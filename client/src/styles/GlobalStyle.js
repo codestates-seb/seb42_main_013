@@ -13,6 +13,10 @@ const GlobalStyle = createGlobalStyle`
   :root {
     /* color */
     --blue-100: #5B85EB;
+    /* gap */
+    --gap-sm: 8px;
+    --gap-md: 16px;
+    --gap-lg: 24px;
   }
   .app-container {
     display: flex;
