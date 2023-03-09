@@ -11,7 +11,6 @@ const MypageConatiner = styled.div`
   align-items: center;
   justify-content: center;
   background-color: white;
-  /* flex: 1; */
   gap: 32px;
 
   --black-100: #d0d0d0;
@@ -68,6 +67,7 @@ const UserInfo = styled.div`
   }
   >div:nth-child(2){
     flex: 1 0 50%;
+
   }
 `
 
