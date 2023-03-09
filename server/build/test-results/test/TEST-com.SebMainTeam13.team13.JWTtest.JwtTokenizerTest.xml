@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.SebMainTeam13.team13.JWTtest.JwtTokenizerTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2023-03-09T07:32:36" hostname="DESKTOP-UMNQVNU" time="1.635">
+  <properties/>
+  <testcase name="encodeBase64SecretKeyTest()" classname="com.SebMainTeam13.team13.JWTtest.JwtTokenizerTest" time="0.006"/>
+  <testcase name="generateAccessTokenTest()" classname="com.SebMainTeam13.team13.JWTtest.JwtTokenizerTest" time="0.08"/>
+  <testcase name="does not throw any Exception when jws verify" classname="com.SebMainTeam13.team13.JWTtest.JwtTokenizerTest" time="0.03"/>
+  <testcase name="generateRefreshTokenTest()" classname="com.SebMainTeam13.team13.JWTtest.JwtTokenizerTest" time="0.002"/>
+  <testcase name="throw ExpiredJwtException when jws verify" classname="com.SebMainTeam13.team13.JWTtest.JwtTokenizerTest" time="1.515"/>
+  <system-out><![CDATA[a2V2aW4xMjM0MTIzNDEyMzQxMjM0MTIzNDEyMzQxMjM0
+eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sIm1lbWJlcklkIjoxLCJzdWIiOiJ0ZXN0IGFjY2VzcyB0b2tlbiIsImlhdCI6MTY3ODM0NzE1NiwiZXhwIjoxNjc4MzQ3NzU2fQ.PBSS4YSM-gtsUW4vSVf6mpoHEWAlmuy2dne61QOr08w
+eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0IHJlZnJlc2ggdG9rZW4iLCJpYXQiOjE2NzgzNDcxNTYsImV4cCI6MTY3ODQzMzU1Nn0.usk-ctvFVa65Ofax5v2e5QoitKB4UEYV9v4KdmoACJI
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
