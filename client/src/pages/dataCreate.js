@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { faTimes, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useState } from "react";
+import CreateModal from "../components/CreateModal";
 
 
 const DataCreateContainer = styled.div`
@@ -82,7 +84,8 @@ const DataInput = styled.input`
   width: auto;
   height: var(--component-height);
 `
-const AddBtn = styled.button`
+
+export const AddBtn = styled.button`
   color: white;
   background-color: var(--blue-100);
   border: none;
@@ -97,6 +100,12 @@ const AddBtn = styled.button`
 
 
 function DataCrete() {
+  const [isOpen, setIsoOpen] = useState(true)
+  const openContainsModalHandler = () => {
+    setIsoOpen(!isOpen)
+  }
+
+
   return(
     <DataCreateContainer>
       <InputSection>
@@ -130,20 +139,20 @@ function DataCrete() {
       <InputSection>
         <h3>약 이름</h3>
         <div>
-          <DataInput />
+          <DataInput type="text"/>
         </div>
       </InputSection>
       <InputSection>
         <h3>주요 성분</h3>
         <div>
-          <OptionTag selected={1}>영양제</OptionTag>
-          <OptionTag>처방약</OptionTag>
+          <OptionTag selected={1}>아티초크 150mg</OptionTag>
+          <AddBtn onClick={openContainsModalHandler}><FontAwesomeIcon icon={faPlus}/></AddBtn>
         </div>
       </InputSection>
       <InputSection>
         <h3>소비기한</h3>
         <div>
-         <DataInput />
+         <DataInput type="date" />
         </div>
       </InputSection>
       <InputSection>
@@ -155,7 +164,7 @@ function DataCrete() {
       <InputSection>
         <h3>복용 기간</h3>
         <div>
-          <DataInput /> ~ <DataInput />
+          <DataInput type="date" /> ~ <DataInput type="date"/>
         </div>
       </InputSection>
       <InputSection>
@@ -180,6 +189,7 @@ function DataCrete() {
         <AddBtn><FontAwesomeIcon icon={faPlus}/></AddBtn>
         </div>
       </InputSection>
+      {isOpen &&  <CreateModal isOpen={isOpen} openContainsModalHandler={openContainsModalHandler}/>}
     </DataCreateContainer>    
   )
 }
