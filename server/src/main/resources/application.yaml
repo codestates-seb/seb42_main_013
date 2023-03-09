@@ -14,6 +14,10 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
 config:
   domain: {}
+jwt:
+  key: ${JWT_SECRET_KEY}
+  access-token-expiration-minutes: 30
+  refresh-token-expiration-minutes: 420
 ---
 spring:
   h2:
@@ -43,3 +47,7 @@ server:
 mail:
   address:
     admin: admin@gmail.com
+jwt:
+  key: ${JWT_SECRET_KEY}
+  access-token-expiration-minutes: 30
+  refresh-token-expiration-minutes: 420

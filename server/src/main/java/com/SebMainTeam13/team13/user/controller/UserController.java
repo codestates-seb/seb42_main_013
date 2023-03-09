@@ -20,10 +20,10 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
-    private final static String USERS_DEFAULT_URL = "/api/users/";
+    private final static String USERS_DEFAULT_URL = "/users";
     private final UserMapper mapper;
     private final UserService userService;
 

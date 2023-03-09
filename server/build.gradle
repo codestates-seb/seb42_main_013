@@ -36,6 +36,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
 	implementation 'mysql:mysql-connector-java'
+	implementation 'com.google.code.gson:gson:2.9.0'
 	compileOnly 'org.projectlombok:lombok'
 	compileOnly 'org.mapstruct:mapstruct:1.5.3.Final'
 	runtimeOnly 'com.h2database:h2'

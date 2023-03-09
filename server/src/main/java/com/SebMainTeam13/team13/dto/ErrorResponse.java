@@ -1,6 +1,6 @@
 package com.SebMainTeam13.team13.dto;
 
-import com.stackoverflow.team25.exception.ExceptionCode;
+import com.SebMainTeam13.team13.exception.ExceptionCode;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;

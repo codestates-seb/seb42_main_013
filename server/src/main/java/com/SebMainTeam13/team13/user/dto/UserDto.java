@@ -16,14 +16,12 @@ public class UserDto {
         private Long userId;
         private String displayName;
 
-
     }
     @Getter
     @Setter
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    @RequiredArgsConstructor
     public static class Response {
         private Long userId;
         private String email;

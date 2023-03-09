@@ -10,6 +10,7 @@ import java.util.List;
 
 import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.FetchType.EAGER;
+import static javax.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PRIVATE;
 @Entity
 @Table(name = "users")
@@ -27,13 +28,14 @@ public class User {
     private String password;
     private String displayName;
     @Builder.Default
-    @OneToMany(mappedBy = "user", cascade = PERSIST, fetch = EAGER)
+    @OneToMany(mappedBy = "user", cascade = PERSIST, fetch = LAZY)
     @Setter(PRIVATE)
     private List<UserRole> userRoles = new ArrayList<>();
     @Column(nullable = false, updatable = false, unique = true)
     private String email;
 
-    @ElementCollection(fetch = FetchType.EAGER)
+    @Builder.Default
+    @ElementCollection(fetch = LAZY)
     private List<String> roles = new ArrayList<>();
 
     @Builder.Default

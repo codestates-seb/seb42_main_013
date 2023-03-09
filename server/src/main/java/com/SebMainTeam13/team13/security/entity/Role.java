@@ -9,6 +9,9 @@ import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.FetchType.EAGER;
+
+
 @Entity
 @Getter
 @Setter
@@ -22,5 +25,6 @@ public class Role {
     private String roleName;
     private String roleDesc;
     @OneToMany(mappedBy = "role")
+    @Builder.Default
     private List<UserRole> userRoles = new ArrayList<>();
 }
