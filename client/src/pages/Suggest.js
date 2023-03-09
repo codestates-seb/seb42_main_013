@@ -41,7 +41,7 @@ const SmallContent = styled.div`
   border: 1px solid #999999;
   border-radius: 30px;
   color: #464646;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
   word-break: keep-all;
   white-space: pre-wrap;
