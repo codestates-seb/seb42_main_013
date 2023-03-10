@@ -12,7 +12,7 @@ export const MypageConatiner = styled.div`
   align-items: center;
   justify-content: center;
   background-color: white;
-  gap: 31px;
+  gap: 32px;
 `
 
 const MypageBox = styled.div`
@@ -89,7 +89,8 @@ export const BasicBtn = styled.div`
   color: white;
   padding: 16px 0;
   border-radius: 5px;
-  font-family: "NanumBarunGothicBold";
+  font-family: ${(props) => props.bold ? "NanumBarunGothicBold" : "NanumBarunGothic"};
+  gap: 8px;
 `
 
 
