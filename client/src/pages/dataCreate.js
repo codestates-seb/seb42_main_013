@@ -31,7 +31,7 @@ const InputSection = styled.section`
     align-items: center;
   }
 `
-const OptionTag = styled.button`
+export const OptionTag = styled.button`
   display: flex;
   align-items: center;
   height: var(--component-height);

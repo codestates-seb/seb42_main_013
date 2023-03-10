@@ -97,7 +97,7 @@ export const BasicBtn = styled.div`
 
 
 
-function Mypage(){
+function MyPage(){
 
 
   return (
@@ -132,4 +132,4 @@ function Mypage(){
   )
 }
 
-export default Mypage;
+export default MyPage;
