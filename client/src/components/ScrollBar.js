@@ -1,12 +1,43 @@
 import styled from "styled-components";
-import { useRef, useState } from "react";
+import { useState } from "react";
+import useWindowSize from "../util/useWindowSize";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { health } from "./Health";
 
 const ScrollBarContainer = styled.div`
   height: 100px;
   display: flex;
+  justify-content: baseline;
+  align-items: center;
   margin: 16px -20px;
+  margin-left: 0;
   white-space: nowrap;
   overflow-x: scroll;
+  .scroll-button {
+    color: var(--black-300);
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+  .left {
+    position: absolute;
+    left: 10px;
+    z-index: 10;
+  }
+  .right {
+    position: absolute;
+    right: 10px;
+    z-index: 10;
+  }
+  .selected-area {
+    font-weight: 600;
+  }
+  .category-select {
+    background-color: rgba(91, 133, 235, 0.8);
+    /* border: 2px solid var(--blue-100); */
+  }
   ::-webkit-scrollbar {
     display: none;
   }
@@ -14,95 +45,145 @@ const ScrollBarContainer = styled.div`
 
 const CategoryDiv = styled.div`
   margin: 0 8px;
-  font-size: 14px;
+  font-size: 13px;
+  cursor: pointer;
+  transform: ${(props) => props.slidePx ? `translateX(${props.slidePx}px)` : "none"};
+  transition: 0.5s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `
 
 const CategoryIconDiv = styled.div`
   width: 55px;
   height: 55px;
-  background-color: #eaeaea;
+  background-color: var(--black-600);
   border-radius: 20px;
   margin-bottom: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img {
+    width: 35px;
+    height: 35px;
+  }
 `
 
 function ScrollBar() {
-  const scrollRef = useRef(null);
-  const [isDrag, setIsDrag] = useState(false);
-  const [startX, setStartX] = useState();
-
-  const onDragStart = (e) => {
-    e.preventDefault();
-    setIsDrag(true);
-    setStartX(e.pageX + scrollRef.current.scrollLeft);
-  };
-
-  const onDragEnd = () => {
-    setIsDrag(false);
-  };
-
-  const onDragMove = (e) => {
-    if(isDrag) {
-      const { scrollWidth, clientWidth, scrollLeft } = scrollRef.current;
-
-      scrollRef.current.scrollLeft = startX - e.pageX;
-
-      if(scrollLeft === 0) {
-        setStartX(e.pageX);
-      } else if(scrollWidth <= clientWidth + scrollLeft) {
-        setStartX(e.pageX + scrollLeft);
-      }
-    }
+  const [slidePx, setSlidePx] = useState(0);
+  const size = useWindowSize();
+  let moveWidth;
+  if(size.width > 428) {
+    moveWidth = 428;
+  } else {
+    moveWidth = size.width;
   }
 
-  console.log("렌더링테스트");
+  const toPrev = () => {
+    if (slidePx < 0) setSlidePx(slidePx + moveWidth - 120);
+  };
+
+  const toNext = () => {
+    if (slidePx > -1200) setSlidePx(slidePx - moveWidth + 120);
+  };
 
   return (
-    <ScrollBarContainer
-    onMouseDown={onDragStart}
-    onMouseMove={onDragMove}
-    onMouseUp={onDragEnd}
-    onMouseLeave={onDragEnd}
-    ref={scrollRef}>
-      <CategoryDiv>
-        <CategoryIconDiv></CategoryIconDiv>
+    <ScrollBarContainer>
+      <FontAwesomeIcon icon={faCircleChevronLeft} className="scroll-button left" onClick={toPrev} />
+      {health.map(el => {
+        return (
+          <CategoryDiv key={el.id} slidePx={slidePx} className={el.title === "눈건강" ? "selected-area" : ""}>
+            <CategoryIconDiv className={el.title === "눈건강" ? "category-select" : ""}>
+              <img src={el.src} alt="health-icon"/>
+            </CategoryIconDiv>
+            {el.title}
+          </CategoryDiv>
+        )
+      })}
+      {/* <CategoryDiv slidePx={slidePx}>
+        <CategoryIconDiv>
+          <img src={`${process.env.PUBLIC_URL}/images/healthicons/nutrition.png`} alt="health-icon"/>
+        </CategoryIconDiv>
         건강고민1
       </CategoryDiv>
-      <CategoryDiv>
-        <CategoryIconDiv></CategoryIconDiv>
+      <CategoryDiv slidePx={slidePx}>
+        <CategoryIconDiv className="category-select"></CategoryIconDiv>
         건강고민2
       </CategoryDiv>
-      <CategoryDiv>
+      <CategoryDiv slidePx={slidePx}>
         <CategoryIconDiv></CategoryIconDiv>
         건강고민3
       </CategoryDiv>
-      <CategoryDiv>
+      <CategoryDiv slidePx={slidePx}>
         <CategoryIconDiv></CategoryIconDiv>
         건강고민4
       </CategoryDiv>
-      <CategoryDiv>
+      <CategoryDiv slidePx={slidePx}>
         <CategoryIconDiv></CategoryIconDiv>
         건강고민5
       </CategoryDiv>
-      <CategoryDiv>
+      <CategoryDiv slidePx={slidePx}>
         <CategoryIconDiv></CategoryIconDiv>
         건강고민6
       </CategoryDiv>
-      <CategoryDiv>
+      <CategoryDiv slidePx={slidePx}>
         <CategoryIconDiv></CategoryIconDiv>
         건강고민7
       </CategoryDiv>
-      <CategoryDiv>
+      <CategoryDiv slidePx={slidePx}>
         <CategoryIconDiv></CategoryIconDiv>
         건강고민8
       </CategoryDiv>
-      <CategoryDiv>
+      <CategoryDiv slidePx={slidePx}>
         <CategoryIconDiv></CategoryIconDiv>
         건강고민9
       </CategoryDiv>
-      <CategoryDiv>
+      <CategoryDiv slidePx={slidePx}>
         <CategoryIconDiv></CategoryIconDiv>
         건강고민10
       </CategoryDiv>
+      <CategoryDiv slidePx={slidePx}>
+        <CategoryIconDiv></CategoryIconDiv>
+        건강고민11
+      </CategoryDiv>
+      <CategoryDiv slidePx={slidePx}>
+        <CategoryIconDiv></CategoryIconDiv>
+        건강고민12
+      </CategoryDiv>
+      <CategoryDiv slidePx={slidePx}>
+        <CategoryIconDiv></CategoryIconDiv>
+        건강고민13
+      </CategoryDiv>
+      <CategoryDiv slidePx={slidePx}>
+        <CategoryIconDiv></CategoryIconDiv>
+        건강고민14
+      </CategoryDiv>
+      <CategoryDiv slidePx={slidePx}>
+        <CategoryIconDiv></CategoryIconDiv>
+        건강고민15
+      </CategoryDiv>
+      <CategoryDiv slidePx={slidePx}>
+        <CategoryIconDiv></CategoryIconDiv>
+        건강고민16
+      </CategoryDiv>
+      <CategoryDiv slidePx={slidePx}>
+        <CategoryIconDiv></CategoryIconDiv>
+        건강고민17
+      </CategoryDiv>
+      <CategoryDiv slidePx={slidePx}>
+        <CategoryIconDiv></CategoryIconDiv>
+        건강고민18
+      </CategoryDiv>
+      <CategoryDiv slidePx={slidePx}>
+        <CategoryIconDiv></CategoryIconDiv>
+        건강고민19
+      </CategoryDiv>
+      <CategoryDiv slidePx={slidePx}>
+        <CategoryIconDiv></CategoryIconDiv>
+        건강고민20
+      </CategoryDiv> */}
+      <FontAwesomeIcon icon={faCircleChevronRight} className="scroll-button right" windowwidth={size.width} onClick={toNext}/>
     </ScrollBarContainer>
   )
 }

@@ -20,7 +20,7 @@ const FooterContainer = styled.div`
 
 const FooterCatDiv = styled.div`
   padding: 4px;
-  color: #464646;
+  color: var(--black-100);
   display: flex;
   flex-direction: column;
   justify-content: center;

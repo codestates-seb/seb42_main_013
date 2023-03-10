@@ -6,9 +6,8 @@ const SuggestContainer = styled.div`
   background-color: #ffffff;
   width: 100%;
   max-width: 428px;
-  min-height: 100vh;
-  color: #464646;
-  margin-bottom: 16px;
+  height: 100%;
+  color: var(--black-100);
 `
 
 const SugContentConatiner = styled.div`
@@ -30,6 +29,7 @@ const LargeContent = styled.div`
   font-weight: 500;
   @media (max-width: 427px){
     height: 42vw;
+    font-size: 3.7vw;
     }
 `
 
@@ -38,9 +38,9 @@ const SmallContent = styled.div`
   padding: 16px;
   width: 100%;
   height: 180px;
-  border: 1px solid #999999;
+  border: 1px solid var(--black-300);
   border-radius: 30px;
-  color: #464646;
+  color: var(--black-100);
   font-size: 18px;
   font-weight: 600;
   word-break: keep-all;
@@ -52,6 +52,7 @@ const SmallContent = styled.div`
   text-align: ${(props) => props.align || "left"};
   @media (max-width: 427px){
     height: 42vw;
+    font-size: 4.2vw;
     }
 `
 
