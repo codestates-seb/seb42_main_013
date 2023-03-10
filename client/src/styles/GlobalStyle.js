@@ -9,10 +9,19 @@ const GlobalStyle = createGlobalStyle`
     /* font-family: 'NanumBarunGothicLight'; */
     font-family: 'NanumBarunGothic';
     /* font-family: 'NanumBarunGothicBold'; */
+    ::-webkit-scrollbar {
+      display: none;
     }
+  }
   :root {
     /* color */
     --blue-100: #5B85EB;
+    --black-100: #464646;
+    --black-200: #646464;
+    --black-300: #999999;
+    --black-400: #b4b4b4;
+    --black-500: #eaeaea;
+    --black-600: #f0f0f0;
     /* gap */
     --gap-sm: 8px;
     --gap-md: 16px;
@@ -34,10 +43,13 @@ const GlobalStyle = createGlobalStyle`
   .app-wrap {
     width: 100%;
     max-width: 428px;
-    background-color: aquamarine;
+    box-shadow: 0px 0px 16px rgb(50 50 50 / 12%);
   }
   .container {
-    padding-top: 48px;
+    position: relative;
+    top: 48px;
+    height: calc(100vh - 112px);
+    overflow: scroll;
   }
 `
 
