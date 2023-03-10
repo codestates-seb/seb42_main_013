@@ -9,7 +9,10 @@ const GlobalStyle = createGlobalStyle`
     /* font-family: 'NanumBarunGothicLight'; */
     font-family: 'NanumBarunGothic';
     /* font-family: 'NanumBarunGothicBold'; */
+    ::-webkit-scrollbar {
+      display: none;
     }
+  }
   :root {
     /* color */
     --blue-100: #5B85EB;
@@ -34,10 +37,12 @@ const GlobalStyle = createGlobalStyle`
   .app-wrap {
     width: 100%;
     max-width: 428px;
-    background-color: aquamarine;
   }
   .container {
-    padding-top: 48px;
+    position: relative;
+    top: 48px;
+    height: calc(100vh - 112px);
+    overflow: scroll;
   }
 `
 
