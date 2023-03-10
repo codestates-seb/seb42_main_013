@@ -16,6 +16,12 @@ const GlobalStyle = createGlobalStyle`
   :root {
     /* color */
     --blue-100: #5B85EB;
+    --black-100: #464646;
+    --black-200: #646464;
+    --black-300: #999999;
+    --black-400: #b4b4b4;
+    --black-500: #eaeaea;
+    --black-600: #f0f0f0;
     /* gap */
     --gap-sm: 8px;
     --gap-md: 16px;
@@ -37,6 +43,7 @@ const GlobalStyle = createGlobalStyle`
   .app-wrap {
     width: 100%;
     max-width: 428px;
+    box-shadow: 0px 0px 16px rgb(50 50 50 / 12%);
   }
   .container {
     position: relative;
