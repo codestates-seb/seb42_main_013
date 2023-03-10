@@ -3,112 +3,114 @@ import background1 from "../images/backgrounds/background1.jpg"
 import background2 from "../images/backgrounds/background2.jpg"
 import background3 from "../images/backgrounds/background3.jpg"
 import background4 from "../images/backgrounds/background4.jpg"
-import useWindowSize from "../util/useWindowSize";
-import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore, { Pagination, Autoplay } from "swiper";
+import "swiper/css";
+import "swiper/css/pagination";
+
+SwiperCore.use([Pagination, Autoplay]);
 
 const IntroContainer = styled.div`
   width: 100%;
   height: 100vh;
+  .swiper-pagination {
+    bottom: 160px;
+  }
+  .swiper-pagination-bullet {
+    margin: 0 var(--gap-sm)!important;
+    background-color: var(--black-200);
+  }
+  .swiper-pagination-bullet-active {
+    background-color: var(--blue-100);
+  }
 `
 
-const BackgroundContainer = styled.div`
+const BackgroundImg1 = styled.div`
   width: ${(props) => `${props.curwidth}px`};
   height: 100vh;
-  z-index: -1;
-  overflow: hidden;
-  position: relative;
-`
-
-const SlideDiv1 = styled.div`
-  width: ${(props) => `${props.curwidth}px`};
-  height: 100vh;
-  position: relative;
+  object-fit: cover;
   background-image: url(${background1});
   background-size: auto 100%;
   background-position: center;
-  opacity: 0.85;
+  opacity: 0.75;
 `
 
-const SlideDiv2 = styled(SlideDiv1)`
-  background-image: url(${background2});
-  left: ${(props) => `${props.curwidth}px`};
-  top: ${(props) => `-${props.curheight}px`};
+const BackgroundImg2 = styled(BackgroundImg1)`
+    background-image: url(${background2});
 `
 
-const SlideDiv3 = styled(SlideDiv1)`
-  background-image: url(${background3});
-  opacity: 0.7;
-  left: ${(props) => `${props.curwidth * 2}px`};
-  top: ${(props) => `-${props.curheight * 2}px`};
+const BackgroundImg3 = styled(BackgroundImg1)`
+    background-image: url(${background3});
+    opacity: 0.65;
 `
 
-const SlideDiv4 = styled(SlideDiv1)`
-  background-image: url(${background4});
-  left: ${(props) => `${props.curwidth * 3}px`};
-  top: ${(props) => `-${props.curheight * 3}px`};
+const BackgroundImg4 = styled(BackgroundImg1)`
+    background-image: url(${background4});
 `
 
-const SlideBtnDiv = styled.div`
-  position: relative;
-  bottom: 200px;
+export const CurrentBtn = styled.button`
+  width: 250px;
+  height: 50px;
+  border-style: none;
+  border-radius: 5px;
+  background-color: var(--blue-100);
+  color: #ffffff;
+  font-size: 16px;
+  cursor: pointer;
+  margin: var(--gap-md) 0;
+  :hover {background-color: rgba(91, 133, 235, 0.8)} :active {background-color: rgba(91, 133, 235, 0.8)}
+`
+const LoginSignupDiv = styled.div`
+  width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  ${(props) => `${props.curwidth}px`};
-`
-const SlideBtn = styled.button`
-  border-style: none;
-  width: 10px;
-  height: 10px;
-  margin: var(--gap-md);
-  border-radius: 30px;
-  background-color: var(--black-400);
   position: relative;
-  z-index: 10;
+  z-index: 999;
+  bottom: 150px;
+  .login-area {
+    width: 250px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--black-200)
+  }
+  .login-button {
+    color: var(--blue-100);
+  }
 `
 
 function Intro() {
-  // 이동버튼용 상태
-  const [moveWidth, setMoveWidth] = useState(0);
-  // 현재 화면 너비, 높이 설정
-  const size = useWindowSize();
-  let curwidth;
-  if (size.width > 428) {
-    curwidth = 428;
-  } else {
-    curwidth = size.width;
-  }
-
-  const curheight = size.height;
-
-  // 이동 버튼 함수
-  const firstBtn = () => {
-    setMoveWidth(0);
-  }
-  const secondBtn = () => {
-    setMoveWidth(-(curwidth));
-  }
-  const thirdBtn = () => {
-    setMoveWidth(-(curwidth));
-  }
-  const fourthBtn = () => {
-    setMoveWidth(-(curwidth));
-  }
 
   return (
     <IntroContainer>
-      <BackgroundContainer curwidth={curwidth}>
-        <SlideDiv1 curwidth={curwidth} curheight={curheight}></SlideDiv1>
-        <SlideDiv2 curwidth={curwidth} curheight={curheight}></SlideDiv2>
-        <SlideDiv3 curwidth={curwidth} curheight={curheight}></SlideDiv3>
-        <SlideDiv4 curwidth={curwidth} curheight={curheight}></SlideDiv4>
-      </BackgroundContainer>
-      <SlideBtnDiv curwidth={curwidth}>
-        <SlideBtn />
-        <SlideBtn />
-        <SlideBtn />
-        <SlideBtn />
-      </SlideBtnDiv>
+      <Swiper
+        spaceBetween={0}
+        slidesPerView={1}
+        autoplay={{ delay: 4000 }}
+        pagination={{ clickable: true }}>
+        <SwiperSlide>
+          <BackgroundImg1></BackgroundImg1>
+        </SwiperSlide>
+        <SwiperSlide>
+        <BackgroundImg2></BackgroundImg2>
+        </SwiperSlide>
+        <SwiperSlide>
+        <BackgroundImg3></BackgroundImg3>
+        </SwiperSlide>
+        <SwiperSlide>
+          <BackgroundImg4></BackgroundImg4>
+        </SwiperSlide>
+      </Swiper>
+      <LoginSignupDiv>
+        <CurrentBtn>시작하기</CurrentBtn>
+        <div className="login-area">
+          <div>계정이 있으신가요?</div>
+          <Link to="/login" className="login-button">로그인하기</Link>
+        </div>
+      </LoginSignupDiv>
     </IntroContainer>
   )
 }
