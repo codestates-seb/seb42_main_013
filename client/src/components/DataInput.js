@@ -10,14 +10,15 @@ export const RealInput = styled.input`
   font-size: 16px;
   height: 32px;
   width: 100%;
+  padding: 0 8px;
   ::-webkit-outer-spin-button, ::-webkit-inner-spin-button{
     -webkit-appearance: none;
   }
   ::placeholder{
-    color : red
+    color : var(--black-300)
   }
 `
-const FakeInput = styled.div`
+export const FakeInput = styled.div`
   border: ${(props) => props.isFocus ? "1px solid var(--blue-100)" : "var(--black-400) solid 1px"};
   border-radius: 5px;
   flex: 1 0 40%;
