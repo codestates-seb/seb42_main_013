@@ -1,8 +1,19 @@
 import GlobalStyle from "./styles/GlobalStyle";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
+import Suggest from "./pages/Suggest";
+import Search from "./pages/Search";
+import Intro from "./pages/Intro";
+import DataCreate from "./pages/DataCreate"
+import Login from "./pages/Login";
+import MyPage from "./pages/MyPage";
+import SetUserInfo from "./pages/SetUserInfo";
+import Summary from "./pages/Summary";
+import { Routes, Route, useLocation } from 'react-router-dom';
 
 function App() {
+  const { pathname } = useLocation();
+
   return (
     <>
       <GlobalStyle />
@@ -11,11 +22,21 @@ function App() {
           test - 웹 화면
         </div>
         <div className="app-wrap">
-          <Header />
+          {(pathname === "/intro") ? null : <Header />}
           <div className="container">
-          test - 메인 화면
+            <Routes>
+              <Route path="/" element={<Suggest />} />
+              <Route path="/search" element={<Search />} />
+              <Route path="/suggest" element={<Suggest />} />
+              <Route path="/intro" element={<Intro />} />
+              <Route path="/datacreate" element={<DataCreate />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/mypage" element={<MyPage />} />
+              <Route path="/setuserinfo" element={<SetUserInfo />} />
+              <Route path="/summary" element={<Summary />} />
+            </Routes>
           </div>
-          <Footer />
+          {(pathname === "/intro" || pathname === "/login" || pathname === "/datacreate") ? null : <Footer />}
         </div>
       </div>
     </>
