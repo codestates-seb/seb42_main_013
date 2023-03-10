@@ -23,7 +23,7 @@ function App() {
         </div>
         <div className="app-wrap">
           {(pathname === "/intro") ? null : <Header />}
-          <div className="container">
+          <div className={(pathname === "/intro" || pathname === "/login") ? "" : "container"}>
             <Routes>
               <Route path="/" element={<Suggest />} />
               <Route path="/search" element={<Search />} />
