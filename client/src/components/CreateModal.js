@@ -1,58 +1,63 @@
 import styled from "styled-components";
-import { AddBtn } from "../pages/dataCreate";
+import { AddBtn } from "../pages/DataCreate";
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import DataInput from "./DataInput";
 
 
 
-export const ModalBackdrop = styled.div`
-  position: fixed;
-  z-index: 999;
-  top: 0;
+const ModalBackdrop = styled.div`
+  /* top: 0;
   left: 0;
   bottom: 0;
-  right: 0;
-  background-color: rgba(0,0,0,0.4);
-  display: grid;
-  place-items: center;
+  right: 0; */
+  /* 위 대신 아래로 하면 기존 컴포넌트도 안밀리고 좋음 */
+  inset: 0px;
+  transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  position: fixed;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  -webkit-tap-highlight-color: transparent;
+  z-index: -1;
+  @media (min-width: 1024px){
+    padding-left: 460px;
+  }
 `;
 
-export const ModalContainer = styled.div`
-  text-align: center;
+const ModalContainer = styled.div`
+  position: fixed;
+  inset: 0px;
+  z-index: 1200;
 `;
 
-export const ModalBtn = styled.button`
-  background-color: #4000c7;
-  text-decoration: none;
-  border: none;
-  padding: 20px;
-  color: white;
-  border-radius: 30px;
-  cursor: grab;
-`;
+
 
 export const ModalView = styled.div`
-  border-radius: 10px;
+  position: relative;
+  border-radius: 5px;
   background-color: #ffffff;
-  width: 300px;
-  height: 100px;
-  .btnBox{
+  margin: auto;
+  padding: 8px;
+  max-width: 428px;
+  width: calc(100% - 40px);
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  font-size: 16px;
+  gap: var(--gap-sm);
+  >div:first-child{
+    display: flex;
     width: 100%;
     justify-content: flex-end;
-    align-items: flex-end;
-  }
-  > span.close-btn {
-    margin-top: 5px;
-    cursor: pointer;
-  }
-  > div.desc {
-    margin-top: 25px;
-    color: #4000c7;
   }
 `
 
 
-function CreateModal ({isOpen, openContainsModalHandler}) {
+function CreateModal ({isOpen, openContainsModalHandler, data, setData}) {
 
   return (
     <>
@@ -61,8 +66,10 @@ function CreateModal ({isOpen, openContainsModalHandler}) {
           <div></div>
           <ModalView onClick={(e) => e.stopPropagation()}>
             <div className="closeBtn"><AddBtn><FontAwesomeIcon icon={faTimes}/></AddBtn></div>
-
-            <div className='desc'>HELLO CODESTATES!</div>
+            <div>성분명</div>
+            <DataInput/>
+            <div>함량</div>
+            <DataInput/>
           </ModalView>
         </ModalBackdrop> : null}
       </ModalContainer>
