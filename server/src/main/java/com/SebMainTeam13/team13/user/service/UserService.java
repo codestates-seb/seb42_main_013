@@ -5,21 +5,18 @@ import com.SebMainTeam13.team13.auth.utils.AuthorityUtils;
 import com.SebMainTeam13.team13.user.entity.User;
 import com.SebMainTeam13.team13.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.cdi.Eager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
-        private final UserRepository userRepository;
-        private final ApplicationEventPublisher publisher;
-
+     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthorityUtils authorityUtils;
 
@@ -50,7 +47,7 @@ public class UserService {
 
 
         public User getUser(long userId) {
-            //TODO: 삭제된 회원 조회시 처리
+            //TODO: 삭제된 회원 조회 불가하도록 하는 기능이 없음
             return userRepository.findById(userId).orElseThrow(() -> {
                 throw new RuntimeException("멤버가 없음");
             });
@@ -96,8 +93,4 @@ public class UserService {
             }
         }
 
-
-        public Optional<User> findUserByEmail(String email) {
-            return userRepository.findByEmail(email);
-        }
 }

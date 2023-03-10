@@ -23,7 +23,6 @@ public class JwtTokenizerTest {
     private String secretKey;
     private String base64EncodedSecretKey;
 
-    // (1)
     @BeforeAll
     public void init() {
         jwtTokenizer = new JwtTokenizer();
@@ -32,7 +31,6 @@ public class JwtTokenizerTest {
         base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(secretKey);
     }
 
-    // (2)
     @Test
     public void encodeBase64SecretKeyTest() {
         System.out.println(base64EncodedSecretKey);
@@ -40,7 +38,6 @@ public class JwtTokenizerTest {
         assertThat(secretKey, is(new String(Decoders.BASE64.decode(base64EncodedSecretKey))));
     }
 
-    // (3)
     @Test
     public void generateAccessTokenTest() {
         Map<String, Object> claims = new HashMap<>();
@@ -59,7 +56,6 @@ public class JwtTokenizerTest {
         assertThat(accessToken, notNullValue());
     }
 
-    // (4)
     @Test
     public void generateRefreshTokenTest() {
         String subject = "test refresh token";
