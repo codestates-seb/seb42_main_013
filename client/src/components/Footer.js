@@ -12,7 +12,7 @@ const FooterContainer = styled.div`
   height: 64px;
   position: fixed;
   bottom: 0;
-  border-top: 1px solid #999999;
+  border-top: 1px solid var(--black-500);
   padding: 8px;
   display: flex;
   justify-content: space-around;
