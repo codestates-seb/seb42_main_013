@@ -9,6 +9,7 @@ import Login from "./pages/Login";
 import MyPage from "./pages/MyPage";
 import SetUserInfo from "./pages/SetUserInfo";
 import Summary from "./pages/Summary";
+import Calendar from "./pages/CalendarPage";
 import { Routes, Route, useLocation } from 'react-router-dom';
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
               <Route path="/mypage" element={<MyPage />} />
               <Route path="/setuserinfo" element={<SetUserInfo />} />
               <Route path="/summary" element={<Summary />} />
+              <Route path="/calendar" element={<Calendar />} />
             </Routes>
           </div>
           {(pathname === "/intro" || pathname === "/login" || pathname === "/datacreate") ? null : <Footer />}
