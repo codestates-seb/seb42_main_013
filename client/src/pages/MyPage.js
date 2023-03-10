@@ -1,9 +1,10 @@
 import styled from "styled-components";
-import { OptionTag } from "./dataCreate";
+import { OptionTag } from "./DataCreate";
 import { faGear } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useState } from "react";
 
-const MypageConatiner = styled.div`
+export const MypageConatiner = styled.div`
   display: flex;
   padding: 0 36px 80px;
   min-height: calc(100vh - 48px - 64px);
@@ -11,10 +12,7 @@ const MypageConatiner = styled.div`
   align-items: center;
   justify-content: center;
   background-color: white;
-  gap: 32px;
-
-  --black-100: #d0d0d0;
-  --black-300: #666666;
+  gap: 31px;
 `
 
 const MypageBox = styled.div`
@@ -38,7 +36,7 @@ const MypageBox = styled.div`
 const ProfileAvartar = styled.div`
   width: 90px;
   height: 90px;
-  background-color: var(--black-100);
+  background-color: var(--black-400);
   border-radius: 50%;
 `
 const ProfileName = styled.div`
@@ -46,7 +44,7 @@ const ProfileName = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  color: var( --black-300);
+  color: var( --black-200);
   margin-bottom: 8px;
   >div:first-child{
     font-size: 16px;
@@ -67,7 +65,6 @@ const UserInfo = styled.div`
   }
   >div:nth-child(2){
     flex: 1 0 50%;
-
   }
 `
 
@@ -97,8 +94,8 @@ export const BasicBtn = styled.div`
 
 
 
-function Mypage(){
-
+function MyPage(){
+  const [isEditMode, setEditMode] = useState(false)
 
   return (
     <MypageConatiner>
@@ -132,4 +129,4 @@ function Mypage(){
   )
 }
 
-export default Mypage;
+export default MyPage;
