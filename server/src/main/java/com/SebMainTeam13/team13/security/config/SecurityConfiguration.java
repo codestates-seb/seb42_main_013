@@ -42,7 +42,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfiguration {
     private final JwtTokenizer jwtTokenizer;
     private final AuthorityUtils authorityUtils;
-    private final UserService userService;
+
 
 
 
@@ -59,8 +59,6 @@ public class SecurityConfiguration {
                 .httpBasic().disable()
                 .exceptionHandling()
                 .and()
-                .apply(new CustomFilterConfigurer())
-                .and()
                 .authorizeHttpRequests(authorize -> authorize
                         .antMatchers(HttpMethod.POST, "/*/users").permitAll()
                         .antMatchers(HttpMethod.PATCH, "/*/users/**").hasRole("USER")
@@ -68,10 +66,7 @@ public class SecurityConfiguration {
                         .antMatchers(HttpMethod.GET, "/*/users/**").hasAnyRole("USER", "ADMIN")
                         .antMatchers(HttpMethod.DELETE, "/*/users/**").hasRole("USER")
                         .anyRequest().permitAll()
-                )
-                        .oauth2Login(oauth2 -> oauth2
-                                .successHandler(new OAuth2SuccessHandler(jwtTokenizer, authorityUtils,userService))
-                        );
+                         );
         return http.build();
     }
     @Bean
