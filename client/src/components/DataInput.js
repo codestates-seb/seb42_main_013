@@ -50,9 +50,6 @@ export const RealInput = styled.input`
     color: transparent;
     background: transparent;
   }
-  >input:focus{
-    /* outline: none; */
-  }    
   ::placeholder{
     color : var(--black-300)
   }
