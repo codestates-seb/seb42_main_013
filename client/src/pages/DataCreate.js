@@ -123,7 +123,7 @@ function DataCrete() {
       <InputSection>
         <h3>약 이름<p>*</p></h3>
         <div>
-          <DataInput type="text" value={data.name} data={data} setData={setData} key="name"/>
+          <DataInput type="text" data={data} setData={setData} value="name"/>
         </div> 
       </InputSection>
       <InputSection>
@@ -136,23 +136,23 @@ function DataCrete() {
       <InputSection>
         <h3>소비기한</h3>
         <div>
-         <DataInput type="date" value={data.expiryDate} data={data} setData={setData} key="expiryDate"/>
+         <DataInput type="date" data={data} setData={setData} value="expiryDate"/>
         </div>
       </InputSection>
       <InputSection>
         <h3>잔여알수 / 전체용량</h3>
         <Box>
-          <DataInput placeholder="잔여알수" type="number" value={data.currentQty} key="currentQty" data={data} setData={setData} />
+          <DataInput placeholder="잔여알수" type="number" value="currentQty" data={data} setData={setData} />
           /
-          <DataInput placeholder="전체용량" type="number" value={data.totalQty} key="totalQty" data={data} setData={setData}/> 
+          <DataInput placeholder="전체용량" type="number" value="totalQty" data={data} setData={setData}/> 
         </Box>
       </InputSection>
       <InputSection>
         <h3>복용 기간</h3>
         <div>
-          <DataInput type="date" value={data.startDate} key="startDate" data={data} setData={setData}/>
+          <DataInput type="date" value={data.startDate} data={data} setData={setData}/>
           ~
-          <DataInput type="date" value={data.endDate} key="endDate" data={data} setData={setData}/>
+          <DataInput type="date" value={data.endDate} data={data} setData={setData}/>
         </div>
       </InputSection>
       <InputSection>
@@ -173,7 +173,7 @@ function DataCrete() {
         <h3>복용량<p>*</p></h3>
         <div>
         <AddBtn><FontAwesomeIcon icon={faMinus}/></AddBtn>
-        <DataInput placeholder="1회 복용량" type="number" value={data.dose} key="dose" data={data} setData={setData} />
+        <DataInput placeholder="1회 복용량" type="number" value="dose" data={data} setData={setData} />
         <AddBtn><FontAwesomeIcon icon={faPlus}/></AddBtn>
         </div>
       </InputSection>
