@@ -7,6 +7,7 @@ import { clear } from "@testing-library/user-event/dist/clear";
 const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
+  flex: 1;
   >div:last-child{
     color: rgb(240, 86, 86);
     font-size: 12px;
@@ -16,9 +17,9 @@ const InputContainer = styled.div`
 `
 export const FakeInput = styled.div`
   display: flex;
+  flex-direction: row;
   border: ${(props) => props.isFocus ? "1px solid var(--blue-100)" : "var(--black-400) solid 1px"};
   border-radius: 5px;
-  flex: 1 0 40%;
   /* 1줄 꽉채우게 */
   padding: 0 8px;
   :hover{
@@ -34,9 +35,24 @@ export const RealInput = styled.input`
   font-size: 16px;
   height: 32px;
   width: 100%;
+  position:relative;
   ::-webkit-outer-spin-button, ::-webkit-inner-spin-button{
     -webkit-appearance: none;
   }
+  ::-webkit-calendar-picker-indicator{
+    position:absolute;
+      /* 부모 relative - 자식 absolute */
+      /* 부모 relative 지정 안해주면 전체 화면 cover된다 */
+    left:0;
+    top:0;
+    width: 100%;
+    height: 100%;
+    color: transparent;
+    background: transparent;
+  }
+  >input:focus{
+    /* outline: none; */
+  }    
   ::placeholder{
     color : var(--black-300)
   }
@@ -88,7 +104,7 @@ function DataInput ({value, placeholder, data, setData, isRequired, type}) {
           width={value && value.length+1}
           placeholder={placeholder}
         />
-        {
+        { type!=="date" &&
         <>
           <DeleteBtn value={!!data[value]} >
             <button onClick={()=>clear()}>

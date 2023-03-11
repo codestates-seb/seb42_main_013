@@ -20,6 +20,7 @@ const InputSection = styled.section`
   display: flex;
   flex-direction: column;
   margin-bottom: 16px;
+  width: 100%;
   >h3{
     font-family: 'NanumBarunGothicBold';
     color: var(--black-200);
@@ -36,7 +37,7 @@ const InputSection = styled.section`
   }
   >div{
     display: flex;
-    flex-wrap: wrap;
+    flex-flow: row wrap;
     gap: 8px;
     width: 100%;
     line-height: 100%;
@@ -150,9 +151,9 @@ function DataCrete() {
       <InputSection>
         <h3>복용 기간</h3>
         <div>
-          <DataInput type="date" value={data.startDate} data={data} setData={setData}/>
+          <DataInput type="date" value="data.startDate" data={data} setData={setData}/>
           ~
-          <DataInput type="date" value={data.endDate} data={data} setData={setData}/>
+          <DataInput type="date" value="data.endDate" data={data} setData={setData}/>
         </div>
       </InputSection>
       <InputSection>
