@@ -14,10 +14,6 @@ const DataCreateContainer = styled.div`
   justify-content: space-around;
   padding: 0px 20px 40px;
   background-color: white;
-  --border : #B0B0B0 solid 1px;
-  --border-radius: 5px;
-  --component-height: 25px;
-
 `
 
 const InputSection = styled.section`
@@ -26,7 +22,7 @@ const InputSection = styled.section`
   margin-bottom: 16px;
   >h3{
     font-family: 'NanumBarunGothicBold';
-    color: #666666;
+    color: var(--black-200);
     font-size: 16px;
     margin-bottom: 8px;
     display: flex;
@@ -50,23 +46,23 @@ const InputSection = styled.section`
 export const OptionTag = styled.button`
   display: flex;
   align-items: center;
-  height: var(--component-height);
+  height: 32px;
   /* line-height: var(--component-height); */
   border-width: 0;
   border-radius: 30px;
-  padding: 10px;
+  padding: 0 10px;
   text-align: center;
-  color : ${(props) => props.selected ? "white" : "#666666"};
+  color : ${(props) => props.selected ? "white" : "var(--black-200)"};
   background-color: ${(props) => props.selected ? "var(--blue-100)" : "#D9D9D9"};
-  font-size: 12px;
+  font-size: 14px;
   button{
     margin-left: 7px;
     margin-right: 2px;
-    height: var(--component-height);
+    height: 25px;
     width: auto;
     background-color: transparent;
     border: none;
-    color: ${(props) => props.selected ? "white" : "#666666"};
+    color: ${(props) => props.selected ? "white" : "var(--black-200)"};
   }
 `
 const Box=styled.div`
@@ -78,8 +74,8 @@ export const AddBtn = styled.button`
   color: white;
   background-color: var(--blue-100);
   border: none;
-  width: var(--component-height);;
-  height: var(--component-height);
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -111,7 +107,6 @@ function DataCrete() {
     }
   )
 
-
   return(
     <DataCreateContainer>
       <InputSection>
@@ -128,8 +123,8 @@ function DataCrete() {
       <InputSection>
         <h3>약 이름<p>*</p></h3>
         <div>
-          <DataInput type="text" handler={(e)=>setData({...data,name:e.target.value})}/>
-        </div>
+          <DataInput type="text" value={data.name} data={data} setData={setData} key="name"/>
+        </div> 
       </InputSection>
       <InputSection>
         <h3>주요 성분</h3>
@@ -141,23 +136,23 @@ function DataCrete() {
       <InputSection>
         <h3>소비기한</h3>
         <div>
-         <DataInput type="date" handler={(e)=>setData({...data,expiryDate:e.target.value})}/>
+         <DataInput type="date" value={data.expiryDate} data={data} setData={setData} key="expiryDate"/>
         </div>
       </InputSection>
       <InputSection>
         <h3>잔여알수 / 전체용량</h3>
         <Box>
-          <DataInput type="number" value={data.currentQty} handler={(e)=>setData({...data,currentQty:e.target.value})} />
+          <DataInput placeholder="잔여알수" type="number" value={data.currentQty} key="currentQty" data={data} setData={setData} />
           /
-          <DataInput type="number" value={data.totalQty} handler={(e)=>setData({...data,totalQty:e.target.value})}/> 
+          <DataInput placeholder="전체용량" type="number" value={data.totalQty} key="totalQty" data={data} setData={setData}/> 
         </Box>
       </InputSection>
       <InputSection>
         <h3>복용 기간</h3>
         <div>
-          <DataInput type="date" handler={(e)=>setData({...data,startDate:e.target.value})}/>
+          <DataInput type="date" value={data.startDate} key="startDate" data={data} setData={setData}/>
           ~
-          <DataInput type="date" handler={(e)=>setData({...data,endDate:e.target.value})}/>
+          <DataInput type="date" value={data.endDate} key="endDate" data={data} setData={setData}/>
         </div>
       </InputSection>
       <InputSection>
@@ -178,7 +173,7 @@ function DataCrete() {
         <h3>복용량<p>*</p></h3>
         <div>
         <AddBtn><FontAwesomeIcon icon={faMinus}/></AddBtn>
-        2 알
+        <DataInput placeholder="1회 복용량" type="number" value={data.dose} key="dose" data={data} setData={setData} />
         <AddBtn><FontAwesomeIcon icon={faPlus}/></AddBtn>
         </div>
       </InputSection>
