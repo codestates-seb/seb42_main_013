@@ -96,11 +96,11 @@ function DataCrete() {
       img: null,
       name: "",
       contains: [{}],
-      expiryDate: null,
-      currentQty: null,
-      totalQty: null,
-      startDate: null,
-      endDate: null,
+      expiryDate: "",
+      currentQty: "",
+      totalQty: "",
+      startDate: "",
+      endDate: "",
       cycle: 1,
       time:[],
       dose:1,
@@ -165,8 +165,8 @@ function DataCrete() {
       <InputSection>
         <h3>복용 시간</h3>
         <div>
-          <OptionTag selected={1}>오전 9시<button><FontAwesomeIcon icon={faTimes}/></button></OptionTag>
-          <AddBtn><FontAwesomeIcon icon={faPlus}/></AddBtn>
+          {/* <OptionTag selected={1}>오전 9시<button><FontAwesomeIcon icon={faTimes}/></button></OptionTag> */}
+          {/* <AddBtn><FontAwesomeIcon icon={faPlus}/></AddBtn> */}
         </div>
       </InputSection>
       <InputSection>

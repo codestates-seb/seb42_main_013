@@ -64,21 +64,16 @@ const DeleteBtn = styled.div`
 
 
 
-function DataInput ({value, key, placeholder, data, setData, isRequired, type}) {
+function DataInput ({value, placeholder, data, setData, isRequired, type}) {
   const [isFocus, setIsFocus] = useState(false)
   const onBlurHandler = (e) => {
     setIsFocus(false)
   }
   const changeHandler = (e) => {
-    const copiedData = data
-    copiedData[key]=e.target.value
-    setData(copiedData)
-    console.log(value)
+    setData({...data,[value]:e.target.value})
   }
   const clear = () => {
-    const copiedData = data
-    copiedData[key]=null
-    setData(copiedData)
+    setData({...data,[value]:""})
   }
  
   return (
@@ -88,16 +83,16 @@ function DataInput ({value, key, placeholder, data, setData, isRequired, type}) 
           onFocus={()=>setIsFocus(true)}
           onBlur={()=>setIsFocus(false)}
           type={type} 
-          value={value}
+          value={data[value]}
           onChange={changeHandler} 
           width={value && value.length+1}
           placeholder={placeholder}
         />
         {
         <>
-          <DeleteBtn value={value} onClick={clear}>
-            <button>
-              <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-x" viewBox="0 0 16 16">
+          <DeleteBtn value={value} >
+            <button onClick={()=>clear()}>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
                 <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
               </svg>
             </button>
