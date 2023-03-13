@@ -9,6 +9,8 @@ const GlobalStyle = createGlobalStyle`
     /* font-family: 'NanumBarunGothicLight'; */
     font-family: 'NanumBarunGothic';
     /* font-family: 'NanumBarunGothicBold'; */
+    /* a 태그 관련 설정 */
+    a {text-decoration: none;color: inherit;}a:visited {background: none;}a:active {background: none;};
     ::-webkit-scrollbar {
       display: none;
     }
