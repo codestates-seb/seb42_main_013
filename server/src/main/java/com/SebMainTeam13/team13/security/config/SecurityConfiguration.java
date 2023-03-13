@@ -1,37 +1,30 @@
 package com.SebMainTeam13.team13.security.config;
 
 
+import com.SebMainTeam13.team13.auth.handler.UserAccessDeniedHandler;
+import com.SebMainTeam13.team13.auth.handler.UserAuthenticationEntryPoint;
 import com.SebMainTeam13.team13.auth.utils.AuthorityUtils;
 import com.SebMainTeam13.team13.jwt.JwtTokenizer;
 import com.SebMainTeam13.team13.security.filter.JwtAuthenticationFilter;
 import com.SebMainTeam13.team13.security.filter.JwtVerificationFilter;
 import com.SebMainTeam13.team13.security.handler.JWTAuthenticationFailureHandler;
 import com.SebMainTeam13.team13.security.handler.JwtAuthenticationSuccessHandler;
-import com.SebMainTeam13.team13.user.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-<<<<<<< Updated upstream
-
-=======
 import org.springframework.context.annotation.Import;
->>>>>>> Stashed changes
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-
 
 import java.util.Arrays;
 
@@ -43,26 +36,22 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfiguration {
     private final JwtTokenizer jwtTokenizer;
     private final AuthorityUtils authorityUtils;
-
-
-
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .headers().frameOptions().sameOrigin()
                 .and()
                 .csrf().disable()
-                .formLogin()
-                .loginPage("/auths/login-form")
-                .loginProcessingUrl("/process_login")
-                .failureUrl("/auths/login-form?error")
+                .cors(withDefaults())
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .logout()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/")
+                .formLogin().disable()
+                .httpBasic().disable()
+                .exceptionHandling()
+                .authenticationEntryPoint(new UserAuthenticationEntryPoint())
+                .accessDeniedHandler(new UserAccessDeniedHandler())
                 .and()
-                .exceptionHandling().accessDeniedPage("/auths/access-denied")
+                .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
                         .antMatchers(HttpMethod.POST, "/*/users").permitAll()
@@ -71,7 +60,7 @@ public class SecurityConfiguration {
                         .antMatchers(HttpMethod.GET, "/*/users/**").hasAnyRole("USER", "ADMIN")
                         .antMatchers(HttpMethod.DELETE, "/*/users/**").hasRole("USER")
                         .anyRequest().permitAll()
-                         );
+                );
         return http.build();
     }
     @Bean
@@ -79,18 +68,15 @@ public class SecurityConfiguration {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
 
-    public class CustomFilterConfigurer extends AbstractHttpConfigurer<CustomFilterConfigurer, HttpSecurity> {
+    public class CustomFilterConfigurer extends AbstractHttpConfigurer<CustomFilterConfigurer, HttpSecurity> {  // (2-1)
         @Override
         public void configure(HttpSecurity builder) throws Exception {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
 
             JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer);
-            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils);
+            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils);  // (2) 추가
 
             jwtAuthenticationFilter.setFilterProcessesUrl("/auth/login");
             jwtAuthenticationFilter.setAuthenticationSuccessHandler(new JwtAuthenticationSuccessHandler());
