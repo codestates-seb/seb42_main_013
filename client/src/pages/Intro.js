@@ -3,6 +3,7 @@ import background1 from "../images/backgrounds/background1.jpg"
 import background2 from "../images/backgrounds/background2.jpg"
 import background3 from "../images/backgrounds/background3.jpg"
 import background4 from "../images/backgrounds/background4.jpg"
+import { CurrentBtn } from "../styles/Buttons";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Pagination, Autoplay } from "swiper";
@@ -33,34 +34,62 @@ const BackgroundImg1 = styled.div`
   background-image: url(${background1});
   background-size: auto 100%;
   background-position: center;
-  opacity: 0.75;
+  /* opacity: 0.75; */
+  ::before {
+    position: absolute;
+    content: "";
+    top:0px;
+    left:0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255,255,255,0.2);
+    }
 `
 
 const BackgroundImg2 = styled(BackgroundImg1)`
     background-image: url(${background2});
+    ::before {
+    background-color: rgba(255,255,255,0.35);
+    }
 `
 
 const BackgroundImg3 = styled(BackgroundImg1)`
     background-image: url(${background3});
-    opacity: 0.65;
+    ::before {
+    background-color: rgba(255,255,255,0.35);
+    }
 `
 
 const BackgroundImg4 = styled(BackgroundImg1)`
     background-image: url(${background4});
 `
 
-export const CurrentBtn = styled.button`
-  width: 250px;
-  height: 50px;
-  border-style: none;
-  border-radius: 5px;
-  background-color: var(--blue-100);
-  color: #ffffff;
-  font-size: 16px;
-  cursor: pointer;
-  margin: var(--gap-md) 0;
-  :hover {background-color: rgba(91, 133, 235, 0.8)} :active {background-color: rgba(91, 133, 235, 0.8)}
+const ContentDiv1 = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: 150px;
+  z-index: 999;
+  img {
+    width: 300px;
+    margin: var(--gap-md);
+  }
+  .content {
+    color: var(--black-100);
+    white-space: pre-wrap;
+  }
 `
+
+const ContentDiv2 = styled(ContentDiv1)`
+  top: 350px;
+  right: 16px;
+  align-items: flex-end;
+  text-align: right;
+`
+
 const LoginSignupDiv = styled.div`
   width: 100%;
   display: flex;
@@ -84,21 +113,31 @@ const LoginSignupDiv = styled.div`
 
 function Intro() {
 
+  const content2 = "필요한 영양제를 추천받고\n원하는 영양제를 검색하세요!"
   return (
     <IntroContainer>
       <Swiper
         spaceBetween={0}
         slidesPerView={1}
-        autoplay={{ delay: 4000 }}
+        // autoplay={{ delay: 4000 }}
         pagination={{ clickable: true }}>
         <SwiperSlide>
-          <BackgroundImg1></BackgroundImg1>
+          <BackgroundImg1>
+            <ContentDiv1>
+              <img src={`${process.env.PUBLIC_URL}/images/logo1.png`} alt="logo" />
+              <div className="content">당신을 위한 영양제 맞춤 서비스</div>
+            </ContentDiv1>
+          </BackgroundImg1>
         </SwiperSlide>
         <SwiperSlide>
-        <BackgroundImg2></BackgroundImg2>
+          <BackgroundImg2>
+            <ContentDiv2>
+              <div className="content">{content2}</div>
+            </ContentDiv2>
+          </BackgroundImg2>
         </SwiperSlide>
         <SwiperSlide>
-        <BackgroundImg3></BackgroundImg3>
+          <BackgroundImg3></BackgroundImg3>
         </SwiperSlide>
         <SwiperSlide>
           <BackgroundImg4></BackgroundImg4>
