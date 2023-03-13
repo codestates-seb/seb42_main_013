@@ -10,6 +10,7 @@ import MyPage from "./pages/MyPage";
 import SetUserInfo from "./pages/SetUserInfo";
 import Summary from "./pages/Summary";
 import Calendar from "./pages/CalendarPage";
+import SignupDone from "./pages/SignupDone";
 import { Routes, Route, useLocation } from 'react-router-dom';
 
 function App() {
@@ -24,11 +25,10 @@ function App() {
         </div>
         <div className="app-wrap">
           {(pathname === "/intro") ? null : <Header />}
-          <div className={(pathname === "/intro" || pathname === "/login") ? "" : "container"}>
+          <div className={(pathname === "/intro" || pathname === "/login" || pathname === "/signupdone") ? "" : "container"}>
             <Routes>
               <Route path="/" element={<Suggest />} />
               <Route path="/search" element={<Search />} />
-              <Route path="/suggest" element={<Suggest />} />
               <Route path="/intro" element={<Intro />} />
               <Route path="/datacreate" element={<DataCreate />} />
               <Route path="/login" element={<Login />} />
@@ -36,9 +36,11 @@ function App() {
               <Route path="/setuserinfo" element={<SetUserInfo />} />
               <Route path="/summary" element={<Summary />} />
               <Route path="/calendar" element={<Calendar />} />
+              {/*추후 모달 형식으로 바꿀 경우 삭제할 예정*/}
+              <Route path="/signupdone" element={<SignupDone />} />
             </Routes>
           </div>
-          {(pathname === "/intro" || pathname === "/login" || pathname === "/datacreate") ? null : <Footer />}
+          {(pathname === "/intro" || pathname === "/login" || pathname === "/datacreate" || pathname === "/signupdone") ? null : <Footer />}
         </div>
       </div>
     </>

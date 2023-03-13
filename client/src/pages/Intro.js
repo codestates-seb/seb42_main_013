@@ -3,7 +3,7 @@ import background1 from "../images/backgrounds/background1.jpg"
 import background2 from "../images/backgrounds/background2.jpg"
 import background3 from "../images/backgrounds/background3.jpg"
 import background4 from "../images/backgrounds/background4.jpg"
-import { CurrentBtn } from "../styles/Buttons";
+import { SmallBtn } from "../styles/Buttons";
 import { Link, useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Pagination, Autoplay } from "swiper";
@@ -113,9 +113,7 @@ const ContentDiv4 = styled(ContentDiv1)`
   line-height: 32px;
 `
 
-const IntroBtn = styled(CurrentBtn)`
-  width: 70%;
-`
+
 const LoginSignupDiv = styled.div`
   width: 100%;
   display: flex;
@@ -194,7 +192,7 @@ function Intro() {
         </SwiperSlide>
       </Swiper>
       <LoginSignupDiv>
-        <IntroBtn onClick={introBtnHandler}>시작하기</IntroBtn>
+        <SmallBtn onClick={introBtnHandler}>시작하기</SmallBtn>
         <div className="login-area">
           <div>계정이 있으신가요?</div>
           <Link to="/login" className="login-button">로그인하기</Link>
