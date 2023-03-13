@@ -1,9 +1,16 @@
 package com.SebMainTeam13.team13.user.service;
 
+<<<<<<< Updated upstream
 import com.SebMainTeam13.team13.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.SebMainTeam13.team13.user.entity.User;
+=======
+import com.SebMainTeam13.team13.user.entity.User;
+import com.SebMainTeam13.team13.user.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+>>>>>>> Stashed changes
 
 import java.util.Optional;
 
