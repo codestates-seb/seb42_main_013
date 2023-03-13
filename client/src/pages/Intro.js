@@ -3,8 +3,8 @@ import background1 from "../images/backgrounds/background1.jpg"
 import background2 from "../images/backgrounds/background2.jpg"
 import background3 from "../images/backgrounds/background3.jpg"
 import background4 from "../images/backgrounds/background4.jpg"
-import { CurrentBtn } from "../styles/Buttons";
-import { Link } from "react-router-dom";
+import { SmallBtn } from "../styles/Buttons";
+import { Link, useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Pagination, Autoplay } from "swiper";
 import "swiper/css";
@@ -83,6 +83,9 @@ const ContentDiv1 = styled.div`
     color: var(--black-100);
     white-space: pre-wrap;
   }
+  strong {
+    color: var(--blue-100);
+  }
 `
 
 const ContentDiv2 = styled(ContentDiv1)`
@@ -94,9 +97,10 @@ const ContentDiv2 = styled(ContentDiv1)`
 `
 
 const ContentDiv3 = styled(ContentDiv1)`
+  justify-content: center;
   align-items: center;
   text-align: center;
-  top: 220px;
+  bottom: 120px;
   font-size: 20px;
   line-height: 32px;
 `
@@ -104,14 +108,12 @@ const ContentDiv3 = styled(ContentDiv1)`
 const ContentDiv4 = styled(ContentDiv1)`
   align-items: flex-end;
   text-align: right;
-  top: 0;
+  top: 50px;
   font-size: 20px;
   line-height: 32px;
 `
 
-const IntroBtn = styled(CurrentBtn)`
-  width: 70%;
-`
+
 const LoginSignupDiv = styled.div`
   width: 100%;
   display: flex;
@@ -136,13 +138,19 @@ const LoginSignupDiv = styled.div`
 `
 
 function Intro() {
+  const navigate = useNavigate();
+
+  const introBtnHandler = (e) => {
+    e.preventDefault();
+    navigate("/signup")
+  }
 
   return (
     <IntroContainer>
       <Swiper
         spaceBetween={0}
         slidesPerView={1}
-        // autoplay={{ delay: 4000 }}
+        autoplay={{ delay: 4000 }}
         pagination={{ clickable: true }}>
         <SwiperSlide>
           <BackgroundImg1>
@@ -157,7 +165,7 @@ function Intro() {
             <ContentDiv2>
               <div className="content">
                 <p>나만의 <strong>영양제 달력</strong>으로</p>
-                <p>영양제 일정을 관리하세요!</p>
+                <p>꼼꼼하게 정리하는 영양제 일정</p>
               </div>
             </ContentDiv2>
           </BackgroundImg2>
@@ -166,8 +174,8 @@ function Intro() {
           <BackgroundImg3>
             <ContentDiv3>
               <div className="content">
-                <p>필요한 영양제를 <strong>추천</strong>받고</p>
-                <p>원하는 영양제를 <strong>검색</strong>하세요!</p>
+                <p>필요한 영양제는 <strong>추천</strong>받고</p>
+                <p>새로운 영양제 <strong>검색</strong>까지</p>
               </div>
             </ContentDiv3>
           </BackgroundImg3>
@@ -176,15 +184,15 @@ function Intro() {
           <BackgroundImg4>
             <ContentDiv4>
             <div className="content">
-                <p>필요한 영양제를 <strong>추천</strong>받고</p>
-                <p>원하는 영양제를 <strong>검색</strong>하세요!</p>
+                <p>복용 중인 <strong>영양제</strong>와 <strong>약</strong>은</p>
+                <p>한 페이지에서 손쉽게 관리</p>
               </div>
             </ContentDiv4>
           </BackgroundImg4>
         </SwiperSlide>
       </Swiper>
       <LoginSignupDiv>
-        <IntroBtn>시작하기</IntroBtn>
+        <SmallBtn onClick={introBtnHandler}>시작하기</SmallBtn>
         <div className="login-area">
           <div>계정이 있으신가요?</div>
           <Link to="/login" className="login-button">로그인하기</Link>

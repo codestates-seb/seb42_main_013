@@ -30,7 +30,6 @@ function App() {
             <Routes>
               <Route path="/" element={<Suggest />} />
               <Route path="/search" element={<Search />} />
-              <Route path="/suggest" element={<Suggest />} />
               <Route path="/intro" element={<Intro />} />
               <Route path="/datacreate" element={<DataCreate />} />
               <Route path="/login" element={<Login />} />
