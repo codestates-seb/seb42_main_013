@@ -11,3 +11,7 @@ export const CurrentBtn = styled.button`
   padding: var(--gap-md) 0;
   :hover {background-color: #6b91ed} :active {background-color: #6b91ed}
 `
+
+export const SmallBtn = styled(CurrentBtn)`
+  width: 70%;
+`
