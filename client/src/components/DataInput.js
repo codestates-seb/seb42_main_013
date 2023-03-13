@@ -9,15 +9,13 @@ export const FakeInput = styled.div`
   display: flex;
   flex: 1;
   flex-direction: row;
-  border: ${(props) => props.isFocus ? "1px solid var(--blue-100)" : "var(--black-400) solid 1px"};
+  border : ${(props) => props.isFocus ?"1px solid var(--blue-100)" : "1px solid var(--black-400)"};
+  border-color: ${(props) => !props.isInvalid ?"rgb(240, 86, 86)" :null};
   border-radius: 5px;
   /* 1줄 꽉채우게 */
   padding: 0 8px;
   :hover{
     background-color: #F7F9FA;
-  }
-  :invalid{
-    border-color: rgb(240, 86, 86);
   }
 `
 
@@ -60,7 +58,9 @@ export const RealInput = styled.input`
     width: 100%;
     display: ${(props) => !!props.value && "none"};
   }
-
+  :invalid{
+    background-color: aqua;
+  }
 `
 const DeleteBtn = styled.div`
   display: flex;
@@ -85,20 +85,26 @@ const DeleteBtn = styled.div`
 
 
 
-function DataInput ({value,minlength, required, placeholder, data, setData, type}) {
+function DataInput ({value, minlength, required, placeholder, data, setData, type}) {
   const [isFocus, setIsFocus] = useState(false)
+  const [isInvalid, setIsInvalid] = useState(true)
   const changeHandler = (e) => {
     setData({...data,[value]:e.target.value})
+    isInvalid && setIsInvalid(e.target.checkValidity())
   }
-
   const clear = () => {
     setData({...data,[value]:""})
   }
+  const blurHandler = (e) => {
+    setIsInvalid(e.target.checkValidity())
+    console.log(isInvalid)
+    setIsFocus(false)
+  }
   return (
-    <FakeInput isFocus={isFocus}>
+    <FakeInput isFocus={isFocus} isInvalid={isInvalid}>
       <RealInput
         onFocus={()=>setIsFocus(true)}
-        onBlur={()=>setIsFocus(false)}
+        onBlur={blurHandler}
         type={type} 
         value={data[value]}
         onChange={changeHandler} 

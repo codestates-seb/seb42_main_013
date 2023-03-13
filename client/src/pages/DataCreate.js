@@ -128,7 +128,7 @@ function DataCrete() {
       <InputSection>
         <h3>약 이름<p>*</p></h3>
         <div>
-          <DataInput required={1} type="text" data={data} setData={setData} value="name"/>
+          <DataInput required={1} minlength={1} type="text" data={data} setData={setData} value="name"/>
         </div> 
       </InputSection>
       <InputSection>
