@@ -96,11 +96,15 @@ function DataCrete() {
       type: "supplement",
       img: null,
       name: "",
-      contains: [{}],
+      contains: [{
+        ingredientId: null,
+        ingredientName: '',
+        amount: ''
+      }],
       expiryDate: "",
       currentQty: "",
       totalQty: "",
-      startDate: "",
+      startDate: new Date().toISOString().substring(0,10),
       endDate: "",
       cycle: 1,
       time:[],
@@ -124,7 +128,7 @@ function DataCrete() {
       <InputSection>
         <h3>약 이름<p>*</p></h3>
         <div>
-          <DataInput type="text" data={data} setData={setData} value="name"/>
+          <DataInput required={1} type="text" data={data} setData={setData} value="name"/>
         </div> 
       </InputSection>
       <InputSection>
@@ -151,9 +155,9 @@ function DataCrete() {
       <InputSection>
         <h3>복용 기간</h3>
         <div>
-          <DataInput type="date" value="data.startDate" data={data} setData={setData}/>
+          <DataInput required={1} minlength={1} placeholder="시작일" type="date" value="startDate" data={data} setData={setData}/>
           ~
-          <DataInput type="date" value="data.endDate" data={data} setData={setData}/>
+          <DataInput placeholder="종료일" type="date" value="endDate" data={data} setData={setData}/>
         </div>
       </InputSection>
       <InputSection>
@@ -174,7 +178,7 @@ function DataCrete() {
         <h3>복용량<p>*</p></h3>
         <div>
         <AddBtn><FontAwesomeIcon icon={faMinus}/></AddBtn>
-        <DataInput placeholder="1회 복용량" type="number" value="dose" data={data} setData={setData} />
+        <DataInput required={1} placeholder="1회 복용량" type="number" value="dose" data={data} setData={setData} />
         <AddBtn><FontAwesomeIcon icon={faPlus}/></AddBtn>
         </div>
       </InputSection>

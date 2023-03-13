@@ -4,19 +4,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { clear } from "@testing-library/user-event/dist/clear";
 
-const InputContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  >div:last-child{
-    color: rgb(240, 86, 86);
-    font-size: 12px;
-    margin-top: 4px;
-    margin-left: 2px;
-  }
-`
+
 export const FakeInput = styled.div`
   display: flex;
+  flex: 1;
   flex-direction: row;
   border: ${(props) => props.isFocus ? "1px solid var(--blue-100)" : "var(--black-400) solid 1px"};
   border-radius: 5px;
@@ -25,17 +16,21 @@ export const FakeInput = styled.div`
   :hover{
     background-color: #F7F9FA;
   }
+  :invalid{
+    border-color: rgb(240, 86, 86);
+  }
 `
 
 export const RealInput = styled.input`
   border: none;
   background-color: transparent;
   box-shadow: none ;
-  outline: 0;
   font-size: 16px;
   height: 32px;
   width: 100%;
+  outline: none;
   position:relative;
+  color: var(--black-100);
   ::-webkit-outer-spin-button, ::-webkit-inner-spin-button{
     -webkit-appearance: none;
   }
@@ -49,10 +44,23 @@ export const RealInput = styled.input`
     height: 100%;
     color: transparent;
     background: transparent;
+    cursor: pointer;
   }
   ::placeholder{
-    color : var(--black-300)
+    color: var(--black-300)
   }
+  &[type='date']::-webkit-datetime-edit {
+    display: ${(props) => (!!props.value) ?"inline-block"  :"none"};
+  }
+  &[type='date']::before{
+    position: absolute;
+    left: 0px;
+    color: var(--black-300);
+    content: "${(props) => props.placeholder}";
+    width: 100%;
+    display: ${(props) => !!props.value && "none"};
+  }
+
 `
 const DeleteBtn = styled.div`
   display: flex;
@@ -77,45 +85,39 @@ const DeleteBtn = styled.div`
 
 
 
-function DataInput ({value, placeholder, data, setData, isRequired, type}) {
+function DataInput ({value,minlength, required, placeholder, data, setData, type}) {
   const [isFocus, setIsFocus] = useState(false)
-  const onBlurHandler = (e) => {
-    setIsFocus(false)
-  }
   const changeHandler = (e) => {
     setData({...data,[value]:e.target.value})
   }
+
   const clear = () => {
     setData({...data,[value]:""})
   }
- 
   return (
-    <InputContainer>
-      <FakeInput isFocus={isFocus}>
-        <RealInput
-          onFocus={()=>setIsFocus(true)}
-          onBlur={()=>setIsFocus(false)}
-          type={type} 
-          value={data[value]}
-          onChange={changeHandler} 
-          width={value && value.length+1}
-          placeholder={placeholder}
-        />
-        { type!=="date" &&
-        <>
-          <DeleteBtn value={!!data[value]} >
-            <button onClick={()=>clear()}>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-              </svg>
-            </button>
-          </DeleteBtn>
-        </>
-        }
-      </FakeInput>
-      {isRequired && <div> !! 필수 입력 항목입니다.</div>}
-    </InputContainer>
-
+    <FakeInput isFocus={isFocus}>
+      <RealInput
+        onFocus={()=>setIsFocus(true)}
+        onBlur={()=>setIsFocus(false)}
+        type={type} 
+        value={data[value]}
+        onChange={changeHandler} 
+        placeholder={placeholder}
+        required={required}
+        minlength={minlength}
+      />
+      { type!=="date" &&
+      <>
+        <DeleteBtn value={!!data[value]} >
+          <button onClick={()=>clear()}>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+            </svg>
+          </button>
+        </DeleteBtn>
+      </>
+      }
+    </FakeInput>
   )
 }
 
