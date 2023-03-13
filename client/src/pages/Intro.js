@@ -165,7 +165,7 @@ function Intro() {
             <ContentDiv2>
               <div className="content">
                 <p>나만의 <strong>영양제 달력</strong>으로</p>
-                <p>영양제 일정을 관리하세요!</p>
+                <p>꼼꼼하게 정리하는 영양제 일정</p>
               </div>
             </ContentDiv2>
           </BackgroundImg2>
@@ -174,8 +174,8 @@ function Intro() {
           <BackgroundImg3>
             <ContentDiv3>
               <div className="content">
-                <p>필요한 영양제를 <strong>추천</strong>받고</p>
-                <p>원하는 영양제를 <strong>검색</strong>하세요!</p>
+                <p>필요한 영양제는 <strong>추천</strong>받고</p>
+                <p>새로운 영양제 <strong>검색</strong>까지</p>
               </div>
             </ContentDiv3>
           </BackgroundImg3>
@@ -184,8 +184,8 @@ function Intro() {
           <BackgroundImg4>
             <ContentDiv4>
             <div className="content">
-                <p>복용 중인 <strong>영양제</strong>와 <strong>약</strong>을</p>
-                <p>한 페이지에서 관리하세요!</p>
+                <p>복용 중인 <strong>영양제</strong>와 <strong>약</strong>은</p>
+                <p>한 페이지에서 손쉽게 관리</p>
               </div>
             </ContentDiv4>
           </BackgroundImg4>

@@ -1,11 +1,28 @@
 import styled from "styled-components";
-import { BasicBtn, MypageConatiner } from "./MyPage";
-import { faCircleUser, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import DataInput from "../components/DataInput";
 import { useState } from "react";
 import { OptionTag } from "./DataCreate";
+import { health } from "../components/Health";
+import { CurrentBtn } from "../styles/Buttons";
 
+
+const SetUserInfoContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 36px;
+  background-color: #ffffff;
+  gap: 32px;
+  h1 {
+    font-size: 28px;
+    color: var(--black-100);
+  }
+`
 
 const SelectSexBox = styled.div`
   display: flex;
@@ -15,6 +32,22 @@ const SelectSexBox = styled.div`
     flex-direction: column;
   }
 `
+
+const IconDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 var(--gap-md);
+  img {
+    margin-bottom: var(--gap-sm);
+    width: 60px;
+  }
+  .selected {
+    color: var(--blue-100);
+    font-weight: 600;
+  }
+`
+
 const FlexBox = styled.div`
   width: 100%;
   div{
@@ -54,47 +87,85 @@ const OptionBox = styled.div`
 `
 const OptionDropdown = styled.div`
   display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 16px 8px;
   flex-wrap: wrap;
   width: 100%;
   border: 1px solid var(--blue-100);
-  gap:4px;
+  gap:8px;
   border-radius: 0 0 5px 5px;
+  .selected {
+    background-color: var(--blue-100);
+    color: #ffffff;
+  }
 `
 
-function SetUserInfo () {
-  const [isOpen, setIsOpen] = useState(false);
-  const total = ['영양보충', '눈건강', '면역력','간겅강','피로회복','장건강','체지방 감소','혈행개선','피부건강','위건강','관절/뼈건강','갱년기','기억력개선','긴장완화','성장발육','혈당조절','혈압조절','항산화','전립선','콜레스테롤']
+const InfoOptionTag = styled(OptionTag)`
+  width: 23%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px;
+  font-size: 12px;
+  background-color: "var(--black-500)";
+  color: "var(--black-200)";
+`
 
-  return(
-    <MypageConatiner>
+function SetUserInfo() {
+  // 상태 설정
+  const [isOpen, setIsOpen] = useState(false);
+  const [data, setData] = useState({ birthday: "" });
+  const [isClickedSex, setIsClickedSex] = useState("");
+  const [isClickedTag, setIsClickedTag] = useState([]);
+  // 필요한 요소 설정
+  const total = health.map(el => el.title);
+
+  const manClickHandler = () => {
+    setIsClickedSex("남성");
+  }
+  const womanClickHandler = () => {
+    setIsClickedSex("여성");
+  }
+
+  const tagClickHandler = (e) => {
+    console.log(e.target.textContent);
+    const clickedTag = [...isClickedTag, e.target.textContent];
+    setIsClickedTag(clickedTag);
+  }
+
+  return (
+    <SetUserInfoContainer>
       <h1>필수 정보 입력</h1>
       <SelectSexBox>
-        <div>
-          <FontAwesomeIcon icon={faCircleUser}/>
-          <span>남성</span>
-        </div>
-        <div>
-          <FontAwesomeIcon icon={faCircleUser}/>
-          <span>여성</span>
-        </div>
+        <IconDiv onClick={manClickHandler}>
+          {isClickedSex === "남성"
+            ? <img src={`${process.env.PUBLIC_URL}/images/user_man_selected.png`} alt="logo" />
+            : <img src={`${process.env.PUBLIC_URL}/images/user_man.png`} alt="logo" />}
+          <span className={`${isClickedSex === "남성" ? "selected" : ""}`}>남성</span>
+        </IconDiv>
+        <IconDiv onClick={womanClickHandler}>
+          {isClickedSex === "여성"
+            ? <img src={`${process.env.PUBLIC_URL}/images/user_woman_selected.png`} alt="logo" />
+            : <img src={`${process.env.PUBLIC_URL}/images/user_woman.png`} alt="logo" />}
+          <span className={`${isClickedSex === "여성" ? "selected" : ""}`}>여성</span>
+        </IconDiv>
       </SelectSexBox>
-      <FlexBox><DataInput type="date" placeholder="생년월일"/></FlexBox>
+      <FlexBox><DataInput type="date" placeholder="생년월일" value="birthday" data={data} setData={setData} /></FlexBox>
       <OptionBox>
         <OptionBtn isOpen={isOpen}>
-          <span>건강 고민</span><button onClick={()=>setIsOpen(!isOpen)}><FontAwesomeIcon icon={faCaretDown}/></button>
+          <span>건강 고민</span><button onClick={() => setIsOpen(!isOpen)}><FontAwesomeIcon icon={faCaretDown} /></button>
         </OptionBtn>
         {isOpen &&
           <OptionDropdown>
-          {total.map((ele,idx)=>{
-            return <OptionTag key={idx}>{ele}</OptionTag>
-          })}
+            {total.map((ele, idx) => {
+              return <InfoOptionTag key={idx} onClick={tagClickHandler} className={`${isClickedTag.includes(ele) ? "selected" : ""}`}>{ele}</InfoOptionTag>
+            })}
           </OptionDropdown>
         }
-
       </OptionBox>
-      <BasicBtn>입력 완료</BasicBtn>
-    </MypageConatiner>
+      <CurrentBtn>입력 완료</CurrentBtn>
+    </SetUserInfoContainer>
   )
 
 }

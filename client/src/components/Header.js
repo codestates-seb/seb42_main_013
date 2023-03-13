@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const HeaderContainer = styled.div`
   background-color: var(--blue-100);
@@ -25,6 +25,7 @@ const HeaderContainer = styled.div`
     width: 20px;
     height: 20px;
     color: #ffffff;
+    cursor: pointer;
   }
   .none {
     display: none;
@@ -42,10 +43,18 @@ const RightDiv = styled.div`
 
 function Header() {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
+
+  const prevBtnHandler = (e) => {
+    e.preventDefault();
+    navigate(-1);
+  }
 
   return (
     <HeaderContainer>
-      <FontAwesomeIcon icon={faChevronLeft} className={`${(pathname === "/datacreate" || pathname === "/login" || pathname === "/search") ? "icon" : "icon hidden"}`} />
+      <FontAwesomeIcon icon={faChevronLeft}
+      className={`${(pathname === "/datacreate" || pathname === "/login" || pathname === "/search") ? "icon" : "icon hidden"}`}
+      onClick={prevBtnHandler}/>
       <div className="logo">I Pill U</div>
       <RightDiv>
         <FontAwesomeIcon icon={faArrowRightFromBracket} className={`${(pathname === "/mypage" || pathname === "/setuserinfo") ? "icon" : "icon none"}`} />
