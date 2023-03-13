@@ -2,14 +2,12 @@ package com.SebMainTeam13.team13.user.entity;
 
 import com.SebMainTeam13.team13.security.entity.UserRole;
 import lombok.*;
-import org.springframework.data.domain.Auditable;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 import static javax.persistence.CascadeType.PERSIST;
-import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PRIVATE;
 @Entity
@@ -45,7 +43,7 @@ public class User {
     @Getter
     public enum UserStatus {
         USER_ACTIVATE(1, "활동중"),
-        USER_SLEEP(2, "휴면"),
+        USER_DORMANT(2, "휴면"),
         USER_DELETE(3, "회원 삭제");
         private int nums;
         private String desc;

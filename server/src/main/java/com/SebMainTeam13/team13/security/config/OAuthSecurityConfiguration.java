@@ -1,5 +1,6 @@
 package com.SebMainTeam13.team13.security.config;
 
+
 import com.SebMainTeam13.team13.auth.handler.OAuth2SuccessHandler;
 import com.SebMainTeam13.team13.auth.handler.UserAccessDeniedHandler;
 import com.SebMainTeam13.team13.auth.handler.UserAuthenticationEntryPoint;
@@ -11,6 +12,7 @@ import com.SebMainTeam13.team13.user.service.OAuthUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -26,10 +28,12 @@ import java.util.Arrays;
 import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 @RequiredArgsConstructor
+@Import(CorsConfig.class)
 public class OAuthSecurityConfiguration {
         private final JwtTokenizer jwtTokenizer;
         private final AuthorityUtils authorityUtils;
         private final OAuthUserService userService;
+
 
 
 

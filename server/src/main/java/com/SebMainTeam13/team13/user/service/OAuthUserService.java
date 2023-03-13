@@ -10,18 +10,18 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class OAuthUserService {
- 
-        private final UserRepository userRepository;
+
+    private final UserRepository userRepository;
 
 
-        public User createUser(User user) {
-            if (!existsEmail(user.getEmail())) {
-                User savedUser = userRepository.save(user);
-                return savedUser;
-            }
+    public User createUser(User user) {
+         if (!existsEmail(user.getEmail())) {
+             User savedUser = userRepository.save(user);
+              return savedUser;
+         }
 
             return null;
-        }
+    }
     private boolean existsEmail(String email) {
         Optional<User> user = userRepository.findByEmail(email);
         return user.isPresent();

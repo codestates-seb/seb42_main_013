@@ -5,6 +5,7 @@ import com.SebMainTeam13.team13.auth.utils.AuthorityUtils;
 import com.SebMainTeam13.team13.user.entity.User;
 import com.SebMainTeam13.team13.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +17,7 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 public class UserService {
-     private final UserRepository userRepository;
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthorityUtils authorityUtils;
 
