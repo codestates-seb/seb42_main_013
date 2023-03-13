@@ -9,5 +9,5 @@ export const CurrentBtn = styled.button`
   font-size: 16px;
   cursor: pointer;
   padding: var(--gap-md) 0;
-  :hover {background-color: rgba(91, 133, 235, 0.8)} :active {background-color: rgba(91, 133, 235, 0.8)}
+  :hover {background-color: #6b91ed} :active {background-color: #6b91ed}
 `
