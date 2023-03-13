@@ -6,7 +6,7 @@ import DataInput from "./DataInput";
 
 
 
-const ModalBackdrop = styled.div`
+export const ModalBackdrop = styled.div`
   /* top: 0;
   left: 0;
   bottom: 0;
@@ -67,9 +67,9 @@ function CreateModal ({isOpen, openContainsModalHandler, data, setData}) {
           <ModalView onClick={(e) => e.stopPropagation()}>
             <div className="closeBtn"><AddBtn><FontAwesomeIcon icon={faTimes}/></AddBtn></div>
             <div>성분명</div>
-            <DataInput/>
+            {/* <DataInput/> */}
             <div>함량</div>
-            <DataInput/>
+            {/* <DataInput/> */}
           </ModalView>
         </ModalBackdrop> : null}
       </ModalContainer>

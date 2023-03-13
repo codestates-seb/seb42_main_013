@@ -29,6 +29,13 @@ const SummartLists = styled.ul`
   flex-direction: column;
   gap: 16px;
 `
+const Options = styled.div`
+
+`
+
+const Sort = styled.div`
+
+`
 
 function Summary (){
   const dummy = [
@@ -95,6 +102,9 @@ function Summary (){
         <FilterBtn>종합</FilterBtn>
         <FilterBtn>종합</FilterBtn>
       </Headfilter>
+      <Options>
+        
+      </ Options>
       <SummartLists>
         {dummy.map((ele,idx)=>{
           return <SummaryList key={idx} pill={ele}/>
