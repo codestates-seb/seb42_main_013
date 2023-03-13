@@ -66,16 +66,18 @@ const BackgroundImg4 = styled(BackgroundImg1)`
 
 const ContentDiv1 = styled.div`
   width: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   position: relative;
-  top: 150px;
   z-index: 999;
+  padding: 0 20px;
   img {
     width: 300px;
     margin: var(--gap-md);
+    margin-top: 120px;
   }
   .content {
     color: var(--black-100);
@@ -84,12 +86,32 @@ const ContentDiv1 = styled.div`
 `
 
 const ContentDiv2 = styled(ContentDiv1)`
-  top: 350px;
-  right: 16px;
-  align-items: flex-end;
-  text-align: right;
+  justify-content: center;
+  align-items: flex-start;
+  top: 80px;
+  font-size: 20px;
+  line-height: 32px;
 `
 
+const ContentDiv3 = styled(ContentDiv1)`
+  align-items: center;
+  text-align: center;
+  top: 220px;
+  font-size: 20px;
+  line-height: 32px;
+`
+
+const ContentDiv4 = styled(ContentDiv1)`
+  align-items: flex-end;
+  text-align: right;
+  top: 0;
+  font-size: 20px;
+  line-height: 32px;
+`
+
+const IntroBtn = styled(CurrentBtn)`
+  width: 70%;
+`
 const LoginSignupDiv = styled.div`
   width: 100%;
   display: flex;
@@ -99,12 +121,14 @@ const LoginSignupDiv = styled.div`
   position: relative;
   z-index: 999;
   bottom: 150px;
+  padding: 0 20px;
   .login-area {
-    width: 250px;
+    width: 70%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: var(--black-200)
+    color: var(--black-200);
+    margin: var(--gap-md) 0;
   }
   .login-button {
     color: var(--blue-100);
@@ -113,7 +137,6 @@ const LoginSignupDiv = styled.div`
 
 function Intro() {
 
-  const content2 = "필요한 영양제를 추천받고\n원하는 영양제를 검색하세요!"
   return (
     <IntroContainer>
       <Swiper
@@ -125,26 +148,43 @@ function Intro() {
           <BackgroundImg1>
             <ContentDiv1>
               <img src={`${process.env.PUBLIC_URL}/images/logo1.png`} alt="logo" />
-              <div className="content">당신을 위한 영양제 맞춤 서비스</div>
+              <p className="content">당신을 위한 영양제 맞춤 서비스</p>
             </ContentDiv1>
           </BackgroundImg1>
         </SwiperSlide>
         <SwiperSlide>
           <BackgroundImg2>
             <ContentDiv2>
-              <div className="content">{content2}</div>
+              <div className="content">
+                <p>나만의 <strong>영양제 달력</strong>으로</p>
+                <p>영양제 일정을 관리하세요!</p>
+              </div>
             </ContentDiv2>
           </BackgroundImg2>
         </SwiperSlide>
         <SwiperSlide>
-          <BackgroundImg3></BackgroundImg3>
+          <BackgroundImg3>
+            <ContentDiv3>
+              <div className="content">
+                <p>필요한 영양제를 <strong>추천</strong>받고</p>
+                <p>원하는 영양제를 <strong>검색</strong>하세요!</p>
+              </div>
+            </ContentDiv3>
+          </BackgroundImg3>
         </SwiperSlide>
         <SwiperSlide>
-          <BackgroundImg4></BackgroundImg4>
+          <BackgroundImg4>
+            <ContentDiv4>
+            <div className="content">
+                <p>필요한 영양제를 <strong>추천</strong>받고</p>
+                <p>원하는 영양제를 <strong>검색</strong>하세요!</p>
+              </div>
+            </ContentDiv4>
+          </BackgroundImg4>
         </SwiperSlide>
       </Swiper>
       <LoginSignupDiv>
-        <CurrentBtn>시작하기</CurrentBtn>
+        <IntroBtn>시작하기</IntroBtn>
         <div className="login-area">
           <div>계정이 있으신가요?</div>
           <Link to="/login" className="login-button">로그인하기</Link>
