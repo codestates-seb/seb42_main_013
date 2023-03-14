@@ -6,6 +6,8 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { searchActions } from "../reducer/searchReducer";
 
 const FooterContainer = styled.div`
   background-color: #ffffff;
@@ -46,8 +48,10 @@ function Footer() {
     { name: '알약관리', src: faPills, link: '/summary' },
     { name: '마이페이지', src: faUser, link: '/mypage' }
   ]
+  const dispatch = useDispatch();
 
   const selectCategory = (index) => {
+    dispatch(searchActions.removeSearchValue());
     setCurrentTab(index);
   }
 
