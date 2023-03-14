@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { faTimes, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from "react";
 import CreateModal from "../components/CreateModal";
@@ -93,13 +93,14 @@ function DataCrete() {
 
   const [data, setData] = useState(
     {
+      dataID: null,
       type: "supplement",
       img: null,
       name: "",
-      contains: [{
+      ingredients: [{
         ingredientId: null,
         ingredientName: '',
-        amount: ''
+        ingredientAmount: ''
       }],
       expiryDate: "",
       currentQty: "",
@@ -128,7 +129,7 @@ function DataCrete() {
       <InputSection>
         <h3>약 이름<p>*</p></h3>
         <div>
-          <DataInput required={1} minlength={1} type="text" data={data} setData={setData} value="name"/>
+          <DataInput required={1} minlength={1} type="text" data={data} setData={setData} name="name"/>
         </div> 
       </InputSection>
       <InputSection>
@@ -147,17 +148,17 @@ function DataCrete() {
       <InputSection>
         <h3>잔여알수 / 전체용량</h3>
         <Box>
-          <DataInput placeholder="잔여알수" type="number" value="currentQty" data={data} setData={setData} />
+          <DataInput placeholder="잔여알수" type="number" name="currentQty" data={data} setData={setData} />
           /
-          <DataInput placeholder="전체용량" type="number" value="totalQty" data={data} setData={setData}/> 
+          <DataInput placeholder="전체용량" type="number" name="totalQty" data={data} setData={setData}/> 
         </Box>
       </InputSection>
       <InputSection>
         <h3>복용 기간</h3>
         <div>
-          <DataInput required={1} minlength={1} placeholder="시작일" type="date" value="startDate" data={data} setData={setData}/>
+          <DataInput required={1} minlength={1} placeholder="시작일" type="date" name="startDate" data={data} setData={setData}/>
           ~
-          <DataInput placeholder="종료일" type="date" value="endDate" data={data} setData={setData}/>
+          <DataInput placeholder="종료일" type="date" name="endDate" data={data} setData={setData}/>
         </div>
       </InputSection>
       <InputSection>
@@ -178,7 +179,7 @@ function DataCrete() {
         <h3>복용량<p>*</p></h3>
         <div>
         <AddBtn><FontAwesomeIcon icon={faMinus}/></AddBtn>
-        <DataInput required={1} placeholder="1회 복용량" type="number" value="dose" data={data} setData={setData} />
+        <DataInput required={1} placeholder="1회 복용량" type="number" name="dose" data={data} setData={setData} />
         <AddBtn><FontAwesomeIcon icon={faPlus}/></AddBtn>
         </div>
       </InputSection>
