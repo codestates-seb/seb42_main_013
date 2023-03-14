@@ -49,9 +49,9 @@ public class DetailService {
     public Detail updateDetail(Detail detail) {
         Long detailId = detail.getDetailId();
         Detail verifiedDetail = findAndVerifyDetailByDetailId(detailId);
-        if (!Objects.equals(verifiedDetail.getUser().getUserId(), detail.getUser().getUserId())) {
-            throw new RuntimeException("수정할 수 있는 회원이 아닙니다.");
-        }
+//        if (!Objects.equals(verifiedDetail.getUser().getUserId(), detail.getUser().getUserId())) {
+//            throw new RuntimeException("수정할 수 있는 회원이 아닙니다.");
+//        }
 
         Optional.ofNullable(detail.getAge())
                 .ifPresent(verifiedDetail::setAge);

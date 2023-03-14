@@ -7,6 +7,8 @@ import com.SebMainTeam13.team13.detail.mapper.DetailMapper;
 import com.SebMainTeam13.team13.detail.service.DetailService;
 import com.SebMainTeam13.team13.dto.MultiResponseDto;
 import com.SebMainTeam13.team13.dto.SingleResponseDto;
+import com.SebMainTeam13.team13.user.dto.UserDto;
+import com.SebMainTeam13.team13.user.entity.User;
 import com.SebMainTeam13.team13.utils.UriCreator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +38,7 @@ public class DetailController {
 
     @PostMapping
     public ResponseEntity postDetail(@Valid @RequestBody DetailDto.Post post) {
- //       Long userIdAuthed = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        Long userIdAuthed = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Detail detail = detailService.createDetail(detailMapper.detailPostDtoToDetail(post));
         URI location = UriCreator.createUri(DETAIL_DEFAULT_URL, detail.getDetailId());
 
@@ -46,12 +48,12 @@ public class DetailController {
     @PatchMapping("/{detail-id}")
     public ResponseEntity patchDetail(@PathVariable("detail-id") @Positive long detailId,
                                         @Valid @RequestBody DetailDto.Patch patch) {
-        Long userId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        patch.setUserId(userId);
+//        Long userIdAuthed = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
         patch.setDetailId(detailId);
         Detail detail = detailService.updateDetail(detailMapper.detailPatchDtoToDetail(patch));
         DetailDto.Response response = detailMapper.detailToDetailResponseDto(detail);
-
+        response.setUserId(detail.getUser().getUserId());
         return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.OK);
     }
 
@@ -59,6 +61,7 @@ public class DetailController {
     public ResponseEntity getDetail(@PathVariable("detail-id") long detailId) {
         Detail detail = detailService.findDetail(detailId);
 
+//        Long userIdAuthed = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         DetailDto.Response response = detailMapper.detailToDetailResponseDto(detail);
         response.setUserId(detail.getUser().getUserId());
         return new ResponseEntity<>(new SingleResponseDto<>(response),HttpStatus.OK);

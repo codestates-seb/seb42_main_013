@@ -44,13 +44,11 @@ public class DetailMapper {
     }
 
     public Detail detailPatchDtoToDetail(DetailDto.Patch patch) {
-        User user = new User();
-        user.setUserId(patch.getUserId());
-        Detail detail = new Detail();
-        detail.setDetailId(patch.getDetailId());
-        detail.setAge(patch.getAge());
-        detail.setGender(patch.getGender());
-        detail.setUser(user);
+        return Detail.builder()
+                .detailId(patch.getDetailId())
+                .age(patch.getAge())
+                .gender(patch.getGender())
+                .build();
 //        List<DetailSupplement> detailSupplements = patch.getSupplements()
 //                .stream()
 //                .map(Supplement::new)
@@ -61,7 +59,7 @@ public class DetailMapper {
 //                    return detailSupplement;
 //                }).collect(Collectors.toList());
 //        detail.setDetailSupplements(detailSupplements);
-        return detail;
+
     }
 
     public DetailDto.Response detailToDetailResponseDto(Detail detail) {
