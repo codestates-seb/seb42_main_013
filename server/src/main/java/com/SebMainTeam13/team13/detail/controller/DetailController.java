@@ -36,7 +36,8 @@ public class DetailController {
 
     @PostMapping
     public ResponseEntity postDetail(@Valid @RequestBody DetailDto.Post post) {
-        Long userId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String userIdString = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        Long userId = Long.parseLong(userIdString);
         post.setUserId(userId);
         Detail detail = detailService.createDetail(detailMapper.detailPostDtoToDetail(post));
         URI location = UriCreator.createUri(DETAIL_DEFAULT_URL, detail.getDetailId());
@@ -65,14 +66,7 @@ public class DetailController {
         return new ResponseEntity<>(new SingleResponseDto<>(response),HttpStatus.OK);
     }
 
-    @GetMapping
-    public ResponseEntity getDetails(Pageable pageable) {
-        Page<Detail> pageDetails = detailService.findDetails(pageable);
-        List<Detail> details = pageDetails.getContent();
-        List<DetailDto.Response> responses = detailMapper.detailsToDetailResponseDtos(details);
 
-        return new ResponseEntity<>(new MultiResponseDto<>(responses,pageDetails),HttpStatus.OK);
-    }
 
     @DeleteMapping("/{detailId}")
     public ResponseEntity deleteDetail(@PathVariable long detailId) {

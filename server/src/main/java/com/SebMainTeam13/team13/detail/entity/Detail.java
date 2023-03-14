@@ -23,10 +23,10 @@ public class Detail extends Auditable {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long detailId;
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "detail")
     private User user;
     @Column(nullable = false)
-    private Integer age;
+    private Long age;
 
     @Column(nullable = false)
     private String gender;

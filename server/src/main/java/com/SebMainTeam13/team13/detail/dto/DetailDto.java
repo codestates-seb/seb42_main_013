@@ -1,7 +1,6 @@
 package com.SebMainTeam13.team13.detail.dto;
 
 
-import com.SebMainTeam13.team13.detail.entity.Detail;
 import com.SebMainTeam13.team13.user.dto.UserDto;
 import lombok.*;
 
@@ -17,7 +16,7 @@ public class DetailDto {
     @AllArgsConstructor
     public static class Post {
         private Long userId;
-        private Integer age;
+        private Long age;
         private String gender;
 
 //        private List<String> supplement;
@@ -34,7 +33,7 @@ public class DetailDto {
 
         private Long userId;
         private Long detailId;
-        private Integer age;
+        private Long age;
         private String gender;
 //        private List<String> supplement;
 //        private List<String> concerns;
@@ -45,11 +44,10 @@ public class DetailDto {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    @RequiredArgsConstructor
     public static class Response {
         private Long userId;
         private Long detailId;
-        private Integer age;
+        private Long age;
         private String gender;
         private UserDto.Response user;
 

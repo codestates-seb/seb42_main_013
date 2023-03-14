@@ -3,6 +3,7 @@ package com.SebMainTeam13.team13.detail.service;
 import com.SebMainTeam13.team13.detail.entity.Detail;
 import com.SebMainTeam13.team13.detail.repository.DetailRepository;
 import com.SebMainTeam13.team13.exception.BusinessLogicException;
+import com.SebMainTeam13.team13.user.entity.User;
 import com.SebMainTeam13.team13.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -78,13 +79,6 @@ public class DetailService {
     }
 
 
-    public Page<Detail> findDetails(Pageable pageable) {
-        PageRequest of = PageRequest.of(pageable.getPageNumber() - 1,
-                pageable.getPageSize(),
-                pageable.getSort());
-        return detailRepository.findDetailPage(of);
-    }
-
 
     @Transactional
     public void deleteDetail(Long detailId) {
@@ -118,8 +112,9 @@ public class DetailService {
                 .orElseThrow(() -> new RuntimeException("해당 질문이 존재 하지 않음"));
     }
     private void verifyExistDetail(Long userId) {
-        Optional<Detail> question = detailRepository.findByUserId(userId);
-        if (question.isPresent())
+        Optional<User> user = userRepository.findById(userId);
+
+        if (user.get().getDetail()!=null)
             throw new BusinessLogicException(DETAIL_EXISTS);
     }
 

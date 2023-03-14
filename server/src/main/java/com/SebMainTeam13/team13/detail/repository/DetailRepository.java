@@ -9,6 +9,5 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.Optional;
 
 public interface DetailRepository extends JpaRepository<Detail, Long> {
-    Optional<Detail> findByUserId(Long userId);
-    Page<Detail> findDetailPage(Pageable pageable);
+    Optional<Detail> findByDetailId(Long detailId);
 }
