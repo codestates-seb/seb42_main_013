@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PRIVATE;
 @Entity
@@ -42,7 +43,7 @@ public class User {
     private UserStatus userStatus = UserStatus.USER_ACTIVATE;
 
     @OneToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "detail_id")
     private Detail detail;
 
     @Getter

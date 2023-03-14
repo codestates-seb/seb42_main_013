@@ -11,6 +11,8 @@ import javax.persistence.*;
 
 import static com.SebMainTeam13.team13.detail.entity.Detail.DetailType.ACTIVATE;
 
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
@@ -19,7 +21,8 @@ import static javax.persistence.GenerationType.IDENTITY;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Detail extends Auditable {
+
+public class Detail  {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long detailId;

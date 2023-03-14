@@ -30,7 +30,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> optionalUser = userRepository.findByEmail(username);
         User findUser = optionalUser.orElseThrow(() -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
-
+        Hibernate.initialize(optionalUser.get().getRoles());
         return new CustomUserDetails(findUser);
         }
         private final class CustomUserDetails extends User implements UserDetails {
@@ -38,6 +38,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 setUserId(user.getUserId());
                 setEmail(user.getEmail());
                 setPassword(user.getPassword());
+                Hibernate.initialize(user.getUserRoles());
                 setRoles(user.getRoles());
             }
             @Override

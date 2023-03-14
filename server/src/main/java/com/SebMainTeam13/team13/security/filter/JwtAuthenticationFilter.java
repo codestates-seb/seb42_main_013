@@ -4,7 +4,6 @@ import com.SebMainTeam13.team13.jwt.JwtTokenizer;
 import com.SebMainTeam13.team13.security.dto.LoginDto;
 import com.SebMainTeam13.team13.user.entity.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,14 +15,19 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.*;
-@RequiredArgsConstructor
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenizer jwtTokenizer;
 
 
-
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtTokenizer jwtTokenizer) {
+        this.authenticationManager = authenticationManager;
+        this.jwtTokenizer = jwtTokenizer;
+    }
 
     @SneakyThrows
     @Override

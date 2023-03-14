@@ -48,7 +48,7 @@ public class DetailService {
     @Transactional
     public Detail updateDetail(Detail detail) {
         Long detailId = detail.getDetailId();
-        Detail verifiedDetail = verifyDetailById(detailId);
+        Detail verifiedDetail = findAndVerifyDetailByDetailId(detailId);
         if (!Objects.equals(verifiedDetail.getUser().getUserId(), detail.getUser().getUserId())) {
             throw new RuntimeException("수정할 수 있는 회원이 아닙니다.");
         }
@@ -73,16 +73,12 @@ public class DetailService {
 
 
 
-    public Detail findDetail(long detailId) {
-
-        return findVerifiedDetail(detailId);
-    }
 
 
 
     @Transactional
     public void deleteDetail(Long detailId) {
-        Detail detail = verifyDetailById(detailId);
+        Detail detail = findAndVerifyDetailByDetailId(detailId);
         Long userId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (!Objects.equals(detail.getUser().getUserId(), userId)) {
             throw new RuntimeException("삭제할 수 있는 권한이 없습니다.");
@@ -98,19 +94,23 @@ public class DetailService {
     }
 
 
-    public Detail findVerifiedDetail(long detailId) {
+
+
+
+    //#### 내부 메서드 ###//
+
+    public Detail findAndVerifyDetailByDetailId(long detailId) {
         Optional<Detail> optionalDetail = detailRepository.findById(detailId);
 
         return optionalDetail.orElseThrow(() ->
                 new BusinessLogicException(DETAIL_NOT_FOUND));
     }
 
+    public Detail findDetail(long detailId) {
 
-    //#### 내부 메서드 ###//
-    private Detail verifyDetailById(Long detailId) {
-        return detailRepository.findById(detailId)
-                .orElseThrow(() -> new RuntimeException("해당 질문이 존재 하지 않음"));
+        return findAndVerifyDetailByDetailId(detailId);
     }
+
     private void verifyExistDetail(Long userId) {
         Optional<User> user = userRepository.findById(userId);
 

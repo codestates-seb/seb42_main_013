@@ -36,9 +36,7 @@ public class DetailController {
 
     @PostMapping
     public ResponseEntity postDetail(@Valid @RequestBody DetailDto.Post post) {
-        String userIdString = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        Long userId = Long.parseLong(userIdString);
-        post.setUserId(userId);
+ //       Long userIdAuthed = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Detail detail = detailService.createDetail(detailMapper.detailPostDtoToDetail(post));
         URI location = UriCreator.createUri(DETAIL_DEFAULT_URL, detail.getDetailId());
 
