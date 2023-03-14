@@ -4,6 +4,7 @@ import DataInput, { FakeInput, SocialBtn } from "../components/DataInput";
 import { CurrentBtn } from "../styles/Buttons";
 import { MypageConatiner } from "./MyPage";
 import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 
 
 const LoginBox = styled.div`
@@ -109,7 +110,7 @@ function Login () {
         <DataInput type="text" data={data} setData={setData} value="email" placeholder="이메일" />
         <DataInput type="password" data={data} setData={setData} value="password" placeholder="비밀번호" />
         <CurrentBtn>로그인</CurrentBtn>
-        <div>계정이 없으신가요 ?<span onClick={onClick} style={{cursor:"pointer"}}>회원가입</span></div>
+        <div>계정이 없으신가요 ?<Link to="/signup" >회원가입</Link></div>
       </LoginBox>
         <HorizonLine text="또는" />
       <OtherWayBox>

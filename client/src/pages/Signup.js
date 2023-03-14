@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { CurrentBtn } from "../styles/Buttons";
 import { MypageConatiner } from "./MyPage";
 import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 
 export const LoginBox = styled.form`
   width: 100%;
@@ -98,7 +99,7 @@ function Signup() {
           />
         </FakeInput>
         <CurrentBtn>회원가입</CurrentBtn>
-        <div>계정이 있으신가요 ?<span onClick={onClick} style={{cursor:"pointer"}}>로그인</span></div>
+        <div>계정이 있으신가요 ?<Link to='/login'>로그인</Link></div>
       </LoginBox>
     </MypageConatiner>
   )
