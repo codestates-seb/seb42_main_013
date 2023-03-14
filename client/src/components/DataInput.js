@@ -1,12 +1,18 @@
 import { useState } from "react";
 import styled from "styled-components";
 
+const InputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex:1;
+`
+
 export const FakeInput = styled.div`
   display: flex;
   flex: 1;
   flex-direction: row;
   border : ${(props) => props.isFocus ?"1px solid var(--blue-100)" : "1px solid var(--black-400)"};
-  border-color: ${(props) => !props.isInvalid ?"rgb(240, 86, 86)" :null};
+  border-color: ${(props) => !props.isValid && "rgb(240, 86, 86)"};
   border-radius: 5px;
   /* 1줄 꽉채우게 */
   padding: 0 8px;
@@ -79,6 +85,7 @@ const DeleteBtn = styled.div`
 const ValidityMsg = styled.div`
   color: rgb(240, 86, 86);
   font-size: 12px;
+  opacity : ${(props) => props.isValid ? "0" : "1"};
 `
 
 
@@ -87,18 +94,19 @@ function DataInput ({name, minlength, required, placeholder, data, setData, type
   const [isValid, setIsValid] = useState(true)
   const changeHandler = (e) => {
     setData({...data,[name]:e.target.value})
-    !isValid && setIsValid(e.target.checkValidity())
+    // !isValid && setIsValid(e.target.checkValidity())
+    !isValid && setIsValid(e.target.validity.valid)
   }
   const clear = () => {
     setData({...data,[name]:""})
   }
   const blurHandler = (e) => {
-    setIsValid(e.target.checkValidity())
+    setIsValid(e.target.validity.valid)
     setIsFocus(false)
   }
   return (
-    <>
-      <FakeInput isFocus={isFocus} isInvalid={isValid}>
+    <InputContainer>
+      <FakeInput isFocus={isFocus} isValid={isValid}>
         <RealInput
           onFocus={()=>setIsFocus(true)}
           onBlur={blurHandler}
@@ -123,8 +131,8 @@ function DataInput ({name, minlength, required, placeholder, data, setData, type
         </>
         }
       </FakeInput>
-      {!isValid && <ValidityMsg>내용을 입력해주세요.</ValidityMsg>}
-    </>
+      <ValidityMsg isValid={isValid}>내용을 입력해주세요.</ValidityMsg>
+    </InputContainer>
   )
 }
 
