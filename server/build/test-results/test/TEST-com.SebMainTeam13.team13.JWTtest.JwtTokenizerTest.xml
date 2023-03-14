@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.SebMainTeam13.team13.JWTtest.JwtTokenizerTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2023-03-10T07:08:13" hostname="DESKTOP-UMNQVNU" time="1.666">
+<testsuite name="com.SebMainTeam13.team13.JWTtest.JwtTokenizerTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2023-03-13T00:11:23" hostname="DESKTOP-UMNQVNU" time="1.629">
   <properties/>
-  <testcase name="encodeBase64SecretKeyTest()" classname="com.SebMainTeam13.team13.JWTtest.JwtTokenizerTest" time="0.007"/>
-  <testcase name="generateAccessTokenTest()" classname="com.SebMainTeam13.team13.JWTtest.JwtTokenizerTest" time="0.095"/>
-  <testcase name="does not throw any Exception when jws verify" classname="com.SebMainTeam13.team13.JWTtest.JwtTokenizerTest" time="0.041"/>
-  <testcase name="generateRefreshTokenTest()" classname="com.SebMainTeam13.team13.JWTtest.JwtTokenizerTest" time="0.002"/>
-  <testcase name="throw ExpiredJwtException when jws verify" classname="com.SebMainTeam13.team13.JWTtest.JwtTokenizerTest" time="1.517"/>
+  <testcase name="encodeBase64SecretKeyTest()" classname="com.SebMainTeam13.team13.JWTtest.JwtTokenizerTest" time="0.005"/>
+  <testcase name="generateAccessTokenTest()" classname="com.SebMainTeam13.team13.JWTtest.JwtTokenizerTest" time="0.072"/>
+  <testcase name="does not throw any Exception when jws verify" classname="com.SebMainTeam13.team13.JWTtest.JwtTokenizerTest" time="0.028"/>
+  <testcase name="generateRefreshTokenTest()" classname="com.SebMainTeam13.team13.JWTtest.JwtTokenizerTest" time="0.001"/>
+  <testcase name="throw ExpiredJwtException when jws verify" classname="com.SebMainTeam13.team13.JWTtest.JwtTokenizerTest" time="1.521"/>
   <system-out><![CDATA[a2V2aW4xMjM0MTIzNDEyMzQxMjM0MTIzNDEyMzQxMjM0
-eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sIm1lbWJlcklkIjoxLCJzdWIiOiJ0ZXN0IGFjY2VzcyB0b2tlbiIsImlhdCI6MTY3ODQzMjA5MywiZXhwIjoxNjc4NDMyNjkzfQ.EqwARcL86LU8MUPrxg7fLyKcA4QfGvfX4l_XAOu280c
-eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0IHJlZnJlc2ggdG9rZW4iLCJpYXQiOjE2Nzg0MzIwOTMsImV4cCI6MTY3ODUxODQ5M30.PojBYxl9ydoFO6HUnyqrX9_ZlT14Vnu2lpdwhKezaGg
+eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sIm1lbWJlcklkIjoxLCJzdWIiOiJ0ZXN0IGFjY2VzcyB0b2tlbiIsImlhdCI6MTY3ODY2NjI4MywiZXhwIjoxNjc4NjY2ODgzfQ.xSFkJeK-UOast4R8PtuR1xiyBNKRwzIxSF5c4PV028c
+eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0IHJlZnJlc2ggdG9rZW4iLCJpYXQiOjE2Nzg2NjYyODMsImV4cCI6MTY3ODc1MjY4M30.kpSdRNV4TiWaQvLnOByWfI8Nu_Ygqz_Ynvzshwrefvs
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
