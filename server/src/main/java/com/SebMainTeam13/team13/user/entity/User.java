@@ -1,5 +1,6 @@
 package com.SebMainTeam13.team13.user.entity;
 
+import com.SebMainTeam13.team13.detail.entity.Detail;
 import com.SebMainTeam13.team13.security.entity.UserRole;
 import lombok.*;
 
@@ -39,6 +40,10 @@ public class User {
     @Builder.Default
     @Enumerated(EnumType.STRING)
     private UserStatus userStatus = UserStatus.USER_ACTIVATE;
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private Detail detail;
 
     @Getter
     public enum UserStatus {
