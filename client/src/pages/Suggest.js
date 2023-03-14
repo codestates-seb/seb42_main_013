@@ -63,10 +63,8 @@ function Suggest() {
     <SuggestContainer>
       <SearchBar />
       <SugContentConatiner>
-        <LargeContent>
-          <div>눈 건강에 좋은 영양제 추천</div>
-        </LargeContent>
-        <div className="smallcontent-area">
+      <ScrollBar />
+      <div className="smallcontent-area">
           <SmallContent>
             <div>
               {content1}
@@ -78,7 +76,9 @@ function Suggest() {
             </div>
           </SmallContent>
         </div>
-        <ScrollBar />
+        <LargeContent>
+          <div>눈 건강에 좋은 영양제 추천</div>
+        </LargeContent>
         <div className="smallcontent-area">
           <SmallContent>
             영역1

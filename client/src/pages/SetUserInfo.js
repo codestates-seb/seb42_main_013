@@ -166,7 +166,7 @@ function SetUserInfo() {
         </IconDiv>
       </SelectSexBox>
       <FlexBox><DataInput type="date" placeholder="생년월일" value="birthday" data={data} setData={setData} /></FlexBox>
-      <OptionBox>
+      {/* <OptionBox>
         <OptionBtn isOpen={isOpen}>
           <span>건강 고민</span><button onClick={() => setIsOpen(!isOpen)}><FontAwesomeIcon icon={faCaretDown} /></button>
         </OptionBtn>
@@ -177,7 +177,7 @@ function SetUserInfo() {
             })}
           </OptionDropdown>
         }
-      </OptionBox>
+      </OptionBox> */}
       <CurrentBtn>입력 완료</CurrentBtn>
     </SetUserInfoContainer>
   )
