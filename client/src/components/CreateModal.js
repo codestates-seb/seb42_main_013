@@ -41,8 +41,7 @@ export const ModalView = styled.div`
   background-color: #ffffff;
   margin: auto;
   padding: 16px 20px;
-  max-width: 428px;
-  width: calc(100% - 20px);
+  max-width: 300px;
   display: flex;
   flex-direction: column;
   transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
@@ -84,25 +83,20 @@ const Buttons = styled.div`
 
 
 function CreateModal ({isOpen, openContainsModalHandler, data, setData}) {
-  const [ingredient, setIngredient] = useState({
-    ingredientId: null,
-    ingredientName: '',
-    ingredientAmount: ''
-  })
+  const [ingredient, setIngredient] = useState([])
   
   const closeModalHandler = () => {
-    setIngredient({
-      ingredientId: null,
-      ingredientName: '',
-      ingredientAmount: ''
-    })
+    setIngredient([])
     openContainsModalHandler()
   }
 
   const addIngredientHandler = () => {
-    let id = data.ingredients.length===0 ?0 :data.ingredients.at(-1).ingredientId+1
-    setData({...data, ingredients:[...data.ingredients, { ...ingredient,ingredientId: id}]})
-    console.log(data)
+    // let id = data.ingredients.length===0 ?0 :data.ingredients.at(-1).ingredientId+1
+    // setData({...data, ingredients:[...data.ingredients, { ...ingredient,ingredientId: id}]})
+    // 함량은 표기 안하기로 함
+    setData({...data,ingredients:[...data.ingredients,ingredient.ingredientName]})
+    setIngredient([])
+    openContainsModalHandler();
   }
   return (
     <ModalContainer>
@@ -118,11 +112,11 @@ function CreateModal ({isOpen, openContainsModalHandler, data, setData}) {
           </div> */}
           <div>성분명</div>
           <DataInput data={ingredient} required={1} setData={setIngredient} name="ingredientName" />
-          <div>함량</div>
-          <DataInput type="number" data={ingredient} required={1} setData={setIngredient} name="ingredientAmount" />
+          {/* <div>함량</div> */}
+          {/* <DataInput type="number" data={ingredient} required={1} setData={setIngredient} name="ingredientAmount" /> */}
           <Buttons>
             <CurrentBtn onClick={closeModalHandler}>취소</CurrentBtn>
-            <CurrentBtn disabled={!ingredient.ingredientAmount || !ingredient.ingredientName} onClick={addIngredientHandler}>추가하기</CurrentBtn>
+            <CurrentBtn disabled={!ingredient} onClick={addIngredientHandler}>추가하기</CurrentBtn>
           </Buttons>
         </ModalView>
       </ModalBackdrop> : null}

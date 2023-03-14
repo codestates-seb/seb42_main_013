@@ -53,8 +53,8 @@ export const OptionTag = styled.button`
   border-radius: 30px;
   padding: 0 10px;
   text-align: center;
-  color : ${(props) => props.selected ? "white" : "var(--black-200)"};
-  background-color: ${(props) => props.selected ? "var(--blue-100)" : "#D9D9D9"};
+  color : ${(props) => props.notselected ?"var(--black-200)" :"white"};
+  background-color: ${(props) => props.notselected ?"#D9D9D9" :"var(--blue-100)"};
   font-size: 14px;
   button{
     margin-left: 7px;
@@ -63,7 +63,7 @@ export const OptionTag = styled.button`
     width: auto;
     background-color: transparent;
     border: none;
-    color: ${(props) => props.selected ? "white" : "var(--black-200)"};
+    color: ${(props) => props.notselected ?"var(--black-200)" :"white"};
   }
 `
 const Box=styled.div`
@@ -114,7 +114,7 @@ function DataCrete() {
       <InputSection>
         <h3>종류</h3>
         <div>
-          <OptionTag selected={1}>영양제</OptionTag>
+          <OptionTag notselected={1}>영양제</OptionTag>
           <OptionTag>처방약</OptionTag>
         </div>
       </InputSection>
@@ -131,7 +131,9 @@ function DataCrete() {
       <InputSection>
         <h3>주요 성분</h3>
         <div>
-          <OptionTag selected={1}>아티초크 150mg</OptionTag>
+          {data.ingredients.map((ele,idx)=>{
+            return <OptionTag key={idx} selected={1}>{ele}</OptionTag>
+          })}
           <AddBtn onClick={openContainsModalHandler}><FontAwesomeIcon icon={faPlus}/></AddBtn>
         </div>
       </InputSection>
@@ -144,9 +146,9 @@ function DataCrete() {
       <InputSection>
         <h3>잔여알수 / 전체용량</h3>
         <Box>
-          <DataInput placeholder="잔여알수" type="number" name="currentQty" data={data} setData={setData} />
+          <DataInput placeholder="잔여알수" required={1} type="number" name="currentQty" data={data} setData={setData} />
           /
-          <DataInput placeholder="전체용량" type="number" name="totalQty" data={data} setData={setData}/> 
+          <DataInput placeholder="전체용량" required={1} type="number" name="totalQty" data={data} setData={setData}/> 
         </Box>
       </InputSection>
       <InputSection>
