@@ -89,6 +89,22 @@ function CreateModal ({isOpen, openContainsModalHandler, data, setData}) {
     ingredientName: '',
     ingredientAmount: ''
   })
+  
+  const closeModalHandler = () => {
+    setIngredient({
+      ingredientId: null,
+      ingredientName: '',
+      ingredientAmount: ''
+    })
+    openContainsModalHandler()
+  }
+
+  const addIngredientHandler = () => {
+    let id = data.ingredients.length===0 ?1 :data.ingredients.slice(-1).ingredientId+1
+    setData({...data, ingredients:[...data.ingredients, { ...ingredient,ingredientId: id}]})
+    console.log(data)
+  }
+  console.log(!!ingredient.ingredientAmount)
   return (
     <ModalContainer>
       {isOpen === true ? <ModalBackdrop onClick={openContainsModalHandler}>
@@ -102,10 +118,13 @@ function CreateModal ({isOpen, openContainsModalHandler, data, setData}) {
             </AddBtn>
           </div> */}
           <div>성분명</div>
-          <DataInput data={ingredient} setData={setIngredient} name="ingredientName" />
+          <DataInput data={ingredient} required={1} setData={setIngredient} name="ingredientName" />
           <div>함량</div>
-          <DataInput data={ingredient} setData={setIngredient} name="ingredientAmount" />
-          <Buttons><CurrentBtn>취소</CurrentBtn><CurrentBtn>추가하기</CurrentBtn></Buttons>
+          <DataInput type="number" data={ingredient} required={1} setData={setIngredient} name="ingredientAmount" />
+          <Buttons>
+            <CurrentBtn onClick={closeModalHandler}>취소</CurrentBtn>
+            <CurrentBtn disabled={!ingredient.ingredientAmount || !ingredient.ingredientName} onClick={addIngredientHandler}>추가하기</CurrentBtn>
+          </Buttons>
         </ModalView>
       </ModalBackdrop> : null}
     </ModalContainer>
