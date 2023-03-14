@@ -29,7 +29,7 @@ function App() {
           <div className={(pathname === "/intro" || pathname === "/login" || pathname === "/signup" || pathname === "/setuserinfo") ? "" : "container"}>
             <Routes>
               <Route path="/" element={<Suggest />} />
-              <Route path="/search" element={<Search />} />
+              <Route path="/search/:search_item" element={<Search />} />
               <Route path="/intro" element={<Intro />} />
               <Route path="/datacreate" element={<DataCreate />} />
               <Route path="/login" element={<Login />} />
