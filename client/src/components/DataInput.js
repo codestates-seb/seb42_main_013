@@ -54,14 +54,12 @@ export const RealInput = styled.input`
     width: 100%;
     display: ${(props) => !!props.value && "none"};
   }
-  :invalid{
-    background-color: aqua;
-  }
 `
 const DeleteBtn = styled.div`
   display: flex;
   align-items: center;
   margin-left: 8px;
+  color: var(--black-200);
   >button{
     opacity : ${(props) => props.value ? "1" : "0"};
     cursor: pointer;
@@ -110,6 +108,9 @@ function DataInput ({name, minlength, required, placeholder, data, setData, type
           placeholder={placeholder}
           required={required}
         />
+        { name === "ingredientAmount" &&
+          <DeleteBtn>mg</DeleteBtn>
+        }
         { type!=="date" &&
         <>
           <DeleteBtn value={!!data[name]} >
