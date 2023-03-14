@@ -11,6 +11,7 @@ import SetUserInfo from "./pages/SetUserInfo";
 import Summary from "./pages/Summary";
 import Calendar from "./pages/CalendarPage";
 import Signup from "./pages/Signup";
+import WebAside from "./components/WebAside";
 
 import { Routes, Route, useLocation } from 'react-router-dom';
 
@@ -22,7 +23,7 @@ function App() {
       <GlobalStyle />
       <div className="app-container">
         <div className="web-description">
-          test - 웹 화면
+          <WebAside />
         </div>
         <div className="app-wrap">
           {(pathname === "/intro") ? null : <Header />}

@@ -37,7 +37,6 @@ const GlobalStyle = createGlobalStyle`
   }
   .web-description {
     width: 380px;
-    background-color: #5B85EB;
     @media (max-width: 1023px){
     display: none;
     }
