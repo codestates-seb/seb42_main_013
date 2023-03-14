@@ -80,10 +80,10 @@ public class DetailMapper {
                 .build();
     }
 
-    public List<DetailDto.Response> detailsToDetailResponseDtos(List<Detail> details) {
-        return details.stream()
-                .map(this::detailToDetailResponseDto)
-                .collect(Collectors.toList());
-    }
+//    public List<DetailDto.Response> detailsToDetailResponseDtos(List<Detail> details) {
+//        return details.stream()
+//                .map(this::detailToDetailResponseDto)
+//                .collect(Collectors.toList());
+//    }
 
 }

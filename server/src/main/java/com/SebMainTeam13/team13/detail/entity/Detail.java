@@ -7,12 +7,14 @@ import lombok.*;
 
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 
 
 import static com.SebMainTeam13.team13.detail.entity.Detail.DetailType.ACTIVATE;
 
 import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.FetchType.EAGER;
+import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
@@ -21,12 +23,12 @@ import static javax.persistence.GenerationType.IDENTITY;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
+@Transactional
 public class Detail  {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long detailId;
-    @OneToOne(mappedBy = "detail")
+    @OneToOne
     private User user;
     @Column(nullable = false)
     private Long age;

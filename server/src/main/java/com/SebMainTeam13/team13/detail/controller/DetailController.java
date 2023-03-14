@@ -60,7 +60,7 @@ public class DetailController {
         Detail detail = detailService.findDetail(detailId);
 
         DetailDto.Response response = detailMapper.detailToDetailResponseDto(detail);
-
+        response.setUserId(detail.getUser().getUserId());
         return new ResponseEntity<>(new SingleResponseDto<>(response),HttpStatus.OK);
     }
 

@@ -49,7 +49,6 @@ public class DetailDto {
         private Long detailId;
         private Long age;
         private String gender;
-        private UserDto.Response user;
 
 
 //        private List<String> supplement;
