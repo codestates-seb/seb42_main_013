@@ -97,11 +97,7 @@ function DataCrete() {
       type: "supplement",
       img: null,
       name: "",
-      ingredients: [{
-        ingredientId: null,
-        ingredientName: '',
-        ingredientAmount: ''
-      }],
+      ingredients: [],
       expiryDate: "",
       currentQty: "",
       totalQty: "",
@@ -129,7 +125,7 @@ function DataCrete() {
       <InputSection>
         <h3>약 이름<p>*</p></h3>
         <div>
-          <DataInput required={1} minlength={1} type="text" data={data} setData={setData} name="name"/>
+          <DataInput required={1} type="text" data={data} setData={setData} name="name"/>
         </div> 
       </InputSection>
       <InputSection>
@@ -156,7 +152,7 @@ function DataCrete() {
       <InputSection>
         <h3>복용 기간</h3>
         <div>
-          <DataInput required={1} minlength={1} placeholder="시작일" type="date" name="startDate" data={data} setData={setData}/>
+          <DataInput required={1} placeholder="시작일" type="date" name="startDate" data={data} setData={setData}/>
           ~
           <DataInput placeholder="종료일" type="date" name="endDate" data={data} setData={setData}/>
         </div>
