@@ -10,7 +10,9 @@ import { CurrentBtn } from "../styles/Buttons";
 
 const SetUserInfoContainer = styled.div`
   width: 100%;
-  height: 100%;
+  height: calc(100vh - 48px);
+  position: relative;
+  top: 48px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -21,6 +23,12 @@ const SetUserInfoContainer = styled.div`
   h1 {
     font-size: 28px;
     color: var(--black-100);
+  }
+  @media (max-width: 389px) {
+    gap: var(--gap-md);
+    h1 {
+      font-size: 24px;
+    }
   }
 `
 
@@ -99,6 +107,9 @@ const OptionDropdown = styled.div`
     background-color: var(--blue-100);
     color: #ffffff;
   }
+  @media (max-width: 389px) {
+    gap: 4px;
+  }
 `
 
 const InfoOptionTag = styled(OptionTag)`
@@ -110,6 +121,9 @@ const InfoOptionTag = styled(OptionTag)`
   font-size: 12px;
   background-color: "var(--black-500)";
   color: "var(--black-200)";
+  @media (max-width: 389px) {
+    font-size: 11px;
+  }
 `
 
 function SetUserInfo() {
