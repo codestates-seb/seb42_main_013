@@ -100,11 +100,10 @@ function CreateModal ({isOpen, openContainsModalHandler, data, setData}) {
   }
 
   const addIngredientHandler = () => {
-    let id = data.ingredients.length===0 ?1 :data.ingredients.slice(-1).ingredientId+1
+    let id = data.ingredients.length===0 ?0 :data.ingredients.at(-1).ingredientId+1
     setData({...data, ingredients:[...data.ingredients, { ...ingredient,ingredientId: id}]})
     console.log(data)
   }
-  console.log(!!ingredient.ingredientAmount)
   return (
     <ModalContainer>
       {isOpen === true ? <ModalBackdrop onClick={openContainsModalHandler}>
