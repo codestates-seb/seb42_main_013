@@ -1,9 +1,5 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import { clear } from "@testing-library/user-event/dist/clear";
-
 
 export const FakeInput = styled.div`
   display: flex;
@@ -82,48 +78,52 @@ const DeleteBtn = styled.div`
     fill: currentColor;
   }
 `
+const ValidityMsg = styled.div`
+  color: rgb(240, 86, 86);
+  font-size: 12px;
+`
 
 
-
-function DataInput ({value, minlength, required, placeholder, data, setData, type}) {
+function DataInput ({name, minlength, required, placeholder, data, setData, type}) {
   const [isFocus, setIsFocus] = useState(false)
-  const [isInvalid, setIsInvalid] = useState(true)
+  const [isValid, setIsValid] = useState(true)
   const changeHandler = (e) => {
-    setData({...data,[value]:e.target.value})
-    isInvalid && setIsInvalid(e.target.checkValidity())
+    setData({...data,[name]:e.target.value})
+    !isValid && setIsValid(e.target.checkValidity())
   }
   const clear = () => {
-    setData({...data,[value]:""})
+    setData({...data,[name]:""})
   }
   const blurHandler = (e) => {
-    setIsInvalid(e.target.checkValidity())
-    console.log(isInvalid)
+    setIsValid(e.target.checkValidity())
     setIsFocus(false)
   }
   return (
-    <FakeInput isFocus={isFocus} isInvalid={isInvalid}>
-      <RealInput
-        onFocus={()=>setIsFocus(true)}
-        onBlur={blurHandler}
-        type={type} 
-        value={data[value]}
-        onChange={changeHandler} 
-        placeholder={placeholder}
-        required={required}
-        minlength={minlength}
-      />
-      { type!=="date" &&
-      <>
-        <DeleteBtn value={!!data[value]} >
-          <button onClick={()=>clear()}>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-              <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-            </svg>
-          </button>
-        </DeleteBtn>
-      </>
-      }
-    </FakeInput>
+    <>
+      <FakeInput isFocus={isFocus} isInvalid={isValid}>
+        <RealInput
+          onFocus={()=>setIsFocus(true)}
+          onBlur={blurHandler}
+          type={type} 
+          value={data[name]}
+          onChange={changeHandler} 
+          placeholder={placeholder}
+          required={required}
+        />
+        { type!=="date" &&
+        <>
+          <DeleteBtn value={!!data[name]} >
+            <button onClick={()=>clear()}>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+              </svg>
+            </button>
+          </DeleteBtn>
+        </>
+        }
+      </FakeInput>
+      {!isValid && <ValidityMsg>내용을 입력해주세요.</ValidityMsg>}
+    </>
   )
 }
 
