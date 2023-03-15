@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { searchActions } from "../reducer/searchReducer";
 
 const SearchBarContainer = styled.div`
   width: 100%;
@@ -35,12 +38,37 @@ const SearchInput = styled.input`
   }
 `
 
-function SearchBar() {
+function SearchBar({ setData }) {
+  // process.env.REACT_APP_NAVER_CLIENT_ID 형태로 사용
+  const state = useSelector(state => state.searchReducer);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const searchValueHandler = (e) => {
+    const data = e.target.value;
+    dispatch(searchActions.changeSearchValue({ data }));
+  }
+
+
+  const searchBtnHandler = () => {
+    if (state.searchValue.length > 0) {
+      navigate(`/search/:${state.searchValue}`)
+    }
+  }
+
+  const searchEnterHandler = (e) => {
+    if (e.key === "Enter") {
+      if (state.searchValue.length > 0) {
+        navigate(`/search/:${state.searchValue}`)
+      }
+    }
+  }
+
   return (
     <SearchBarContainer>
       <SearchBarDiv>
-        <SearchInput type="text" placeholder="새로운 영양제 탐색" />
-        <FontAwesomeIcon icon={faMagnifyingGlass} className="icon-search" />
+        <SearchInput type="text" placeholder="새로운 영양제 탐색" value={state.searchValue} onChange={searchValueHandler} onKeyUp={searchEnterHandler} />
+        <FontAwesomeIcon icon={faMagnifyingGlass} className="icon-search" onClick={searchBtnHandler} />
       </SearchBarDiv>
     </SearchBarContainer>
   )

@@ -3,8 +3,8 @@ import background1 from "../images/backgrounds/background1.jpg"
 import background2 from "../images/backgrounds/background2.jpg"
 import background3 from "../images/backgrounds/background3.jpg"
 import background4 from "../images/backgrounds/background4.jpg"
-import { CurrentBtn } from "../styles/Buttons";
-import { Link } from "react-router-dom";
+import { SmallBtn } from "../styles/Buttons";
+import { Link, useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Pagination, Autoplay } from "swiper";
 import "swiper/css";
@@ -66,29 +66,53 @@ const BackgroundImg4 = styled(BackgroundImg1)`
 
 const ContentDiv1 = styled.div`
   width: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   position: relative;
-  top: 150px;
   z-index: 999;
+  padding: 0 20px;
   img {
     width: 300px;
     margin: var(--gap-md);
+    margin-top: 120px;
   }
   .content {
     color: var(--black-100);
     white-space: pre-wrap;
   }
+  strong {
+    color: var(--blue-100);
+  }
 `
 
 const ContentDiv2 = styled(ContentDiv1)`
-  top: 350px;
-  right: 16px;
+  justify-content: center;
+  align-items: flex-start;
+  top: 80px;
+  font-size: 20px;
+  line-height: 32px;
+`
+
+const ContentDiv3 = styled(ContentDiv1)`
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  bottom: 120px;
+  font-size: 20px;
+  line-height: 32px;
+`
+
+const ContentDiv4 = styled(ContentDiv1)`
   align-items: flex-end;
   text-align: right;
+  top: 50px;
+  font-size: 20px;
+  line-height: 32px;
 `
+
 
 const LoginSignupDiv = styled.div`
   width: 100%;
@@ -99,12 +123,14 @@ const LoginSignupDiv = styled.div`
   position: relative;
   z-index: 999;
   bottom: 150px;
+  padding: 0 20px;
   .login-area {
-    width: 250px;
+    width: 70%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: var(--black-200)
+    color: var(--black-200);
+    margin: var(--gap-md) 0;
   }
   .login-button {
     color: var(--blue-100);
@@ -112,39 +138,61 @@ const LoginSignupDiv = styled.div`
 `
 
 function Intro() {
+  const navigate = useNavigate();
 
-  const content2 = "필요한 영양제를 추천받고\n원하는 영양제를 검색하세요!"
+  const introBtnHandler = (e) => {
+    e.preventDefault();
+    navigate("/signup")
+  }
+
   return (
     <IntroContainer>
       <Swiper
         spaceBetween={0}
         slidesPerView={1}
-        // autoplay={{ delay: 4000 }}
+        autoplay={{ delay: 4000 }}
         pagination={{ clickable: true }}>
         <SwiperSlide>
           <BackgroundImg1>
             <ContentDiv1>
               <img src={`${process.env.PUBLIC_URL}/images/logo1.png`} alt="logo" />
-              <div className="content">당신을 위한 영양제 맞춤 서비스</div>
+              <p className="content">당신을 위한 영양제 맞춤 서비스</p>
             </ContentDiv1>
           </BackgroundImg1>
         </SwiperSlide>
         <SwiperSlide>
           <BackgroundImg2>
             <ContentDiv2>
-              <div className="content">{content2}</div>
+              <div className="content">
+                <p>나만의 <strong>영양제 달력</strong>으로</p>
+                <p>꼼꼼하게 정리하는 영양제 일정</p>
+              </div>
             </ContentDiv2>
           </BackgroundImg2>
         </SwiperSlide>
         <SwiperSlide>
-          <BackgroundImg3></BackgroundImg3>
+          <BackgroundImg3>
+            <ContentDiv3>
+              <div className="content">
+                <p>필요한 영양제는 <strong>추천</strong>받고</p>
+                <p>새로운 영양제 <strong>검색</strong>까지</p>
+              </div>
+            </ContentDiv3>
+          </BackgroundImg3>
         </SwiperSlide>
         <SwiperSlide>
-          <BackgroundImg4></BackgroundImg4>
+          <BackgroundImg4>
+            <ContentDiv4>
+            <div className="content">
+                <p>복용 중인 <strong>영양제</strong>와 <strong>약</strong>은</p>
+                <p>한 페이지에서 손쉽게 관리</p>
+              </div>
+            </ContentDiv4>
+          </BackgroundImg4>
         </SwiperSlide>
       </Swiper>
       <LoginSignupDiv>
-        <CurrentBtn>시작하기</CurrentBtn>
+        <SmallBtn onClick={introBtnHandler}>시작하기</SmallBtn>
         <div className="login-area">
           <div>계정이 있으신가요?</div>
           <Link to="/login" className="login-button">로그인하기</Link>

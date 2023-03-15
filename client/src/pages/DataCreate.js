@@ -10,7 +10,7 @@ const DataCreateContainer = styled.div`
   min-height: calc(100vh - 48px - 64px);
   flex-direction: column;
   justify-content: space-around;
-  padding: 0px 20px 40px;
+  padding: 24px 20px 40px;
   background-color: white;
 `;
 

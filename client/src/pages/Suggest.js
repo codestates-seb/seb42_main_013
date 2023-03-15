@@ -22,15 +22,44 @@ const LargeContent = styled.div`
   margin-bottom: 16px;
   padding: 16px;
   width: 100%;
-  height: 180px;
+  height: 360px;
   background-color: rgba(91, 133, 235, 0.8);
   border-radius: 30px;
   color: #ffffff;
   font-weight: 500;
+  display: flex;
+  flex-direction: column;
   @media (max-width: 427px){
-    height: 42vw;
+    height: 80vw;
     font-size: 3.7vw;
     }
+`
+
+const SupplementsArea = styled.div`
+width: 100%;
+height: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
+margin-top: var(--gap-sm);
+`
+
+const SupplementDiv = styled.div`
+  width: 29%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 var(--gap-lg);
+  justify-content: center;
+  align-items: center;
+`
+
+const SupplementImgDiv = styled.div`
+  width: 100%;
+  height: 70%;
+  border-radius: 25px;
+  background-color: #ffffff;
+  margin-bottom: 4px;
 `
 
 const SmallContent = styled.div`
@@ -63,36 +92,46 @@ function Suggest() {
     <SuggestContainer>
       <SearchBar />
       <SugContentConatiner>
+        <ScrollBar />
         <LargeContent>
           <div>눈 건강에 좋은 영양제 추천</div>
+          <SupplementsArea>
+            <SupplementDiv>
+              <SupplementImgDiv></SupplementImgDiv>
+              <div>영양제1</div>
+            </SupplementDiv>
+            <SupplementDiv>
+              <SupplementImgDiv></SupplementImgDiv>
+              <div>영양제2</div>
+            </SupplementDiv>
+          </SupplementsArea>
+          <SupplementsArea>
+            <SupplementDiv>
+              <SupplementImgDiv></SupplementImgDiv>
+              <div>영양제3</div>
+            </SupplementDiv>
+            <SupplementDiv>
+              <SupplementImgDiv></SupplementImgDiv>
+              <div>영양제4</div>
+            </SupplementDiv>
+          </SupplementsArea>
         </LargeContent>
         <div className="smallcontent-area">
+        </div>
+        <div className="smallcontent-area">
           <SmallContent>
-            <div>
-              {content1}
-            </div>
+            {content1}
           </SmallContent>
-          <SmallContent align="center">
-            <div>
-              {content2}
-            </div>
+          <SmallContent>
+            {content2}
           </SmallContent>
         </div>
-        <ScrollBar />
         <div className="smallcontent-area">
           <SmallContent>
             영역1
           </SmallContent>
           <SmallContent>
             영역2
-          </SmallContent>
-        </div>
-        <div className="smallcontent-area">
-          <SmallContent>
-            영역3
-          </SmallContent>
-          <SmallContent>
-            영역4
           </SmallContent>
         </div>
       </SugContentConatiner>

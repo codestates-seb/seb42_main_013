@@ -6,7 +6,7 @@ import { CurrentBtn } from "../styles/Buttons";
 
 
 
-const ModalBackdrop = styled.div`
+export const ModalBackdrop = styled.div`
   /* top: 0;
   left: 0;
   bottom: 0;

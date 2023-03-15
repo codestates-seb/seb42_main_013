@@ -10,6 +10,9 @@ import MyPage from "./pages/MyPage";
 import SetUserInfo from "./pages/SetUserInfo";
 import Summary from "./pages/Summary";
 import Calendar from "./pages/CalendarPage";
+import Signup from "./pages/Signup";
+import WebAside from "./components/WebAside";
+
 import { Routes, Route, useLocation } from 'react-router-dom';
 
 function App() {
@@ -20,15 +23,14 @@ function App() {
       <GlobalStyle />
       <div className="app-container">
         <div className="web-description">
-          test - 웹 화면
+          <WebAside />
         </div>
         <div className="app-wrap">
           {(pathname === "/intro") ? null : <Header />}
-          <div className={(pathname === "/intro" || pathname === "/login") ? "" : "container"}>
+          <div className={(pathname === "/intro" || pathname === "/login" || pathname === "/signup" || pathname === "/setuserinfo") ? "" : "container"}>
             <Routes>
               <Route path="/" element={<Suggest />} />
-              <Route path="/search" element={<Search />} />
-              <Route path="/suggest" element={<Suggest />} />
+              <Route path="/search/:search_item" element={<Search />} />
               <Route path="/intro" element={<Intro />} />
               <Route path="/datacreate" element={<DataCreate />} />
               <Route path="/login" element={<Login />} />
@@ -36,9 +38,10 @@ function App() {
               <Route path="/setuserinfo" element={<SetUserInfo />} />
               <Route path="/summary" element={<Summary />} />
               <Route path="/calendar" element={<Calendar />} />
+              <Route path="/signup" element={<Signup />} />
             </Routes>
           </div>
-          {(pathname === "/intro" || pathname === "/login" || pathname === "/datacreate") ? null : <Footer />}
+          {(pathname === "/intro" || pathname === "/login" || pathname === "/signup" || pathname === "/datacreate" || pathname === "/setuserinfo") ? null : <Footer />}
         </div>
       </div>
     </>
