@@ -39,8 +39,8 @@ const ItemPriceDiv = styled.div`
 
 function Items({title, img, link, price}) {
   // props 관련 설정
-  title = title.replace("<b>", "");
-  title = title.replace("</b>", "");
+  title = title.replaceAll("<b>", "");
+  title = title.replaceAll("</b>", "");
   let newPrice = price.split("");
   let head = newPrice.slice(0, -3);
   let tail = newPrice.slice(-3);
