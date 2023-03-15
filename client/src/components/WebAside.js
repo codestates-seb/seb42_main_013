@@ -46,13 +46,16 @@ const BackgroundDiv = styled.div`
 
 const TeamDiv = styled.div`
   width: 100%;
-  margin-top: var(--gap-lg);
+  margin-top: var(--gap-md);
+  padding-top: var(--gap-md);
+  border-top: 1px solid var(--black-400);
 `
 
 const TeamnameDiv = styled.div`
   width: 100%;
   font-size: 15px;
   margin-bottom: var(--gap-lg);
+  padding-bottom: var(--gap-sm);
   font-weight: 600;
   display: flex;
   justify-content: flex-start;

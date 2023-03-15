@@ -56,14 +56,22 @@ function SearchBar({ setData }) {
     }
   }
 
-    return (
-      <SearchBarContainer>
-        <SearchBarDiv>
-          <SearchInput type="text" placeholder="새로운 영양제 탐색" value={state.searchValue} onChange={searchValueHandler} />
-          <FontAwesomeIcon icon={faMagnifyingGlass} className="icon-search" onClick={searchBtnHandler} />
-        </SearchBarDiv>
-      </SearchBarContainer>
-    )
+  const searchEnterHandler = (e) => {
+    if (e.key === "Enter") {
+      if (state.searchValue.length > 0) {
+        navigate(`/search/:${state.searchValue}`)
+      }
+    }
   }
 
-  export default SearchBar;
+  return (
+    <SearchBarContainer>
+      <SearchBarDiv>
+        <SearchInput type="text" placeholder="새로운 영양제 탐색" value={state.searchValue} onChange={searchValueHandler} onKeyUp={searchEnterHandler} />
+        <FontAwesomeIcon icon={faMagnifyingGlass} className="icon-search" onClick={searchBtnHandler} />
+      </SearchBarDiv>
+    </SearchBarContainer>
+  )
+}
+
+export default SearchBar;

@@ -78,9 +78,10 @@ function Search() {
         "X-Naver-Client-Secret": process.env.REACT_APP_NAVER_CLIENT_SECRET,
       },
     })
-      .then((res) => setData(res.data.items))
+      .then((res) => {
+        setData(res.data.items)
+      })
   }, [search_item])
-
 
   return (
     <SearchContainer>

@@ -46,6 +46,7 @@ const IconDiv = styled.div`
   justify-content: center;
   align-items: center;
   margin: 0 var(--gap-md);
+  cursor: pointer;
   img {
     margin-bottom: var(--gap-sm);
     width: 60px;
@@ -148,6 +149,12 @@ function SetUserInfo() {
     setIsClickedTag(clickedTag);
   }
 
+  const submitBtnHandler = (e) => {
+    e.preventDefault();
+    const birthDate = data.birthday;
+    const submitData = {birthDate, gender: isClickedSex};
+    console.log(submitData);
+  }
   return (
     <SetUserInfoContainer>
       <h1>필수 정보 입력</h1>
@@ -178,7 +185,7 @@ function SetUserInfo() {
           </OptionDropdown>
         }
       </OptionBox> */}
-      <CurrentBtn>입력 완료</CurrentBtn>
+      <CurrentBtn onClick={submitBtnHandler}>입력 완료</CurrentBtn>
     </SetUserInfoContainer>
   )
 
