@@ -30,7 +30,6 @@ import java.util.stream.Collectors;
 @RequestMapping("/details")
 @Validated
 @RequiredArgsConstructor
-@Slf4j
 public class DetailController {
     private final static String DETAIL_DEFAULT_URL = "/details";
     private final DetailService detailService;
