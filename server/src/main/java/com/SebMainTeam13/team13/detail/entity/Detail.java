@@ -31,7 +31,7 @@ public class Detail  {
     @OneToOne
     private User user;
     @Column(nullable = false)
-    private Long age;
+    private String birthDate;
 
     @Column(nullable = false)
     private String gender;

@@ -41,7 +41,6 @@ public class SupplementController {
                                       @Valid @RequestBody SupplementDto.Patch patch) {
 //        Long userIdAuthed = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        patch.setSupplementId(supplementId);
         Supplement supplement = supplementService.updateSupplement(supplementMapper.supplementPatchDtoToSupplement(patch));
         SupplementDto.Response response = supplementMapper.supplementToSupplementResponseDto(supplement);
 

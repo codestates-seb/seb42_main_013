@@ -29,7 +29,7 @@ public class SupplementService {
 
     @Transactional
     public Supplement updateSupplement(Supplement supplement) {
-        Long supplementId = supplement.getSupplementId();
+        Long supplementId = findAndVerifySupplementByName(supplement.getSupplementName()).getSupplementId();
         Supplement verifiedSupplement = findAndVerifySupplementBySupplementId(supplementId);
 
         Optional.ofNullable(supplement.getSupplementName())
@@ -58,5 +58,10 @@ public class SupplementService {
         return optionalSupplement.orElseThrow(() ->
                 new BusinessLogicException(SUPPLEMENT_NOT_FOUND));
     }
-
+    public Supplement findAndVerifySupplementByName(String supplementName){
+        Optional<Supplement> optionalSupplement = supplementRepository.findBySupplementName(supplementName);
+        return optionalSupplement.orElseThrow(() ->
+                new BusinessLogicException(SUPPLEMENT_NOT_FOUND));
+    }
 }
+

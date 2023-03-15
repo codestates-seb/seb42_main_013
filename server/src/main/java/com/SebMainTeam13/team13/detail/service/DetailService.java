@@ -53,8 +53,8 @@ public class DetailService {
 //            throw new RuntimeException("수정할 수 있는 회원이 아닙니다.");
 //        }
 
-        Optional.ofNullable(detail.getAge())
-                .ifPresent(verifiedDetail::setAge);
+        Optional.ofNullable(detail.getBirthDate())
+                .ifPresent(verifiedDetail::setBirthDate);
         Optional.ofNullable(detail.getGender())
                 .ifPresent(verifiedDetail::setGender);
 //        detail.getDetailSupplements().forEach(detailSupplement -> {
