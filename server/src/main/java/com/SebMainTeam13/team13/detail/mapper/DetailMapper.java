@@ -24,7 +24,7 @@ public class DetailMapper {
         User user = new User();
         user.setUserId(post.getUserId());
         Detail detail = new Detail();
-        detail.setAge(post.getAge());
+        detail.setBirthDate(post.getBirthDate());
         detail.setGender(post.getGender());
         detail.setUser(user);
 //        List<DetailSupplement> detailSupplements = new ArrayList<>();
@@ -46,7 +46,7 @@ public class DetailMapper {
     public Detail detailPatchDtoToDetail(DetailDto.Patch patch) {
         return Detail.builder()
                 .detailId(patch.getDetailId())
-                .age(patch.getAge())
+                .birthDate(patch.getBirthDate())
                 .gender(patch.getGender())
                 .build();
 //        List<DetailSupplement> detailSupplements = patch.getSupplements()
@@ -70,7 +70,7 @@ public class DetailMapper {
 
         return DetailDto.Response.builder()
                 .detailId(detail.getDetailId())
-                .age(detail.getAge())
+                .birthDate(detail.getBirthDate())
                 .gender(detail.getGender())
  //               .owner(userresponse)
  //               .Supplements(SupplementNames)
