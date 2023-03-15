@@ -1,23 +1,26 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-const InputContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex:1;
-`
 
 export const FakeInput = styled.div`
   display: flex;
   flex: 1;
-  flex-direction: row;
   border : ${(props) => props.isFocus ?"1px solid var(--blue-100)" : "1px solid var(--black-400)"};
   border-color: ${(props) => !props.isValid && "rgb(240, 86, 86)"};
   border-radius: 5px;
   /* 1줄 꽉채우게 */
   padding: 0 8px;
+  position: relative;
   :hover{
     background-color: #F7F9FA;
+  }
+  ::after{
+    position: absolute;
+    left:0;
+    bottom: -18px;
+    font-size: 12px;
+    color: rgb(240, 86, 86);
+    content: "${(props) => props.validationMessage}";
   }
 `
 
@@ -47,7 +50,7 @@ export const RealInput = styled.input`
     cursor: pointer;
   }
   ::placeholder{
-    color: var(--black-300)
+    color: var(--black-400)
   }
   &[type='date']::-webkit-datetime-edit {
     display: ${(props) => (!!props.value) ?"inline-block"  :"none"};
@@ -55,13 +58,16 @@ export const RealInput = styled.input`
   &[type='date']::before{
     position: absolute;
     left: 0px;
-    color: var(--black-300);
+    color: var(--black-400);
     content: "${(props) => props.placeholder}";
     width: 100%;
     display: ${(props) => !!props.value && "none"};
   }
+  &[type='time']{
+    min-width: 100px;
+  }
 `
-const DeleteBtn = styled.div`
+export const DeleteBtn = styled.div`
   display: flex;
   align-items: center;
   margin-left: 8px;
@@ -76,37 +82,78 @@ const DeleteBtn = styled.div`
     height: 20px;
   }
   svg{
-    color: var(--black-200);
+    color: var(--black-400);
     width: 100%;
     height: 100%;
     fill: currentColor;
   }
 `
-const ValidityMsg = styled.div`
-  color: rgb(240, 86, 86);
-  font-size: 12px;
-  opacity : ${(props) => props.isValid ? "0" : "1"};
-`
+// const ValidityMsg = styled.div`
+//   color: rgb(240, 86, 86);
+//   font-size: 12px;
+//   opacity : ${(props) => props.isValid ? "0" : "1"};
+// `
 
 
-function DataInput ({name, minlength, required, placeholder, data, setData, type}) {
+function DataInput ({name, min, max, required, placeholder, data, setData, type}) {
   const [isFocus, setIsFocus] = useState(false)
   const [isValid, setIsValid] = useState(true)
+  const [validityState, setValidityState] = useState("")
+  
+  const getValidtyState = (e) => {
+    if(!e.target.validity.valid){
+      let validity = ''
+      for(let key in e.target.validity){
+        if(e.target.validity[key]) validity = key
+      }
+      return validity
+    }
+  }
+  const validationMessage = (validityState) => {
+    let message = ''
+    switch(validityState) {
+      case "rangeOverflow" :
+        message = "전체 용량보다 적어야 합니다."
+      break;
+      case "valueMissing" :
+        message = "필수 입력 항목입니다."
+      break;
+      case "rangeUnderflow" :
+        message = "0 이상의 숫자를 입력해주세요."
+      break;
+      case "customError" :
+        message = "잔여 알 수 보다 많아야 합니다."
+      break;
+      default:
+        message = ""
+    }
+    return message
+  }
+
+
   const changeHandler = (e) => {
     setData({...data,[name]:e.target.value})
     // !isValid && setIsValid(e.target.checkValidity())
+    // 한번 blur 후에 유효성 체크 되도록
+    if(name==="totalQty" && Number(e.target.value)<Number(data.currentQty)){
+      e.target.setCustomValidity("lessThanCurrent")
+    } else {
+      e.target.setCustomValidity("")
+    }
+    console.log(e.target.validity.valid)
     !isValid && setIsValid(e.target.validity.valid)
+    setValidityState(getValidtyState(e))
   }
   const clear = () => {
     setData({...data,[name]:""})
   }
   const blurHandler = (e) => {
     setIsValid(e.target.validity.valid)
+    setValidityState(getValidtyState(e))
     setIsFocus(false)
   }
   return (
-    <InputContainer>
-      <FakeInput isFocus={isFocus} isValid={isValid}>
+      <FakeInput isFocus={isFocus} isValid={isValid} validationMessage={validationMessage(validityState)}>
         <RealInput
           onFocus={()=>setIsFocus(true)}
           onBlur={blurHandler}
@@ -115,9 +162,15 @@ function DataInput ({name, minlength, required, placeholder, data, setData, type
           onChange={changeHandler} 
           placeholder={placeholder}
           required={required}
+          min={min}
+          max={max}
+          name={name}
         />
-        { name === "ingredientAmount" &&
+        {/* { name === "ingredientAmount" &&
           <DeleteBtn>mg</DeleteBtn>
+        } */}
+        { name === "dose" &&
+          <DeleteBtn>알</DeleteBtn>
         }
         { type!=="date" &&
         <>
@@ -131,8 +184,6 @@ function DataInput ({name, minlength, required, placeholder, data, setData, type
         </>
         }
       </FakeInput>
-      <ValidityMsg isValid={isValid}>내용을 입력해주세요.</ValidityMsg>
-    </InputContainer>
   )
 }
 

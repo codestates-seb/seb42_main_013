@@ -21,8 +21,8 @@ const ImgBoxes = styled.div`
   gap: 8px;
 `
 const ImgBox = styled.div`
-  border: var(--border);
-  border-radius: var(--border-radius);
+  border: 1px solid var(--black-300);
+  border-radius: 5px;
   width: 50px;
   height: 50px;
   position: relative;
@@ -38,7 +38,7 @@ const ImgBox = styled.div`
       fill-rule: evenodd;
       >g{
         transform: translate(4.779px, 6.111px);
-        stroke: #666666;
+        stroke: var(--black-300);
         stroke-width: 1.3;
       }
     }
@@ -56,7 +56,6 @@ function Swiper(){
   return(
     <Imgscreen>
      <ImgBoxes>
-       <ImgBox /><ImgBox /><ImgBox /><ImgBox /><ImgBox /><ImgBox /><ImgBox /><ImgBox /><ImgBox /><ImgBox />
        <ImgBox>
           <svg className="camera">
             <g>
@@ -68,6 +67,7 @@ function Swiper(){
             </g>
           </svg>
         </ImgBox>
+        <ImgBox /><ImgBox /><ImgBox /><ImgBox /><ImgBox /><ImgBox /><ImgBox /><ImgBox />
     </ImgBoxes>
   </Imgscreen>
   )

@@ -82,25 +82,26 @@ const Buttons = styled.div`
 `
 
 
-function CreateModal ({isOpen, openContainsModalHandler, data, setData}) {
-  const [ingredient, setIngredient] = useState([])
+function CreateModal ({isOpen, openModalHandler, data, name, setData}) {
+  const [ele, setEle] = useState({})
   
   const closeModalHandler = () => {
-    setIngredient([])
-    openContainsModalHandler()
+    setEle({})
+    openModalHandler()
   }
 
-  const addIngredientHandler = () => {
+  const addEleHandler = () => {
     // let id = data.ingredients.length===0 ?0 :data.ingredients.at(-1).ingredientId+1
     // setData({...data, ingredients:[...data.ingredients, { ...ingredient,ingredientId: id}]})
     // 함량은 표기 안하기로 함
-    setData({...data,ingredients:[...data.ingredients,ingredient.ingredientName]})
-    setIngredient([])
-    openContainsModalHandler();
+    setData({...data,[name]:[...data[name],ele.key]})
+    setEle({})
+    console.log(data)
+    openModalHandler();
   }
   return (
     <ModalContainer>
-      {isOpen === true ? <ModalBackdrop onClick={openContainsModalHandler}>
+      {isOpen === true ? <ModalBackdrop onClick={openModalHandler}>
         <div></div>
         <ModalView onClick={(e) => e.stopPropagation()}>
           {/* <div className="closebtn">
@@ -110,13 +111,16 @@ function CreateModal ({isOpen, openContainsModalHandler, data, setData}) {
               </svg>
             </AddBtn>
           </div> */}
-          <div>성분명</div>
-          <DataInput data={ingredient} required={1} setData={setIngredient} name="ingredientName" />
+          <div>{name==="time" ?"" :"성분명"}</div>
+          { name==="time"
+            ?<DataInput type="time" data={ele} required={1} setData={setEle} name="key" />
+            :<DataInput data={ele} required={1} setData={setEle} name="key"/>
+          }
           {/* <div>함량</div> */}
           {/* <DataInput type="number" data={ingredient} required={1} setData={setIngredient} name="ingredientAmount" /> */}
           <Buttons>
             <CurrentBtn onClick={closeModalHandler}>취소</CurrentBtn>
-            <CurrentBtn disabled={!ingredient} onClick={addIngredientHandler}>추가하기</CurrentBtn>
+            <CurrentBtn disabled={!ele} onClick={addEleHandler}>추가하기</CurrentBtn>
           </Buttons>
         </ModalView>
       </ModalBackdrop> : null}
