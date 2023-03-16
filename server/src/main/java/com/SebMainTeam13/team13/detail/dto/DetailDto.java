@@ -15,7 +15,7 @@ public class DetailDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Post {
-        private Long userId;
+
         private String birthDate;
         private String gender;
 
@@ -31,7 +31,7 @@ public class DetailDto {
     @AllArgsConstructor
     public static class Patch {
 
-        private Long userId;
+
         private Long detailId;
         private String birthDate;
         private String gender;
@@ -45,7 +45,7 @@ public class DetailDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Response {
-        private Long userId;
+
         private Long detailId;
         private String birthDate;
         private String gender;

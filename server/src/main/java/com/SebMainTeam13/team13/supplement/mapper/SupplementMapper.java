@@ -18,7 +18,9 @@ public class SupplementMapper {
         return  Supplement.builder()
                 .supplementName(post.getSupplementName())
                 .nutrients(post.getNutrients())
+                .supplementType(post.getSupplementType())
                 .imageURL(post.getImageURL())
+
 
                 .build();
 
@@ -41,6 +43,7 @@ public class SupplementMapper {
         return Supplement.builder()
                 .supplementName(patch.getSupplementName())
                 .nutrients(patch.getNutrients())
+                .supplementType(patch.getSupplementType())
                 .imageURL(patch.getImageURL())
 
                 .build();
@@ -66,6 +69,7 @@ public class SupplementMapper {
                     .supplementName(supplement.getSupplementName())
                     .nutrients(supplement.getNutrients())
                     .imageURL(supplement.getImageURL())
+                    .supplementType(supplement.getSupplementType())
 
 
 

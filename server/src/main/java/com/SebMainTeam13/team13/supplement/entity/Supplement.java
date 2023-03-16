@@ -1,10 +1,12 @@
 package com.SebMainTeam13.team13.supplement.entity;
 
+import com.SebMainTeam13.team13.detailSupplement.entity.DetailSupplement;
 import lombok.*;
 
 import javax.persistence.*;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static javax.persistence.GenerationType.IDENTITY;
@@ -22,9 +24,11 @@ public class Supplement {
     private String supplementName;
     @ElementCollection
     @CollectionTable(name = "nutrient", joinColumns = @JoinColumn(name = "supplement_id"))
-    @Column(name = "name")
+    @Column(name = "nutrients")
     private List<String> nutrients;
     private String imageURL;
- //   private List<DetailSupplement> detailSupplements;
+    private String supplementType;
+    @OneToMany(mappedBy = "supplement", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DetailSupplement> detailSupplements = new ArrayList<>();
 
 }

@@ -30,7 +30,7 @@ public class UserDto {
         private String email;
         private String displayName;
         private User.UserStatus userStatus;
-        private List<String> roles = new ArrayList<>();
+
         public Response(User user) {
             this.userId = user.getUserId();
             this.email = user.getEmail();

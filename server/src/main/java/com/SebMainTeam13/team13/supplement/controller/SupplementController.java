@@ -46,9 +46,9 @@ public class SupplementController {
 
         return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.OK);
     }
-    @GetMapping("/{supplement-id}")
-    public ResponseEntity getSupplement(@PathVariable("supplement-id") long supplementId) {
-        Supplement supplement = supplementService.findAndVerifySupplementBySupplementId(supplementId);
+    @GetMapping("/{supplement-name}")
+    public ResponseEntity getSupplement(@PathVariable("supplement-name") String supplementName) {
+        Supplement supplement = supplementService.findAndVerifySupplementByName(supplementName);
 
 //        Long userIdAuthed = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         SupplementDto.Response response = supplementMapper.supplementToSupplementResponseDto(supplement);
