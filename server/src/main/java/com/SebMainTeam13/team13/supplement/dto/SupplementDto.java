@@ -14,7 +14,7 @@ public class SupplementDto {
         private String supplementName;
         private List<String> nutrients;
         private String imageURL;
-
+        private String supplementType;
     }
     @Getter
     @Setter
@@ -25,6 +25,7 @@ public class SupplementDto {
         private String supplementName;
         private List<String> nutrients;
         private String imageURL;
+        private String supplementType;
     }
 
     @Getter
@@ -37,5 +38,6 @@ public class SupplementDto {
         private String supplementName;
         private List<String> nutrients;
         private String imageURL;
+        private String supplementType;
     }
 }

@@ -22,9 +22,11 @@ public class Supplement {
     private String supplementName;
     @ElementCollection
     @CollectionTable(name = "nutrient", joinColumns = @JoinColumn(name = "supplement_id"))
-    @Column(name = "name")
+    @Column(name = "nutrients")
     private List<String> nutrients;
     private String imageURL;
+    private String supplementType;
+
  //   private List<DetailSupplement> detailSupplements;
 
 }
