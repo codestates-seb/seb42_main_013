@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import { useState } from "react";
 import { health } from "./Health";
+import { useSelector, useDispatch } from "react-redux";
+import { concernActions } from "../reducer/concernReducer";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -46,10 +47,12 @@ const CategoryIconDiv = styled.div`
 `
 
 function ScrollBar() {
-  const [isClicked, setIsClicked] = useState("영양보충");
+  const state = useSelector(state => state.concernReducer);
+  const dispatch = useDispatch();
 
   const clickHandler = (e) => {
-    setIsClicked(e.currentTarget.id);
+    const data = e.currentTarget.id;
+    dispatch(concernActions.changeConcernClicked({ data }));
   }
 
   return (
@@ -60,8 +63,8 @@ function ScrollBar() {
       >
         {health.map(el => {
           return (
-            <SwiperSlide key={el.id} className={el.title === isClicked ? "selected-area category" : "category"} onClick={clickHandler} id={el.title}>
-              <CategoryIconDiv className={el.title === isClicked ? "category-select" : ""}>
+            <SwiperSlide key={el.id} className={el.title === state.isClicked ? "selected-area category" : "category"} onClick={clickHandler} id={el.title}>
+              <CategoryIconDiv className={el.title === state.isClicked ? "category-select" : ""}>
                 <img src={el.src} alt="health-icon" />
               </CategoryIconDiv>
               <div>{el.title}</div>

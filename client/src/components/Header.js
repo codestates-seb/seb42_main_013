@@ -3,7 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import { searchActions } from "../reducer/searchReducer";
 
 const HeaderContainer = styled.div`
   background-color: var(--blue-100);
@@ -17,9 +19,7 @@ const HeaderContainer = styled.div`
   align-items: center;
   padding: 0 20px;
   .logo {
-    color: #ffffff;
-    font-weight: 600;
-    font-size: 18px;
+    width: 120px;
   }
   .icon {
     width: 20px;
@@ -44,10 +44,15 @@ const RightDiv = styled.div`
 function Header() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const prevBtnHandler = (e) => {
     e.preventDefault();
     navigate(-1);
+  }
+
+  const removeHandler = () => {
+    dispatch(searchActions.removeSearchValue());
   }
 
   return (
@@ -55,7 +60,7 @@ function Header() {
       <FontAwesomeIcon icon={faChevronLeft}
       className={`${(pathname === "/datacreate" || pathname === "/login" || pathname === "/search") ? "icon" : "icon hidden"}`}
       onClick={prevBtnHandler}/>
-      <div className="logo">I Pill U</div>
+      <Link to="/" onClick={removeHandler}><img src="images/logo_header.png" alt="logo" className="logo"/></Link>
       <RightDiv>
         <FontAwesomeIcon icon={faArrowRightFromBracket} className={`${(pathname === "/mypage" || pathname === "/setuserinfo") ? "icon" : "icon none"}`} />
         <FontAwesomeIcon icon={faPlus} className={`${pathname === "/summary" ? "icon" : "icon none"}`} />
