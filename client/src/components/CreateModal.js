@@ -83,10 +83,9 @@ const Buttons = styled.div`
 
 
 function CreateModal ({isOpen, openModalHandler, data, name, setData}) {
-  const [ele, setEle] = useState({})
-  
+  const [ele, setEle] = useState({key:""})
   const closeModalHandler = () => {
-    setEle({})
+    setEle({key:""})
     openModalHandler()
   }
 
@@ -95,8 +94,7 @@ function CreateModal ({isOpen, openModalHandler, data, name, setData}) {
     // setData({...data, ingredients:[...data.ingredients, { ...ingredient,ingredientId: id}]})
     // 함량은 표기 안하기로 함
     setData({...data,[name]:[...data[name],ele.key]})
-    setEle({})
-    console.log(data)
+    setEle({key:""})
     openModalHandler();
   }
   return (
@@ -111,8 +109,8 @@ function CreateModal ({isOpen, openModalHandler, data, name, setData}) {
               </svg>
             </AddBtn>
           </div> */}
-          <div>{name==="time" ?"" :"성분명"}</div>
-          { name==="time"
+          <div>{name==="takingTime" ?"" :"성분명"}</div>
+          { name==="takingTime"
             ?<DataInput type="time" data={ele} required={1} setData={setEle} name="key" />
             :<DataInput data={ele} required={1} setData={setEle} name="key"/>
           }

@@ -112,13 +112,13 @@ function Summary() {
       dosagePerServing: 1,
     },
     {
-      supplementId: 0,
+      supplementId: 1,
       type: "supplement",
       imageURL: "https://freepngimg.com/save/112695-picture-fish-oil-capsule-free-download-png-hd/1000x500",
       supplementName: "오메가3",
       nutrients: ["SAT"],
       expirationDate: "2023-12-25",
-      pillsLeft: "10",
+      pillsLeft: "98",
       totalCapacity: "150",
       startDate: new Date().toISOString().substring(0, 10),
       endDate: "",
@@ -127,13 +127,13 @@ function Summary() {
       dosagePerServing: 1,
     },
     {
-      supplementId: 0,
+      supplementId: 2,
       type: "supplement",
       imageURL: "https://freepngimg.com/save/112695-picture-fish-oil-capsule-free-download-png-hd/1000x500",
       supplementName: "오메가3",
       nutrients: ["SAT"],
-      expirationDate: "2024-04-15",
-      pillsLeft: "10",
+      expirationDate: "2023-03-15",
+      pillsLeft: "120",
       totalCapacity: "150",
       startDate: new Date().toISOString().substring(0, 10),
       endDate: "",
@@ -142,12 +142,12 @@ function Summary() {
       dosagePerServing: 1,
     },
     {
-      supplementId: 0,
+      supplementId: 3,
       type: "drug",
       imageURL: "https://freepngimg.com/save/112695-picture-fish-oil-capsule-free-download-png-hd/1000x500",
       supplementName: "항생제",
       nutrients: ["SAT"],
-      expirationDate: "2024-07-23",
+      expirationDate: "2023-04-12",
       pillsLeft: "3",
       totalCapacity: "150",
       startDate: new Date().toISOString().substring(0, 10),
@@ -157,13 +157,13 @@ function Summary() {
       dosagePerServing: 1,
     },
     {
-      supplementId: 0,
+      supplementId: 4,
       type: "supplement",
       imageURL: "https://freepngimg.com/save/112695-picture-fish-oil-capsule-free-download-png-hd/1000x500",
       supplementName: "오메가3",
       nutrients: ["SAT"],
       expirationDate: "2023-09-14",
-      pillsLeft: "5",
+      pillsLeft: "100",
       totalCapacity: "150",
       startDate: new Date().toISOString().substring(0, 10),
       endDate: "",
@@ -172,7 +172,7 @@ function Summary() {
       dosagePerServing: 1,
     },
     {
-      supplementId: 0,
+      supplementId: 5,
       type: "drug",
       imageURL: "https://freepngimg.com/save/112695-picture-fish-oil-capsule-free-download-png-hd/1000x500",
       supplementName: "감기약",
@@ -267,7 +267,7 @@ function Summary() {
       </Options>
       <SummartLists>
         {data.map((ele, idx) => {
-          return <SummaryList key={idx} pill={ele} />;
+          return <SummaryList key={idx} pill={ele} data={data} setData={setData}/>;
         })}
       </SummartLists>
     </SummaryContainer>
