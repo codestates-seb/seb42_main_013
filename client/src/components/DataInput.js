@@ -1,8 +1,5 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDisplay, faXmark } from "@fortawesome/free-solid-svg-icons";
-import { clear } from "@testing-library/user-event/dist/clear";
 
 
 export const SocialBtn = ({ name, href, bgcolor, color }) => {
@@ -54,16 +51,22 @@ export const SocialBtnCss = styled.button`
 export const FakeInput = styled.div`
   display: flex;
   flex: 1;
-  flex-direction: row;
-  border: ${(props) => props.isFocus ? "1px solid var(--blue-100)" : "var(--black-400) solid 1px"};
+  border : ${(props) => props.isFocus ?"1px solid var(--blue-100)" : "1px solid var(--black-400)"};
+  border-color: ${(props) => !props.isValid && "rgb(240, 86, 86)"};
   border-radius: 5px;
   /* 1줄 꽉채우게 */
   padding: 0 8px;
+  position: relative;
   :hover{
     background-color: #F7F9FA;
   }
-  :invalid{
-    border-color: rgb(240, 86, 86);
+  ::after{
+    position: absolute;
+    left:0;
+    bottom: -18px;
+    font-size: 12px;
+    color: rgb(240, 86, 86);
+    content: "${(props) => props.validationMessage}";
   }
 `
 
@@ -93,7 +96,7 @@ export const RealInput = styled.input`
     cursor: pointer;
   }
   ::placeholder{
-    color: var(--black-300)
+    color: var(--black-400)
   }
   &[type='date']::-webkit-datetime-edit {
     display: ${(props) => (!!props.value) ? "inline-block" : "none"};
@@ -101,17 +104,20 @@ export const RealInput = styled.input`
   &[type='date']::before{
     position: absolute;
     left: 0px;
-    color: var(--black-300);
+    color: var(--black-400);
     content: "${(props) => props.placeholder}";
     width: 100%;
     display: ${(props) => !!props.value && "none"};
   }
-
+  &[type='time']{
+    min-width: 100px;
+  }
 `
-const DeleteBtn = styled.div`
+export const DeleteBtn = styled.div`
   display: flex;
   align-items: center;
   margin-left: 8px;
+  color: var(--black-200);
   >button{
     opacity : ${(props) => props.value ? "1" : "0"};
     cursor: pointer;
@@ -122,48 +128,108 @@ const DeleteBtn = styled.div`
     height: 20px;
   }
   svg{
-    color: var(--black-200);
+    color: var(--black-400);
     width: 100%;
     height: 100%;
     fill: currentColor;
   }
 `
+// const ValidityMsg = styled.div`
+//   color: rgb(240, 86, 86);
+//   font-size: 12px;
+//   opacity : ${(props) => props.isValid ? "0" : "1"};
+// `
 
 
-
-function DataInput({ value, minlength, required, placeholder, data, setData, type }) {
+function DataInput ({name, min, max, required, placeholder, data, setData, type}) {
   const [isFocus, setIsFocus] = useState(false)
-  const changeHandler = (e) => {
-    setData({ ...data, [value]: e.target.value })
+  const [isValid, setIsValid] = useState(true)
+  const [validityState, setValidityState] = useState("")
+  
+  const getValidtyState = (e) => {
+    if(!e.target.validity.valid){
+      let validity = ''
+      for(let key in e.target.validity){
+        if(e.target.validity[key]) validity = key
+      }
+      return validity
+    }
+  }
+  const validationMessage = (validityState) => {
+    let message = ''
+    switch(validityState) {
+      case "rangeOverflow" :
+        message = "전체 용량보다 적어야 합니다."
+      break;
+      case "valueMissing" :
+        message = "필수 입력 항목입니다."
+      break;
+      case "rangeUnderflow" :
+        message = "0 이상의 숫자를 입력해주세요."
+      break;
+      case "customError" :
+        message = "잔여 알 수 보다 많아야 합니다."
+      break;
+      default:
+        message = ""
+    }
+    return message
   }
 
+
+  const changeHandler = (e) => {
+    setData({...data,[name]:e.target.value})
+    // !isValid && setIsValid(e.target.checkValidity())
+    // 한번 blur 후에 유효성 체크 되도록
+    if(name==="totalQty" && Number(e.target.value)<Number(data.currentQty)){
+      e.target.setCustomValidity("lessThanCurrent")
+    } else {
+      e.target.setCustomValidity("")
+    }
+    console.log(e.target.validity.valid)
+    !isValid && setIsValid(e.target.validity.valid)
+    setValidityState(getValidtyState(e))
+  }
   const clear = () => {
-    setData({ ...data, [value]: "" })
+    setData({...data,[name]:""})
+  }
+  const blurHandler = (e) => {
+    setIsValid(e.target.validity.valid)
+    setValidityState(getValidtyState(e))
+    setIsFocus(false)
   }
   return (
-    <FakeInput isFocus={isFocus}>
-      <RealInput
-        onFocus={() => setIsFocus(true)}
-        onBlur={() => setIsFocus(false)}
-        type={type}
-        value={data[value]}
-        onChange={changeHandler}
-        placeholder={placeholder}
-        required={required}
-        minlength={minlength}
-      />
-      {type !== "date" &&
+      <FakeInput isFocus={isFocus} isValid={isValid} validationMessage={validationMessage(validityState)}>
+        <RealInput
+          onFocus={()=>setIsFocus(true)}
+          onBlur={blurHandler}
+          type={type} 
+          value={data[name]}
+          onChange={changeHandler} 
+          placeholder={placeholder}
+          required={required}
+          min={min}
+          max={max}
+          name={name}
+        />
+        {/* { name === "ingredientAmount" &&
+          <DeleteBtn>mg</DeleteBtn>
+        } */}
+        { name === "dose" &&
+          <DeleteBtn>알</DeleteBtn>
+        }
+        { type!=="date" &&
         <>
-          <DeleteBtn value={!!data[value]} >
-            <button onClick={() => clear()}>
+          <DeleteBtn value={!!data[name]} >
+            <button onClick={()=>clear()}>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
               </svg>
             </button>
           </DeleteBtn>
         </>
-      }
-    </FakeInput>
+        }
+      </FakeInput>
   )
 }
 
