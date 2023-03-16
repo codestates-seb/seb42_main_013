@@ -31,14 +31,14 @@ public class DetailService {
 //    private final SupplementService supplementService;
 
     @Transactional
-    public Detail createDetail(Detail detail) {
-        Long userId = detail.getUser().getUserId();
-
+    public Detail createDetail(Detail detail,Long userId) {
         verifyExistDetail(userId);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new BusinessLogicException(USER_NOT_FOUND));
 
         detail.setUser(userRepository.findById(userId).orElseThrow(() ->
                 new BusinessLogicException(USER_NOT_FOUND)));
-
+        user.setDetail(detail);
 
         return detailRepository.save(detail);
     }

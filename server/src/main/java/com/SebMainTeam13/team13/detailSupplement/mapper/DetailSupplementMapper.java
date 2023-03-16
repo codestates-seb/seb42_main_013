@@ -4,6 +4,7 @@ import com.SebMainTeam13.team13.detailSupplement.dto.DetailSupplementDto;
 import com.SebMainTeam13.team13.detailSupplement.entity.DetailSupplement;
 import com.SebMainTeam13.team13.supplement.entity.Supplement;
 
+import com.SebMainTeam13.team13.supplement.service.SupplementService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -13,10 +14,12 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 public class DetailSupplementMapper {
+    private final SupplementService supplementService;
     public DetailSupplement detailSupplementPostDtoToDetailSupplement(DetailSupplementDto.Post post) {
+        Supplement supplement = supplementService.findAndVerifySupplementByName(post.getSupplementName());
+
         return  DetailSupplement.builder()
-                .detailId(post.getDetailId())
-                .supplementId(post.getSupplementId())
+
                 .expirationDate(post.getExpirationDate())
                 .startDate(post.getStartDate())
                 .endDate(post.getEndDate())
@@ -25,14 +28,16 @@ public class DetailSupplementMapper {
                 .totalCapacity(post.getTotalCapacity())
                 .dosagePerServing(post.getDosagePerServing())
                 .dosageInterval(post.getDosageInterval())
+                .supplement(supplement)
 
                 .build();
     }
 
-    public DetailSupplement detailSupplementPatchDtoToDetailSupplement(DetailSupplementDto.Patch patch) {
+    public DetailSupplement detailSupplementPatchDtoToDetailSupplement(DetailSupplementDto.Patch patch, String supplementName) {
+        Supplement supplement = supplementService.findAndVerifySupplementByName(supplementName);
+
         return  DetailSupplement.builder()
-                .detailId(patch.getDetailId())
-                .supplementId(patch.getSupplementId())
+
                 .expirationDate(patch.getExpirationDate())
                 .startDate(patch.getStartDate())
                 .endDate(patch.getEndDate())
@@ -41,6 +46,7 @@ public class DetailSupplementMapper {
                 .totalCapacity(patch.getTotalCapacity())
                 .dosagePerServing(patch.getDosagePerServing())
                 .dosageInterval(patch.getDosageInterval())
+                .supplement(supplement)
 
                 .build();
     }
@@ -48,8 +54,7 @@ public class DetailSupplementMapper {
     public DetailSupplementDto.Response detailSupplementToDetailSupplementResponseDto(DetailSupplement detailSupplement) {
 
         return DetailSupplementDto.Response.builder()
-                .detailId(detailSupplement.getDetailId())
-                .supplementId(detailSupplement.getSupplementId())
+
                 .expirationDate(detailSupplement.getExpirationDate())
                 .startDate(detailSupplement.getStartDate())
                 .endDate(detailSupplement.getEndDate())

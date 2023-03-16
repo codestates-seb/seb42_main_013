@@ -1,6 +1,8 @@
 package com.SebMainTeam13.team13.detailSupplement.entity;
 
 
+import com.SebMainTeam13.team13.detail.entity.Detail;
+import com.SebMainTeam13.team13.supplement.entity.Supplement;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,8 +22,12 @@ public class DetailSupplement {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long detailSupplementId;
-    private Long detailId;
-    private Long supplementId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "detail_id")
+    private Detail detail;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "supplement_id")
+    private Supplement supplement;
     private String expirationDate;
     private String startDate;
     private String endDate;

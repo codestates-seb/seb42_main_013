@@ -14,8 +14,7 @@ public class DetailSupplementDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Post {
-        private Long detailId;
-        private Long supplementId;
+        private String supplementName;
         private String expirationDate;
         private String startDate;
         private String endDate;
@@ -33,8 +32,7 @@ public class DetailSupplementDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Patch {
-        private Long detailId;
-        private Long supplementId;
+        private String supplementName;
         private String expirationDate;
         private String startDate;
         private String endDate;
@@ -52,8 +50,6 @@ public class DetailSupplementDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Response {
-        private Long detailId;
-        private Long supplementId;
         private String expirationDate;
         private String startDate;
         private String endDate;

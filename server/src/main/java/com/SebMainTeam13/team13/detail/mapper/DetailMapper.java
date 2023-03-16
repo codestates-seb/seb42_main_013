@@ -21,12 +21,11 @@ public class DetailMapper {
     private final UserMapper userMapper;
 
     public Detail detailPostDtoToDetail(DetailDto.Post post) {
-        User user = new User();
-        user.setUserId(post.getUserId());
-        Detail detail = new Detail();
-        detail.setBirthDate(post.getBirthDate());
-        detail.setGender(post.getGender());
-        detail.setUser(user);
+        return Detail.builder()
+
+                .birthDate(post.getBirthDate())
+                .gender(post.getGender())
+                .build();
 //        List<DetailSupplement> detailSupplements = new ArrayList<>();
 //        if (post.getSupplements() != null) {
 //            detailSupplements = post.getSupplements()
@@ -40,7 +39,7 @@ public class DetailMapper {
 //                    }).collect(Collectors.toList());
 //        }
 //        detail.setDetailSupplements(detailSupplements);
-        return detail;
+
     }
 
     public Detail detailPatchDtoToDetail(DetailDto.Patch patch) {

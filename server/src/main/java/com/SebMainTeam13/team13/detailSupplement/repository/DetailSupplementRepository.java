@@ -1,5 +1,6 @@
 package com.SebMainTeam13.team13.detailSupplement.repository;
 
+import com.SebMainTeam13.team13.detail.entity.Detail;
 import com.SebMainTeam13.team13.detailSupplement.entity.DetailSupplement;
 import com.SebMainTeam13.team13.supplement.entity.Supplement;
 import org.springframework.data.domain.Page;
@@ -14,4 +15,8 @@ public interface DetailSupplementRepository extends JpaRepository<DetailSuppleme
  //   Optional<DetailSupplement> findByDetailSupplementName(String supplementName);
  //   List<Supplement> findAllBySupplementNameIn(List<String> supplementNames);
     Optional<DetailSupplement> findByDetailSupplementId(Long detailSupplementId);
+
+    Optional<DetailSupplement>findByDetailAndSupplement(Detail detail, Supplement supplement);
+
+
 }
