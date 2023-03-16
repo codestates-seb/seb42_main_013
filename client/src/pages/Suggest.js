@@ -1,6 +1,14 @@
 import styled from "styled-components";
 import SearchBar from "../components/SearchBar";
 import ScrollBar from "../components/ScrollBar";
+import { useSelector, useDispatch } from "react-redux";
+import { health } from "../components/Health";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import { concernActions } from "../reducer/concernReducer";
+import card1 from "../images/cards/card1.jpg";
+import card2 from "../images/cards/card2.jpg";
+import card3 from "../images/cards/card3.jpg";
 
 const SuggestContainer = styled.div`
   background-color: #ffffff;
@@ -14,13 +22,16 @@ const SugContentConatiner = styled.div`
   padding: 0 20px;
   .smallcontent-area {
     display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
     gap: 16px;
   }
 `
 
 const LargeContent = styled.div`
   margin-bottom: 16px;
-  padding: 16px;
+  padding: var(--gap-md);
   width: 100%;
   height: 360px;
   background-color: rgba(91, 133, 235, 0.8);
@@ -29,45 +40,56 @@ const LargeContent = styled.div`
   font-weight: 500;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   @media (max-width: 427px){
     height: 80vw;
-    font-size: 3.7vw;
+    font-size: 3.5vw;
     }
 `
 
 const SupplementsArea = styled.div`
-width: 100%;
-height: 100%;
-display: flex;
-justify-content: center;
-align-items: center;
-margin-top: var(--gap-sm);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-top: var(--gap-md);
+  gap: 4px;
 `
 
 const SupplementDiv = styled.div`
-  width: 29%;
-  height: 100%;
+  width: 30%;
+  height: 48.5%;
   display: flex;
   flex-direction: column;
   margin: 0 var(--gap-lg);
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  white-space: pre-wrap;
+  text-align: center;
+  @media (max-width: 427px){
+    width: 22.4vw;
+  }
 `
 
 const SupplementImgDiv = styled.div`
-  width: 100%;
+  width: 102px;
   height: 70%;
   border-radius: 25px;
   background-color: #ffffff;
   margin-bottom: 4px;
+  @media (max-width: 427px){
+    width: 21.2vw;
+  }
 `
 
-const SmallContent = styled.div`
-  margin-bottom: 16px;
-  padding: 16px;
-  width: 100%;
+const SmallContent1 = styled.div`
+  padding: 12px;
+  width: 46.395%;
   height: 180px;
-  border: 1px solid var(--black-300);
+  border-style: none;
+  background-color: var(--black-500);
   border-radius: 30px;
   color: var(--black-100);
   font-size: 18px;
@@ -77,62 +99,88 @@ const SmallContent = styled.div`
   line-height: 140%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
   text-align: ${(props) => props.align || "left"};
+  div {
+    width: 100%;
+  }
   @media (max-width: 427px){
     height: 42vw;
     font-size: 4.2vw;
-    }
+  }
+`
+
+const SmallContent2 = styled(SmallContent1)`
+  align-items: center;  
+  text-align: center;
+  background-image: url(${card2});
+  background-size: cover;
+  background-position: center;
+  border-style: none;
+`
+
+const SmallContent3 = styled(SmallContent1)`
+  align-items: center;
+  text-align: center;
+  background-image: url(${card3});
+  background-size: 100%;
+  background-position: center;
+  border-style: none;
+  color: var(--black-100);
+
+`
+
+const SmallContent4 = styled(SmallContent1)`
+  text-align: right;
+  border-style: none;
+  align-items: baseline;
+  background-image: url(${card1});
+  background-size: cover;
+  background-position: center;
 `
 
 function Suggest() {
-  const content1 = "면역력이 걱정인 당신,\n매일 아침\n홍삼스틱 하나 어떠신가요?"
-  const content2 = "눈 건강엔 오메가3 영양제도 좋지만\n등 푸른 생선도 함께 드세요!"
+  const state = useSelector(state => state.concernReducer);
+  const dispatch = useDispatch();
+  const clickedConcern = health.filter(el => el.title === state.isClicked)[0];
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    const data = "영양보충"
+    dispatch(concernActions.changeConcernClicked({ data }));
+  }, [pathname])
+
   return (
     <SuggestContainer>
       <SearchBar />
       <SugContentConatiner>
         <ScrollBar />
         <LargeContent>
-          <div>눈 건강에 좋은 영양제 추천</div>
+          <div>{state.isClicked}에 좋은 영양제 추천</div>
           <SupplementsArea>
-            <SupplementDiv>
-              <SupplementImgDiv></SupplementImgDiv>
-              <div>영양제1</div>
-            </SupplementDiv>
-            <SupplementDiv>
-              <SupplementImgDiv></SupplementImgDiv>
-              <div>영양제2</div>
-            </SupplementDiv>
-          </SupplementsArea>
-          <SupplementsArea>
-            <SupplementDiv>
-              <SupplementImgDiv></SupplementImgDiv>
-              <div>영양제3</div>
-            </SupplementDiv>
-            <SupplementDiv>
-              <SupplementImgDiv></SupplementImgDiv>
-              <div>영양제4</div>
-            </SupplementDiv>
+            {clickedConcern.supplementsList.map((el, idx) => {
+              return (
+                <SupplementDiv key={idx}>
+                  <SupplementImgDiv></SupplementImgDiv>
+                  <div>{el}</div>
+                </SupplementDiv>
+              )
+            })}
           </SupplementsArea>
         </LargeContent>
         <div className="smallcontent-area">
-        </div>
-        <div className="smallcontent-area">
-          <SmallContent>
-            {content1}
-          </SmallContent>
-          <SmallContent>
-            {content2}
-          </SmallContent>
-        </div>
-        <div className="smallcontent-area">
-          <SmallContent>
-            영역1
-          </SmallContent>
-          <SmallContent>
-            영역2
-          </SmallContent>
+          <SmallContent1>
+            <div>{clickedConcern.contents[0]}</div>
+          </SmallContent1>
+          <SmallContent2>
+            <div>{clickedConcern.contents[1]}</div>
+          </SmallContent2>
+          <SmallContent3>
+            <div>{clickedConcern.contents[2]}</div>
+          </SmallContent3>
+          <SmallContent4>
+            <div>{clickedConcern.contents[3]}</div>
+          </SmallContent4>
         </div>
       </SugContentConatiner>
     </SuggestContainer>

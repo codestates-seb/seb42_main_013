@@ -52,14 +52,14 @@ function SearchBar({ setData }) {
 
   const searchBtnHandler = () => {
     if (state.searchValue.length > 0) {
-      navigate(`/search/:${state.searchValue}`)
+      navigate(`/search?query=${state.searchValue}`)
     }
   }
 
   const searchEnterHandler = (e) => {
     if (e.key === "Enter") {
       if (state.searchValue.length > 0) {
-        navigate(`/search/:${state.searchValue}`)
+        navigate(`/search?query=${state.searchValue}`)
       }
     }
   }
