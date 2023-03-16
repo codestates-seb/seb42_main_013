@@ -20,4 +20,7 @@ public class Concern {
 
     @ElementCollection(fetch = FetchType.LAZY)
     private List<String> contents = new ArrayList<>();
+
+    @ElementCollection(fetch = FetchType.LAZY)
+    private List<String> supplementsList = new ArrayList<>();
 }
