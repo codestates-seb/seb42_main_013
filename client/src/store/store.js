@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
+import dataCreateReducer from "../reducer/dataCreateReducer";
 import searchReducer from "../reducer/searchReducer";
 
 
 
 const store = configureStore({
   reducer: {
-    searchReducer
+    searchReducer,
+    create: dataCreateReducer,
   }
 })
 
