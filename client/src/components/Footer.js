@@ -5,7 +5,7 @@ import { faPills } from "@fortawesome/free-solid-svg-icons";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { searchActions } from "../reducer/searchReducer";
 
@@ -40,29 +40,29 @@ const FooterContainer = styled.div`
   }
 `
 
-function Footer() {
-  const [currentTab, setCurrentTab] = useState(1);
-  const categoryArr = [
-    { name: '달력관리', src: faCalendarCheck, link: '/calendar' },
-    { name: '추천/검색', src: faMagnifyingGlass, link: '/' },
-    { name: '알약관리', src: faPills, link: '/summary' },
-    { name: '마이페이지', src: faUser, link: '/mypage' }
-  ]
-  const dispatch = useDispatch();
+const FooterBtn = styled.button`
+  background-color: transparent;
+  border-style: none;
+`
 
-  const selectCategory = (index) => {
-    dispatch(searchActions.removeSearchValue());
-    setCurrentTab(index);
-  }
+function Footer() {
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const categoryArr = [
+    { name: '달력관리', src: faCalendarCheck, link: ["/calendar"] },
+    { name: '추천/검색', src: faMagnifyingGlass, link: ["/", "/search"] },
+    { name: '알약관리', src: faPills, link: ["/summary"] },
+    { name: '마이페이지', src: faUser, link: ["/mypage"] }
+  ]
 
   return (
     <FooterContainer>
       {categoryArr.map((el, idx) => {
         return (
-          <Link to={el.link} className={currentTab === idx ? "category selected" : "category"} key={idx} onClick={() => selectCategory(idx)}>
+          <FooterBtn className={el.link.includes(pathname) ? "category selected" : "category"} key={idx} onClick={() => navigate(el.link[0])}>
             <FontAwesomeIcon icon={el.src} className="footer-icon" />
             <div>{el.name}</div>
-          </Link>
+          </FooterBtn>
         )
       })}
     </FooterContainer>

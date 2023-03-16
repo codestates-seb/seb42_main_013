@@ -54,7 +54,7 @@ const TeamDiv = styled.div`
 const TeamnameDiv = styled.div`
   width: 100%;
   font-size: 15px;
-  margin-bottom: var(--gap-lg);
+  margin-bottom: var(--gap-md);
   padding-bottom: var(--gap-sm);
   font-weight: 600;
   display: flex;
