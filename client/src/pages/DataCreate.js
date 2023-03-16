@@ -117,8 +117,6 @@ const Cycle = styled.div`
   &.ndays {
     flex: ${(props) => (props.isEditMode ? "6" : "1")};
   }
-  > input {
-  }
   > span {
     padding: 8px 0px;
     opacity: ${(props) => (props.isEditMode ? "0" : "1")};
