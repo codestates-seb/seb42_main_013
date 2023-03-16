@@ -4,6 +4,9 @@ import CreateModal from "../components/CreateModal";
 import Swiper from "../components/Swiper";
 import DataInput, { DeleteBtn, RealInput } from "../components/DataInput";
 import Tags from "../components/Tags";
+import { useDispatch, useSelector } from "react-redux";
+import { setCreateData } from "../reducer/dataCreateReducer";
+
 
 const DataCreateContainer = styled.div`
   display: flex;
@@ -140,22 +143,9 @@ function DataCrete() {
   const openeModalHandler = () => {
     setIsOpen(!isOpen);
   };
-
-  const [data, setData] = useState({
-    dataID: null,
-    type: "supplement",
-    img: null,
-    name: "",
-    ingredients: [],
-    expiryDate: "",
-    currentQty: "",
-    totalQty: "",
-    startDate: new Date().toISOString().substring(0, 10),
-    endDate: "",
-    cycle: "1",
-    time: [],
-    dose: 1,
-  });
+  const data = useSelector((state)=> state.create)
+  const dispatch = useDispatch();
+  const setData = (data) => dispatch(setCreateData(data))
   const inputEl = useRef(null);
   const [isEditMode, setEditMode] = useState(false);
   useEffect(() => {
@@ -164,23 +154,22 @@ function DataCrete() {
     }
   }, [isEditMode]);
   const openEditHandler = () => {
-    setData({ ...data, cycle: "" });
+    setData({ ...data, dosageInterval: "" });
     setEditMode(true);
   };
   const cycleHandler = (e) => {
-    setData({ ...data, cycle: e.target.value });
+    setData({ ...data, dosageInterval: e.target.value });
   };
   const blurHandler = (e) => {
     setEditMode(false);
-    !e.target.value && setData({ ...data, cycle: "1" });
+    !e.target.value && setData({ ...data, dosageInterval: "1" });
   };
   const deleteIngredient = (ele, idx) => {
-    setData({ ...data, ingredients: [...data.ingredients.slice(0, idx), ...data.ingredients.slice(idx + 1)] });
+    setData({ ...data, nutrients: [...data.nutrients.slice(0, idx), ...data.nutrients.slice(idx + 1)] });
   };
   const deleteTime = (ele, idx) => {
-    setData({ ...data, time: [...data.time.slice(0, idx), ...data.time.slice(idx + 1)] });
+    setData({ ...data, takingTime: [...data.takingTime.slice(0, idx), ...data.takingTime.slice(idx + 1)] });
   };
-
   return (
     <DataCreateContainer>
       <InputSection>
@@ -229,18 +218,18 @@ function DataCrete() {
           약 이름<p>*</p>
         </h3>
         <div>
-          <DataInput required={1} type="text" data={data} setData={setData} name="name" />
+          <DataInput required={1} type="text" data={data} setData={setData} name="supplementName" />
         </div>
       </InputSection>
       <InputSection>
         <h3>주요 성분</h3>
         <div>
-          {data.ingredients.map((ele, idx) => {
+          {data.nutrients && data.nutrients.map((ele, idx) => {
             return <Tags key={idx} ele={ele} idx={idx} deleteEleHandler={deleteIngredient} />;
           })}
           <AddBtn
             onClick={() => {
-              setWhichData("ingredients");
+              setWhichData("nutrients");
               openeModalHandler();
             }}
           >
@@ -260,9 +249,9 @@ function DataCrete() {
       <InputSection>
         <h3>잔여알수 / 전체용량<p>*</p></h3>
         <Box>
-          <DataInput max={data.totalQty} placeholder="잔여알수" required={1} type="number" name="currentQty" data={data} setData={setData} />
+          <DataInput max={data.totalCapacity} placeholder="잔여알수" required={1} type="number" name="pillsLeft" data={data} setData={setData} />
           /
-          <DataInput placeholder="전체용량" required={1} type="number" name="totalQty" data={data} setData={setData} />
+          <DataInput placeholder="전체용량" required={1} type="number" name="totalCapacity" data={data} setData={setData} />
         </Box>
       </InputSection>
       <InputSection>
@@ -278,13 +267,13 @@ function DataCrete() {
           복용 주기<p>*</p>
         </h3>
         <div>
-          <Cycle className="everyday" selected={data.cycle === "1" ? 1 : 0} onClick={() => setData({ ...data, cycle: "1" })}>
+          <Cycle className="everyday" selected={data.dosageInterval === "1" ? 1 : 0} onClick={() => setData({ ...data, cycle: "1" })}>
             <span>매일</span>
           </Cycle>
-          <Cycle className="ndays" selected={data.cycle !== "1" ? 1 : 0} onClick={openEditHandler} isEditMode={isEditMode}>
+          <Cycle className="ndays" selected={data.dosageInterval !== "1" ? 1 : 0} onClick={openEditHandler} isEditMode={isEditMode}>
             {isEditMode && (
               <>
-                <RealInput type="number" value={data.cycle} ref={inputEl} onBlur={blurHandler} onChange={cycleHandler} placeholder="몇일마다 복용하시나요" />
+                <RealInput type="number" value={data.dosageInterval} ref={inputEl} onBlur={blurHandler} onChange={cycleHandler} placeholder="몇일마다 복용하시나요" />
                 <DeleteBtn value={1}>
                   <button>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -294,19 +283,19 @@ function DataCrete() {
                 </DeleteBtn>
               </>
             )}
-            {!isEditMode && <span>{data.cycle === "1" ? "N" : data.cycle}일</span>}
+            {!isEditMode && <span>{data.dosageInterval === "1" ? "N" : data.dosageInterval}일</span>}
           </Cycle>
         </div>
       </InputSection>
       <InputSection>
         <h3>복용 시간</h3>
         <div>
-          {data.time.map((ele, idx) => {
+          {data.takingTime && data.takingTime.map((ele, idx) => {
             return <Tags key={idx} ele={ele} idx={idx} deleteEleHandler={deleteTime} />;
           })}
           <AddBtn
             onClick={() => {
-              setWhichData("time");
+              setWhichData("takingTime");
               openeModalHandler();
             }}
           >
@@ -322,7 +311,7 @@ function DataCrete() {
           1회 복용량<p>*</p>
         </h3>
         <div>
-          <DataInput required={1} min={1} placeholder="1회 복용량" type="number" name="dose" data={data} setData={setData} />
+          <DataInput required={1} min={1} placeholder="1회 복용량" type="number" name="dosagePerServing" data={data} setData={setData} />
         </div>
       </InputSection>
 
