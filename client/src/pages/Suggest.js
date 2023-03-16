@@ -150,8 +150,6 @@ function Suggest() {
     dispatch(concernActions.changeConcernClicked({ data }));
   }, [pathname])
 
-  console.log(clickedConcern);
-
   return (
     <SuggestContainer>
       <SearchBar />

@@ -48,6 +48,7 @@ const FooterBtn = styled.button`
 function Footer() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const categoryArr = [
     { name: '달력관리', src: faCalendarCheck, link: ["/calendar"] },
     { name: '추천/검색', src: faMagnifyingGlass, link: ["/", "/search"] },
@@ -59,7 +60,7 @@ function Footer() {
     <FooterContainer>
       {categoryArr.map((el, idx) => {
         return (
-          <FooterBtn className={el.link.includes(pathname) ? "category selected" : "category"} key={idx} onClick={() => navigate(el.link[0])}>
+          <FooterBtn className={el.link.includes(pathname) ? "category selected" : "category"} key={idx} onClick={() => {navigate(el.link[0]); dispatch(searchActions.removeSearchValue())}}>
             <FontAwesomeIcon icon={el.src} className="footer-icon" />
             <div>{el.name}</div>
           </FooterBtn>
