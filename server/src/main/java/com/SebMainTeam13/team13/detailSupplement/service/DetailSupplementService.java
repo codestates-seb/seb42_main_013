@@ -16,6 +16,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import javax.persistence.EntityManager;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static com.SebMainTeam13.team13.exception.ExceptionCode.DETAIL_SUPPLEMENT_NOT_FOUND;
@@ -28,6 +31,7 @@ public class DetailSupplementService {
     private final DetailSupplementRepository detailDetailSupplementRepository;
     private final DetailService detailService;
     private final UserService userservice;
+    private EntityManager entityManager;
 
     private final SupplementService supplementService;
 
@@ -79,6 +83,11 @@ public class DetailSupplementService {
 
         return verifiedDetailSupplement;
     }
+
+    public void deleteDetailSupplement(DetailSupplement detailSupplement){
+       detailDetailSupplementRepository.delete(detailSupplement);
+    }
+
     //#### 내부 메서드 ###//
 
     private void  verifyDetailSupplementByDetailAndSupplement(DetailSupplement detailSupplement) {
@@ -108,5 +117,11 @@ public class DetailSupplementService {
         Supplement supplement = supplementService.findAndVerifySupplementByName(supplementName);
 
         return detailDetailSupplementRepository.findByDetailAndSupplement(detail, supplement).get();
+    }
+    public List<DetailSupplement> findDetailSupplements (Long userId){
+        User user = userservice.getUser(userId);
+        Detail detail = user.getDetail();
+
+        return detailDetailSupplementRepository.findDetailSupplementsByDetail(detail);
     }
 }

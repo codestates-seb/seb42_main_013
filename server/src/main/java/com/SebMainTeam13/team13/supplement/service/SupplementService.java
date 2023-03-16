@@ -6,9 +6,13 @@ import com.SebMainTeam13.team13.supplement.entity.Supplement;
 import com.SebMainTeam13.team13.supplement.repository.SupplementRepository;
 import com.SebMainTeam13.team13.user.entity.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 import static com.SebMainTeam13.team13.exception.ExceptionCode.*;
@@ -64,5 +68,8 @@ public class SupplementService {
         return optionalSupplement.orElseThrow(() ->
                 new BusinessLogicException(SUPPLEMENT_NOT_FOUND));
     }
+
+
+
 }
 

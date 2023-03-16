@@ -66,6 +66,8 @@ public class DetailSupplementMapper {
 
                 .build();
     }
-
+    public List<DetailSupplementDto.Response> detailSupplementsToDetailSupplementResponseDtos(List<DetailSupplement> detailSupplements) {
+        return detailSupplements.stream().map(DetailSupplementDto.Response::new).collect(Collectors.toList());
+    }
 
 }
