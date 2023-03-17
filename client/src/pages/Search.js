@@ -2,7 +2,7 @@ import styled from "styled-components";
 import SearchBar from "../components/SearchBar";
 import Items from "../components/Items";
 import { useEffect, useState } from "react";
-import { useSearchParams, useLocation } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
@@ -94,7 +94,6 @@ const PaginationDiv = styled.div`
 function Search() {
   const [data, setData] = useState([]);
   const [isClicked, setIsClicked] = useState(1);
-  const { pathname } = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
   const numbers = [1, 2, 3, 4, 5]
   const query = searchParams.get("query");
@@ -132,8 +131,6 @@ function Search() {
       setIsClicked(isClicked + 1);
     }
   }
-
-  console.log(pathname);
 
   return (
     <SearchContainer>

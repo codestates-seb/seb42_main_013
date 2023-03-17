@@ -20,6 +20,7 @@ const HeaderContainer = styled.div`
   padding: 0 20px;
   .logo {
     width: 120px;
+    margin-top: 2px;
   }
   .icon {
     width: 20px;
