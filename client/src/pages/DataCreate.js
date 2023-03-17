@@ -6,6 +6,7 @@ import DataInput, { DeleteBtn, RealInput } from "../components/DataInput";
 import Tags from "../components/Tags";
 import { useDispatch, useSelector } from "react-redux";
 import { setCreateData } from "../reducer/dataCreateReducer";
+import FileInput from "../components/FileInput";
 
 
 const DataCreateContainer = styled.div`
@@ -212,6 +213,7 @@ function DataCrete() {
       <InputSection>
         <h3>이미지</h3>
         <Swiper />
+        {/* <FileInput /> */}
       </InputSection>
       <InputSection>
         <h3>
