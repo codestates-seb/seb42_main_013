@@ -40,7 +40,7 @@ public class ConcernController {
     public ResponseEntity patchConcern(@PathVariable("concern-id") @Positive long concernId,
                                        @RequestBody ConcernDto.Patch concernPatchDto){
 
-        Concern concern = concernService.updateConcern(mapper.concernPatchDtoToConcern(concernPatchDto));
+        Concern concern = concernService.updateConcern(mapper.concernPatchDtoToConcern(concernPatchDto),concernId);
         ConcernDto.Response response = mapper.concernToConcernResponseDto(concern);
 
         return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.OK);
