@@ -2,6 +2,7 @@ package com.SebMainTeam13.team13.detail.entity;
 
 
 import com.SebMainTeam13.team13.audit.Auditable;
+import com.SebMainTeam13.team13.concern.entity.Concern;
 import com.SebMainTeam13.team13.detailSupplement.entity.DetailSupplement;
 import com.SebMainTeam13.team13.user.entity.User;
 import lombok.*;
@@ -50,4 +51,7 @@ public class Detail  {
     }
     @OneToMany(mappedBy = "detail", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DetailSupplement> detailSupplements = new ArrayList<>();
+
+    @ManyToMany
+    private List<Concern> concerns = new ArrayList<>();
 }

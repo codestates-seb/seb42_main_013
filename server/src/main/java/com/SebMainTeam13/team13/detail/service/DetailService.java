@@ -1,5 +1,7 @@
 package com.SebMainTeam13.team13.detail.service;
 
+import com.SebMainTeam13.team13.concern.entity.Concern;
+import com.SebMainTeam13.team13.concern.repository.ConcernRepository;
 import com.SebMainTeam13.team13.detail.entity.Detail;
 import com.SebMainTeam13.team13.detail.repository.DetailRepository;
 import com.SebMainTeam13.team13.exception.BusinessLogicException;
@@ -27,18 +29,18 @@ import static com.SebMainTeam13.team13.exception.ExceptionCode.*;
 public class DetailService {
     private final DetailRepository detailRepository;
     private final UserRepository userRepository;
+    private final ConcernRepository concernRepository;
 //    private final SupplementRepository supplementRepository;
 //    private final SupplementService supplementService;
 
     @Transactional
     public Detail createDetail(Detail detail,Long userId) {
         verifyExistDetail(userId);
-        User user = userRepository.findById(userId)
+       User user = userRepository.findById(userId)
                 .orElseThrow(() -> new BusinessLogicException(USER_NOT_FOUND));
-
-        detail.setUser(userRepository.findById(userId).orElseThrow(() ->
-                new BusinessLogicException(USER_NOT_FOUND)));
+        detail.setUser(user);
         user.setDetail(detail);
+        for(Concern i:detail.getConcerns()) i.getDetails().add(detail);
 
         return detailRepository.save(detail);
     }

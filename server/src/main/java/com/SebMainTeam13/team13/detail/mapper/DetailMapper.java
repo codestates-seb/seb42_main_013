@@ -1,6 +1,8 @@
 package com.SebMainTeam13.team13.detail.mapper;
 
 
+import com.SebMainTeam13.team13.concern.entity.Concern;
+import com.SebMainTeam13.team13.concern.repository.ConcernRepository;
 import com.SebMainTeam13.team13.detail.dto.DetailDto;
 import com.SebMainTeam13.team13.detail.entity.Detail;
 import com.SebMainTeam13.team13.user.dto.UserDto;
@@ -19,26 +21,18 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class DetailMapper {
     private final UserMapper userMapper;
-
+    private final ConcernRepository concernRepository;
     public Detail detailPostDtoToDetail(DetailDto.Post post) {
+       List<Concern> concerns = new ArrayList<>();
+       for(Long i:post.getConcernIds()){
+           concerns.add(concernRepository.findByConcernId(i).get());
+       }
         return Detail.builder()
 
                 .birthDate(post.getBirthDate())
                 .gender(post.getGender())
+                .concerns(concerns)
                 .build();
-//        List<DetailSupplement> detailSupplements = new ArrayList<>();
-//        if (post.getSupplements() != null) {
-//            detailSupplements = post.getSupplements()
-//                    .stream()
-//                    .map(Supplement::new)
-//                    .map(Supplement -> {
-//                        DetailSupplement detailSupplement = new DetailSupplement();
-//                        detailSupplement.setDetail(detail);
-//                        detailSupplement.setSupplement(Supplement);
-//                        return detailSupplement;
-//                    }).collect(Collectors.toList());
-//        }
-//        detail.setDetailSupplements(detailSupplements);
 
     }
 
@@ -48,39 +42,19 @@ public class DetailMapper {
                 .birthDate(patch.getBirthDate())
                 .gender(patch.getGender())
                 .build();
-//        List<DetailSupplement> detailSupplements = patch.getSupplements()
-//                .stream()
-//                .map(Supplement::new)
-//                .map(Supplement -> {
-//                    DetailSupplement detailSupplement = new DetailSupplement();
-//                    detailSupplement.setDetail(detail);
-//                    detailSupplement.setSupplement(Supplement);
-//                    return detailSupplement;
-//                }).collect(Collectors.toList());
-//        detail.setDetailSupplements(detailSupplements);
 
     }
 
     public DetailDto.Response detailToDetailResponseDto(Detail detail) {
-//        List<String> SupplementNames = detail.getDetailSupplements().stream()
-//                .map(detailSupplement -> detailSupplement.getSupplement().getName())
-//                .collect(Collectors.toList());
+
         UserDto.Response userresponse = userMapper.userToUserResponseDto(detail.getUser());
 
         return DetailDto.Response.builder()
                 .detailId(detail.getDetailId())
                 .birthDate(detail.getBirthDate())
                 .gender(detail.getGender())
- //               .owner(userresponse)
- //               .Supplements(SupplementNames)
- //               .detailType(detail.getDetailType())
+
                 .build();
     }
-
-//    public List<DetailDto.Response> detailsToDetailResponseDtos(List<Detail> details) {
-//        return details.stream()
-//                .map(this::detailToDetailResponseDto)
-//                .collect(Collectors.toList());
-//    }
 
 }

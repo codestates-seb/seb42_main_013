@@ -4,17 +4,21 @@ import com.SebMainTeam13.team13.concern.dto.ConcernDto;
 import com.SebMainTeam13.team13.concern.entity.Concern;
 import com.SebMainTeam13.team13.concern.mapper.ConcernMapper;
 import com.SebMainTeam13.team13.concern.service.ConcernService;
+import com.SebMainTeam13.team13.dto.ListResponseDto;
 import com.SebMainTeam13.team13.dto.SingleResponseDto;
 import com.SebMainTeam13.team13.utils.UriCreator;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Positive;
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/concerns")
+@RequiredArgsConstructor
 public class ConcernController {
 
     private final static String CONCERN_DEFAULT_URL = "/concerns";
@@ -22,10 +26,7 @@ public class ConcernController {
     private final ConcernService concernService;
     private final ConcernMapper mapper;
 
-    public ConcernController(ConcernService concernService, ConcernMapper mapper) {
-        this.concernService = concernService;
-        this.mapper = mapper;
-    }
+
 
     @PostMapping
     public ResponseEntity postConcern(@RequestBody ConcernDto.Post concernPostDto){
@@ -38,7 +39,7 @@ public class ConcernController {
     @PatchMapping("/{concern-id}")
     public ResponseEntity patchConcern(@PathVariable("concern-id") @Positive long concernId,
                                        @RequestBody ConcernDto.Patch concernPatchDto){
-        concernPatchDto.setConcernId(concernId);
+
         Concern concern = concernService.updateConcern(mapper.concernPatchDtoToConcern(concernPatchDto));
         ConcernDto.Response response = mapper.concernToConcernResponseDto(concern);
 
@@ -52,13 +53,12 @@ public class ConcernController {
 
         return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.OK);
     }
+    @GetMapping
+    public ResponseEntity getConcerns() {
+        List<Concern> concerns = concernService.findConcerns();
+        List<ConcernDto.Response> responses = mapper.concernsToConcernResponseDtos(concerns);
 
-//    @GetMapping
-//    public ResponseEntity getConcerns(){
-//        List<Concern> concernList = concernService.findConcerns();
-//
-//        List<ConcernDto.Response> responses = mapper.concernsToConcernResponseDtos(concernList);
-//
-//        return new ResponseEntity<>(responses, HttpStatus.OK);
-//    }
+        return new ResponseEntity<>(new ListResponseDto<>(responses),HttpStatus.OK);
+    }
+
 }

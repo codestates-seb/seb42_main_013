@@ -1,5 +1,6 @@
 package com.SebMainTeam13.team13.user.controller;
 
+import com.SebMainTeam13.team13.detail.mapper.DetailMapper;
 import com.SebMainTeam13.team13.dto.MultiResponseDto;
 import com.SebMainTeam13.team13.dto.SingleResponseDto;
 import com.SebMainTeam13.team13.user.dto.UserDto;
@@ -29,6 +30,7 @@ public class UserController {
     private final UserMapper mapper;
     private final UserService userService;
 
+
     @PostMapping
     public ResponseEntity createUser(@Valid @RequestBody UserDto.Post postDto) {
         User user = userService.createUser(mapper.userPostToUser(postDto));
@@ -49,7 +51,7 @@ public class UserController {
     @GetMapping("/{userId}")
     public ResponseEntity getUser(@PathVariable @Positive long userId) {
         User user = userService.getUser(userId);
-        UserDto.Response response = mapper.userToUserResponseDto(user);
+        UserDto.Response response = mapper.userToResponse(user);
 
         return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.OK);
     }
