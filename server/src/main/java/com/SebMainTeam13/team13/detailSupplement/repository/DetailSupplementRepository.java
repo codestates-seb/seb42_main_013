@@ -18,5 +18,5 @@ public interface DetailSupplementRepository extends JpaRepository<DetailSuppleme
 
     Optional<DetailSupplement>findByDetailAndSupplement(Detail detail, Supplement supplement);
 
-
+    List<DetailSupplement>findDetailSupplementsByDetail(Detail detail);
 }

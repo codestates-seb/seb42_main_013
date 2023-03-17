@@ -1,5 +1,6 @@
 package com.SebMainTeam13.team13.supplement.controller;
 
+import com.SebMainTeam13.team13.dto.MultiResponseDto;
 import com.SebMainTeam13.team13.supplement.dto.SupplementDto;
 import com.SebMainTeam13.team13.supplement.entity.Supplement;
 import com.SebMainTeam13.team13.dto.SingleResponseDto;
@@ -9,6 +10,8 @@ import com.SebMainTeam13.team13.supplement.mapper.SupplementMapper;
 import com.SebMainTeam13.team13.supplement.service.SupplementService;
 import com.SebMainTeam13.team13.utils.UriCreator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/supplements")
@@ -55,5 +59,6 @@ public class SupplementController {
 
         return new ResponseEntity<>(new SingleResponseDto<>(response),HttpStatus.OK);
     }
+
 
 }
