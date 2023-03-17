@@ -8,12 +8,9 @@ public enum ExceptionCode {
     NOT_IMPLEMENTATION(501, "Not Implementation"),
     INVALID_MEMBER_STATUS(400, "Invalid member status"),
     DETAIL_NOT_FOUND(404, "Question not found"),
-    DETAIL_EXISTS(409, "Detail already exists"),
-    CONCERN_NOT_FOUND(404, "Concern not found"),
     SUPPLEMENT_NOT_FOUND(404, "Supplement not found"),
     DETAIL_SUPPLEMENT_NOT_FOUND(404, "DetailSupplement not found"),
     DETAIL_EXISTS(409, "Detail already exists");
-
     @Getter
     private int status;
 
