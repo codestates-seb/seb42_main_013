@@ -48,7 +48,12 @@ function Header() {
 
   const prevBtnHandler = (e) => {
     e.preventDefault();
-    navigate(-1);
+    if (pathname === "/search") {
+      dispatch(searchActions.removeSearchValue());
+      navigate("/");
+    } else {
+      navigate(-1);
+    }
   }
 
   const removeHandler = () => {
@@ -58,9 +63,9 @@ function Header() {
   return (
     <HeaderContainer>
       <FontAwesomeIcon icon={faChevronLeft}
-      className={`${(pathname === "/datacreate" || pathname === "/login" || pathname === "/search") ? "icon" : "icon hidden"}`}
-      onClick={prevBtnHandler}/>
-      <Link to="/" onClick={removeHandler}><img src="images/logo_header.png" alt="logo" className="logo"/></Link>
+        className={`${(pathname === "/datacreate" || pathname === "/login" || pathname === "/search") ? "icon" : "icon hidden"}`}
+        onClick={prevBtnHandler} />
+      <Link to="/" onClick={removeHandler}><img src="images/logo_header.png" alt="logo" className="logo" /></Link>
       <RightDiv>
         <FontAwesomeIcon icon={faArrowRightFromBracket} className={`${(pathname === "/mypage" || pathname === "/setuserinfo") ? "icon" : "icon none"}`} />
         <FontAwesomeIcon icon={faPlus} className={`${pathname === "/summary" ? "icon" : "icon none"}`} />

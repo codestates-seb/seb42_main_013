@@ -2,7 +2,7 @@ import styled from "styled-components";
 import SearchBar from "../components/SearchBar";
 import Items from "../components/Items";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useLocation } from "react-router-dom";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
@@ -94,6 +94,7 @@ const PaginationDiv = styled.div`
 function Search() {
   const [data, setData] = useState([]);
   const [isClicked, setIsClicked] = useState(1);
+  const { pathname } = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
   const numbers = [1, 2, 3, 4, 5]
   const query = searchParams.get("query");
@@ -132,7 +133,7 @@ function Search() {
     }
   }
 
-  console.log()
+  console.log(pathname);
 
   return (
     <SearchContainer>
@@ -147,7 +148,7 @@ function Search() {
           </div>
           <PriceFilterBtn className="not-price-area">적용</PriceFilterBtn>
         </PriceFilterDiv> */}
-        <div className="search-result">검색 결과</div>
+        <div className="search-result">'{query}' 검색 결과</div>
         {data.map((el, idx) => {
           return (
             <Items key={idx} title={el.title} img={el.image} link={el.link} price={el.lprice} />
