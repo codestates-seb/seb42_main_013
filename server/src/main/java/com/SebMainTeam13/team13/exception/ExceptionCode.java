@@ -11,7 +11,7 @@ public enum ExceptionCode {
     CONCERN_NOT_FOUND(404, "Concern not found"),
     SUPPLEMENT_NOT_FOUND(404, "Supplement not found"),
     DETAIL_SUPPLEMENT_NOT_FOUND(404, "DetailSupplement not found"),
-    DETAIL_EXISTS(409, "Detail already exists");
+    DETAIL_EXISTS(409, "Detail already exists"); 
 
     @Getter
     private int status;
