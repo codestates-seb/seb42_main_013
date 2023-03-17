@@ -165,12 +165,10 @@ function DataCrete() {
     setEditMode(false);
     !e.target.value && setData({ ...data, dosageInterval: "1" });
   };
-  const deleteIngredient = (ele, idx) => {
-    setData({ ...data, nutrients: [...data.nutrients.slice(0, idx), ...data.nutrients.slice(idx + 1)] });
+  const deleteEleHandler = (ele, idx, name) => {
+    setData({ ...data, [name]: [...data[name].slice(0, idx), ...data[name].slice(idx + 1)] });
   };
-  const deleteTime = (ele, idx) => {
-    setData({ ...data, takingTime: [...data.takingTime.slice(0, idx), ...data.takingTime.slice(idx + 1)] });
-  };
+
   return (
     <DataCreateContainer>
       <InputSection>
@@ -227,7 +225,7 @@ function DataCrete() {
         <h3>주요 성분</h3>
         <div>
           {data.nutrients && data.nutrients.map((ele, idx) => {
-            return <Tags key={idx} ele={ele} idx={idx} deleteEleHandler={deleteIngredient} />;
+            return <Tags key={idx} ele={ele} idx={idx} deleteEleHandler={deleteEleHandler} name="nutrients"/>;
           })}
           <AddBtn
             onClick={() => {
@@ -293,7 +291,7 @@ function DataCrete() {
         <h3>복용 시간</h3>
         <div>
           {data.takingTime && data.takingTime.map((ele, idx) => {
-            return <Tags key={idx} ele={ele} idx={idx} deleteEleHandler={deleteTime} />;
+            return <Tags key={idx} ele={ele} idx={idx} deleteEleHandler={deleteEleHandler} name="takingTime" />;
           })}
           <AddBtn
             onClick={() => {
