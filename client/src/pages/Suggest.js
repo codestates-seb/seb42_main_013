@@ -3,12 +3,12 @@ import SearchBar from "../components/SearchBar";
 import ScrollBar from "../components/ScrollBar";
 import { useSelector, useDispatch } from "react-redux";
 import { health } from "../components/Health";
-import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { concernActions } from "../reducer/concernReducer";
 import card1 from "../images/cards/card1.jpg";
 import card2 from "../images/cards/card2.jpg";
 import card3 from "../images/cards/card3.jpg";
+import card4 from "../images/cards/card4.jpg";
 
 const SuggestContainer = styled.div`
   background-color: #ffffff;
@@ -30,7 +30,7 @@ const SugContentConatiner = styled.div`
 `
 
 const LargeContent = styled.div`
-  margin-bottom: 16px;
+  margin-bottom: var(--gap-lg);
   padding: var(--gap-md);
   width: 100%;
   height: 360px;
@@ -89,9 +89,11 @@ const SmallContent1 = styled.div`
   width: 46.395%;
   height: 180px;
   border-style: none;
-  background-color: var(--black-500);
+  background-image: url(${card4});
+  background-size: cover;
+  background-position: center;
   border-radius: 30px;
-  color: var(--black-100);
+  color: var(--black-600);
   font-size: 18px;
   font-weight: 600;
   word-break: keep-all;
@@ -117,6 +119,7 @@ const SmallContent2 = styled(SmallContent1)`
   background-size: cover;
   background-position: center;
   border-style: none;
+  color: var(--black-100);
 `
 
 const SmallContent3 = styled(SmallContent1)`
@@ -137,18 +140,19 @@ const SmallContent4 = styled(SmallContent1)`
   background-image: url(${card1});
   background-size: cover;
   background-position: center;
+  color: var(--black-100);
 `
 
 function Suggest() {
   const state = useSelector(state => state.concernReducer);
   const dispatch = useDispatch();
-  const clickedConcern = health.filter(el => el.title === state.isClicked)[0];
-  const { pathname } = useLocation();
+  const clickedConcern = health.filter(el => el.title === state.selectedConcern)[0];
+  const numbers = [0, 1, 2, 3].sort(() => Math.random() - 0.5);
 
   useEffect(() => {
     const data = "영양보충"
     dispatch(concernActions.changeConcernClicked({ data }));
-  }, [pathname])
+  }, [])
 
   return (
     <SuggestContainer>
@@ -156,7 +160,7 @@ function Suggest() {
       <SugContentConatiner>
         <ScrollBar />
         <LargeContent>
-          <div>{state.isClicked}에 좋은 영양제 추천</div>
+          <div>{state.selectedConcern}에 좋은 영양제 추천</div>
           <SupplementsArea>
             {clickedConcern.supplementsList.map((el, idx) => {
               return (
@@ -170,16 +174,16 @@ function Suggest() {
         </LargeContent>
         <div className="smallcontent-area">
           <SmallContent1>
-            <div>{clickedConcern.contents[0]}</div>
+            <div>{clickedConcern.contents[numbers[0]]}</div>
           </SmallContent1>
           <SmallContent2>
-            <div>{clickedConcern.contents[1]}</div>
+            <div>{clickedConcern.contents[numbers[1]]}</div>
           </SmallContent2>
           <SmallContent3>
-            <div>{clickedConcern.contents[2]}</div>
+            <div>{clickedConcern.contents[numbers[2]]}</div>
           </SmallContent3>
           <SmallContent4>
-            <div>{clickedConcern.contents[3]}</div>
+            <div>{clickedConcern.contents[numbers[3]]}</div>
           </SmallContent4>
         </div>
       </SugContentConatiner>
