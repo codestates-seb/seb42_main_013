@@ -181,13 +181,13 @@ function DataInput ({name, min, max, required, placeholder, data, setData, type}
     setData({...data,[name]:e.target.value})
     // !isValid && setIsValid(e.target.checkValidity())
     // 한번 blur 후에 유효성 체크 되도록
-    if(name==="totalQty" && Number(e.target.value)<Number(data.pillsLeft)){
+    if(name==="totalCapacity" && Number(e.target.value)<Number(data.pillsLeft)){
       e.target.setCustomValidity("lessThanCurrent")
     } else {
       e.target.setCustomValidity("")
     }
     !isValid && setIsValid(e.target.validity.valid)
-    setValidityState(getValidtyState(e))
+    !isValid && setValidityState(getValidtyState(e))
   }
   const clear = () => {
     setData({...data,[name]:""})
