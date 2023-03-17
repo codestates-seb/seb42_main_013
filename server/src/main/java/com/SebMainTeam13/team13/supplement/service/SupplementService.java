@@ -1,6 +1,8 @@
 package com.SebMainTeam13.team13.supplement.service;
 
 
+import com.SebMainTeam13.team13.concern.entity.Concern;
+import com.SebMainTeam13.team13.concern.repository.ConcernRepository;
 import com.SebMainTeam13.team13.exception.BusinessLogicException;
 import com.SebMainTeam13.team13.supplement.entity.Supplement;
 import com.SebMainTeam13.team13.supplement.repository.SupplementRepository;
@@ -22,12 +24,15 @@ import static com.SebMainTeam13.team13.exception.ExceptionCode.*;
 @RequiredArgsConstructor
 public class SupplementService {
     private final SupplementRepository supplementRepository;
+    private final ConcernRepository concernRepository;
 
 
 
     public Supplement createSupplement(Supplement supplement){
         verifySupplementByName(supplement);
-
+        Concern concern = concernRepository.findById(supplement.getConcern().getConcernId()).get();
+        supplement.setConcern(concern);
+        concern.getSupplements().add(supplement);
         return supplementRepository.save(supplement);
 
     }
@@ -43,6 +48,8 @@ public class SupplementService {
                 .ifPresent(verifiedSupplement::setNutrients);
         Optional.ofNullable(supplement.getImageURL())
                 .ifPresent(verifiedSupplement::setImageURL);
+        Optional.ofNullable(supplement.getSupplementType())
+                .ifPresent(verifiedSupplement::setSupplementType);
 
 
 

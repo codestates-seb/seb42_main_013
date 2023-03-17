@@ -20,7 +20,7 @@ public class DetailDto {
         private String gender;
 
 //        private List<String> supplement;
-//        private List<String> concerns;
+       private List<Long> concernIds;
 
     }
 

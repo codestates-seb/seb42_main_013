@@ -1,117 +1,62 @@
 package com.SebMainTeam13.team13.concern.dto;
 
-import lombok.Getter;
+import com.SebMainTeam13.team13.concern.entity.Concern;
+import com.SebMainTeam13.team13.detailSupplement.entity.DetailSupplement;
+import com.SebMainTeam13.team13.supplement.entity.Supplement;
+import lombok.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 
 public class ConcernDto {
-
+    @Getter
+    @Setter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Post {
         private String title;
         private List<String> contents;
-        private List<String> supplementsList;
 
-        public String getTitle() {
-            return title;
-        }
 
-        public List<String> getContents() {
-            return contents;
-        }
-
-        public List<String> getSupplementsList() {
-            return supplementsList;
-        }
-
-        public Post(String title, List<String> contents, List<String> supplementsList) {
-            this.title = title;
-            this.contents = contents;
-            this.supplementsList = supplementsList;
-        }
     }
-
+    @Getter
+    @Setter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Patch {
-        private long concernId;
+
         private String title;
         private List<String> contents;
-        private List<String> supplementsList;
 
-        public long getConcernId() {
-            return concernId;
-        }
 
-        public void setConcernId(long concernId) {
-            this.concernId = concernId;
-        }
 
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public List<String> getContents() {
-            return contents;
-        }
-
-        public void setContents(List<String> contents) {
-            this.contents = contents;
-        }
-
-        public List<String> getSupplementsList() {
-            return supplementsList;
-        }
-
-        public void setSupplementsList(List<String> supplementsList) {
-            this.supplementsList = supplementsList;
-        }
     }
-
+    @Getter
+    @Setter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Response {
+
+
         private Long concernId;
         private String title;
         private List<String> supplementsList;
         private List<String> contents;
+        public Response(Concern concern) {
 
-        public Long getConcernId() {
-            return concernId;
+                    this.concernId= concern.getConcernId();
+                    this.contents=concern.getContents();
+                    this.supplementsList=concern.getSupplements().stream()
+                            .map(Supplement::getSupplementName).collect(Collectors.toList());
+                    this.title=concern.getTitle();
+
+
         }
 
-        public void setConcernId(Long concernId) {
-            this.concernId = concernId;
-        }
 
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public List<String> getContents() {
-            return contents;
-        }
-
-        public void setContents(List<String> contents) {
-            this.contents = contents;
-        }
-
-        public List<String> getSupplementsList() {
-            return supplementsList;
-        }
-
-        public void setSupplementsList(List<String> supplementsList) {
-            this.supplementsList = supplementsList;
-        }
-
-        public Response(Long concernId, String title, List<String> contents, List<String> supplementsList) {
-            this.concernId = concernId;
-            this.title = title;
-            this.contents = contents;
-            this.supplementsList = supplementsList;
-        }
     }
 }

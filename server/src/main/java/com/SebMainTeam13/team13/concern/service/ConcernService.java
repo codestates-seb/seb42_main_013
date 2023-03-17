@@ -5,25 +5,32 @@ import com.SebMainTeam13.team13.concern.mapper.ConcernMapper;
 import com.SebMainTeam13.team13.concern.repository.ConcernRepository;
 import com.SebMainTeam13.team13.exception.BusinessLogicException;
 import com.SebMainTeam13.team13.exception.ExceptionCode;
+import com.SebMainTeam13.team13.supplement.entity.Supplement;
+import com.SebMainTeam13.team13.supplement.repository.SupplementRepository;
+import com.SebMainTeam13.team13.user.entity.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
+import static com.SebMainTeam13.team13.exception.ExceptionCode.SUPPLEMENT_NOT_FOUND;
+import static com.SebMainTeam13.team13.exception.ExceptionCode.USER_NOT_FOUND;
 
 @Service
+@RequiredArgsConstructor
 public class ConcernService {
     private final ConcernRepository concernRepository;
-    private final ConcernMapper mapper;
+    private final SupplementRepository supplementRepository;
 
-    public ConcernService(ConcernRepository concernRepository, ConcernMapper mapper) {
-        this.concernRepository = concernRepository;
-        this.mapper = mapper;
-    }
+
 
     public Concern createConcern(Concern concern){
-        Concern savedConcern = concernRepository.save(concern);
 
-        return savedConcern;
+
+        return concernRepository.save(concern);
     }
 
     public Concern updateConcern(Concern concern){
