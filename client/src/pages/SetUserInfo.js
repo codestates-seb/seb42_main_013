@@ -1,8 +1,8 @@
 import styled from "styled-components";
+import DataInput from "../components/DataInput";
+import { useState, useRef } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
-import DataInput from "../components/DataInput";
-import { useState } from "react";
 import { OptionTag } from "./DataCreate";
 import { health } from "../components/Health";
 import { CurrentBtn } from "../styles/Buttons";
@@ -10,14 +10,15 @@ import { CurrentBtn } from "../styles/Buttons";
 
 const SetUserInfoContainer = styled.div`
   width: 100%;
-  height: calc(100vh - 48px);
+  height: max-content;
+  min-height: calc(100vh - 48px);
   position: relative;
-  top: 48px;
+  top: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0 36px;
+  padding: 24px 36px;
   background-color: #ffffff;
   gap: 32px;
   h1 {
@@ -39,6 +40,41 @@ const SelectSexBox = styled.div`
     display: flex;
     flex-direction: column;
   }
+`
+
+const ImageContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--black-100);
+  input {
+    display: none;
+  }
+`
+
+const ImageDiv = styled.div`
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  background-color: var(--black-500);
+  margin: var(--gap-md);
+  img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+  }
+`
+
+const ImageLabel = styled.label`
+  padding: var(--gap-sm);
+  color: #ffffff;
+  font-size: 14px;
+  background-color: var(--blue-100);
+  border-radius: 5px;
+  cursor: pointer;
+  :hover {background-color: #6b91ed} :active {background-color: #6b91ed}
 `
 
 const IconDiv = styled.div`
@@ -88,7 +124,11 @@ export const OptionBtn = styled.div`
     transform: ${(props) => props.isOpen ? "scaleY(-1)" : "null"};
     transition: .3s; 
   }
+  .option-icon {
+    cursor: pointer;
+  }
 `
+
 const OptionBox = styled.div`
   display: block;
   flex-direction: column;
@@ -120,8 +160,9 @@ const InfoOptionTag = styled(OptionTag)`
   align-items: center;
   padding: 4px;
   font-size: 12px;
-  background-color: "var(--black-500)";
-  color: "var(--black-200)";
+  background-color: var(--black-500);
+  color: var(--black-200);
+  cursor: pointer;
   @media (max-width: 389px) {
     font-size: 11px;
   }
@@ -131,60 +172,85 @@ function SetUserInfo() {
   // 상태 설정
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState({ birthday: "" });
-  const [isClickedSex, setIsClickedSex] = useState("");
-  const [isClickedTag, setIsClickedTag] = useState([]);
+  const [clickedSex, setClickedSex] = useState("");
+  const [imgFile, setImgFile] = useState(null);
+  const [clickedTag, setClickedTag] = useState([]);
   // 필요한 요소 설정
+  const imgRef = useRef();
   const total = health.map(el => el.title);
 
+  const saveImgFile = () => {
+    const file = imgRef.current.files[0];
+    const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+          setImgFile(reader.result);
+      };
+  };
+
   const manClickHandler = () => {
-    setIsClickedSex("남성");
+    setClickedSex("남성");
   }
   const womanClickHandler = () => {
-    setIsClickedSex("여성");
+    setClickedSex("여성");
   }
 
   const tagClickHandler = (e) => {
     console.log(e.target.textContent);
-    const clickedTag = [...isClickedTag, e.target.textContent];
-    setIsClickedTag(clickedTag);
+    const tagList = [...clickedTag, e.target.textContent];
+    setClickedTag(tagList);
   }
 
   const submitBtnHandler = (e) => {
     e.preventDefault();
     const birthDate = data.birthday;
-    const submitData = {birthDate, gender: isClickedSex};
+    const submitData = { birthDate, gender: clickedSex, tagList: clickedTag };
     console.log(submitData);
   }
+
   return (
     <SetUserInfoContainer>
       <h1>필수 정보 입력</h1>
+      <ImageContainer>
+        <h3>프로필 사진</h3>
+        <ImageDiv>
+          {imgFile ? <img src={imgFile} alt="프로필 이미지" /> : null}
+        </ImageDiv>
+        <ImageLabel htmlFor="profileImg">이미지 선택하기</ImageLabel>
+        <input
+        type="file"
+        id="profileImg"
+        accept="image/*"
+        ref={imgRef}
+        onChange={saveImgFile}/>
+      </ImageContainer>
       <SelectSexBox>
         <IconDiv onClick={manClickHandler}>
-          {isClickedSex === "남성"
+          {clickedSex === "남성"
             ? <img src={`${process.env.PUBLIC_URL}/images/user_man_selected.png`} alt="logo" />
             : <img src={`${process.env.PUBLIC_URL}/images/user_man.png`} alt="logo" />}
-          <span className={`${isClickedSex === "남성" ? "selected" : ""}`}>남성</span>
+          <span className={`${clickedSex === "남성" ? "selected" : ""}`}>남성</span>
         </IconDiv>
         <IconDiv onClick={womanClickHandler}>
-          {isClickedSex === "여성"
+          {clickedSex === "여성"
             ? <img src={`${process.env.PUBLIC_URL}/images/user_woman_selected.png`} alt="logo" />
             : <img src={`${process.env.PUBLIC_URL}/images/user_woman.png`} alt="logo" />}
-          <span className={`${isClickedSex === "여성" ? "selected" : ""}`}>여성</span>
+          <span className={`${clickedSex === "여성" ? "selected" : ""}`}>여성</span>
         </IconDiv>
       </SelectSexBox>
       <FlexBox><DataInput type="date" placeholder="생년월일" value="birthday" data={data} setData={setData} /></FlexBox>
-      {/* <OptionBox>
+      <OptionBox>
         <OptionBtn isOpen={isOpen}>
-          <span>건강 고민</span><button onClick={() => setIsOpen(!isOpen)}><FontAwesomeIcon icon={faCaretDown} /></button>
+          <span>건강 고민 (다수 선택 가능)</span><button onClick={() => setIsOpen(!isOpen)}><FontAwesomeIcon icon={faCaretDown} className="option-icon"/></button>
         </OptionBtn>
         {isOpen &&
           <OptionDropdown>
             {total.map((ele, idx) => {
-              return <InfoOptionTag key={idx} onClick={tagClickHandler} className={`${isClickedTag.includes(ele) ? "selected" : ""}`}>{ele}</InfoOptionTag>
+              return <InfoOptionTag key={idx} onClick={tagClickHandler} className={`${clickedTag.includes(ele) ? "selected" : ""}`}>{ele}</InfoOptionTag>
             })}
           </OptionDropdown>
         }
-      </OptionBox> */}
+      </OptionBox>
       <CurrentBtn onClick={submitBtnHandler}>입력 완료</CurrentBtn>
     </SetUserInfoContainer>
   )
