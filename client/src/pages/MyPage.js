@@ -3,16 +3,21 @@ import { OptionTag } from "./DataCreate";
 import { faGear } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from "react";
+import { CurrentBtn } from "../styles/Buttons";
 
 export const MypageConatiner = styled.div`
   display: flex;
-  padding: 0 36px 80px;
-  min-height: calc(100vh - 48px - 64px);
+  padding: 0 36px;
+  height: 100%;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   background-color: white;
   gap: 32px;
+  h1 {
+    color: var(--black-100);
+    font-size: 28px;
+  }
 `
 
 const MypageBox = styled.div`
@@ -34,9 +39,9 @@ const MypageBox = styled.div`
 `
 
 const ProfileAvartar = styled.div`
-  width: 90px;
-  height: 90px;
-  background-color: var(--black-400);
+  width: 100px;
+  height: 100px;
+  background-color: var(--black-500);
   border-radius: 50%;
 `
 const ProfileName = styled.div`
@@ -96,13 +101,19 @@ export const BasicBtn = styled.div`
 
 
 function MyPage(){
-  const [isEditMode, setEditMode] = useState(false)
+  const [isEditMode, setEditMode] = useState(false);
+
+  const editModeHandler = () => {
+    setEditMode(!isEditMode);
+  }
+
+  console.log(isEditMode);
 
   return (
     <MypageConatiner>
       <h1>마이페이지</h1>
       <MypageBox>
-        <div className="top"><FontAwesomeIcon icon={faGear}/></div>
+        <div className="top"></div>
         <ProfileAvartar />
         <ProfileName>
           <div>JOAAA</div>
@@ -125,7 +136,7 @@ function MyPage(){
             <OptionTag selected={1}>피부건강</OptionTag>
         </TagBox>
       </MypageBox>
-      <BasicBtn>프로필 수정</BasicBtn>
+      <CurrentBtn onClick={editModeHandler}>{isEditMode ? "수정 완료" : "프로필 수정하기"}</CurrentBtn>
     </MypageConatiner>
   )
 }

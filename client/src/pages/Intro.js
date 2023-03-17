@@ -122,7 +122,7 @@ const LoginSignupDiv = styled.div`
   align-items: center;
   position: relative;
   z-index: 999;
-  bottom: 150px;
+  bottom: 130px;
   padding: 0 20px;
   .login-area {
     width: 70%;
