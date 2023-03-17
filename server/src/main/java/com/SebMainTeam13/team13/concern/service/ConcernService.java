@@ -33,7 +33,8 @@ public class ConcernService {
         return concernRepository.save(concern);
     }
 
-    public Concern updateConcern(Concern concern){
+    public Concern updateConcern(Concern concern,Long concernId){
+        concern.setConcernId(concernId);
         Concern verifiedConcern = findVerifiedConcern(concern.getConcernId());
 
         Optional.ofNullable(concern.getTitle())

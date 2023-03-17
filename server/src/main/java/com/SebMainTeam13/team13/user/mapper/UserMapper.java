@@ -37,15 +37,22 @@ public class UserMapper {
                 .build();
     }
     public UserDto.Response userToResponse(User user) {
-      List<Concern> concerns = user.getDetail().getConcerns();
       List<String> supplementNames = new ArrayList<>();
-      for(Concern i: concerns){
-          List<Supplement> supplements = i.getSupplements();
+      if(user.getDetail().getConcerns()!=null) {
+              List<Concern> concerns = user.getDetail().getConcerns();
 
-          for(Supplement j: supplements) {
-              supplementNames.add(j.getSupplementName());
-          }
+
+              for (Concern i : concerns) {
+                  List<Supplement> supplements = i.getSupplements();
+
+                  for (Supplement j : supplements) {
+                      supplementNames.add(j.getSupplementName());
+                  }
+
+              }
       }
+
+
         Detail detail = user.getDetail();
         DetailDto.Response detailDto =
                             DetailDto.Response.builder()
