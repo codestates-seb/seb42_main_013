@@ -42,8 +42,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserStatus userStatus = UserStatus.USER_ACTIVATE;
 
-    @OneToOne
-    @JoinColumn(name = "detail_id")
+    @OneToOne(fetch = EAGER)
+    @JoinColumn(name = "detail")
     private Detail detail;
 
     @Getter
@@ -59,4 +59,5 @@ public class User {
             this.desc = desc;
         }
     }
+
 }

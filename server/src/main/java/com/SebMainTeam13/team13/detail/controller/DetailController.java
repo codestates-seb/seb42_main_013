@@ -30,7 +30,6 @@ import java.util.stream.Collectors;
 @RequestMapping("/details")
 @Validated
 @RequiredArgsConstructor
-@Slf4j
 public class DetailController {
     private final static String DETAIL_DEFAULT_URL = "/details";
     private final DetailService detailService;
@@ -38,8 +37,9 @@ public class DetailController {
 
     @PostMapping
     public ResponseEntity postDetail(@Valid @RequestBody DetailDto.Post post) {
-//        Long userIdAuthed = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Detail detail = detailService.createDetail(detailMapper.detailPostDtoToDetail(post));
+//TODO:: userId 토큰에서 가져오기        Long userIdAuthed = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long userId = 1L;
+        Detail detail = detailService.createDetail(detailMapper.detailPostDtoToDetail(post),userId);
         URI location = UriCreator.createUri(DETAIL_DEFAULT_URL, detail.getDetailId());
 
         return ResponseEntity.created(location).build();
@@ -53,7 +53,7 @@ public class DetailController {
         patch.setDetailId(detailId);
         Detail detail = detailService.updateDetail(detailMapper.detailPatchDtoToDetail(patch));
         DetailDto.Response response = detailMapper.detailToDetailResponseDto(detail);
-        response.setUserId(detail.getUser().getUserId());
+
         return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.OK);
     }
 
@@ -63,7 +63,7 @@ public class DetailController {
 
 //        Long userIdAuthed = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         DetailDto.Response response = detailMapper.detailToDetailResponseDto(detail);
-        response.setUserId(detail.getUser().getUserId());
+
         return new ResponseEntity<>(new SingleResponseDto<>(response),HttpStatus.OK);
     }
 

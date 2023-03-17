@@ -15,8 +15,8 @@ public class DetailDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Post {
-        private Long userId;
-        private Long age;
+
+        private String birthDate;
         private String gender;
 
 //        private List<String> supplement;
@@ -31,9 +31,9 @@ public class DetailDto {
     @AllArgsConstructor
     public static class Patch {
 
-        private Long userId;
+
         private Long detailId;
-        private Long age;
+        private String birthDate;
         private String gender;
 //        private List<String> supplement;
 //        private List<String> concerns;
@@ -45,9 +45,9 @@ public class DetailDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Response {
-        private Long userId;
+
         private Long detailId;
-        private Long age;
+        private String birthDate;
         private String gender;
 
 

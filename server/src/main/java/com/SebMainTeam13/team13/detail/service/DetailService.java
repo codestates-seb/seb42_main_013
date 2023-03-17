@@ -31,14 +31,14 @@ public class DetailService {
 //    private final SupplementService supplementService;
 
     @Transactional
-    public Detail createDetail(Detail detail) {
-        Long userId = detail.getUser().getUserId();
-
+    public Detail createDetail(Detail detail,Long userId) {
         verifyExistDetail(userId);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new BusinessLogicException(USER_NOT_FOUND));
 
         detail.setUser(userRepository.findById(userId).orElseThrow(() ->
                 new BusinessLogicException(USER_NOT_FOUND)));
-
+        user.setDetail(detail);
 
         return detailRepository.save(detail);
     }
@@ -53,8 +53,8 @@ public class DetailService {
 //            throw new RuntimeException("수정할 수 있는 회원이 아닙니다.");
 //        }
 
-        Optional.ofNullable(detail.getAge())
-                .ifPresent(verifiedDetail::setAge);
+        Optional.ofNullable(detail.getBirthDate())
+                .ifPresent(verifiedDetail::setBirthDate);
         Optional.ofNullable(detail.getGender())
                 .ifPresent(verifiedDetail::setGender);
 //        detail.getDetailSupplements().forEach(detailSupplement -> {
