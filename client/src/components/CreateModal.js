@@ -100,7 +100,6 @@ function CreateModal ({isOpen, openModalHandler, data, name, setData}) {
   return (
     <ModalContainer>
       {isOpen === true ? <ModalBackdrop onClick={openModalHandler}>
-        <div></div>
         <ModalView onClick={(e) => e.stopPropagation()}>
           {/* <div className="closebtn">
             <AddBtn onClick={openContainsModalHandler}>

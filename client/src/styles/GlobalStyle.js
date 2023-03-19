@@ -52,6 +52,12 @@ const GlobalStyle = createGlobalStyle`
     height: calc(100vh - 112px);
     overflow: scroll;
   }
+  .other {
+    position: relative;
+    top: 48px;
+    height: calc(100vh - 48px);
+    overflow: scroll;
+  }
 `
 
 export default GlobalStyle;

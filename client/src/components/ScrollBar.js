@@ -63,8 +63,8 @@ function ScrollBar() {
       >
         {health.map(el => {
           return (
-            <SwiperSlide key={el.id} className={el.title === state.isClicked ? "selected-area category" : "category"} onClick={clickHandler} id={el.title}>
-              <CategoryIconDiv className={el.title === state.isClicked ? "category-select" : ""}>
+            <SwiperSlide key={el.id} className={el.title === state.selectedConcern ? "selected-area category" : "category"} onClick={clickHandler} id={el.title}>
+              <CategoryIconDiv className={el.title === state.selectedConcern ? "category-select" : ""}>
                 <img src={el.src} alt="health-icon" />
               </CategoryIconDiv>
               <div>{el.title}</div>

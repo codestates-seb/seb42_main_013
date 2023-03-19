@@ -1,18 +1,29 @@
 import styled from "styled-components";
 import { OptionTag } from "./DataCreate";
-import { faGear } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from "react";
+import { CurrentBtn } from "../styles/Buttons";
+import ImageEditor from "../components/ImageEditor";
+import ConcernSelector from "../components/ConcernSelector";
 
 export const MypageConatiner = styled.div`
   display: flex;
-  padding: 0 36px 80px;
-  min-height: calc(100vh - 48px - 64px);
+  padding: 0 36px;
+  height: 100%;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   background-color: white;
   gap: 32px;
+  h1 {
+    color: var(--black-100);
+    font-size: 28px;
+  }
+`
+
+const NewMyContainer = styled(MypageConatiner)`
+  height: max-content;
+  min-height: calc(100vh - 112px);
+  padding: 36px;
 `
 
 const MypageBox = styled.div`
@@ -34,9 +45,9 @@ const MypageBox = styled.div`
 `
 
 const ProfileAvartar = styled.div`
-  width: 90px;
-  height: 90px;
-  background-color: var(--black-400);
+  width: 100px;
+  height: 100px;
+  background-color: var(--black-500);
   border-radius: 50%;
 `
 const ProfileName = styled.div`
@@ -58,13 +69,18 @@ const UserInfo = styled.div`
   font-size: 14px;
   width: 100%;
   text-align: start;
+  font-weight: 600;
+  color: var(--black-100);
   >div:first-child{
     color: var(--blue-100);
-    font-family: "NanumBarunGothicBold";
     flex: 1 0 50%;
   }
   >div:nth-child(2){
     flex: 1 0 50%;
+  }
+  .userinfo-title {
+    display: flex;
+    align-items: center;
   }
 `
 
@@ -93,40 +109,131 @@ export const BasicBtn = styled.div`
   gap: 8px;
 `
 
+const NameInput = styled.input`
+  width: 50%;
+  padding: 4px;
+  padding-left: var(--gap-sm);
+  border: 1px solid var(--black-400);
+`
 
+const SelectContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 40px;
+  color: var(--black-400);
+  .selected {
+    color: var(--blue-100);
+  }
+`
 
-function MyPage(){
-  const [isEditMode, setEditMode] = useState(false)
+const SelectIconDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  img {
+    width: 40px;
+  }
+`
+
+const BirthDateInput = styled.input`
+  flex: 1 0 50%;
+  color: var(--black-100);
+  padding: 4px;
+`
+
+function MyPage() {
+  const [isEditMode, setEditMode] = useState(false);
+  const [username, setUsername] = useState("JOAAA");
+  const [clickedSex, setClickedSex] = useState("여성");
+  const [clickedTag, setClickedTag] = useState(["영양보충", "관절/뼈건강", "피부건강"]);
+  const [birthDate, setBirthDate] = useState("1990-01-01");
+
+  const editModeHandler = () => {
+    setEditMode(!isEditMode);
+  }
+
+  const editNameHandler = (e) => {
+    setUsername(e.target.value);
+  }
+
+  const manClickHandler = () => {
+    setClickedSex("남성");
+  }
+  const womanClickHandler = () => {
+    setClickedSex("여성");
+  }
+
+  const tagClickHandler = (e) => {
+    if (clickedTag.includes(e.target.textContent)) {
+      const taglist = clickedTag.filter(el => el !== e.target.textContent);
+      setClickedTag(taglist);
+    } else {
+      const tagList = [...clickedTag, e.target.textContent];
+      setClickedTag(tagList);
+    }
+  }
+
+  const birthDateHandler = (e) => {
+    console.log(e.target.value);
+    setBirthDate(e.target.value);
+  }
+
+  console.log(isEditMode);
 
   return (
-    <MypageConatiner>
-      <h1>마이페이지</h1>
+    <NewMyContainer>
+      {isEditMode ? <h1>수정하기</h1> : <h1>마이페이지</h1>}
       <MypageBox>
-        <div className="top"><FontAwesomeIcon icon={faGear}/></div>
-        <ProfileAvartar />
+        <div className="top"></div>
+        {isEditMode ? <ImageEditor /> : <ProfileAvartar />}
         <ProfileName>
-          <div>JOAAA</div>
+          {isEditMode ? <NameInput type="text" value={username} onChange={editNameHandler} /> : <div>{username}</div>}
           <div>blueseablueskyblueme@gmail.com</div>
         </ProfileName>
         <UserInfo>
-          <div>생년 월일</div>
-          <div>1990.01.01</div>
+          <div className="userinfo-title"><span>생년 월일</span></div>
+          {isEditMode ? <BirthDateInput type="date" value={birthDate} onChange={birthDateHandler}/> : <div>{birthDate.replaceAll("-", ".")}.</div>}
         </UserInfo>
         <UserInfo>
-          <div>성별</div>
-          <div>여성</div>
+          <div className="userinfo-title"><span>성별</span></div>
+          {isEditMode ?
+            <SelectContainer>
+              <SelectIconDiv onClick={manClickHandler}>
+                {clickedSex === "남성"
+                  ? <img src={`${process.env.PUBLIC_URL}/images/user_man_selected.png`} alt="logo" />
+                  : <img src={`${process.env.PUBLIC_URL}/images/user_man.png`} alt="logo" />}
+                <span className={`${clickedSex === "남성" ? "selected" : ""}`}>남성</span>
+              </SelectIconDiv>
+              <SelectIconDiv onClick={womanClickHandler}>
+                {clickedSex === "여성"
+                  ? <img src={`${process.env.PUBLIC_URL}/images/user_woman_selected.png`} alt="logo" />
+                  : <img src={`${process.env.PUBLIC_URL}/images/user_woman.png`} alt="logo" />}
+                <span className={`${clickedSex === "여성" ? "selected" : ""}`}>여성</span>
+              </SelectIconDiv>
+            </SelectContainer>
+            : <div>여성</div>}
         </UserInfo>
-        <UserInfo>
-          <div className="withtag">건강 고민</div>
-        </UserInfo>
-        <TagBox>
-            <OptionTag selected={1}>영양보충</OptionTag>
-            <OptionTag selected={1}>관절/뼈건강</OptionTag>
-            <OptionTag selected={1}>피부건강</OptionTag>
-        </TagBox>
+        {isEditMode
+          ? <ConcernSelector tagClickHandler={tagClickHandler} clickedTag={clickedTag} />
+          :
+          <>
+            <UserInfo>
+              <div className="withtag">건강 고민</div>
+            </UserInfo>
+            <TagBox>
+              {clickedTag.map((el, idx) => {
+                return (
+                  <OptionTag key={idx}>{el}</OptionTag>
+                )
+              })}
+            </TagBox>
+          </>}
       </MypageBox>
-      <BasicBtn>프로필 수정</BasicBtn>
-    </MypageConatiner>
+      <CurrentBtn onClick={editModeHandler}>{isEditMode ? "수정 완료" : "프로필 수정하기"}</CurrentBtn>
+    </NewMyContainer>
   )
 }
 

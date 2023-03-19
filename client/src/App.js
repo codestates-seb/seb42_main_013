@@ -28,7 +28,8 @@ function App() {
         </div>
         <div className="app-wrap">
           {(pathname === "/intro") ? null : <Header />}
-          <div className={(pathname === "/intro" || pathname === "/login" || pathname === "/signup" || pathname === "/setuserinfo") ? "" : "container"}>
+          <div className={(pathname === "/intro" || pathname === "/login" || pathname === "/signup" || pathname === "/setuserinfo")
+            ? (pathname === "/intro") ? "" : "other" : "container"}>
             <Routes>
               <Route path="/" element={<Suggest />} />
               <Route path="/search" element={<Search />} />
@@ -42,7 +43,7 @@ function App() {
               <Route path="/signup" element={<Signup />} />
             </Routes>
           </div>
-          {(pathname === "/intro" || pathname === "/login" || pathname === "/signup" || pathname === "/datacreate" || pathname === "/setuserinfo") ? null : <Footer />}
+          {(pathname === "/intro" || pathname === "/login" || pathname === "/signup" || pathname === "/setuserinfo") ? null : <Footer />}
         </div>
       </div>
     </>

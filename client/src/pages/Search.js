@@ -132,8 +132,6 @@ function Search() {
     }
   }
 
-  console.log()
-
   return (
     <SearchContainer>
       <SearchBar setData={setData} />
@@ -147,7 +145,7 @@ function Search() {
           </div>
           <PriceFilterBtn className="not-price-area">적용</PriceFilterBtn>
         </PriceFilterDiv> */}
-        <div className="search-result">검색 결과</div>
+        <div className="search-result">'{query}' 검색 결과</div>
         {data.map((el, idx) => {
           return (
             <Items key={idx} title={el.title} img={el.image} link={el.link} price={el.lprice} />

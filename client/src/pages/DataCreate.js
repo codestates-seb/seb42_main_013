@@ -267,7 +267,7 @@ function DataCrete() {
           복용 주기<p>*</p>
         </h3>
         <div>
-          <Cycle className="everyday" selected={data.dosageInterval === "1" ? 1 : 0} onClick={() => setData({ ...data, cycle: "1" })}>
+          <Cycle className="everyday" selected={data.dosageInterval === "1" ? 1 : 0} onClick={() => setData({ ...data, dosageInterval: "1" })}>
             <span>매일</span>
           </Cycle>
           <Cycle className="ndays" selected={data.dosageInterval !== "1" ? 1 : 0} onClick={openEditHandler} isEditMode={isEditMode}>
