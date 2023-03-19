@@ -12,9 +12,11 @@ const Container = styled.div`
     background-color: #EFEFEF;
     padding: 10px;
 `;
+const arrow=styled.div`
 
+`;
 
-function Calendar({ nowYear, nowMonth, nowDay, setNowYear, setNowMonth, setNowDay}) {
+function Calendar({ nowYear, nowMonth, nowDate, setNowYear, setNowMonth, setNowDate }) {
     const [datas, setDatas] = useState()
     const [yearMonth, setYearMonth] = useState({ year: 2023, month: 3 })
     const [selected, setSelected] = useState("")
@@ -42,16 +44,22 @@ function Calendar({ nowYear, nowMonth, nowDay, setNowYear, setNowMonth, setNowDa
         let currentYear = date.getFullYear();
         let currentMonth = date.getMonth();
 
-        var startDay = new Date(currentYear, currentMonth, 0); 
-        var prevDate = startDay.getDate(); 
-        var prevDay = startDay.getDay() + 1 === 7 ? 0 : startDay.getDay() + 1; 
-        var endDay = new Date(currentYear, currentMonth + 1, 0);
-        var nextDate = endDay.getDate(); 
-        var nextDay = endDay.getDay(); 
-        console.log(`pre: ${prevDay}`)
-        console.log(date.getDay())
+        let cYear = new Date().getFullYear()
+        let cMonth = new Date().getMonth()+1
+        let cDay = new Date().getDate()
+
+        // console.log(cYear, cMonth, cDay)
+
+        let startDay = new Date(currentYear, currentMonth, 0);
+        let prevDate = startDay.getDate();
+        let prevDay = startDay.getDay() + 1 === 7 ? 0 : startDay.getDay() + 1;
+        let endDay = new Date(currentYear, currentMonth + 1, 0);
+        let nextDate = endDay.getDate();
+        let nextDay = endDay.getDay();
+        // console.log(`pre: ${prevDay}`)
+        // console.log(date.getDay())
         const total = [
-            ...Array.from({ length: prevDay }, (v, i) => i + prevDate - prevDay + 1), 
+            ...Array.from({ length: prevDay }, (v, i) => i + prevDate - prevDay + 1),
             ...Array.from({ length: nextDate }, (v, i) => i + 1),
             ...Array.from({ length: 6 - nextDay }, (v, i) => i + 1)
         ].map((e, index) => {
@@ -63,12 +71,15 @@ function Calendar({ nowYear, nowMonth, nowDay, setNowYear, setNowMonth, setNowDa
             const onDuration = !prev && !next
 
             const monWedFri = index % 7 === 1 || index % 7 === 3 || index % 7 === 5
-            console.log(nowYear, year)
+            // console.log(nowYear, year)
 
-            const passed = onDuration && ((e < nowDay && month === nowMonth && year === nowYear) || ((month < nowMonth && year === nowYear) || year < nowYear))
-            console.log(e, nowDay, (prev ? month - 1 : next ? month + 1 : month), nowMonth, year, nowYear)
-            console.log(`${nowYear}. ${nowMonth}. ${nowDay}.`)
-            const todayFlag = e === nowDay && (prev ? month - 1 : next ? month + 1 : month) === nowMonth && year === nowYear
+            const passed = onDuration && ((e < nowDate && month === nowMonth && year === nowYear) || ((month < nowMonth && year === nowYear) || year < nowYear))
+            // console.log(e, nowDay, (prev ? month - 1 : next ? month + 1 : month), nowMonth, year, nowYear)
+            // console.log(`${nowYear}. ${nowMonth}. ${nowDate}.`)
+            const todayFlag = (e === cDay) && (month === cMonth) && (year === cYear)
+
+            // console.log(e)
+
             const obj = {
                 date,
                 name: e,
@@ -83,18 +94,22 @@ function Calendar({ nowYear, nowMonth, nowDay, setNowYear, setNowMonth, setNowDa
             }
             return obj
         })
-        console.log(total)
+        // console.log(total)
         setDatas(total)
     }
     return (
         <Container>
             <div className="comp_calendar">
                 <div style={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'center' }}>
-                    <div onClick={() => changeCalendar(yearMonth.month - 1)} style={{ fontSize: '16px', color: "#505050", marginRight: '20px', cursor: 'pointer' }}>{"<"}</div>
+                    <div onClick={() => changeCalendar(yearMonth.month - 1)} style={{ fontSize: '16px', color: "#505050", marginRight: '20px', cursor: 'pointer' }}>
+                        <img src="../../images/icon--arrowLeft.png"/>
+                    </div>
                     <span>{yearMonth.year}</span>
                     <span>. </span>
                     <span>{yearMonth.month}</span>
-                    <div onClick={() => changeCalendar(yearMonth.month + 1)} style={{ fontSize: '16px', color: "#505050", marginLeft: '20px', cursor: 'pointer' }}>{">"}</div>
+                    <div onClick={() => changeCalendar(yearMonth.month + 1)} style={{ fontSize: '16px', color: "#505050", marginLeft: '20px', cursor: 'pointer' }}>
+                    <img src="../../images/icon--arrowRight.png"/>
+                    </div>
                 </div>
                 <div className="sec_cal">
                     <div className="cal_wrap">
@@ -104,15 +119,15 @@ function Calendar({ nowYear, nowMonth, nowDay, setNowYear, setNowMonth, setNowDa
                         <div className="dates" >
                             {datas && datas.map((e, index) =>
                                 <div onClick={() => {
-                                    if(e.prev){changeCalendar(yearMonth.month - 1)}
-                                    else if(e.next){changeCalendar(yearMonth.month + 1)}
+                                    if (e.prev) { changeCalendar(yearMonth.month - 1) }
+                                    else if (e.next) { changeCalendar(yearMonth.month + 1) }
                                     setSelected(e.date)
-                                    const Dates = e.date.split("-").map(e=>Number(e)); 
-                                    const setDates=[setNowYear, setNowMonth, setNowDay];
-                                    setDates.forEach((e, idx)=>e(Dates[idx]));
-                                }} key={index} className={`day${e.prevNext || !e.onDuration ? " disable" : e.todayFlag ? " today" : ""}`} style={{ fontSize: '12px', border: selected === e.date ? '2px solid #5b85eb' : e.prevNext? '2px solid #D6D6D6':"none" }}>
-                                    <span style={{ margin: '5px', fontFamily: 'NanumBarunGothic'}} >{e.name}</span>
-                                    {(e.monWedFri && e.onDuration) && <div style={{ position: 'absolute', width: '4px', height: '4px', backgroundColor: "orange", bottom: '4px', borderRadius: '99px' }}></div>}
+                                    const Dates = e.date.split("-").map(e => Number(e));
+                                    const setDates = [setNowYear, setNowMonth, setNowDate];
+                                    setDates.forEach((e, idx) => e(Dates[idx]));
+                                }} key={index} className={`day${e.prevNext || !e.onDuration ? " disable" : e.todayFlag ? " today" : ""}`} style={{ fontSize: '12px', border: selected === e.date ? '2px solid #5b85eb' : e.prevNext ? '2px solid #D6D6D6' : "none" }}>
+                                    <span style={{ margin: '5px', fontFamily: 'NanumBarunGothic' }} >{e.name}</span>
+                                    {(e.monWedFri && e.onDuration) && <div style={{ position: 'absolute', width: '4px', height: '4px', backgroundColor: "#FB7F0E", bottom: '4px', borderRadius: '99px' }}></div>}
                                 </div>
                             )}
                         </div>
