@@ -18,6 +18,15 @@ const SuggestContainer = styled.div`
   max-width: 428px;
   height: 100%;
   color: var(--black-100);
+  .highlight {
+    color: var(--blue-100);
+    font-weight: 600;
+  }
+`
+
+const WelcomeDiv = styled.div`
+  padding: 0 20px;
+  font-size: 14px;
 `
 
 const UserContainer = styled.div`
@@ -32,10 +41,6 @@ const UserConcern = styled.div`
   border: 2px solid var(--blue-100);
   border-radius: 30px;
   padding: var(--gap-md);
-  .user-name {
-    color: var(--blue-100);
-    font-weight: 600;
-  }
 `
 
 const UserSupContainer = styled.div`
@@ -76,9 +81,14 @@ const SugContentConatiner = styled.div`
   }
 `
 
+const CategoryTitle = styled.div`
+  margin: var(--gap-md) 0 var(--gap-sm);
+  font-weight: 600;
+`
+
 const LargeContent = styled.div`
   margin-bottom: var(--gap-lg);
-  padding: var(--gap-md);
+  padding: var(--gap-lg);
   width: 100%;
   height: 360px;
   background-color: rgba(91, 133, 235, 0.8);
@@ -88,6 +98,15 @@ const LargeContent = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  .lg-content-title {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .ipu-icon {
+    width: 20px;
+    margin-right: 4px;
+  }
   @media (max-width: 427px){
     height: 80vw;
     font-size: 3.5vw;
@@ -116,8 +135,17 @@ const SupplementDiv = styled.div`
   white-space: pre-wrap;
   text-align: center;
   cursor: pointer;
+  img {
+    width: 80%;
+  }
+  .icon-image {
+    width: 50%;
+  }
   @media (max-width: 427px){
     width: 22.4vw;
+    img {
+    width: 70%;
+    }
   }
 `
 
@@ -127,9 +155,16 @@ const SupplementImgDiv = styled.div`
   border-radius: 25px;
   background-color: #ffffff;
   margin-bottom: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   @media (max-width: 427px){
     width: 21.2vw;
   }
+`
+
+const SmallContentTitle = styled(CategoryTitle)`
+  margin: var(--gap-md) 0;
 `
 
 const SmallContent1 = styled.div`
@@ -220,9 +255,10 @@ function Suggest() {
   return (
     <SuggestContainer>
       <SearchBar />
+      <WelcomeDiv>환영합니다, <span className="highlight">JOAAA</span>님!</WelcomeDiv>
       <UserContainer>
         <UserConcern>
-          <div><span className="user-name">JOAAA</span>님을 위한 영양제 추천</div>
+          <div><span className="highlight">JOAAA</span>님을 위한 영양제 추천</div>
           <UserSupContainer>
             <div className="supplement-area" id="종합비타민" onClick={userSupClick}>
               <UserSupImg src="images/icon-pill1.png" alt="supplement-icon" />
@@ -240,20 +276,22 @@ function Suggest() {
         </UserConcern>
       </UserContainer>
       <SugContentConatiner>
+        <CategoryTitle>내 <span className="highlight">건강고민</span>에 맞는 영양 찾기</CategoryTitle>
         <ScrollBar />
         <LargeContent>
-          <div>{state.selectedConcern}에 좋은 영양제 추천</div>
+          <div className="lg-content-title"><img src="images/icon--ipu.png" alt="ipu-icon" className="ipu-icon" />{state.selectedConcern}에 좋은 영양제</div>
           <SupplementsArea>
             {clickedConcern.supplementsList.map((el, idx) => {
               return (
-                <SupplementDiv key={idx} id={el} onClick={SupplementClick}>
-                  <SupplementImgDiv></SupplementImgDiv>
-                  <div>{el}</div>
+                <SupplementDiv key={idx} id={el.supplementName} onClick={SupplementClick}>
+                  <SupplementImgDiv><img src={el.imageURL || "images/icon-pill4.png"} alt="supplement-icon" className={el.imageURL ? "" : "icon-image"} /></SupplementImgDiv>
+                  <div>{el.supplementName}</div>
                 </SupplementDiv>
               )
             })}
           </SupplementsArea>
         </LargeContent>
+        <SmallContentTitle>건강한 생활정보</SmallContentTitle>
         <div className="smallcontent-area">
           <SmallContent1>
             <div>{clickedConcern.contents[numbers[0]]}</div>

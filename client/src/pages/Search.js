@@ -132,6 +132,8 @@ function Search() {
     }
   }
 
+  console.log(data);
+
   return (
     <SearchContainer>
       <SearchBar setData={setData} />
