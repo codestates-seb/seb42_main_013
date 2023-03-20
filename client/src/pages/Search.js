@@ -19,10 +19,25 @@ const SearchContainer = styled.div`
 const ResultContainer = styled.div`
   padding: 0 20px;
   padding-bottom: var(--gap-md);
+  .search-no-result {
+    width: 100%;
+    text-align: center;
+    padding: var(--gap-lg) 0;
+    p {
+      margin: var(--gap-sm) 0;
+    }
+  }
+`
+
+const ResultTitleDiv = styled.div`
+  margin: var(--gap-lg) 0;
   .search-result {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
-    margin: var(--gap-lg) 0;
+    margin-bottom: 4px;
+  }
+  .search-description {
+    font-size: 14px;
   }
 `
 
@@ -121,13 +136,13 @@ function Search() {
   }
 
   const prevBtnHandler = () => {
-    if(isClicked !== 1) {
+    if (isClicked !== 1) {
       setIsClicked(isClicked - 1);
     }
   }
 
   const nextBtnHandler = () => {
-    if(isClicked !== 5) {
+    if (isClicked !== 5) {
       setIsClicked(isClicked + 1);
     }
   }
@@ -147,22 +162,37 @@ function Search() {
           </div>
           <PriceFilterBtn className="not-price-area">적용</PriceFilterBtn>
         </PriceFilterDiv> */}
-        <div className="search-result">'{query}' 검색 결과</div>
-        {data.map((el, idx) => {
+        <ResultTitleDiv>
+          <div className="search-result">'{query}' 검색 결과</div>
+          <div className="search-description">(검색 결과는 최대 50건까지 확인할 수 있습니다)</div>
+        </ResultTitleDiv>
+        {data.length === 0 ? <div className="search-no-result">
+          <p><strong>'{query}'</strong>에 대한 검색 결과가 없습니다.</p>
+          <p>검색어를 확인해 주세요.</p>
+        </div>
+          : data.map((el, idx) => {
+            return (
+              <Items key={idx} title={el.title} img={el.image} link={el.link} price={el.lprice} />
+            )
+          })}
+        {/* {data.map((el, idx) => {
           return (
             <Items key={idx} title={el.title} img={el.image} link={el.link} price={el.lprice} />
           )
-        })}
+        })} */}
       </ResultContainer>
-      <PaginationDiv>
-        <FontAwesomeIcon icon={faChevronLeft} className="pagination-arrow" onClick={prevBtnHandler} />
-        {numbers.map(el => {
-          return (
-            <PaginationBtn key={el} onClick={paginationHandler} clicked={el === isClicked}>{el}</PaginationBtn>
-          )
-        })}
-        <FontAwesomeIcon icon={faChevronRight} className="pagination-arrow" onClick={nextBtnHandler}/>
-      </PaginationDiv>
+      {data.length === 0 ? null
+        : <PaginationDiv>
+          <FontAwesomeIcon icon={faChevronLeft} className="pagination-arrow" onClick={prevBtnHandler} />
+          {numbers.map(el => {
+            return (
+              <PaginationBtn key={el} onClick={paginationHandler} clicked={el === isClicked}>{el}</PaginationBtn>
+            )
+          })}
+          <FontAwesomeIcon icon={faChevronRight} className="pagination-arrow" onClick={nextBtnHandler} />
+        </PaginationDiv>
+      }
+
     </SearchContainer>
   )
 }

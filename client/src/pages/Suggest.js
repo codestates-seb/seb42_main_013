@@ -41,6 +41,7 @@ const UserConcern = styled.div`
   border: 2px solid var(--blue-100);
   border-radius: 30px;
   padding: var(--gap-md);
+  margin-bottom: var(--gap-md);
 `
 
 const UserSupContainer = styled.div`
@@ -68,6 +69,29 @@ const UserSupImg = styled.img`
   @media (max-width: 427px){
     width: 10.51vw;
     }
+`
+
+const RankingContainer = styled.div`
+  height: 95%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  color: var(--black-100);
+`
+
+const RankingDiv = styled.div`
+  width: 100%;
+  border: 1px solid var(--black-400);
+  border-radius: 20px;
+  margin: 4px 0;
+  padding: 4px;
+  padding-left: var(--gap-sm);
+  font-size: 14px;
+  font-weight: 600;
+  span {
+    margin-right: var(--gap-sm);
+  }
 `
 
 const SugContentConatiner = styled.div`
@@ -273,6 +297,16 @@ function Suggest() {
               <div>마그네슘</div>
             </div>
           </UserSupContainer>
+        </UserConcern>
+      </UserContainer>
+      <UserContainer>
+        <UserConcern>
+          <div>지금 가장 인기 있는 영양제는?</div>
+          <RankingContainer>
+            <RankingDiv><span className="highlight">1.</span>종합비타민</RankingDiv>
+            <RankingDiv><span className="highlight">2.</span>오메가3</RankingDiv>
+            <RankingDiv><span className="highlight">3.</span>루테인 지아잔틴</RankingDiv>
+          </RankingContainer>
         </UserConcern>
       </UserContainer>
       <SugContentConatiner>
