@@ -9,7 +9,7 @@
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-configuration-processor/2.7.6/ef52bd1c96c4b04f3fe6c72a6108a3bea24f966f/spring-boot-configuration-processor-2.7.6.jar" />
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.24/13a394eed5c4f9efb2a6d956e2086f1d81e857d9/lombok-1.18.24.jar" />
         </processorPath>
-        <module name="com.SebMainTeam13.team13.main" />
+        <module name="server.team13.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="11" />
