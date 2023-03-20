@@ -4,6 +4,7 @@ import com.SebMainTeam13.team13.concern.entity.Concern;
 import com.SebMainTeam13.team13.detail.dto.DetailDto;
 import com.SebMainTeam13.team13.detail.entity.Detail;
 import com.SebMainTeam13.team13.detailSupplement.entity.DetailSupplement;
+import com.SebMainTeam13.team13.supplement.dto.SupplementDto;
 import com.SebMainTeam13.team13.supplement.entity.Supplement;
 import com.SebMainTeam13.team13.user.dto.UserDto;
 import com.SebMainTeam13.team13.user.entity.User;
@@ -47,12 +48,15 @@ public class UserMapper {
       List<Supplement> sortedSupplements = supplements.stream()
            .sorted(Comparator.comparingInt(Supplement::getNumberSearched).reversed())
            .distinct()
-           .limit(4)
+           .limit(3)
            .collect(Collectors.toList());
 
-      List<String> supplementNames = sortedSupplements.stream()
-           .map(Supplement::getSupplementName)
-           .collect(Collectors.toList());
+        List<SupplementDto.ResponseForUser> supplementDtos = sortedSupplements.stream()
+                .map(s -> SupplementDto.ResponseForUser.builder()
+                        .supplementName(s.getSupplementName())
+                        .imageURL(s.getImageURL())
+                        .build())
+                .collect(Collectors.toList());
 
         Detail detail = user.getDetail();
         DetailDto.Response detailDto =
@@ -69,7 +73,7 @@ public class UserMapper {
                 .email(user.getEmail())
                 .displayName(user.getDisplayName())
                 .detail(detailDto)
-                .supplementNames(supplementNames)
+                .supplements(supplementDtos)
 
 
 

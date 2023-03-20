@@ -58,5 +58,15 @@ public class SupplementMapper {
 
 
     }
+    public SupplementDto.ResponseForUser supplementToSupplementResponseForUser(Supplement supplement) {
+
+        return SupplementDto.ResponseForUser.builder()
+                .supplementName(supplement.getSupplementName())
+                .imageURL(supplement.getImageURL())
+
+                .build();
+
+
+    }
 
 }

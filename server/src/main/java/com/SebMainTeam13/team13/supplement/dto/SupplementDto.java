@@ -42,4 +42,15 @@ public class SupplementDto {
         private String supplementType;
         private Long concernId;
     }
+    @Getter
+    @Setter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class ResponseForUser {
+        private String supplementName;
+        private String imageURL;
+    }
+
+
 }
