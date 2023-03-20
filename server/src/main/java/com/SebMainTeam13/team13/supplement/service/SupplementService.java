@@ -32,6 +32,7 @@ public class SupplementService {
         verifySupplementByName(supplement);
         Concern concern = concernRepository.findById(supplement.getConcern().getConcernId()).get();
         supplement.setConcern(concern);
+        supplement.setNumberSearched(0);
         concern.getSupplements().add(supplement);
         return supplementRepository.save(supplement);
 
@@ -72,11 +73,19 @@ public class SupplementService {
     }
     public Supplement findAndVerifySupplementByName(String supplementName){
         Optional<Supplement> optionalSupplement = supplementRepository.findBySupplementName(supplementName);
-        return optionalSupplement.orElseThrow(() ->
-                new BusinessLogicException(SUPPLEMENT_NOT_FOUND));
+        if (optionalSupplement.isPresent()) {
+            Supplement supplement = optionalSupplement.get();
+
+            if (supplement.getNumberSearched() == null) {
+                supplement.setNumberSearched(0);
+            }
+            supplement.setNumberSearched(supplement.getNumberSearched() + 1);
+            supplementRepository.save(supplement);
+            return supplement;
+        }
+
+        else throw new BusinessLogicException(SUPPLEMENT_NOT_FOUND);
+
     }
-
-
-
 }
 

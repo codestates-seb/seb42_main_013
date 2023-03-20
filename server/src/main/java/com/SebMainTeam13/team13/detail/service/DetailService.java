@@ -29,9 +29,8 @@ import static com.SebMainTeam13.team13.exception.ExceptionCode.*;
 public class DetailService {
     private final DetailRepository detailRepository;
     private final UserRepository userRepository;
-    private final ConcernRepository concernRepository;
-//    private final SupplementRepository supplementRepository;
-//    private final SupplementService supplementService;
+
+
 
     @Transactional
     public Detail createDetail(Detail detail,Long userId) {
@@ -48,27 +47,17 @@ public class DetailService {
 
 
     @Transactional
-    public Detail updateDetail(Detail detail) {
-        Long detailId = detail.getDetailId();
+    public Detail updateDetail(Detail detail,Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new BusinessLogicException(USER_NOT_FOUND));
+        Long detailId = user.getDetail().getDetailId();
         Detail verifiedDetail = findAndVerifyDetailByDetailId(detailId);
-//        if (!Objects.equals(verifiedDetail.getUser().getUserId(), detail.getUser().getUserId())) {
-//            throw new RuntimeException("수정할 수 있는 회원이 아닙니다.");
-//        }
 
         Optional.ofNullable(detail.getBirthDate())
                 .ifPresent(verifiedDetail::setBirthDate);
         Optional.ofNullable(detail.getGender())
                 .ifPresent(verifiedDetail::setGender);
-//        detail.getDetailSupplements().forEach(detailSupplement -> {
-//            String name = detailSupplement.getSupplement().getName();
-//            Supplement supplement = supplementService.verifySupplement(name);
-//            detailSupplement.setSupplement(supplement);
-//        });
-//
-//        verifiedDetail.getDetailSupplements().clear();
-//        detail.getDetailSupplements().iterator().forEachRemaining(supplement ->
-//                verifiedDetail.getDetailSupplements().add(supplement)
-//        );
+
 
         return verifiedDetail;
     }
@@ -108,8 +97,10 @@ public class DetailService {
                 new BusinessLogicException(DETAIL_NOT_FOUND));
     }
 
-    public Detail findDetail(long detailId) {
-
+    public Detail findDetail(long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new BusinessLogicException(USER_NOT_FOUND));
+        Long detailId = user.getDetail().getDetailId();
         return findAndVerifyDetailByDetailId(detailId);
     }
 
@@ -119,11 +110,4 @@ public class DetailService {
         if (user.get().getDetail()!=null)
             throw new BusinessLogicException(DETAIL_EXISTS);
     }
-
-//    private void verifyExistSupplement(List<String> supplementNames) {
-//        for (String supplementName : supplementNames) {
-//            Optional<Supplement> supplement = supplementRepository.findByName(supplementName);
-//            if (supplement.isEmpty()) supplementService.createSupplement(supplementName);
-//        }
-//    }
 }

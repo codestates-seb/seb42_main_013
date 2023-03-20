@@ -1,6 +1,5 @@
 package com.SebMainTeam13.team13.user.controller;
 
-import com.SebMainTeam13.team13.detail.mapper.DetailMapper;
 import com.SebMainTeam13.team13.dto.MultiResponseDto;
 import com.SebMainTeam13.team13.dto.SingleResponseDto;
 import com.SebMainTeam13.team13.user.dto.UserDto;
@@ -13,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
@@ -48,25 +48,32 @@ public class UserController {
 
         return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.OK);
     }
-    @GetMapping("/{userId}")
-    public ResponseEntity getUser(@PathVariable @Positive long userId) {
+
+    @PatchMapping
+    public ResponseEntity updateMe(@Valid @RequestBody UserDto.Patch patchDto) {
+        String principal = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long userId= userService.findUserIdByEmail(principal);
+        User user = (mapper.userPatchToUser(patchDto));
+        user.setUserId(userId);
+        userService.updateUser(user);
+        UserDto.Response response = mapper.userToUserResponseDto(user);
+
+        return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.OK);
+    }
+    @GetMapping
+    public ResponseEntity getUser() {
+        String principal = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long userId= userService.findUserIdByEmail(principal);
         User user = userService.getUser(userId);
         UserDto.Response response = mapper.userToResponse(user);
 
         return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.OK);
     }
 
-    @GetMapping()
-    public ResponseEntity getUsers(Pageable pageable) {
-        Page<User> pageUser = userService.getUsers(pageable);
-        List<User> users = pageUser.getContent();
-        List<UserDto.Response> responses = mapper.usersToResponses(users);
-
-        return new ResponseEntity(new MultiResponseDto<>(responses, pageUser), HttpStatus.OK);
-    }
-
-    @DeleteMapping("/{userId}")
-    public ResponseEntity deleteUser(@PathVariable @Positive Long userId) {
+    @DeleteMapping
+    public ResponseEntity deleteUser() {
+        String principal = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long userId= userService.findUserIdByEmail(principal);
         userService.deleteUser(userId);
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);

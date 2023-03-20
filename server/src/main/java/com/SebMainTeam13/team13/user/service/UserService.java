@@ -5,11 +5,9 @@ import com.SebMainTeam13.team13.auth.utils.AuthorityUtils;
 import com.SebMainTeam13.team13.user.entity.User;
 import com.SebMainTeam13.team13.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.cdi.Eager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.*;
@@ -78,6 +76,13 @@ public class UserService {
             optionalUser.ifPresent(s -> {
                 throw new RuntimeException("멤버가 이미 존재함");
             });
+        }
+         public Long findUserIdByEmail(String email) {
+             Optional<User> optionalUser = userRepository.findByEmail(email);
+             if (optionalUser.isEmpty()) throw new RuntimeException("멤버가 존재 하지 않음");
+
+
+             return optionalUser.get().getUserId();
         }
 
         private User verifyUserById(Long userId) {

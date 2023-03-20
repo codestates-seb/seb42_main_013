@@ -19,7 +19,6 @@ public class DetailDto {
         private String birthDate;
         private String gender;
 
-//        private List<String> supplement;
        private List<Long> concernIds;
 
     }
@@ -35,8 +34,7 @@ public class DetailDto {
         private Long detailId;
         private String birthDate;
         private String gender;
-//        private List<String> supplement;
-//        private List<String> concerns;
+
     }
 
     @Getter
@@ -51,8 +49,6 @@ public class DetailDto {
         private String gender;
 
 
-//        private List<String> supplement;
-//        private List<String> concerns;
 
 
     }

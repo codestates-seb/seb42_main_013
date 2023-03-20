@@ -5,6 +5,7 @@ import com.SebMainTeam13.team13.detailSupplement.entity.DetailSupplement;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 
 
 import java.util.ArrayList;
@@ -30,8 +31,11 @@ public class Supplement {
     private List<String> nutrients;
     private String imageURL;
     private String supplementType;
-    @OneToMany(mappedBy = "supplement", cascade = CascadeType.ALL, orphanRemoval = false)
+    //TODO:: enum 타입으로 변경
+    @OneToMany(mappedBy = "supplement", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DetailSupplement> detailSupplements = new ArrayList<>();
     @ManyToOne
     private Concern concern;
+
+    private Integer numberSearched;
 }

@@ -32,6 +32,7 @@ public class ConcernService {
 
         return concernRepository.save(concern);
     }
+    // 따로 기능구현 해두면 validation 가능
 
     public Concern updateConcern(Concern concern,Long concernId){
         concern.setConcernId(concernId);

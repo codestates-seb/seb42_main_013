@@ -10,6 +10,7 @@ import com.SebMainTeam13.team13.user.entity.User;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,21 +38,21 @@ public class UserMapper {
                 .build();
     }
     public UserDto.Response userToResponse(User user) {
-      List<String> supplementNames = new ArrayList<>();
-      if(user.getDetail().getConcerns()!=null) {
-              List<Concern> concerns = user.getDetail().getConcerns();
 
+      List<Supplement> supplements = user.getDetail().getConcerns()
+            .stream()
+            .flatMap(concern -> concern.getSupplements().stream())
+            .collect(Collectors.toList());
 
-              for (Concern i : concerns) {
-                  List<Supplement> supplements = i.getSupplements();
+      List<Supplement> sortedSupplements = supplements.stream()
+           .sorted(Comparator.comparingInt(Supplement::getNumberSearched).reversed())
+           .distinct()
+           .limit(4)
+           .collect(Collectors.toList());
 
-                  for (Supplement j : supplements) {
-                      supplementNames.add(j.getSupplementName());
-                  }
-
-              }
-      }
-
+      List<String> supplementNames = sortedSupplements.stream()
+           .map(Supplement::getSupplementName)
+           .collect(Collectors.toList());
 
         Detail detail = user.getDetail();
         DetailDto.Response detailDto =
