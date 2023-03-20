@@ -151,7 +151,15 @@ function MyPage() {
   const [clickedTag, setClickedTag] = useState(["영양보충", "관절/뼈건강", "피부건강"]);
   const [birthDate, setBirthDate] = useState("1990-01-01");
 
-  const editModeHandler = () => {
+  const editBtnHandler = () => {
+    if (isEditMode) {
+      const userInfo = {
+        displayname: username,
+        birthDate,
+        concerns: clickedTag
+      }
+      console.log(userInfo);
+    }
     setEditMode(!isEditMode);
   }
 
@@ -181,8 +189,6 @@ function MyPage() {
     setBirthDate(e.target.value);
   }
 
-  console.log(isEditMode);
-
   return (
     <NewMyContainer>
       {isEditMode ? <h1>수정하기</h1> : <h1>마이페이지</h1>}
@@ -195,7 +201,7 @@ function MyPage() {
         </ProfileName>
         <UserInfo>
           <div className="userinfo-title"><span>생년 월일</span></div>
-          {isEditMode ? <BirthDateInput type="date" value={birthDate} onChange={birthDateHandler}/> : <div>{birthDate.replaceAll("-", ".")}.</div>}
+          {isEditMode ? <BirthDateInput type="date" value={birthDate} onChange={birthDateHandler} /> : <div>{birthDate.replaceAll("-", ".")}.</div>}
         </UserInfo>
         <UserInfo>
           <div className="userinfo-title"><span>성별</span></div>
@@ -232,7 +238,7 @@ function MyPage() {
             </TagBox>
           </>}
       </MypageBox>
-      <CurrentBtn onClick={editModeHandler}>{isEditMode ? "수정 완료" : "프로필 수정하기"}</CurrentBtn>
+      <CurrentBtn onClick={editBtnHandler}>{isEditMode ? "수정 완료" : "프로필 수정하기"}</CurrentBtn>
     </NewMyContainer>
   )
 }

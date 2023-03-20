@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const ItemsContainer = styled.div`
   width: 100%;
@@ -8,7 +9,7 @@ const ItemsContainer = styled.div`
   align-items: center;
 `
 
-const ItemImageDiv = styled.div`
+const ItemImageContainer = styled(Link)`
   width: 75px;
   height: 75px;
   border: 1px solid var(--black-300);
@@ -42,13 +43,15 @@ function Items({title, img, link, price}) {
   title = title.replaceAll("<b>", "");
   title = title.replaceAll("</b>", "");
   let newPrice = price.split("");
-  let head = newPrice.slice(0, -3);
-  let tail = newPrice.slice(-3);
-  newPrice = [...head, ",", ...tail].join("");
+  if(newPrice.length > 3) {
+    let head = newPrice.slice(0, -3);
+    let tail = newPrice.slice(-3);
+    newPrice = [...head, ",", ...tail].join("");
+  }
   
   return (
     <ItemsContainer>
-      <ItemImageDiv img={img}/>
+      <ItemImageContainer to={link} img={img}></ItemImageContainer>
       <ItemContentDiv>
         <ItemTitleDiv><a href={link}>{title}</a></ItemTitleDiv>
         <ItemPriceDiv>{newPrice}원</ItemPriceDiv>

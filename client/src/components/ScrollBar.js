@@ -11,7 +11,7 @@ const ScrollBarContainer = styled.div`
   display: flex;
   justify-content: baseline;
   align-items: center;
-  margin: 16px -20px;
+  margin: var(--gap-sm) -20px var(--gap-md);
   margin-left: 0;
   white-space: nowrap;
   overflow-x: scroll;

@@ -57,20 +57,29 @@ function Header() {
     }
   }
 
+  const plusHandler = () => {
+    navigate("/datacreate");
+  }
+
   const removeHandler = () => {
     dispatch(searchActions.removeSearchValue());
+  }
+
+  const logoutHandler = () => {
+    navigate("/intro");
   }
 
   return (
     <HeaderContainer>
       <FontAwesomeIcon icon={faChevronLeft}
-        className={`${(pathname === "/datacreate" || pathname === "/login" || pathname === "/search") ? "icon" : "icon hidden"}`}
+        className={`${(pathname === "/datacreate" || pathname === "/login" || pathname === "/signup" || pathname === "/search") ? "icon" : "icon hidden"}`}
         onClick={prevBtnHandler} />
-      <Link to="/" onClick={removeHandler}><img src="images/logo_header.png" alt="logo" className="logo" /></Link>
+      {pathname === "/setuserinfo" ? <img src="images/logo_header.png" alt="logo" className="logo" />
+        : <Link to="/" onClick={removeHandler}><img src="images/logo_header.png" alt="logo" className="logo" /></Link>}
       <RightDiv>
-        <FontAwesomeIcon icon={faArrowRightFromBracket} className={`${(pathname === "/mypage" || pathname === "/setuserinfo") ? "icon" : "icon none"}`} />
-        <FontAwesomeIcon icon={faPlus} className={`${pathname === "/summary" ? "icon" : "icon none"}`} />
-        <div className={`${(pathname === "/summary" || pathname === "/mypage" || pathname === "/setuserinfo") ? "icon none" : "icon"}`}></div>
+        <FontAwesomeIcon icon={faArrowRightFromBracket} onClick={logoutHandler} className={`${(pathname === "/mypage") ? "icon" : "icon none"}`} />
+        <FontAwesomeIcon icon={faPlus} onClick={plusHandler} className={`${pathname === "/summary" ? "icon" : "icon none"}`} />
+        <div className={`${(pathname === "/summary" || pathname === "/mypage") ? "icon none" : "icon"}`}></div>
       </RightDiv>
     </HeaderContainer>
   )
