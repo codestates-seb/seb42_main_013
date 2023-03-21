@@ -2,6 +2,7 @@ package com.SebMainTeam13.team13.concern.dto;
 
 import com.SebMainTeam13.team13.concern.entity.Concern;
 import com.SebMainTeam13.team13.detailSupplement.entity.DetailSupplement;
+import com.SebMainTeam13.team13.supplement.dto.SupplementDto;
 import com.SebMainTeam13.team13.supplement.entity.Supplement;
 import lombok.*;
 
@@ -44,14 +45,18 @@ public class ConcernDto {
 
         private Long concernId;
         private String title;
-        private List<String> supplementsList;
+        private List<SupplementDto.ResponseForUser> supplementsList;
         private List<String> contents;
         public Response(Concern concern) {
 
                     this.concernId= concern.getConcernId();
                     this.contents=concern.getContents();
                     this.supplementsList=concern.getSupplements().stream()
-                            .map(Supplement::getSupplementName).collect(Collectors.toList());
+                            .map(supplement -> SupplementDto.ResponseForUser.builder()
+                                    .supplementName(supplement.getSupplementName())
+                                    .imageURL(supplement.getImageURL())
+                                    .build())
+                            .collect(Collectors.toList());
                     this.title=concern.getTitle();
 
 
