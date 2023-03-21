@@ -44,19 +44,22 @@ public class ConcernMapper {
 
         }
 
-        public ConcernDto.Response concernToConcernResponseDto(Concern concern) {
-            List<String> supplementsList = concern.getSupplements().stream()
-                    .map(Supplement::getSupplementName).collect(Collectors.toList());
+    public ConcernDto.Response concernToConcernResponseDto(Concern concern) {
+        List<SupplementDto.ResponseForUser> supplementDtos = concern.getSupplements().stream()
+                .map(supplement -> SupplementDto.ResponseForUser.builder()
+                        .supplementName(supplement.getSupplementName())
+                        .imageURL(supplement.getImageURL())
+                        .build())
+                .collect(Collectors.toList());
 
+        return ConcernDto.Response.builder()
+                .concernId(concern.getConcernId())
+                .title(concern.getTitle())
+                .contents(concern.getContents())
+                .supplementsList(supplementDtos)
+                .build();
+    }
 
-            return ConcernDto.Response.builder()
-                    .concernId(concern.getConcernId())
-                    .title(concern.getTitle())
-                    .contents(concern.getContents())
-                    .supplementsList(supplementsList)
-
-                    .build();
-        }
     public List<ConcernDto.Response> concernsToConcernResponseDtos(List<Concern> concerns) {
         return concerns.stream().map(ConcernDto.Response::new).collect(Collectors.toList());
     }
