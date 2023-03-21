@@ -251,6 +251,8 @@ const SmallContent4 = styled(SmallContent1)`
 `
 
 function Suggest() {
+  //TODO: 서버에 올바른 요청 보내기
+  //TODO 서버에 요청 보내려면 String("영양보충")이 아닌 Number(1)로 상태를 받아야 함
   const state = useSelector(state => state.concernReducer);
   const navigate = useNavigate();
   const dispatch = useDispatch();
