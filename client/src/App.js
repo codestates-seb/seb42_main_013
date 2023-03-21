@@ -12,6 +12,7 @@ import Summary from "./pages/Summary";
 import Calendar from "./pages/CalendarPage";
 import Signup from "./pages/Signup";
 import WebAside from "./components/WebAside";
+import SignupDone from "./pages/SignupDone";
 
 
 import { Routes, Route, useLocation } from 'react-router-dom';
@@ -41,6 +42,7 @@ function App() {
               <Route path="/summary" element={<Summary />} />
               <Route path="/calendar" element={<Calendar />} />
               <Route path="/signup" element={<Signup />} />
+              <Route path="/signupDone" element={<SignupDone />} />
             </Routes>
           </div>
           {(pathname === "/intro" || pathname === "/login" || pathname === "/signup" || pathname === "/setuserinfo") ? null : <Footer />}
