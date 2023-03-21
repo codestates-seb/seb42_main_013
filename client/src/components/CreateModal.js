@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import { AddBtn } from "../pages/DataCreate";
-import DataInput from "./DataInput";
+import DataInput, { FakeInput, RealInput } from "./DataInput";
 import { useState } from "react";
 import { CurrentBtn } from "../styles/Buttons";
+import searchByCode from "../util/searchBycode";
 
 
 
@@ -66,6 +67,12 @@ export const ModalView = styled.div`
     }
   }
 `
+const Title = styled.div`
+  font-family: "NanumBarunGothicBold";
+  color: var(--black-200);
+  font-size: 16px;
+`
+
 const Buttons = styled.div`
   display: flex;
   margin-top: 12px;
@@ -88,15 +95,22 @@ function CreateModal ({isOpen, openModalHandler, data, name, setData}) {
     setEle({key:""})
     openModalHandler()
   }
-
   const addEleHandler = () => {
     // let id = data.ingredients.length===0 ?0 :data.ingredients.at(-1).ingredientId+1
     // setData({...data, ingredients:[...data.ingredients, { ...ingredient,ingredientId: id}]})
     // 함량은 표기 안하기로 함
-    setData({...data,[name]:[...data[name],ele.key]})
+    const sortedNewArr = [...data[name],ele.key].sort()
+    setData({...data,[name]:sortedNewArr})
     setEle({key:""})
     openModalHandler();
   }
+  const [barcode, setBarcode] = useState({barcode:""})
+  const code = () => {
+    searchByCode(barcode.barcode, setData)
+    setBarcode("")
+    openModalHandler();
+  }
+
   return (
     <ModalContainer>
       {isOpen === true ? <ModalBackdrop onClick={openModalHandler}>
@@ -108,16 +122,29 @@ function CreateModal ({isOpen, openModalHandler, data, name, setData}) {
               </svg>
             </AddBtn>
           </div> */}
-          <div>{name==="takingTime" ?"" :"성분명"}</div>
-          { name==="takingTime"
-            ?<DataInput type="time" data={ele} required={1} setData={setEle} name="key" />
-            :<DataInput data={ele} required={1} setData={setEle} name="key"/>
+          { name==="takingTime" && 
+            <>
+              <Title>복용 시간</Title>
+              <DataInput type="time" data={ele} required={1} setData={setEle} name="key" /> 
+            </>}
+          { name==="nutrients" && 
+          <>
+            <Title>성분명</Title>
+            <DataInput data={ele} required={1} setData={setEle} name="key"/>
+          </>
           }
+          { name==="barcode" && <>
+            <Title>바코드</Title>
+            <DataInput data={barcode} setData={setBarcode} placeholder="숫자 직접 입력하기" name="barcode" />
+          </>}
           {/* <div>함량</div> */}
           {/* <DataInput type="number" data={ingredient} required={1} setData={setIngredient} name="ingredientAmount" /> */}
           <Buttons>
             <CurrentBtn onClick={closeModalHandler}>취소</CurrentBtn>
-            <CurrentBtn disabled={!ele} onClick={addEleHandler}>추가하기</CurrentBtn>
+            {name === "barcode"
+            ? <CurrentBtn disabled={!ele} onClick={code}>조회하기</CurrentBtn>
+            : <CurrentBtn disabled={!ele} onClick={addEleHandler}>추가하기</CurrentBtn>
+            }
           </Buttons>
         </ModalView>
       </ModalBackdrop> : null}
