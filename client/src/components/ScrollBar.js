@@ -47,6 +47,7 @@ const CategoryIconDiv = styled.div`
 `
 
 function ScrollBar() {
+  // TODO: 서버 연결 확인되면 map에서 idx 받은 후 id를 el.title 대신 idx로 변경
   const state = useSelector(state => state.concernReducer);
   const dispatch = useDispatch();
 

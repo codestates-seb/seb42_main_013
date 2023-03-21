@@ -41,44 +41,44 @@ const ResultTitleDiv = styled.div`
   }
 `
 
-// const PriceFilterDiv = styled.div`
-//   border: 1px solid #999999;
-//   border-radius: 10px;
-//   width: 100%;
-//   height: 50px;
-//   padding: var(--gap-md);
-//   margin-bottom: var(--gap-md);
-//   display: flex;
-//   justify-content: space-between;
-//   align-items: center;
-//   .price-area {
-//     width: 220px;
-//     display: flex;
-//     justify-content: space-evenly;
-//     align-items: center;
-//   }
-//   .not-price-area {
-//     font-weight: 600;
-//   }
-// `
+const PriceFilterDiv = styled.div`
+  border: 1px solid #999999;
+  border-radius: 30px;
+  width: 100%;
+  height: 50px;
+  padding: var(--gap-sm) var(--gap-lg);
+  margin-bottom: var(--gap-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .price-area {
+    width: 220px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+  .not-price-area {
+    font-weight: 600;
+  }
+`
 
-// const PriceFilterInput = styled.input`
-//   width: 70px;
-//   height: 20px;
-//   margin-right: 4px;
-//   :focus {
-//     outline: none;
-//   }
-// `
+const PriceFilterInput = styled.input`
+  width: 70px;
+  height: 20px;
+  margin-right: 4px;
+  :focus {
+    outline: none;
+  }
+`
 
-// const PriceFilterBtn = styled.button`
-//   width: 45px;
-//   height: 30px;
-//   background-color: var(--blue-100);
-//   color: #ffffff;
-//   border-style: none;
-//   border-radius: 10px;
-// `
+const PriceFilterBtn = styled.button`
+  width: 45px;
+  height: 30px;
+  background-color: var(--blue-100);
+  color: #ffffff;
+  border-style: none;
+  border-radius: 5px;
+`
 
 const PaginationBtn = styled.button`
   border-style: none;
@@ -107,10 +107,11 @@ const PaginationDiv = styled.div`
 `
 
 function Search() {
-  const [data, setData] = useState([]);
+  const [searchData, setSearchData] = useState([]);
   const [isClicked, setIsClicked] = useState(1);
+  const [lowPrice, setLowPrice] = useState("");
+  const [highPrice, setHighPrice] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
-  const numbers = [1, 2, 3, 4, 5]
   const query = searchParams.get("query");
 
   useEffect(() => {
@@ -118,8 +119,8 @@ function Search() {
     axios.get(url, {
       params: {
         query,
-        display: 10,
-        start: (10 * (isClicked - 1) + 1)
+        display: 50,
+        start: 1
       },
       headers: {
         "X-Naver-Client-Id": process.env.REACT_APP_NAVER_CLIENT_ID,
@@ -127,9 +128,15 @@ function Search() {
       },
     })
       .then((res) => {
-        setData(res.data.items)
+        setSearchData(res.data.items)
       })
-  }, [query, isClicked])
+      .catch(err => console.log(err))
+  }, [query])
+
+    // 페이지네이션
+    const newNum = searchData.length;
+    const newNumbers = Array.from({length: Math.ceil(newNum / 10)}, (v, i) => i + 1);
+    let curPage = searchData.slice((isClicked - 1) * 10, isClicked * 10);
 
   const paginationHandler = (e) => {
     setIsClicked(Number(e.target.textContent));
@@ -147,44 +154,52 @@ function Search() {
     }
   }
 
-  console.log(data);
+  const lowPriceChange = (e) => {
+    setLowPrice(e.target.value);
+  }
+
+  const highPriceChange = (e) => {
+    setHighPrice(e.target.value);
+  }
+
+  const priceFilterHandler = (e) => {
+    e.preventDefault();
+    setSearchData(searchData.filter(el => Number(el.lprice) >= Number(lowPrice) && Number(el.lprice) <= Number(highPrice)));
+  }
+
+  // console.log(data);
 
   return (
     <SearchContainer>
-      <SearchBar setData={setData} />
+      <SearchBar setData={setSearchData} />
       <ResultContainer>
-        {/* <PriceFilterDiv>
+        <PriceFilterDiv>
           <div className="not-price-area">가격</div>
           <div className="price-area">
-            <div><PriceFilterInput type="text" />원</div>
+            <div><PriceFilterInput type="text" value={lowPrice} onChange={lowPriceChange}/>원</div>
             <div>~</div>
-            <div><PriceFilterInput type="text" />원</div>
+            <div><PriceFilterInput type="text" value={highPrice} onChange={highPriceChange}/>원</div>
           </div>
-          <PriceFilterBtn className="not-price-area">적용</PriceFilterBtn>
-        </PriceFilterDiv> */}
+          <PriceFilterBtn className="not-price-area" onClick={priceFilterHandler}>적용</PriceFilterBtn>
+        </PriceFilterDiv>
         <ResultTitleDiv>
           <div className="search-result">'{query}' 검색 결과</div>
-          <div className="search-description">(검색 결과는 최대 50건까지 확인할 수 있습니다)</div>
+          <div className="search-description">(검색 결과는 최대 50건까지 확인할 수 있습니다.)</div>
         </ResultTitleDiv>
-        {data.length === 0 ? <div className="search-no-result">
+        {searchData.length === 0 ? <div className="search-no-result">
           <p><strong>'{query}'</strong>에 대한 검색 결과가 없습니다.</p>
           <p>검색어를 확인해 주세요.</p>
         </div>
-          : data.map((el, idx) => {
+          : curPage.map((el, idx) => {
             return (
               <Items key={idx} title={el.title} img={el.image} link={el.link} price={el.lprice} />
             )
           })}
-        {/* {data.map((el, idx) => {
-          return (
-            <Items key={idx} title={el.title} img={el.image} link={el.link} price={el.lprice} />
-          )
-        })} */}
       </ResultContainer>
-      {data.length === 0 ? null
+      {searchData.length === 0 ? null
         : <PaginationDiv>
           <FontAwesomeIcon icon={faChevronLeft} className="pagination-arrow" onClick={prevBtnHandler} />
-          {numbers.map(el => {
+          {newNumbers.map(el => {
             return (
               <PaginationBtn key={el} onClick={paginationHandler} clicked={el === isClicked}>{el}</PaginationBtn>
             )
