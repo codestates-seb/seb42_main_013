@@ -3,9 +3,11 @@ package com.SebMainTeam13.team13.detailSupplement.controller;
 import com.SebMainTeam13.team13.detailSupplement.dto.DetailSupplementDto;
 import com.SebMainTeam13.team13.detailSupplement.entity.DetailSupplement;
 import com.SebMainTeam13.team13.detailSupplement.mapper.DetailSupplementMapper;
+import com.SebMainTeam13.team13.detailSupplement.repository.DetailSupplementRepository;
 import com.SebMainTeam13.team13.detailSupplement.service.DetailSupplementService;
 import com.SebMainTeam13.team13.dto.ListResponseDto;
 import com.SebMainTeam13.team13.dto.SingleResponseDto;
+import com.SebMainTeam13.team13.supplement.entity.Supplement;
 import com.SebMainTeam13.team13.user.service.UserService;
 import com.SebMainTeam13.team13.utils.UriCreator;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,7 @@ public class DetailSupplementController {
     private final static String DETAIL_DEFAULT_URL = "/detailSupplements";
     private final DetailSupplementService detailSupplementService;
     private final DetailSupplementMapper detailSupplementMapper;
+
     private final UserService userService;
     @PostMapping
     public ResponseEntity postDetailSupplement(@Valid @RequestBody DetailSupplementDto.Post post) {
@@ -38,27 +41,28 @@ public class DetailSupplementController {
         return ResponseEntity.created(location).build();
     }
 
-    @PatchMapping("/{supplement-name}")
-    public ResponseEntity patchDetailSupplement(@PathVariable("supplement-name")  String  supplementName,
+    @PatchMapping("/{detailSupplement-id}")
+    public ResponseEntity patchDetailSupplement(@PathVariable("detailSupplement-id")  Long  detailSupplementId,
                                           @Valid @RequestBody DetailSupplementDto.Patch patch) {
         String principal = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Long userId= userService.findUserIdByEmail(principal);
-        DetailSupplement detailSupplement = detailSupplementService.updateDetailSupplement(detailSupplementMapper.detailSupplementPatchDtoToDetailSupplement(patch,supplementName),userId);
+        Long userId = userService.findUserIdByEmail(principal);
+
+        DetailSupplement detailSupplement = detailSupplementService.updateDetailSupplement(detailSupplementMapper.detailSupplementPatchDtoToDetailSupplement(patch,detailSupplementId),detailSupplementId);
         DetailSupplementDto.Response response = detailSupplementMapper.detailSupplementToDetailSupplementResponseDto(detailSupplement);
 
         return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.OK);
     }
-    @GetMapping("/{supplement-name}")
-    public ResponseEntity getSupplement(@PathVariable("supplement-name") String supplementName) {
+    @GetMapping("/{detailSupplement-id}")
+    public ResponseEntity getDetailSupplement(@PathVariable("detailSupplement-id") Long detailSupplementId) {
         String principal = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Long userId= userService.findUserIdByEmail(principal);
-        DetailSupplement detailSupplement = detailSupplementService.findAndVerifyDetailSupplementByUserIDAndSupplementName(userId,supplementName);
+        DetailSupplement detailSupplement = detailSupplementService.findAndVerifyDetailSupplementByDetailSupplementId(detailSupplementId);
         DetailSupplementDto.Response response = detailSupplementMapper.detailSupplementToDetailSupplementResponseDto(detailSupplement);
 
         return new ResponseEntity<>(new SingleResponseDto<>(response),HttpStatus.OK);
     }
     @GetMapping
-    public ResponseEntity getSupplements() {
+    public ResponseEntity getDetailSupplements() {
         String principal = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Long userId= userService.findUserIdByEmail(principal);
         List<DetailSupplement> detailSupplements = detailSupplementService.findDetailSupplements(userId);
@@ -66,12 +70,11 @@ public class DetailSupplementController {
 
         return new ResponseEntity<>(new ListResponseDto<>(responses),HttpStatus.OK);
     }
-    @DeleteMapping("/{supplement-name}")
-    public ResponseEntity deleteQuestion(@PathVariable("supplement-name") String supplementName) {
+    @DeleteMapping("/{detailSupplement-id}")
+    public ResponseEntity deleteDetailSupplement(@PathVariable("{detailSupplement-id}") Long detailSupplementId) {
         String principal = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Long userId= userService.findUserIdByEmail(principal);
-        DetailSupplement detailSupplement = detailSupplementService.findAndVerifyDetailSupplementByUserIDAndSupplementName(userId,supplementName);
-
+        DetailSupplement detailSupplement = detailSupplementService.findAndVerifyDetailSupplementByDetailSupplementId(detailSupplementId);
         detailSupplementService.deleteDetailSupplement(detailSupplement);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

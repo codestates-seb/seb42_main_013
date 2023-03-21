@@ -2,6 +2,8 @@ package com.SebMainTeam13.team13.detailSupplement.mapper;
 
 import com.SebMainTeam13.team13.detailSupplement.dto.DetailSupplementDto;
 import com.SebMainTeam13.team13.detailSupplement.entity.DetailSupplement;
+import com.SebMainTeam13.team13.detailSupplement.repository.DetailSupplementRepository;
+import com.SebMainTeam13.team13.supplement.dto.SupplementDto;
 import com.SebMainTeam13.team13.supplement.entity.Supplement;
 
 import com.SebMainTeam13.team13.supplement.service.SupplementService;
@@ -15,6 +17,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class DetailSupplementMapper {
     private final SupplementService supplementService;
+    public final DetailSupplementRepository detailSupplementRepository;
     public DetailSupplement detailSupplementPostDtoToDetailSupplement(DetailSupplementDto.Post post) {
         Supplement supplement = supplementService.findAndVerifySupplementByName(post.getSupplementName());
 
@@ -33,8 +36,8 @@ public class DetailSupplementMapper {
                 .build();
     }
 
-    public DetailSupplement detailSupplementPatchDtoToDetailSupplement(DetailSupplementDto.Patch patch, String supplementName) {
-        Supplement supplement = supplementService.findAndVerifySupplementByName(supplementName);
+    public DetailSupplement detailSupplementPatchDtoToDetailSupplement(DetailSupplementDto.Patch patch,Long detailSupplementId ) {
+        Supplement supplement = detailSupplementRepository.findByDetailSupplementId(detailSupplementId).get().getSupplement();
 
         return  DetailSupplement.builder()
 
@@ -52,7 +55,14 @@ public class DetailSupplementMapper {
     }
 
     public DetailSupplementDto.Response detailSupplementToDetailSupplementResponseDto(DetailSupplement detailSupplement) {
+        SupplementDto.Response supplement =
+                   SupplementDto.Response.builder()
+                  .supplementName(detailSupplement.getSupplement().getSupplementName())
+                  .supplementType(detailSupplement.getSupplement().getSupplementType())
+                  .imageURL(detailSupplement.getSupplement().getImageURL())
+                  .nutrients(detailSupplement.getSupplement().getNutrients())
 
+                  .build();
         return DetailSupplementDto.Response.builder()
 
                 .expirationDate(detailSupplement.getExpirationDate())
@@ -63,6 +73,7 @@ public class DetailSupplementMapper {
                 .totalCapacity(detailSupplement.getTotalCapacity())
                 .dosagePerServing(detailSupplement.getDosagePerServing())
                 .dosageInterval(detailSupplement.getDosageInterval())
+                .supplementResponse(supplement)
 
                 .build();
     }

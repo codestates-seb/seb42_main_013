@@ -40,7 +40,7 @@ public class SupplementDto {
         private List<String> nutrients;
         private String imageURL;
         private String supplementType;
-        private Long concernId;
+
     }
     @Getter
     @Setter

@@ -50,7 +50,7 @@ public class SupplementMapper {
                     .nutrients(supplement.getNutrients())
                     .imageURL(supplement.getImageURL())
                     .supplementType(supplement.getSupplementType())
-                    .concernId(supplement.getConcern().getConcernId())
+
 
 
 

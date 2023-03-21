@@ -2,6 +2,7 @@ package com.SebMainTeam13.team13.detailSupplement.dto;
 
 
 import com.SebMainTeam13.team13.detailSupplement.entity.DetailSupplement;
+import com.SebMainTeam13.team13.supplement.dto.SupplementDto;
 import lombok.*;
 
 import java.util.List;
@@ -59,6 +60,7 @@ public class DetailSupplementDto {
         private Integer totalCapacity;
         private Integer dosagePerServing;
         private Integer dosageInterval;
+        private SupplementDto.Response supplementResponse;
 
         public Response(DetailSupplement detailSupplement) {
             this.expirationDate = detailSupplement.getExpirationDate();
@@ -69,6 +71,10 @@ public class DetailSupplementDto {
             this.totalCapacity = detailSupplement.getTotalCapacity();
             this.dosagePerServing = detailSupplement.getDosagePerServing();
             this.dosageInterval = detailSupplement.getDosageInterval();
+            this.supplementResponse = SupplementDto.Response.builder()
+                    .supplementName(detailSupplement.getSupplement().getSupplementName())
+                    .imageURL(detailSupplement.getSupplement().getImageURL())
+                    .build();
         }
     }
 }

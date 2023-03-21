@@ -53,11 +53,9 @@ public class DetailSupplementService {
     }
 
     @Transactional
-    public DetailSupplement updateDetailSupplement(DetailSupplement detailSupplement,Long userId) {
-        User user = userservice.getUser(userId);
-        Detail detail = detailService.findAndVerifyDetailByDetailId(user.getDetail().getDetailId());
-        Supplement supplement= detailSupplement.getSupplement();
-        DetailSupplement verifiedDetailSupplement = findAndVerifyDetailSupplementByDetailAndSupplement(supplement, detail);
+    public DetailSupplement updateDetailSupplement(DetailSupplement detailSupplement ,Long detailSupplementId) {
+
+        DetailSupplement verifiedDetailSupplement = findAndVerifyDetailSupplementByDetailSupplementId(detailSupplementId);
 
 
         Optional.ofNullable(detailSupplement.getExpirationDate())
@@ -110,7 +108,12 @@ public class DetailSupplementService {
         return optionalDetailSupplement.orElseThrow(() ->
                 new BusinessLogicException(DETAIL_SUPPLEMENT_NOT_FOUND));
     }
+    public DetailSupplement findAndVerifyDetailSupplementByDetailSupplementId(Long detailSupplementId){
+        Optional<DetailSupplement> optionalDetailSupplement = detailDetailSupplementRepository.findByDetailSupplementId(detailSupplementId);
 
+        return optionalDetailSupplement.orElseThrow(() ->
+                new BusinessLogicException(DETAIL_SUPPLEMENT_NOT_FOUND));
+    }
     public DetailSupplement findAndVerifyDetailSupplementByUserIDAndSupplementName(Long userId, String supplementName) {
         User user = userservice.getUser(userId);
         Detail detail = user.getDetail();
