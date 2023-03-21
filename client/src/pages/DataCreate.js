@@ -236,8 +236,7 @@ function DataCrete() {
       </InputSection>
       <InputSection>
         <h3>이미지</h3>
-        {/* <Swiper />
-        <FileInput /> */}
+        <Swiper />
       </InputSection>
       <InputSection>
         <h3>

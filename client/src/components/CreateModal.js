@@ -4,6 +4,7 @@ import DataInput, { FakeInput, RealInput } from "./DataInput";
 import { useState } from "react";
 import { CurrentBtn } from "../styles/Buttons";
 import searchByCode from "../util/searchBycode";
+import FileInput from "./FileInput";
 
 
 
@@ -135,6 +136,7 @@ function CreateModal ({isOpen, openModalHandler, data, name, setData}) {
           }
           { name==="barcode" && <>
             <Title>바코드</Title>
+            <FileInput barcode={barcode} setBarcode={setBarcode} />
             <DataInput data={barcode} setData={setBarcode} placeholder="숫자 직접 입력하기" name="barcode" />
           </>}
           {/* <div>함량</div> */}
