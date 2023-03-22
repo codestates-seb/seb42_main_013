@@ -6,8 +6,9 @@ import DataInput, { DeleteBtn, RealInput } from "../components/DataInput";
 import Tags from "../components/Tags";
 import { useDispatch, useSelector } from "react-redux";
 import { setCreateData } from "../reducer/dataCreateReducer";
-import FileInput from "../components/FileInput";
+import FileInput from "../components/ImageToBarcode";
 import { CurrentBtn } from "../styles/Buttons";
+import login from "../util/login";
 
 
 
@@ -372,7 +373,7 @@ function DataCrete() {
           <path d="M12 21v-1"></path>
         </svg>
       </ScanBarcode>
-      <CurrentBtn>등록하기</CurrentBtn>
+      <CurrentBtn onClick={login}>등록하기</CurrentBtn>
       {isOpen && <CreateModal name={whichData} isOpen={isOpen} openModalHandler={openeModalHandler} data={data} setData={setData} />}
     </DataCreateContainer>
   );

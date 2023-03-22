@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import emptyBarcodeImg from  "../images/plzAddBarcode.png"
 
 
@@ -20,13 +20,21 @@ function FileInput ({barcode, FileInput}) {
     }
   }
   
-  if (!window.BarcodeDetector) {
-    //! console.log(window.BarcodeDetector) 로도 조회가능
-    console.log("Barcode Detector is not supported by this browser.");
-  } else {
-    console.log("Barcode Detector supported!");
-    // setIsDetectorAvailable(true)
-  }
+
+  // 무한렌더링 발생
+  // !window.BarcodeDetector&& setIsDetectorAvailable(false)
+  // window.BarcodeDetector&& setIsDetectorAvailable(true)
+
+  useEffect(()=>{
+    if (!window.BarcodeDetector) {
+      setIsDetectorAvailable(false)
+      console.log("Barcode Detector is not supported by this browser.");
+    } else {
+      setIsDetectorAvailable(true)
+      console.log("Barcode Detector supported!");
+    }
+  },[])
+
   // const barcodeDetector = new BarcodeDetector();
   // 지원하는 포맷 확인하기
   // (async () => {

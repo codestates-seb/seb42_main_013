@@ -4,7 +4,7 @@ import DataInput, { FakeInput, RealInput } from "./DataInput";
 import { useState } from "react";
 import { CurrentBtn } from "../styles/Buttons";
 import searchByCode from "../util/searchBycode";
-import FileInput from "./FileInput";
+import FileInput from "./ImageToBarcode";
 
 
 
