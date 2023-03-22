@@ -12,7 +12,7 @@
     ],
     "pillsLeft": 50,
     "totalCapacity": 50,
-    "dosagePerServing": 30,
+    "dosagePerServing": 2,
     "dosageInterval": 2
   },
   {
@@ -27,7 +27,7 @@
     ],
     "pillsLeft": 50,
     "totalCapacity": 50,
-    "dosagePerServing": 30,
+    "dosagePerServing": 1,
     "dosageInterval": 1
   }
 ]

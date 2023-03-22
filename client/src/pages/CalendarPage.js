@@ -13,7 +13,7 @@ function CalendarPage() {
   const [nowDay, setNowDay] = useState(new Date().getDay());
   const [testData, setTestData]=useState();
 
-  const URI = "http://ec2-13-125-11-217.ap-northeast-2.compute.amazonaws.com:8080";
+  const URI = "http://ec2-13-125-253-248.ap-northeast-2.compute.amazonaws.com:8080";
   useEffect(()=>{
     (async () => {
       await axios({
