@@ -13,17 +13,13 @@ import java.util.Arrays;
 import java.util.List;
 
 @Configuration
-@EnableWebMvc
-public class CorsConfig implements WebMvcConfigurer{
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
-        configuration.setAllowedMethods(Arrays.asList("GET","POST", "PATCH", "DELETE"));
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
+public class CorsConfig implements WebMvcConfigurer {
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("http://localhost:3000", "http://localhost:8081") // 허용할 출처
+                .allowedMethods("GET", "POST","PATCH","DELETE") // 허용할 HTTP method
+                .allowCredentials(true) // 쿠키 인증 요청 허용
+                .maxAge(3000); // 원하는 시간만큼 pre-flight 리퀘스트를 캐싱
     }
-
-
 }
