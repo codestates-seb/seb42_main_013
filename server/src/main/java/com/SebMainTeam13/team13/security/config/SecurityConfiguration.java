@@ -73,7 +73,8 @@ public class SecurityConfiguration {
             registry.addMapping("/**")
                     .allowedOrigins("http://localhost:3000", "http://bucket-for-main13.s3-website.ap-northeast-2.amazonaws.com") // 허용할 출처
                     .allowedMethods("GET", "POST","PATCH","DELETE","OPTIONS") // 허용할 HTTP method
-                    .exposedHeaders("*")
+                    .exposedHeaders("*") //header 노출
+                    .allowedHeaders("*") // 요청 헤더 중 서버에서 허용하는 헤더
                     .allowCredentials(true) // 쿠키 인증 요청 허용
                     .maxAge(3000); // 원하는 시간만큼 pre-flight 리퀘스트를 캐싱
         }
@@ -85,13 +86,13 @@ public class SecurityConfiguration {
 
 
 
-    public class CustomFilterConfigurer extends AbstractHttpConfigurer<CustomFilterConfigurer, HttpSecurity> {  // (2-1)
+    public class CustomFilterConfigurer extends AbstractHttpConfigurer<CustomFilterConfigurer, HttpSecurity> {
         @Override
         public void configure(HttpSecurity builder) throws Exception {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
 
             JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer);
-            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils);  // (2) 추가
+            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils);
 
             jwtAuthenticationFilter.setFilterProcessesUrl("/auth/login");
             jwtAuthenticationFilter.setAuthenticationSuccessHandler(new JwtAuthenticationSuccessHandler());
