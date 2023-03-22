@@ -2,52 +2,6 @@ import { useState } from "react";
 import styled from "styled-components";
 
 
-export const SocialBtn = ({ name, href, bgcolor, color }) => {
-  return (
-    <SocialBtnCss bgcolor={bgcolor} color={color} name={name}>
-      <img src={href} alt="아이콘" width="15px" />
-      <BtnSpan>
-        <BtnDiv>{name}로 시작하기</BtnDiv>
-      </BtnSpan>
-    </SocialBtnCss>
-  )
-}
-export const BtnSpan = styled.span`
-  display: flex;
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-`
-export const BtnDiv =styled.div`
-  margin:0 !important;
-  padding:0 !important;
-  font-family: 'NanumBarunGothic';
-  color: black !important;
-`;
-
-export const SocialBtnCss = styled.button`
-  cursor:pointer;
-  padding: 5px 20px !important;
-  margin-bottom: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 5px;
-  padding: 0 8px;
-  border: ${(props) => props.name==="구글" ? "1px solid #b4b4b4" : "none"};
-  font-size: 16px;
-  height: 40px;
-  padding: var(--gap-md) 0;
-  width: 100%;
-  background-color: ${(props) => props.bgcolor ? props.bgcolor : "white"};
-  :hover{
-    background-color: ${(props) => props.name==="구글" ? "#F7F9FA":"#fada0a" };
-  }
-  :invalid{
-    border-color: rgb(240, 86, 86);
-  }
-`;
-
 export const FakeInput = styled.div`
   display: flex;
   flex: 1;

@@ -4,7 +4,6 @@ import { faCalendarCheck } from "@fortawesome/free-regular-svg-icons";
 import { faPills } from "@fortawesome/free-solid-svg-icons";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { searchActions } from "../reducer/searchReducer";
@@ -52,7 +51,7 @@ function Footer() {
   const categoryArr = [
     { name: '달력관리', src: faCalendarCheck, link: ["/calendar"] },
     { name: '추천/검색', src: faMagnifyingGlass, link: ["/", "/search"] },
-    { name: '알약관리', src: faPills, link: ["/summary"] },
+    { name: '알약관리', src: faPills, link: ["/summary", "/datacreate"] },
     { name: '마이페이지', src: faUser, link: ["/mypage"] }
   ]
 

@@ -2,6 +2,7 @@ import styled from "styled-components";
 import background5 from "../images/backgrounds/background5.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
+import { Link } from "react-router-dom";
 
 const WebAsideContainer = styled.div`
   width: 100%;
@@ -92,7 +93,7 @@ function WebAside() {
 
   return (
     <WebAsideContainer>
-      <img src="images/logo1.png" alt="logo" />
+      <Link to="/"><img src="images/logo1.png" alt="logo" /></Link>
       <BackgroundDiv>
         <div className="content">
           <p>나만의 <strong>영양제 달력</strong></p>
@@ -103,7 +104,7 @@ function WebAside() {
       </BackgroundDiv>
       <TeamDiv>
         <TeamnameDiv>
-          <div className="team-title">🍙Team. 양반김에 양조간장🥢</div>
+          <div className="team-title">🍙양반김에 양조간장🥢</div>
           <a href="https://github.com/codestates-seb/seb42_main_013" className="team-github">
             <FontAwesomeIcon icon={faGithub} className="icon-github" />
             Team Github

@@ -20,6 +20,7 @@ const HeaderContainer = styled.div`
   padding: 0 20px;
   .logo {
     width: 120px;
+    margin-top: 2px;
   }
   .icon {
     width: 20px;
@@ -48,23 +49,37 @@ function Header() {
 
   const prevBtnHandler = (e) => {
     e.preventDefault();
-    navigate(-1);
+    if (pathname === "/search") {
+      dispatch(searchActions.removeSearchValue());
+      navigate("/");
+    } else {
+      navigate(-1);
+    }
+  }
+
+  const plusHandler = () => {
+    navigate("/datacreate");
   }
 
   const removeHandler = () => {
     dispatch(searchActions.removeSearchValue());
   }
 
+  const logoutHandler = () => {
+    navigate("/intro");
+  }
+
   return (
     <HeaderContainer>
       <FontAwesomeIcon icon={faChevronLeft}
-      className={`${(pathname === "/datacreate" || pathname === "/login" || pathname === "/search") ? "icon" : "icon hidden"}`}
-      onClick={prevBtnHandler}/>
-      <Link to="/" onClick={removeHandler}><img src="images/logo_header.png" alt="logo" className="logo"/></Link>
+        className={`${(pathname === "/datacreate" || pathname === "/login" || pathname === "/signup" || pathname === "/search") ? "icon" : "icon hidden"}`}
+        onClick={prevBtnHandler} />
+      {pathname === "/setuserinfo" ? <img src="images/logo_header.png" alt="logo" className="logo" />
+        : <Link to="/" onClick={removeHandler}><img src="images/logo_header.png" alt="logo" className="logo" /></Link>}
       <RightDiv>
-        <FontAwesomeIcon icon={faArrowRightFromBracket} className={`${(pathname === "/mypage" || pathname === "/setuserinfo") ? "icon" : "icon none"}`} />
-        <FontAwesomeIcon icon={faPlus} className={`${pathname === "/summary" ? "icon" : "icon none"}`} />
-        <div className={`${(pathname === "/summary" || pathname === "/mypage" || pathname === "/setuserinfo") ? "icon none" : "icon"}`}></div>
+        <FontAwesomeIcon icon={faArrowRightFromBracket} onClick={logoutHandler} className={`${(pathname === "/mypage") ? "icon" : "icon none"}`} />
+        <FontAwesomeIcon icon={faPlus} onClick={plusHandler} className={`${pathname === "/summary" ? "icon" : "icon none"}`} />
+        <div className={`${(pathname === "/summary" || pathname === "/mypage") ? "icon none" : "icon"}`}></div>
       </RightDiv>
     </HeaderContainer>
   )
