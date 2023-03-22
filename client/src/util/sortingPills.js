@@ -2,7 +2,13 @@ export function sortingPills (data, sortby){
   let sortedData = []
   switch(sortby){
     case "AtoZ" :
-      sortedData=data.sort((b,a)=>a.supplementName-b.supplementName)
+      sortedData=data.sort((a,b)=>{
+        const A = a.supplementName.toUpperCase()
+        const B = b.supplementName.toUpperCase()
+        if(A<B) return -1
+        if(B>A) return 1
+        return 0      
+      })
     break;
     case "pillsLeftAscending":
       sortedData=data.sort((a,b)=>a.pillsLeft-b.pillsLeft)
