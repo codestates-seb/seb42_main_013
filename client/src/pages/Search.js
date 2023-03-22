@@ -116,7 +116,7 @@ function Search() {
   const query = searchParams.get("query");
 
   useEffect(() => {
-    const url = "/v1/search/shop.json";
+    const url = "https://openapi.naver.com/v1/search/shop.json";
     axios.get(url, {
       params: {
         query,
