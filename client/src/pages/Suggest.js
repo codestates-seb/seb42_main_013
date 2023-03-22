@@ -331,8 +331,8 @@ function Suggest() {
   useEffect(() => {
     const data = 1;
     dispatch(concernActions.changeConcernClicked({ data }));
-    // axios.get(`${process.env.REACT_APP_API_URL}/concerns`)
-    //   .then((res) => console.log(res.data.data));
+    axios.get(`${process.env.REACT_APP_API_URL}/concerns`)
+      .then((res) => console.log(res.data.data));
   }, [])
 
   const userSupClick = (e) => {
