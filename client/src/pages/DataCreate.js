@@ -6,11 +6,8 @@ import DataInput, { DeleteBtn, RealInput } from "../components/DataInput";
 import Tags from "../components/Tags";
 import { useDispatch, useSelector } from "react-redux";
 import { setCreateData } from "../reducer/dataCreateReducer";
-import FileInput from "../components/ImageToBarcode";
 import { CurrentBtn } from "../styles/Buttons";
 import login from "../util/login";
-
-
 
 const DataCreateContainer = styled.div`
   display: flex;
@@ -143,24 +140,38 @@ const Cycle = styled.div`
 `;
 
 const ScanBarcode = styled.button`
-  position: absolute;
-  background-color: red;
+  --width- : 48px;
+  position: fixed;
+  background-color: transparent;
+  color: white;
   border: none;
-  border-radius: 50%;
-  bottom: 0px;
-  right: 20px;
+  top: 0;
+  left: calc( 50% );
+  margin-left: calc( (428px + 460px) / 2 - var(--width-) );
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  svg{
-    fill: none;
+  z-index: 1000;
+  svg {
+    width: var(--width-);
+    height: var(--width-);
+    fill: currentColor;
     stroke: currentColor;
     stroke-width: 2;
     stroke-linecap: round;
     stroke-linejoin: round;
-    width: 24px;
-    height: 24px;
+
+  }
+  path{
+    fill-rule: evenodd;
+  }
+  @media (max-width: 1023px){
+    margin-left: calc( 214px - var(--width-) );
+  }
+  @media (max-width: 428px){
+    margin-left: 0;
+    left: calc(100% - var(--width-));
   }
 `;
 
@@ -350,30 +361,19 @@ function DataCrete() {
           <DataInput required={1} min={1} placeholder="1회 복용량" type="number" name="dosagePerServing" data={data} setData={setData} />
         </div>
       </InputSection>
-      <ScanBarcode        
+      <ScanBarcode
         onClick={() => {
-        setWhichData("barcode");
-        openeModalHandler();
-      }}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-        >
-          <rect x="3" y="3" width="5" height="5" rx="1"></rect>
-          <rect x="16" y="3" width="5" height="5" rx="1"></rect>
-          <rect x="3" y="16" width="5" height="5" rx="1"></rect>
-          <path d="M21 16h-3a2 2 0 0 0-2 2v3"></path>
-          <path d="M21 21v.01"></path>
-          <path d="M12 7v3a2 2 0 0 1-2 2H7"></path>
-          <path d="M3 12h.01"></path>
-          <path d="M12 3h.01"></path>
-          <path d="M12 16v.01"></path>
-          <path d="M16 12h1"></path>
-          <path d="M21 12v.01"></path>
-          <path d="M12 21v-1"></path>
+          setWhichData("barcode");
+          openeModalHandler();
+        }}
+      >
+        <svg version="1.1" viewBox="0 0 700 550" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="m117.6 126c0-12.371 10.031-22.398 22.398-22.398h56v-22.398h-56c-24.742 0-44.801 20.059-44.801 44.801v56h22.398zm0 313.6v-56h-22.398v56c0 24.742 20.059 44.801 44.801 44.801h56v-22.398h-56c-12.375-0.003906-22.402-10.035-22.402-22.402zm470.4 0c0 12.371-10.031 22.398-22.398 22.398h-56v22.398h56c24.742 0 44.801-20.059 44.801-44.801v-56h-22.398zm-22.398-358.4h-56v22.398h56c12.371 0 22.398 10.031 22.398 22.398v56h22.398v-56c0-24.738-20.059-44.797-44.797-44.797zm-448 201.6c0 6.1836 5.0195 11.199 11.199 11.199h448c6.1836 0 11.199-5.0195 11.199-11.199 0-6.1836-5.0195-11.199-11.199-11.199h-448c-6.1836 0-11.199 5.0156-11.199 11.199zm179.2-134.4h-22.398v100.8h22.398zm-134.4 0v100.8h22.398v-100.8zm179.2 0h-22.398v100.8h22.398zm112 0h-22.398v100.8h22.398zm44.797 0h-22.398v100.8h22.398zm22.402 0v100.8h22.398v-100.8zm-268.8 0h-44.801v100.8h44.801zm156.8 0h-44.801v100.8h44.801zm-134.4 268.8h22.398v-100.8h-22.398zm-89.598 0v-100.8h-22.398v100.8zm134.4 0h22.398v-100.8h-22.398zm112 0h22.398v-100.8h-22.398zm44.801 0h22.398v-100.8h-22.398zm67.199 0v-100.8h-22.398v100.8zm-336 0h44.801v-100.8h-44.801zm156.8 0h44.801v-100.8h-44.801z"
+          />
         </svg>
       </ScanBarcode>
-      <CurrentBtn onClick={login}>등록하기</CurrentBtn>
+      <CurrentBtn onClick={login(data)}>등록하기</CurrentBtn>
       {isOpen && <CreateModal name={whichData} isOpen={isOpen} openModalHandler={openeModalHandler} data={data} setData={setData} />}
     </DataCreateContainer>
   );
