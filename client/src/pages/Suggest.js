@@ -7,10 +7,17 @@ import { useEffect } from "react";
 import { concernActions } from "../reducer/concernReducer";
 import { searchActions } from "../reducer/searchReducer";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import card1 from "../images/cards/card1.jpg";
 import card2 from "../images/cards/card2.jpg";
 import card3 from "../images/cards/card3.jpg";
 import card4 from "../images/cards/card4.jpg";
+import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore, { Pagination, Autoplay } from "swiper";
+import "swiper/css";
+import "swiper/css/pagination";
+
+SwiperCore.use([Pagination, Autoplay]);
 
 const SuggestContainer = styled.div`
   background-color: #ffffff;
@@ -39,7 +46,7 @@ const UserConcern = styled.div`
   width: 100%;
   height: 100%;
   border: 2px solid var(--blue-100);
-  border-radius: 30px;
+  border-radius: 20px;
   padding: var(--gap-md);
   margin-bottom: var(--gap-md);
 `
@@ -71,31 +78,90 @@ const UserSupImg = styled.img`
     }
 `
 
-const RankingContainer = styled.div`
-  height: 95%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  color: var(--black-100);
+const SugSlideContainer = styled(UserContainer)`
+  height: 100px;
 `
 
-const RankingDiv = styled.div`
-  width: 100%;
-  border: 1px solid var(--black-400);
-  border-radius: 20px;
-  margin: 4px 0;
-  padding: 4px;
-  padding-left: var(--gap-sm);
+const SugSlideDiv = styled(UserConcern)`
+  padding: 0;
+  border-radius: 0;
+  border-style: none;
+  position: relative;
+  .swiper {
+    height: 100%;
+  }
+  .swiper-wrapper {
+    z-index: -1;
+  }
+  .swiper-pagination {
+    width: 100%;
+    height: 20px;
+    position: absolute;
+    z-index: 20;
+    right: 20px;
+    top: 11.3px;
+  }
+  .swiper-pagination-bullet {
+    background-color: transparent;
+    display: none;
+    position: absolute;
+    right: 37px;
+  }
+  .swiper-pagination-bullet-active {
+    display: inline-block;
+    color: #ffffff;
+    font-size: 14px;
+    font-family: 'NanumBarunGothic';
+  }
+`
+
+const SlideCounter = styled.div`
+  width: 50px;
+  height: 20px;
+  position: absolute;
+  right: 10px;
+  top: 8px;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.3);
   font-size: 14px;
-  font-weight: 600;
-  span {
-    margin-right: var(--gap-sm);
+  color: #ffffff;
+  padding: 3px;
+  padding-left: 22px;
+`
+
+const SugSlide = styled.div`
+  width: 100%;
+  height: 100%;
+  padding: var(--gap-md);
+  border-radius: 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  cursor: pointer;
+  background-color: ${(props) => `${props.bgcolor}`};
+  p {
+    margin: 4px;
+    font-weight: 600;
+    color: var(--black-100);
+  }
+  .slide-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  img {
+    margin-left: 36px;
+    width: 60px;
+  }
+  .cough {
+    margin-left: 60px;
   }
 `
 
 const SugContentConatiner = styled.div`
   padding: 0 20px var(--gap-md);
+  margin-top: var(--gap-md);
+  border-top: 12px solid var(--black-500);
   .smallcontent-area {
     display: flex;
     justify-content: center;
@@ -262,6 +328,8 @@ function Suggest() {
   useEffect(() => {
     const data = "영양보충"
     dispatch(concernActions.changeConcernClicked({ data }));
+    // axios.get(`${process.env.REACT_APP_API_URL}/concerns`)
+    //   .then((res) => console.log(res.data.data));
   }, [])
 
   const userSupClick = (e) => {
@@ -277,6 +345,26 @@ function Suggest() {
     const query = JSON.parse(localStorage.getItem("searchValue"));
     navigate(`/search?query=${query}`);
   }
+
+  const omegaClick = (e) => {
+    navigate("/search?query=오메가3")
+  }
+  const summaryClick = () => {
+    navigate("/summary");
+  }
+  const coldClick = () => {
+    navigate("/search?query=감기예방")
+  }
+  const mypageClick = () => {
+    navigate("/mypage")
+  }
+
+  const pagination = {
+    clickable: true,
+    renderBullet: function (index, className) {
+      return '<span class="' + className + '">' + (index + 1) + "</span>";
+    },
+  };
 
   return (
     <SuggestContainer>
@@ -301,18 +389,71 @@ function Suggest() {
           </UserSupContainer>
         </UserConcern>
       </UserContainer>
-      <UserContainer>
-        <UserConcern>
-          <div>지금 가장 인기 있는 영양제는?</div>
-          <RankingContainer>
-            <RankingDiv><span className="highlight">1.</span>종합비타민</RankingDiv>
-            <RankingDiv><span className="highlight">2.</span>오메가3</RankingDiv>
-            <RankingDiv><span className="highlight">3.</span>루테인 지아잔틴</RankingDiv>
-          </RankingContainer>
-        </UserConcern>
-      </UserContainer>
+      <SugSlideContainer>
+        <SugSlideDiv>
+
+          <Swiper
+            spaceBetween={0}
+            slidesPerView={1}
+            pagination={pagination}
+            rewind={true}
+          // autoplay={{ delay: 3000 }}
+          >
+            <SlideCounter>/ 5</SlideCounter>
+            <SwiperSlide>
+              <SugSlide bgcolor="#ffedba" onClick={omegaClick}>
+                <div className="slide-text">
+                  <p>다른 건 몰라도 이 영양제는 꼭 드세요!</p>
+                  <p>오메가3 구매하러 가기</p>
+                </div>
+                <div className="slide-icon">
+                  <img src="images/icon-suggest1.png" alt="slide-icon" />
+                </div>
+              </SugSlide>
+            </SwiperSlide>
+            <SwiperSlide>
+              <SugSlide bgcolor="#e6e3f4" onClick={summaryClick}>
+                <div className="slide-text">
+                  <p>너무 많아 관리하기 힘든 내 영양제...</p>
+                  <p>'알약관리'에 등록해 보셨나요?</p>
+                </div>
+                <div className="slide-icon">
+                  <img src="images/icon-suggest2.png" alt="slide-icon" />
+                </div>
+              </SugSlide>
+            </SwiperSlide>
+            <SwiperSlide>
+              <SugSlide bgcolor="#d2f4e1" onClick={coldClick}>
+                <div className="slide-text">
+                  <p>꽃샘추위 감기 조심하세요!</p>
+                  <p>미리미리 준비하고 감기예방하기</p>
+                </div>
+                <div className="slide-icon">
+                  <img src="images/icon-suggest3.png" alt="slide-icon" className="cough" />
+                </div>
+              </SugSlide>
+            </SwiperSlide>
+            <SwiperSlide>
+              <SugSlide bgcolor="#f9e3ee" onClick={mypageClick}>
+                <div className="slide-text">
+                  <p>새로운 건강고민이 생기셨나요?</p>
+                  <p>건강고민 선택하고 맞춤 영양제 추천 받아보세요!</p>
+                </div>
+              </SugSlide>
+            </SwiperSlide>
+            <SwiperSlide>
+              <SugSlide bgcolor="#cedcff">
+                <div className="slide-text">
+                  <p>🍙양반김에 양조간장🥢팀</p>
+                  <p>프로젝트 정말정말 고생 많으셨습니다!</p>
+                </div>
+              </SugSlide>
+            </SwiperSlide>
+          </Swiper>
+        </SugSlideDiv>
+      </SugSlideContainer>
       <SugContentConatiner>
-        <CategoryTitle>내 <span className="highlight">건강고민</span>에 맞는 영양 찾기</CategoryTitle>
+        <CategoryTitle><span className="highlight">건강고민</span>별 영양 찾기</CategoryTitle>
         <ScrollBar />
         <LargeContent>
           <div className="lg-content-title"><img src="images/icon--ipu.png" alt="ipu-icon" className="ipu-icon" />{state.selectedConcern}에 좋은 영양제</div>

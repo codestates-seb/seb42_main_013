@@ -78,6 +78,7 @@ const PriceFilterBtn = styled.button`
   color: #ffffff;
   border-style: none;
   border-radius: 5px;
+  cursor: pointer;
 `
 
 const PaginationBtn = styled.button`
@@ -164,7 +165,14 @@ function Search() {
 
   const priceFilterHandler = (e) => {
     e.preventDefault();
-    setSearchData(searchData.filter(el => Number(el.lprice) >= Number(lowPrice) && Number(el.lprice) <= Number(highPrice)));
+    let filteredData = searchData.slice();
+    if(lowPrice.length !== 0) {
+      filteredData = filteredData.filter(el => Number(el.lprice) >= Number(lowPrice));
+    }
+    if(highPrice.length !== 0) {
+      filteredData = filteredData.filter(el => Number(el.lprice) <= Number(highPrice));
+    }
+    setSearchData(filteredData);
   }
 
   // console.log(data);
