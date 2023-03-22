@@ -1,15 +1,12 @@
 import { useEffect, useState } from "react"
 import emptyBarcodeImg from  "../images/plzAddBarcode.png"
+import DetectorNotAvailable from  "../images/DetectorNotAvailable.png"
 
-
-function FileInput ({barcode, FileInput}) {
+function FileInput ({setBarcode, isDetectorAvailable, setIsDetectorAvailable}) {
   const [src, setSrc] = useState(emptyBarcodeImg)
-  const [img, setImg] = useState(emptyBarcodeImg)
-  const [IsDetectorAvailable,setIsDetectorAvailable] = useState(false)
 
   const inputImgHandler = (e) => {
     e.target.files && rendering(e.target.files[0])
-    e.target.files && setImg(e.target.files[0])
     //인풋에 파일이 입력된 경우 렌더링
   }
   const rendering = (file) => {
@@ -17,49 +14,42 @@ function FileInput ({barcode, FileInput}) {
     reader.readAsDataURL(file)
     reader.onload = e => {
       setSrc(e.target.result)
+      const image = new Image()
+      image.src = e.target.result
+      image.onload = () => detect(image)
     }
   }
   
+  const detect = (image) => {
+    const barcodeDetector = new BarcodeDetector();
+    barcodeDetector
+      .detect(image)
+      .then((barcodes) => {
+        setBarcode(barcodes)
+        alert(barcodes[0].rawValue);
+      })
+      .catch((e) => {
+        setIsDetectorAvailable(false)
+        setSrc(DetectorNotAvailable)
+        alert("바코드 리더를 사용할 수 없는 환경입니다. 숫자를 직접 기입해주세요.")
+        console.log(e);
+      });
+  };
 
-  // 무한렌더링 발생
+  // 아래코드 바로 쓰면 무한렌더링 발생
   // !window.BarcodeDetector&& setIsDetectorAvailable(false)
   // window.BarcodeDetector&& setIsDetectorAvailable(true)
 
   useEffect(()=>{
     if (!window.BarcodeDetector) {
       setIsDetectorAvailable(false)
+      setSrc(DetectorNotAvailable)
       console.log("Barcode Detector is not supported by this browser.");
     } else {
       setIsDetectorAvailable(true)
       console.log("Barcode Detector supported!");
     }
   },[])
-
-  // const barcodeDetector = new BarcodeDetector();
-  // 지원하는 포맷 확인하기
-  // (async () => {
-    // console.log(await BarcodeDetector.getSupportedFormats()); // ["aztec", "code_128" ... ]
-  // })();
-
-  // img && barcodeDetector
-  // .detect(img)
-  // .then((barcodes) => {
-  //   barcodes.forEach((barcode) => console.log(barcode.rawValue));
-  // })
-  // .catch((err) => {
-  //   console.log(err);
-  // });
-
-  // const aaa = async (image) => {
-  //   try {
-  //     // const barcodes = await barcodeDetector.detect(image);
-  //     // console.log(barcodes)
-  //     // barcodes.forEach(barcode => searchProductDatabase(barcode));
-  //   } catch (e) {
-  //     console.error('Barcode detection failed:', e);
-  //   }
-  // }
-
 
 
   return(
