@@ -21,12 +21,19 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.util.Arrays;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @RequiredArgsConstructor
-@Import(CorsConfig.class)
+
 public class SecurityConfiguration {
     private final JwtTokenizer jwtTokenizer;
     private final AuthorityUtils authorityUtils;
@@ -56,6 +63,17 @@ public class SecurityConfiguration {
                         .anyRequest().permitAll()
                 );
         return http.build();
+    }
+    @Configuration
+    public class WebConfig implements WebMvcConfigurer {
+        @Override
+        public void addCorsMappings(CorsRegistry registry) {
+            registry.addMapping("/**")
+                    .allowedOrigins("http://localhost:3000", "http://lhttp://bucket-for-main13.s3-website.ap-northeast-2.amazonaws.com") // 허용할 출처
+                    .allowedMethods("GET", "POST","PATCH","DELETE") // 허용할 HTTP method
+                    .allowCredentials(true) // 쿠키 인증 요청 허용
+                    .maxAge(3000); // 원하는 시간만큼 pre-flight 리퀘스트를 캐싱
+        }
     }
     @Bean
     public PasswordEncoder passwordEncoder() {
