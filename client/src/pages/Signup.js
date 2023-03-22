@@ -43,14 +43,10 @@ const onClick=()=>{ window.location.href = '/login'};
 
 function Signup() {
   const URI = "http://ec2-13-125-11-217.ap-northeast-2.compute.amazonaws.com:8080";
-<<<<<<< Updated upstream
   const [isFocus1, setIsFocus1] = useState(false);
   const [isFocus2, setIsFocus2] = useState(false);
   const [isFocus3, setIsFocus3] = useState(false);
 
-=======
-  const [isFocus, setIsFocus] = useState(false);
->>>>>>> Stashed changes
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [data, setData] = useState({ email: '', passward: '', displayName: '' });
   const onSubmit = async (data) => {
