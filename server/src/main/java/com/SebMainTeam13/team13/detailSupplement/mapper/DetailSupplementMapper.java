@@ -65,6 +65,8 @@ public class DetailSupplementMapper {
                   .build();
         return DetailSupplementDto.Response.builder()
 
+                .detailSupplementId(detailSupplement.getDetailSupplementId())
+                .supplementName(detailSupplement.getSupplement().getSupplementName())
                 .expirationDate(detailSupplement.getExpirationDate())
                 .startDate(detailSupplement.getStartDate())
                 .endDate(detailSupplement.getEndDate())

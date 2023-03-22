@@ -52,6 +52,8 @@ public class DetailSupplementDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Response {
+        private Long detailSupplementId;
+        private String supplementName;
         private String expirationDate;
         private String startDate;
         private String endDate;
@@ -63,6 +65,8 @@ public class DetailSupplementDto {
         private SupplementDto.Response supplementResponse;
 
         public Response(DetailSupplement detailSupplement) {
+            this.detailSupplementId=detailSupplement.getDetailSupplementId();
+            this.supplementName = detailSupplement.getSupplement().getSupplementName();
             this.expirationDate = detailSupplement.getExpirationDate();
             this.startDate = detailSupplement.getStartDate();
             this.endDate = detailSupplement.getEndDate();
@@ -73,6 +77,8 @@ public class DetailSupplementDto {
             this.dosageInterval = detailSupplement.getDosageInterval();
             this.supplementResponse = SupplementDto.Response.builder()
                     .supplementName(detailSupplement.getSupplement().getSupplementName())
+                    .nutrients(detailSupplement.getSupplement().getNutrients())
+                    .supplementType(detailSupplement.getSupplement().getSupplementType())
                     .imageURL(detailSupplement.getSupplement().getImageURL())
                     .build();
         }
