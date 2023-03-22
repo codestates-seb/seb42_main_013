@@ -11,7 +11,7 @@ let initialState = {
   totalCapacity: "",
   startDate: new Date().toISOString().substring(0, 10),
   endDate: "",
-  dosageInterval: 1,
+  dosageInterval: "1",
   takingTime: [],
   dosagePerServing: 1,
 }

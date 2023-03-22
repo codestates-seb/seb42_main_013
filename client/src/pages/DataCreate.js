@@ -6,6 +6,9 @@ import DataInput, { DeleteBtn, RealInput } from "../components/DataInput";
 import Tags from "../components/Tags";
 import { useDispatch, useSelector } from "react-redux";
 import { setCreateData } from "../reducer/dataCreateReducer";
+import FileInput from "../components/FileInput";
+import { CurrentBtn } from "../styles/Buttons";
+
 
 
 const DataCreateContainer = styled.div`
@@ -15,6 +18,7 @@ const DataCreateContainer = styled.div`
   justify-content: space-around;
   padding: 24px 20px 40px;
   background-color: white;
+  position: relative;
 `;
 
 const InputSection = styled.section`
@@ -137,15 +141,37 @@ const Cycle = styled.div`
   }
 `;
 
+const ScanBarcode = styled.button`
+  position: absolute;
+  background-color: red;
+  border: none;
+  border-radius: 50%;
+  bottom: 0px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  svg{
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    width: 24px;
+    height: 24px;
+  }
+`;
+
 function DataCrete() {
   const [isOpen, setIsOpen] = useState(false);
   const [whichData, setWhichData] = useState("");
   const openeModalHandler = () => {
     setIsOpen(!isOpen);
   };
-  const data = useSelector((state)=> state.create)
+  const data = useSelector((state) => state.create);
   const dispatch = useDispatch();
-  const setData = (data) => dispatch(setCreateData(data))
+  const setData = (data) => dispatch(setCreateData(data));
   const inputEl = useRef(null);
   const [isEditMode, setEditMode] = useState(false);
   useEffect(() => {
@@ -164,12 +190,10 @@ function DataCrete() {
     setEditMode(false);
     !e.target.value && setData({ ...data, dosageInterval: "1" });
   };
-  const deleteIngredient = (ele, idx) => {
-    setData({ ...data, nutrients: [...data.nutrients.slice(0, idx), ...data.nutrients.slice(idx + 1)] });
+  const deleteEleHandler = (ele, idx, name) => {
+    setData({ ...data, [name]: [...data[name].slice(0, idx), ...data[name].slice(idx + 1)] });
   };
-  const deleteTime = (ele, idx) => {
-    setData({ ...data, takingTime: [...data.takingTime.slice(0, idx), ...data.takingTime.slice(idx + 1)] });
-  };
+
   return (
     <DataCreateContainer>
       <InputSection>
@@ -224,9 +248,10 @@ function DataCrete() {
       <InputSection>
         <h3>주요 성분</h3>
         <div>
-          {data.nutrients && data.nutrients.map((ele, idx) => {
-            return <Tags key={idx} ele={ele} idx={idx} deleteEleHandler={deleteIngredient} />;
-          })}
+          {data.nutrients &&
+            data.nutrients.map((ele, idx) => {
+              return <Tags key={idx} ele={ele} idx={idx} deleteEleHandler={deleteEleHandler} name="nutrients" />;
+            })}
           <AddBtn
             onClick={() => {
               setWhichData("nutrients");
@@ -243,11 +268,13 @@ function DataCrete() {
       <InputSection>
         <h3>소비기한</h3>
         <div>
-          <DataInput type="date" data={data} setData={setData} value="expiryDate" />
+          <DataInput type="date" data={data} setData={setData} name="expirationDate" />
         </div>
       </InputSection>
       <InputSection>
-        <h3>잔여알수 / 전체용량<p>*</p></h3>
+        <h3>
+          잔여알수 / 전체용량<p>*</p>
+        </h3>
         <Box>
           <DataInput max={data.totalCapacity} placeholder="잔여알수" required={1} type="number" name="pillsLeft" data={data} setData={setData} />
           /
@@ -273,7 +300,14 @@ function DataCrete() {
           <Cycle className="ndays" selected={data.dosageInterval !== "1" ? 1 : 0} onClick={openEditHandler} isEditMode={isEditMode}>
             {isEditMode && (
               <>
-                <RealInput type="number" value={data.dosageInterval} ref={inputEl} onBlur={blurHandler} onChange={cycleHandler} placeholder="몇일마다 복용하시나요" />
+                <RealInput
+                  type="number"
+                  value={data.dosageInterval}
+                  ref={inputEl}
+                  onBlur={blurHandler}
+                  onChange={cycleHandler}
+                  placeholder="몇일마다 복용하시나요"
+                />
                 <DeleteBtn value={1}>
                   <button>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -290,9 +324,10 @@ function DataCrete() {
       <InputSection>
         <h3>복용 시간</h3>
         <div>
-          {data.takingTime && data.takingTime.map((ele, idx) => {
-            return <Tags key={idx} ele={ele} idx={idx} deleteEleHandler={deleteTime} />;
-          })}
+          {data.takingTime &&
+            data.takingTime.map((ele, idx) => {
+              return <Tags key={idx} ele={ele} idx={idx} deleteEleHandler={deleteEleHandler} name="takingTime" />;
+            })}
           <AddBtn
             onClick={() => {
               setWhichData("takingTime");
@@ -314,7 +349,30 @@ function DataCrete() {
           <DataInput required={1} min={1} placeholder="1회 복용량" type="number" name="dosagePerServing" data={data} setData={setData} />
         </div>
       </InputSection>
-
+      <ScanBarcode        
+        onClick={() => {
+        setWhichData("barcode");
+        openeModalHandler();
+      }}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+        >
+          <rect x="3" y="3" width="5" height="5" rx="1"></rect>
+          <rect x="16" y="3" width="5" height="5" rx="1"></rect>
+          <rect x="3" y="16" width="5" height="5" rx="1"></rect>
+          <path d="M21 16h-3a2 2 0 0 0-2 2v3"></path>
+          <path d="M21 21v.01"></path>
+          <path d="M12 7v3a2 2 0 0 1-2 2H7"></path>
+          <path d="M3 12h.01"></path>
+          <path d="M12 3h.01"></path>
+          <path d="M12 16v.01"></path>
+          <path d="M16 12h1"></path>
+          <path d="M21 12v.01"></path>
+          <path d="M12 21v-1"></path>
+        </svg>
+      </ScanBarcode>
+      <CurrentBtn>등록하기</CurrentBtn>
       {isOpen && <CreateModal name={whichData} isOpen={isOpen} openModalHandler={openeModalHandler} data={data} setData={setData} />}
     </DataCreateContainer>
   );
