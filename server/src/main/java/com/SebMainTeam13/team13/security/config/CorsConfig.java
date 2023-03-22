@@ -13,18 +13,14 @@ import java.util.Arrays;
 import java.util.List;
 
 @Configuration
+
 public class CorsConfig implements WebMvcConfigurer {
-
-    @Bean
-    CorsConfigurationSource corsConfigurationSource(){
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("*")); //모든 출처에대해 스크립트 기반의 HTTP 통신 허용;
-        configuration.setAllowedHeaders(List.of("*"));
-        configuration.setAllowedMethods(List.of("POST","GET","PATCH", "DELETE"));
-
-        UrlBasedCorsConfigurationSource source= new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**",configuration);
-        return source;
-
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("http://localhost:3000", "http://bucket-for-main13.s3-website.ap-northeast-2.amazonaws.com") // 허용할 출처
+                .allowedMethods("GET", "POST","PATCH","DELETE") // 허용할 HTTP method
+                .allowCredentials(true) // 쿠키 인증 요청 허용
+                .maxAge(3000); // 원하는 시간만큼 pre-flight 리퀘스트를 캐싱
     }
 }
