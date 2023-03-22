@@ -156,9 +156,11 @@ function MyPage() {
       const userInfo = {
         displayname: username,
         birthDate,
+        gender: clickedSex,
         concerns: clickedTag
       }
       console.log(userInfo);
+      alert("수정이 완료되었습니다.");
     }
     setEditMode(!isEditMode);
   }
@@ -220,7 +222,7 @@ function MyPage() {
                 <span className={`${clickedSex === "여성" ? "selected" : ""}`}>여성</span>
               </SelectIconDiv>
             </SelectContainer>
-            : <div>여성</div>}
+            : <div>{clickedSex}</div>}
         </UserInfo>
         {isEditMode
           ? <ConcernSelector tagClickHandler={tagClickHandler} clickedTag={clickedTag} />
