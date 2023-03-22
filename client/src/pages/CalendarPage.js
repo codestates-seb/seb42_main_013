@@ -17,9 +17,10 @@ function CalendarPage() {
   useEffect(()=>{
     (async () => {
       await axios({
-        method: 'post',
+        method: 'get',
         url: `${URI}/detailSupplements`,
         params: {},
+        headers:{Authorization:sessionStorage.getItem('Authorization')}
       })
   
         .then((res) => {

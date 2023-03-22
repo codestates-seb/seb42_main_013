@@ -105,49 +105,49 @@ export const SocialBtnContent = styled.button`
   }
 `;
 
-function Login () {
-  const [data, setData] = useState({email:'' ,password:''});
+function Login() {
+  const [data, setData] = useState({ email: '', password: '' });
 
-  const onSubmit = async (data) => {
+  const onSubmit = async () => {
     const URI = "http://ec2-13-125-11-217.ap-northeast-2.compute.amazonaws.com:8080";
     console.log(data);
     await axios({
-        method: 'post',
-        // url: `/auth/login`,
-        url: `${URI}/auth/login`,
-        params: {},
-        data: data,
+      method: 'post',
+      // url: `/auth/login`,
+      url: `${URI}/auth/login`,
+      params: {},
+      data: data,
     }, { withCredentials: true })
 
-        .then((res) => {
-            console.log(res);
-            // console.log(res.headers["authorization"])
-            // axios.defaults.headers.common["Authorization"]=res.headers["authorization"];
-            // sessionStorage vs localStorage 
-            // sessionStorage 창 끄면 로그아웃되는게 낫다
-            sessionStorage.setItem('Authorization', res.headers["Authorization"])
+      .then((res) => {
+        console.log(res);
+        // console.log(res.headers["authorization"])
+        // axios.defaults.headers.common["Authorization"]=res.headers["authorization"];
+        // sessionStorage vs localStorage 
+        // sessionStorage 창 끄면 로그아웃되는게 낫다
+        sessionStorage.setItem('Authorization', res.headers["Authorization"])
 
-            // sessionStorage.setItem('email', data.username)
-            alert('로그인 성공')
-            window.location.href='/'
+        // sessionStorage.setItem('email', data.username)
+        alert('로그인 성공')
+        window.location.href = '/'
 
-        })
-        .catch((err) => { console.log(err) })
-};
+      })
+      .catch((err) => { console.log(err) })
+  };
 
   return (
     <MypageConatiner>
-      <div style={{fontSize:"40px", fontFamily:"NanumBarunGothicBold", marginLeft:"10px"}}>Welcome!</div>
-      <LoginBox onSubmit={onSubmit}>
-        <DataInput type="text" data={data} setData={setData} value="email" placeholder="이메일" />
-        <DataInput type="password" data={data} setData={setData} value="password" placeholder="비밀번호" />
-        <CurrentBtn>로그인</CurrentBtn>
-        <div>계정이 없으신가요?<Link to="/signup" style={{color: "var(--blue-100)"}}>회원가입</Link></div>
+      <div style={{ fontSize: "40px", fontFamily: "NanumBarunGothicBold", marginLeft: "10px" }}>Welcome!</div>
+      <LoginBox>
+        <DataInput name='email' type="text" data={data} setData={setData} value="email" placeholder="이메일" />
+        <DataInput name='password' type="password" data={data} setData={setData} value="password" placeholder="비밀번호" />
+        <CurrentBtn onClick={onSubmit}>로그인</CurrentBtn>
+        <div>계정이 없으신가요?<Link to="/signup" style={{ color: "var(--blue-100)" }}>회원가입</Link></div>
       </LoginBox>
-        <HorizonLine text="또는" />
+      <HorizonLine text="또는" />
       <OtherWayBox>
-        <SocialBtn name={'구글'} href="/images/icon--google.png" color="#3b4045"/>
-        <SocialBtn name={'카카오'} href="/images/icon--kakao.png" bgcolor="#FEE500" color="#191919"/>
+        <SocialBtn name={'구글'} href="/images/icon--google.png" color="#3b4045" />
+        <SocialBtn name={'카카오'} href="/images/icon--kakao.png" bgcolor="#FEE500" color="#191919" />
       </OtherWayBox>
 
     </MypageConatiner>

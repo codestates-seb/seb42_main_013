@@ -58,6 +58,7 @@ const TimeWrap = ({ time, hours, minutes, supplements, selectedDayFormat }) => {
         supplements.map((e) => {
           if((e.startDate === selectedDayFormat) && (e.takingTime.map((e) => e.split(":")[0]).indexOf(time.split(":")[0]) !== -1)) {
             return <CardWrap>
+              {console.log(supplements.startDate, supplements.endDate)}
               <div>{e.supplementName}</div>
               <div>take {e.take} pill</div>
             </CardWrap>
