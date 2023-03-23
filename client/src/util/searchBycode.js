@@ -1,5 +1,7 @@
 import axios from "axios";
 
+//! 13자리 코드 앞자리가 880이면 국내제품
+
 function searchByCode (code, setData) {
   const config = {
     headers: {
