@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
@@ -60,10 +61,18 @@ public class UserMapper {
                 .collect(Collectors.toList());
 
         List<ConcernDto.ResponseForUser> concerns = user.getDetail().getConcerns().stream()
-                .map(s->ConcernDto.ResponseForUser.builder()
-                        .concernId(s.getConcernId())
-                        .title(s.getTitle())
-                        .build())
+                .map(concern -> {
+                    if (concern != null) {
+                        return ConcernDto.ResponseForUser.builder()
+                                .concernId(concern.getConcernId())
+                                .title(concern.getTitle())
+                                .build();
+                    } else {
+                        // Concern이 null인 경우, 예외처리 또는 로깅 등의 대응이 필요합니다.
+                        return null;
+                    }
+                })
+                .filter(Objects::nonNull)
                 .collect(Collectors.toList());
 
 
