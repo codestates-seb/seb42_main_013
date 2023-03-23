@@ -29,7 +29,7 @@ function App() {
       }
     };
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/users`, config)
+      const response = await axios.get("http://ec2-13-125-253-248.ap-northeast-2.compute.amazonaws.com:8080/users", config)
       return response
     } catch (err) {
       console.log(err)
