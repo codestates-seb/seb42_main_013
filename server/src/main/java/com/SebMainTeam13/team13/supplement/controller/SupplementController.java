@@ -60,6 +60,16 @@ public class SupplementController {
 
         return new ResponseEntity<>(new SingleResponseDto<>(response),HttpStatus.OK);
     }
+    @GetMapping("/{supplement-name}")
+    public ResponseEntity getSupplement(@PathVariable("supplement-name") String supplementName) {
+        Supplement supplement = supplementService.findAndVerifySupplementByName(supplementName);
+
+//        Long userIdAuthed = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        SupplementDto.Response response = supplementMapper.supplementToSupplementResponseDto(supplement);
+
+        return new ResponseEntity<>(new SingleResponseDto<>(response),HttpStatus.OK);
+    }
+
 
 
 }
