@@ -30,9 +30,9 @@ const TimeContentContainer = styled.div`
     display: none;
   }
 `;
-const TimeWrap = ({ time, hours, minutes, supplements, selectedDayFormat }) => {
+const TimeWrap = ({ idx, time, hours, minutes, supplements, selectedDayFormat }) => {
+  hours = String(hours).length<=1?`0${hours}`:hours;
   const isSameHours = time.split(":")[0] === String(hours);
-
   return (
     <Container>
       <TimeDivider>
@@ -51,17 +51,19 @@ const TimeWrap = ({ time, hours, minutes, supplements, selectedDayFormat }) => {
       </TimeWrapCss>
       <InfoDiv>
         {
+          supplements.map((e, idx) => {
+            // const DIVIDE = 1000 / 60 / 60 / 24;
+            // const MULTIPLY = 1000 * 60 * 60 * 24;
+            
+            const calc = Math.floor((new Date(e.endDate).getTime() - new Date(selectedDayFormat).getTime()) / 1000 / 60 / 60 / 24)
+            const period = Math.floor((new Date(e.endDate).getTime() - new Date(e.startDate).getTime()) / 1000 / 60 / 60 / 24)
+            
+            const intakeDate = Math.floor(period / e.dosageInterval)+1
+            const intakeDateArr = Array.from({ length: intakeDate }, (v, i) => { return new Date(e.startDate).getTime() + (1000 * 60 * 60 * 24 * (i*e.dosageInterval)) })
+            const isOn = intakeDateArr.indexOf(new Date(selectedDayFormat).getTime())!==-1
 
-          supplements.map((e) => {
-            const period = Math.floor((new Date(e.endDate).getTime() - new Date(selectedDayFormat).getTime()) / 1000 / 60 / 60 / 24)
-            const Realperiod = Math.floor((new Date(e.endDate).getTime() - new Date(e.startDate).getTime()) / 1000 / 60 / 60 / 24)
-            const take = Math.floor(Realperiod / e.dosageInterval)+1
-            const arr = Array.from({ length: take }, (v, i) => { return new Date(e.startDate).getTime() + (1000 * 60 * 60 * 24 * (i*e.dosageInterval)) })
-            const isOn = arr.indexOf(new Date(selectedDayFormat).getTime())!==-1
-            // console.log(new Date(selectedDayFormat).getTime())
-
-            if (isOn && period <= Realperiod && period >= 0 && (e.takingTime.map((e) => e.split(":")[0]).indexOf(time.split(":")[0]) !== -1)) {
-              return <CardWrap>
+            if (isOn && calc <= period && calc >= 0 && (e.takingTime.map((e) => e.split(":")[0]).indexOf(time.split(":")[0]) !== -1)) {
+              return <CardWrap key={idx}>
                 <div>{e.supplementName}</div>
                 <div>{e.dosagePerServing > 1 ? `take ${e.dosagePerServing} pills` : `take ${e.dosagePerServing} pill`}</div>
               </CardWrap>
@@ -161,7 +163,7 @@ const VerticalLine = styled.div`
 
 function Timeline({ supplements, nowYear, nowMonth, nowDay, nowDate, testData, setNowYear, setNowMonth, setNowDay }) {
   const weeks = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  const timeSpots = Array.from({ length: 25 }, (v, i) => String(i).length > 1 ? `${i}:00` : `0${i}:00`);
+  const timeSpots = Array.from({ length: 24 }, (v, i) => String(i).length > 1 ? `${i}:00` : `0${i}:00`);
   const scrollRef = useRef();
   let time = new Date();
   const [count, setCount] = useState(`${time.getHours()}시 ${time.getMinutes()}분 ${time.getSeconds()}초`);
@@ -170,7 +172,7 @@ function Timeline({ supplements, nowYear, nowMonth, nowDay, nowDate, testData, s
   const selectedDayFormat = `${nowYear}-${nowMonth < 10 ? `0${nowMonth}` : nowMonth}-${nowDate < 10 ? `0${nowDate}` : nowDate}`;
   // console.log(supplements)
   // scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-  console.log(testData);
+  // console.log(testData);
   useEffect(() => {
     const getTime = () => {
       let time = new Date();
@@ -191,10 +193,9 @@ function Timeline({ supplements, nowYear, nowMonth, nowDay, nowDate, testData, s
       <TitleContent>{`${nowMonth < 10 ? `0${nowMonth}` : nowMonth}.${nowDate < 10 ? `0${nowDate}` : nowDate}.${weeks[nowDay]}.`}
       </TitleContent>
       <TimeContentContainer ref={scrollRef}>
-        {/* <VerticalLine /> */}
         {timeSpots.map((e, idx) => {
-          // hours, minutes가 변경될 떄마다 rerendering
-          return <TimeWrap key={e} time={e} hours={hours} minutes={minutes} supplements={supplements} selectedDayFormat={selectedDayFormat}></TimeWrap>
+          // hours, minutes가 변경될 때마다 rerendering
+          return <TimeWrap key={e} idx={e} time={e} hours={hours} minutes={minutes} supplements={supplements} selectedDayFormat={selectedDayFormat}></TimeWrap>
         })}
       </TimeContentContainer>
     </TimelineContainer>

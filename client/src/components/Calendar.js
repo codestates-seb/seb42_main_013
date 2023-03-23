@@ -12,11 +12,8 @@ const Container = styled.div`
     background-color: #EFEFEF;
     padding: 10px;
 `;
-const arrow=styled.div`
 
-`;
-
-function Calendar({ nowYear, nowMonth, nowDate, setNowYear, setNowMonth, setNowDate }) {
+function Calendar({ testData, supplements, nowYear, nowMonth, nowDate, setNowYear, setNowMonth, setNowDate }) {
     const [datas, setDatas] = useState()
     const [yearMonth, setYearMonth] = useState({ year: 2023, month: 3 })
     const [selected, setSelected] = useState("")
@@ -45,7 +42,7 @@ function Calendar({ nowYear, nowMonth, nowDate, setNowYear, setNowMonth, setNowD
         let currentMonth = date.getMonth();
 
         let cYear = new Date().getFullYear()
-        let cMonth = new Date().getMonth()+1
+        let cMonth = new Date().getMonth() + 1
         let cDay = new Date().getDate()
 
         // console.log(cYear, cMonth, cDay)
@@ -63,22 +60,29 @@ function Calendar({ nowYear, nowMonth, nowDate, setNowYear, setNowMonth, setNowD
             ...Array.from({ length: nextDate }, (v, i) => i + 1),
             ...Array.from({ length: 6 - nextDay }, (v, i) => i + 1)
         ].map((e, index) => {
-            const prev = index < prevDay
-            const next = index > nextDate + prevDay - 1
-            const date = year + "-" + (prev ? month - 1 : next ? month + 1 : month) + "-" + ((e + "").length === 1 ? "0" + e : e)
-            const weekend = index % 7 === 0 || index % 7 === 6
+            const prev = index < prevDay;
+            const next = index > nextDate + prevDay - 1;
+            const date = year + "-" + (prev ? month - 1 : next ? month + 1 : month) + "-" + ((e + "").length === 1 ? "0" + e : e);
+            const weekend = index % 7 === 0 || index % 7 === 6;
 
-            const onDuration = !prev && !next
+            const onDuration = !prev && !next;
 
-            const monWedFri = index % 7 === 1 || index % 7 === 3 || index % 7 === 5
-            // console.log(nowYear, year)
+            const monWedFri = index % 7 === 1 || index % 7 === 3 || index % 7 === 5;
 
-            const passed = onDuration && ((e < nowDate && month === nowMonth && year === nowYear) || ((month < nowMonth && year === nowYear) || year < nowYear))
-            // console.log(e, nowDay, (prev ? month - 1 : next ? month + 1 : month), nowMonth, year, nowYear)
-            // console.log(`${nowYear}. ${nowMonth}. ${nowDate}.`)
-            const todayFlag = (e === cDay) && (month === cMonth) && (year === cYear)
+            let alertDate = [];
+            supplements.map((e, idx) => {
+                const period = Math.floor((new Date(e.endDate).getTime() - new Date(e.startDate).getTime()) / 1000 / 60 / 60 / 24);
+                const intakeDate = Math.floor(period / e.dosageInterval) + 1;
+                const intakeDateArr = Array.from({ length: intakeDate }, (v, i) => { return new Date(e.startDate).getTime() + (1000 * 60 * 60 * 24 * (i * e.dosageInterval)) });
+                alertDate = [...alertDate, ...intakeDateArr];
+            })
+            const uniqueArr = [...new Set(alertDate)];
+            // console.log(uniqueArr)
+           
+            // console.log( uniqueArr.map(e=> (e/1000/60/60/24) ))
 
-            // console.log(e)
+            const passed = onDuration && ((e < nowDate && month === nowMonth && year === nowYear) || ((month < nowMonth && year === nowYear) || year < nowYear));
+            const todayFlag = (e === cDay) && (month === cMonth) && (year === cYear);
 
             const obj = {
                 date,
@@ -90,25 +94,26 @@ function Calendar({ nowYear, nowMonth, nowDate, setNowYear, setNowMonth, setNowD
                 passed,
                 todayFlag,
                 prev,
-                next
+                next,
+                uniqueArr
             }
             return obj
         })
         // console.log(total)
-        setDatas(total)
+        setDatas(total);
     }
     return (
         <Container>
             <div className="comp_calendar">
                 <div style={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'center' }}>
                     <div onClick={() => changeCalendar(yearMonth.month - 1)} style={{ fontSize: '16px', color: "#505050", marginRight: '20px', cursor: 'pointer' }}>
-                        <img src="../../images/icon--arrowLeft.png"/>
+                        <img src="../../images/icon--arrowLeft.png" />
                     </div>
                     <span>{yearMonth.year}</span>
                     <span>. </span>
                     <span>{yearMonth.month}</span>
                     <div onClick={() => changeCalendar(yearMonth.month + 1)} style={{ fontSize: '16px', color: "#505050", marginLeft: '20px', cursor: 'pointer' }}>
-                    <img src="../../images/icon--arrowRight.png"/>
+                        <img src="../../images/icon--arrowRight.png" />
                     </div>
                 </div>
                 <div className="sec_cal">
@@ -127,7 +132,10 @@ function Calendar({ nowYear, nowMonth, nowDate, setNowYear, setNowMonth, setNowD
                                     setDates.forEach((e, idx) => e(Dates[idx]));
                                 }} key={index} className={`day${e.prevNext || !e.onDuration ? " disable" : e.todayFlag ? " today" : ""}`} style={{ fontSize: '12px', border: selected === e.date ? '2px solid #5b85eb' : e.prevNext ? '2px solid #D6D6D6' : "none" }}>
                                     <span style={{ margin: '5px', fontFamily: 'NanumBarunGothic' }} >{e.name}</span>
-                                    {(e.monWedFri && e.onDuration) && <div style={{ position: 'absolute', width: '4px', height: '4px', backgroundColor: "#FB7F0E", bottom: '4px', borderRadius: '99px' }}></div>}
+                                    {((e.uniqueArr).indexOf(new Date(e.date).getTime())) !== -1 && (e.onDuration) && <div style={{ position: 'absolute', width: '4px', height: '4px', backgroundColor: "#FB7F0E", bottom: '4px', borderRadius: '99px' }}></div>}
+                                 {console.log(new Date(e.date).getTime())} {/* 모든 날짜(하나씩) */}
+                                {/* {console.log(e.uniqueArr)} */} {/* 복용 날짜 */}
+                                {console.log(e)}
                                 </div>
                             )}
                         </div>
