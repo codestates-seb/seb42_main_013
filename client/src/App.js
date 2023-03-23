@@ -14,6 +14,8 @@ import Signup from "./pages/Signup";
 import WebAside from "./components/WebAside";
 import SignupDone from "./pages/SignupDone";
 import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { loginInfoActions } from "./reducer/loginInfoReducer";
 
 
 import { Routes, Route, useLocation } from 'react-router-dom';
@@ -21,8 +23,10 @@ import axios from "axios";
 
 function App() {
   const { pathname } = useLocation();
+  const { userInfo } = useSelector(state => state.loginInfoReducer);
+  const dispatch = useDispatch();
 
-  const getUserInfo = async() => {
+  const getUserInfo = async () => {
     const config = {
       headers: {
         "Authorization": sessionStorage.getItem("Authorization")
@@ -37,10 +41,21 @@ function App() {
   }
 
   useEffect(() => {
-    // const accessToken = sessionStorage.getItem("Authorization");
-    getUserInfo()
-    .then((res) => console.log(res));
+    const accessToken = sessionStorage.getItem("Authorization");
+    if (accessToken && !userInfo?.email) {
+      getUserInfo()
+        .then((userInfo) => {
+          const actions = {};
+          if (userInfo) {
+            actions.login = true;
+            actions.userInfo = userInfo.data.data;
+            dispatch(loginInfoActions.changeLoginInfo(actions))
+          }
+        });
+    }
   }, [pathname])
+
+  // console.log(userInfo);
 
   return (
     <>

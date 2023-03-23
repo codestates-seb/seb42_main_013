@@ -323,10 +323,13 @@ function Suggest() {
   //TODO: 서버에 올바른 요청 보내기
   //TODO 서버에 요청 보내려면 String("영양보충")이 아닌 Number(1)로 상태를 받아야 함
   const state = useSelector(state => state.concernReducer);
+  const { userInfo } = useSelector(state => state.loginInfoReducer);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const clickedConcern = health.filter(el => el.id === state.selectedConcern)[0];
   const numbers = [0, 1, 2, 3].sort(() => Math.random() - 0.5);
+
+  console.log(userInfo);
 
   useEffect(() => {
     const data = 1;
@@ -372,10 +375,10 @@ function Suggest() {
   return (
     <SuggestContainer>
       <SearchBar />
-      <WelcomeDiv>환영합니다, <span className="highlight">JOAAA</span>님!</WelcomeDiv>
+      <WelcomeDiv>환영합니다, <span className="highlight">{userInfo?.displayName}</span>님!</WelcomeDiv>
       <UserContainer>
         <UserConcern>
-          <div><span className="highlight">JOAAA</span>님을 위한 영양제 추천</div>
+          <div><span className="highlight">{userInfo?.displayName}</span>님을 위한 영양제 추천</div>
           <UserSupContainer>
             <div className="supplement-area" id="종합비타민" onClick={userSupClick}>
               <UserSupImg src="images/icon-pill1.png" alt="supplement-icon" />

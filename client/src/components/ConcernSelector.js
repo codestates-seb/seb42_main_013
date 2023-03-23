@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { OptionTag } from "../pages/DataCreate";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
-import { health } from "../components/Health";
+import axios from "axios";
 
 const OptionBox = styled.div`
   display: block;
@@ -72,7 +72,15 @@ const InfoOptionTag = styled(OptionTag)`
 
 function ConcernSelector({tagClickHandler, clickedTag}) {
   const [isOpen, setIsOpen] = useState(false);
-  const total = health.map(el => el.title);
+  const [concerns, setConcerns] = useState([]);
+
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_API_URL}/concerns`)
+      .then((res) => {
+        // console.log(res.data.data);
+        setConcerns(res.data.data.sort((a,b) => a.concernId - b.concernId));
+      });
+  }, [])
 
   return (
     <OptionBox>
@@ -81,8 +89,8 @@ function ConcernSelector({tagClickHandler, clickedTag}) {
         </OptionBtn>
         {isOpen &&
           <OptionDropdown>
-            {total.map((ele, idx) => {
-              return <InfoOptionTag key={idx} onClick={tagClickHandler} className={`${clickedTag.includes(ele) ? "selected" : ""}`}>{ele}</InfoOptionTag>
+            {concerns.map(ele => {
+              return <InfoOptionTag key={ele.concernId} onClick={tagClickHandler} className={`${clickedTag.includes(ele.concernId) ? "selected" : ""}`} id={ele.concernId}>{ele.title}</InfoOptionTag>
             })}
           </OptionDropdown>
         }
