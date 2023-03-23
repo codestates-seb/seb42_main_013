@@ -7,7 +7,7 @@ import Tags from "../components/Tags";
 import { useDispatch, useSelector } from "react-redux";
 import { setCreateData } from "../reducer/dataCreateReducer";
 import { CurrentBtn } from "../styles/Buttons";
-import login from "../util/dataPost";
+import dataPost from "../util/dataPost";
 
 const DataCreateContainer = styled.div`
   display: flex;
@@ -373,7 +373,7 @@ function DataCrete() {
           />
         </svg>
       </ScanBarcode>
-      <CurrentBtn onClick={login(data)}>등록하기</CurrentBtn>
+      <CurrentBtn onClick={dataPost(data)}>등록하기</CurrentBtn>
       {isOpen && <CreateModal name={whichData} isOpen={isOpen} openModalHandler={openeModalHandler} data={data} setData={setData} />}
     </DataCreateContainer>
   );
