@@ -4,7 +4,7 @@ import DataInput, { FakeInput, RealInput } from "./DataInput";
 import { useState } from "react";
 import { CurrentBtn } from "../styles/Buttons";
 import searchByCode from "../util/searchBycode";
-import FileInput from "./FileInput";
+import ImageToBarcode from "./ImageToBarcode";
 
 
 
@@ -106,6 +106,7 @@ function CreateModal ({isOpen, openModalHandler, data, name, setData}) {
     openModalHandler();
   }
   const [barcode, setBarcode] = useState({barcode:""})
+  const [isDetectorAvailable,setIsDetectorAvailable] = useState(false)
   const code = () => {
     searchByCode(barcode.barcode, setData)
     setBarcode("")
@@ -136,7 +137,7 @@ function CreateModal ({isOpen, openModalHandler, data, name, setData}) {
           }
           { name==="barcode" && <>
             <Title>바코드</Title>
-            <FileInput barcode={barcode} setBarcode={setBarcode} />
+            <ImageToBarcode setBarcode={setBarcode} isDetectorAvailable={isDetectorAvailable} setIsDetectorAvailable={setIsDetectorAvailable} />
             <DataInput data={barcode} setData={setBarcode} placeholder="숫자 직접 입력하기" name="barcode" />
           </>}
           {/* <div>함량</div> */}

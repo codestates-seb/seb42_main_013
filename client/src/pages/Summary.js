@@ -188,25 +188,19 @@ function Summary() {
     },
   ];
   const [sort, setSort] = useState("pillsLeftAscending");
-  const [sortName, setSortName] = useState("남은약 적은순")
   const [tab, setTab] = useState("all");
   const [isSortOpen, setIsSortOpen] = useState(false);
   const [data, setData] = useState([])
   //!이렇게 해야하는 것인가.....
-  const getSortName = (sortby) => {
-    if(sortby==="AtoZ"){
-      return "가나다순"
-    } else if(sortby==="pillsLeftAscending"){
-      return "남은약 적은순"
-    } else if(sortby==="pillsLeftDescending"){
-      return "남은약 많은순"
-    } else if(sortby==="expiryDate"){
-      return "소비기한 임박순"
-    }
+  const getSortName = {
+    "AtoZ": "가나다순",
+    "pillsLeftAscending": "남은약 적은순",
+    "pillsLeftDescending": "남은약 많은순",
+    "expiryDate": "소비기한 임박순"
   }
+
   const sortClickHandler = (sortby) => {
     setSort(sortby)
-    setSortName(getSortName(sortby))
     setIsSortOpen(!isSortOpen)
   }
   const getData = () => {
@@ -235,7 +229,7 @@ function Summary() {
       <Options>
         <Sort onClick={() => setIsSortOpen(!isSortOpen)} isSortOpen={isSortOpen}>
           <button>
-            <span>{sortName}</span>
+            <span>{getSortName[sort]}</span>
             <svg viewBox="0 0 18 18">
               <path d="M13 7L9 11L5 7" />
             </svg>
