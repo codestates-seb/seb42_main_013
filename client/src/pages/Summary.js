@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import SummaryList, { ModalMenu, ModalMenuLi } from "../components/SummaryList.js";
 import { filteringPills } from "../util/filteringPills.js";
+import getPillsData from "../util/getPillsData.js";
 import { sortingPills } from "../util/sortingPills.js";
 
 
@@ -204,11 +205,13 @@ function Summary() {
     setIsSortOpen(!isSortOpen)
   }
   const getData = () => {
-    const response = dummy
+    const response = getPillsData()
     let filtered = filteringPills(response, tab)
     let sorted = sortingPills(filtered, sort)
     setData(sorted)
   }
+  
+
   useEffect(()=>{
     getData()
   },[tab, sort])
