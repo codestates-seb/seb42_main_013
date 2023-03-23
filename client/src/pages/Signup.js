@@ -60,8 +60,8 @@ function Signup() {
     }, { withCredentials: true })
 
       .then((res) => {
-        // alert('회원가입 완료')
-        // window.location.href = '/signupDone'
+        alert('회원가입 완료')
+        window.location.href = '/signupDone'
         console.log(res)
       })
       .catch((err) => { console.log(err) })

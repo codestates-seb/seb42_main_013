@@ -109,7 +109,7 @@ function Login() {
   const [data, setData] = useState({ email: '', password: '' });
 
   const onSubmit = async () => {
-    const URI = "http://ec2-13-125-11-217.ap-northeast-2.compute.amazonaws.com:8080";
+    const URI = "http://ec2-13-125-253-248.ap-northeast-2.compute.amazonaws.com:8080";
     console.log(data);
     await axios({
       method: 'post',
@@ -121,13 +121,7 @@ function Login() {
 
       .then((res) => {
         console.log(res);
-        // console.log(res.headers["authorization"])
-        // axios.defaults.headers.common["Authorization"]=res.headers["authorization"];
-        // sessionStorage vs localStorage 
-        // sessionStorage 창 끄면 로그아웃되는게 낫다
-        sessionStorage.setItem('Authorization', res.headers["Authorization"])
-
-        // sessionStorage.setItem('email', data.username)
+        sessionStorage.setItem('Authorization', res.headers["authorization"])
         alert('로그인 성공')
         window.location.href = '/'
 
