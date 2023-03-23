@@ -123,7 +123,7 @@ function Login() {
         console.log(res);
         sessionStorage.setItem('Authorization', res.headers["authorization"])
         alert('로그인 성공')
-        window.location.href = '/'
+        window.location.href = '/setuserinfo'
 
       })
       .catch((err) => { console.log(err) })

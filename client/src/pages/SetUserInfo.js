@@ -4,7 +4,8 @@ import { CurrentBtn } from "../styles/Buttons";
 // import ImageEditor from "../components/ImageEditor";
 import ConcernSelector from "../components/ConcernSelector";
 import axios from "axios";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 
 const SetUserInfoContainer = styled.div`
@@ -130,6 +131,16 @@ function SetUserInfo() {
   const [birthDate, setBirthDate] = useState("");
   const [clickedSex, setClickedSex] = useState("");
   const [clickedTag, setClickedTag] = useState([]);
+  const navigate = useNavigate();
+  const { userInfo } = useSelector(state => state.loginInfoReducer);
+
+  useEffect(() => {
+    if(userInfo) {
+      navigate("/");
+    }
+  }, [userInfo])
+
+  console.log(userInfo)
 
   const birthDateHandler = (e) => {
     console.log(e.target.value);
@@ -154,7 +165,7 @@ function SetUserInfo() {
       setClickedTag(tagList);
     }
   }
-  console.log(clickedTag);
+  // console.log(clickedTag);
 
   const submitBtnHandler = async (e) => {
     e.preventDefault();
@@ -169,6 +180,7 @@ function SetUserInfo() {
     .then((res) => {
       console.log(res);
       alert("정보 등록이 완료되었습니다!");
+      navigate("/");
     })
     .catch((err) => console.log(err));
   }
