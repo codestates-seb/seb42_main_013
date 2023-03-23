@@ -7,7 +7,7 @@ import Tags from "../components/Tags";
 import { useDispatch, useSelector } from "react-redux";
 import { setCreateData } from "../reducer/dataCreateReducer";
 import { CurrentBtn } from "../styles/Buttons";
-import login from "../util/login";
+import login from "../util/dataPost";
 
 const DataCreateContainer = styled.div`
   display: flex;
