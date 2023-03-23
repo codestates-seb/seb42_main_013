@@ -77,7 +77,12 @@ function Header() {
       {pathname === "/setuserinfo" ? <img src="images/logo_header.png" alt="logo" className="logo" />
         : <Link to="/" onClick={removeHandler}><img src="images/logo_header.png" alt="logo" className="logo" /></Link>}
       <RightDiv>
-        <FontAwesomeIcon icon={faArrowRightFromBracket} onClick={logoutHandler} className={`${(pathname === "/mypage") ? "icon" : "icon none"}`} />
+        <FontAwesomeIcon icon={faArrowRightFromBracket} 
+        onClick={() => {
+          logoutHandler();
+          sessionStorage.removeItem('Authorization');
+        }}
+        className={`${(pathname === "/mypage") ? "icon" : "icon none"}`} />
         <FontAwesomeIcon icon={faPlus} onClick={plusHandler} className={`${pathname === "/summary" ? "icon" : "icon none"}`} />
         <div className={`${(pathname === "/summary" || pathname === "/mypage") ? "icon none" : "icon"}`}></div>
       </RightDiv>
