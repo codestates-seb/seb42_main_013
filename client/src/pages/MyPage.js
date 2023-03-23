@@ -138,7 +138,7 @@ const SelectIconDiv = styled.div`
   }
 `
 
-const BirthDateInput = styled.input`
+export const BirthDateInput = styled.input`
   flex: 1 0 50%;
   color: var(--black-100);
   padding: 4px;
@@ -196,7 +196,7 @@ function MyPage() {
       {isEditMode ? <h1>수정하기</h1> : <h1>마이페이지</h1>}
       <MypageBox>
         <div className="top"></div>
-        {isEditMode ? <ImageEditor /> : <ProfileAvartar />}
+        <ProfileAvartar />
         <ProfileName>
           {isEditMode ? <NameInput type="text" value={username} onChange={editNameHandler} /> : <div>{username}</div>}
           <div>blueseablueskyblueme@gmail.com</div>

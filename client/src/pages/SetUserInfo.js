@@ -1,9 +1,10 @@
 import styled from "styled-components";
-import DataInput from "../components/DataInput";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CurrentBtn } from "../styles/Buttons";
-import ImageEditor from "../components/ImageEditor";
+// import ImageEditor from "../components/ImageEditor";
 import ConcernSelector from "../components/ConcernSelector";
+import axios from "axios";
+import { Navigate } from "react-router-dom";
 
 
 const SetUserInfoContainer = styled.div`
@@ -56,13 +57,6 @@ const IconDiv = styled.div`
   }
 `
 
-const FlexBox = styled.div`
-  width: 100%;
-  div{
-    padding: 8px
-  }
-`
-
 export const OptionBtn = styled.div`
   width: 100%;
   display: flex;
@@ -92,12 +86,56 @@ export const OptionBtn = styled.div`
   }
 `
 
+const BirthDateInput = styled.input`
+  width: 100%;
+  height: 50px;
+  border: 1px solid var(--black-400);
+  color: var(--black-100);
+  border-radius: 5px;
+  padding: 8px;
+  outline: none;
+  position:relative;
+  ::-webkit-calendar-picker-indicator{
+    position:absolute;
+      /* 부모 relative - 자식 absolute */
+      /* 부모 relative 지정 안해주면 전체 화면 cover된다 */
+    left:0;
+    top:0;
+    width: 100%;
+    height: 100%;
+    color: transparent;
+    background: transparent;
+    cursor: pointer;
+  }
+  ::placeholder{
+    color: var(--black-400)
+  }
+  &[type='date']::-webkit-datetime-edit {
+    display: ${(props) => (!!props.value) ? "inline-block" : "none"};
+  }
+  &[type='date']::before{
+    position: absolute;
+    left: 10px;
+    color: var(--black-400);
+    content: "${(props) => props.placeholder}";
+    display: ${(props) => !!props.value && "none"};
+    width: 80%;
+    font-size: 16px;
+  }
+`
+
 function SetUserInfo() {
+  //TODO: DB에서 자료 받아서 건강고민 탭 채우기, post 요청 보낼 때는 건강고민 이름이 아닌 id로 보내야 함(number)!!
   // 상태 설정
-  const [data, setData] = useState({ birthday: "" });
+  const [birthDate, setBirthDate] = useState("");
   const [clickedSex, setClickedSex] = useState("");
   const [clickedTag, setClickedTag] = useState([]);
 
+  const birthDateHandler = (e) => {
+    console.log(e.target.value);
+    setBirthDate(e.target.value);
+  }
+  
   const manClickHandler = () => {
     setClickedSex("남성");
   }
@@ -106,27 +144,39 @@ function SetUserInfo() {
   }
 
   const tagClickHandler = (e) => {
-    if(clickedTag.includes(e.target.textContent)) {
-      const taglist = clickedTag.filter(el => el !== e.target.textContent);
+    console.log(e.target.id);
+    const clickedId = Number(e.target.id)
+    if(clickedTag.includes(clickedId)) {
+      const taglist = clickedTag.filter(el => el !== clickedId);
       setClickedTag(taglist);
     } else {
-      const tagList = [...clickedTag, e.target.textContent];
+      const tagList = [...clickedTag, clickedId];
       setClickedTag(tagList);
     }
   }
   console.log(clickedTag);
 
-  const submitBtnHandler = (e) => {
+  const submitBtnHandler = async (e) => {
     e.preventDefault();
-    const birthDate = data.birthday;
-    const submitData = { birthDate, gender: clickedSex, tagList: clickedTag };
+    const submitData = { birthDate: birthDate, gender: clickedSex, concernIds: clickedTag };
     console.log(submitData);
+    const config = {
+      headers: {
+        "Authorization": sessionStorage.getItem("Authorization")
+      }
+    };
+    await axios.post(`${process.env.REACT_APP_API_URL}/details`, submitData, config)
+    .then((res) => {
+      console.log(res);
+      alert("정보 등록이 완료되었습니다!");
+    })
+    .catch((err) => console.log(err));
   }
 
   return (
     <SetUserInfoContainer>
       <h1>필수 정보 입력</h1>
-      <ImageEditor />
+      {/* <ImageEditor /> */}
       <SelectSexBox>
         <IconDiv onClick={manClickHandler}>
           {clickedSex === "남성"
@@ -141,7 +191,7 @@ function SetUserInfo() {
           <span className={`${clickedSex === "여성" ? "selected" : ""}`}>여성</span>
         </IconDiv>
       </SelectSexBox>
-      <FlexBox><DataInput type="date" placeholder="생년월일" value="birthday" data={data} setData={setData} /></FlexBox>
+      <BirthDateInput type="date" value={birthDate} onChange={birthDateHandler} placeholder="생년월일"/>
       <ConcernSelector tagClickHandler={tagClickHandler} clickedTag={clickedTag}/>
       <CurrentBtn onClick={submitBtnHandler}>입력 완료</CurrentBtn>
     </SetUserInfoContainer>
