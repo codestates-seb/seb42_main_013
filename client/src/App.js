@@ -51,7 +51,7 @@ function App() {
         </div>
         <div className="app-wrap">
           {(pathname === "/intro") ? null : <Header />}
-          <div className={(pathname === "/intro" || pathname === "/login" || pathname === "/signup" || pathname === "/setuserinfo")
+          <div className={(pathname === "/intro" || pathname === "/login" || pathname === "/signup" || pathname === "/setuserinfo" || pathname === "/datacreate")
             ? (pathname === "/intro") ? "" : "other" : "container"}>
             <Routes>
               <Route path="/" element={<Suggest />} />
@@ -67,7 +67,7 @@ function App() {
               <Route path="/signupDone" element={<SignupDone />} />
             </Routes>
           </div>
-          {(pathname === "/intro" || pathname === "/login" || pathname === "/signup" || pathname === "/setuserinfo") ? null : <Footer />}
+          {(pathname === "/intro" || pathname === "/login" || pathname === "/signup" || pathname === "/setuserinfo" || pathname === "/datacreate") ? null : <Footer />}
         </div>
       </div>
     </>
