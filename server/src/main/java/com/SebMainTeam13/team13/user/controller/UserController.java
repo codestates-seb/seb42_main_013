@@ -53,9 +53,9 @@ public class UserController {
     public ResponseEntity updateMe(@Valid @RequestBody UserDto.Patch patchDto) {
         String principal = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Long userId= userService.findUserIdByEmail(principal);
-        User user = (mapper.userPatchToUser(patchDto));
-        user.setUserId(userId);
-        userService.updateUser(user);
+        patchDto.setUserId(userId);
+        User user = userService.updateUser(mapper.userPatchToUser(patchDto));
+
         UserDto.Response response = mapper.userToUserResponseDto(user);
 
         return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.OK);

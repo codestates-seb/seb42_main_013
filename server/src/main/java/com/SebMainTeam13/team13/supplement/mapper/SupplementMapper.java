@@ -16,7 +16,9 @@ public class SupplementMapper {
     private final ConcernRepository concernRepository;
 
     public Supplement supplementPostDtoToSupplement(SupplementDto.Post post) {
-        Concern concern = concernRepository.findByConcernId(post.getConcernId()).get();
+        Concern concern= null;
+        if(post.getConcernId()!= null)
+        concern = concernRepository.findByConcernId(post.getConcernId()).get();
         return  Supplement.builder()
                 .supplementName(post.getSupplementName())
                 .nutrients(post.getNutrients())

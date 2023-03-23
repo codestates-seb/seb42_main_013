@@ -26,13 +26,13 @@ public class ConcernService {
     private final SupplementRepository supplementRepository;
 
 
-
+    //현재 시스템상 필요 없으나 추후 concern 확장할때 validation 가능하므로 남겨둠
     public Concern createConcern(Concern concern){
 
 
         return concernRepository.save(concern);
     }
-    // 따로 기능구현 해두면 validation 가능
+
 
     public Concern updateConcern(Concern concern,Long concernId){
         concern.setConcernId(concernId);

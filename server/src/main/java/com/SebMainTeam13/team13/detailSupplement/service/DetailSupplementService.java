@@ -31,7 +31,7 @@ public class DetailSupplementService {
     private final DetailSupplementRepository detailDetailSupplementRepository;
     private final DetailService detailService;
     private final UserService userservice;
-    private EntityManager entityManager;
+
 
     private final SupplementService supplementService;
 

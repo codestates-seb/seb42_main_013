@@ -29,11 +29,9 @@ public class SupplementService {
 
 
     public Supplement createSupplement(Supplement supplement){
-        verifySupplementByName(supplement);
-        Concern concern = concernRepository.findById(supplement.getConcern().getConcernId()).get();
-        supplement.setConcern(concern);
-        supplement.setNumberSearched(0);
-        concern.getSupplements().add(supplement);
+//        verifySupplementByName(supplement);
+        Optional.ofNullable(supplement.getConcern())
+                .ifPresent(supplement::setConcern);
         return supplementRepository.save(supplement);
 
     }
@@ -58,13 +56,13 @@ public class SupplementService {
     }
         //#### 내부 메서드 ###//
 
-    private void verifySupplementByName(Supplement supplement) {
-        String supplementName = supplement.getSupplementName();
-        Optional<Supplement> optionalSupplement = supplementRepository.findBySupplementName(supplementName);
-        optionalSupplement.ifPresent(s -> {
-            throw new RuntimeException("Supplement already exists");
-        });
-    }
+//    private void verifySupplementByName(Supplement supplement) {
+//        String supplementName = supplement.getSupplementName();
+//        Optional<Supplement> optionalSupplement = supplementRepository.findBySupplementName(supplementName);
+//        optionalSupplement.ifPresent(s -> {
+//            throw new RuntimeException("Supplement already exists");
+//        });
+//    }
     public Supplement findAndVerifySupplementBySupplementId(long supplementId) {
         Optional<Supplement> optionalSupplement = supplementRepository.findById(supplementId);
 
