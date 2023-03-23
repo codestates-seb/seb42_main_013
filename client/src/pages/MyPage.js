@@ -187,11 +187,13 @@ function MyPage() {
   }
 
   const tagClickHandler = (e) => {
-    if (clickedTag.includes(e.target.textContent)) {
-      const taglist = clickedTag.filter(el => el !== e.target.textContent);
+    console.log(e.target.id);
+    const clickedId = Number(e.target.id)
+    if(clickedTag.includes(clickedId)) {
+      const taglist = clickedTag.filter(el => el !== clickedId);
       setClickedTag(taglist);
     } else {
-      const tagList = [...clickedTag, e.target.textContent];
+      const tagList = [...clickedTag, clickedId];
       setClickedTag(tagList);
     }
   }
@@ -242,9 +244,9 @@ function MyPage() {
               <div className="withtag">건강 고민</div>
             </UserInfo>
             <TagBox>
-              {clickedTag.map((el, idx) => {
+              {userInfo?.concerns.map(el => {
                 return (
-                  <OptionTag key={idx}>{el}</OptionTag>
+                  <OptionTag key={el.concernId}>{el.title}</OptionTag>
                 )
               })}
             </TagBox>
