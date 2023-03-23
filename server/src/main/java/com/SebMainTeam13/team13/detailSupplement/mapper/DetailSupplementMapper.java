@@ -19,7 +19,7 @@ public class DetailSupplementMapper {
     private final SupplementService supplementService;
     public final DetailSupplementRepository detailSupplementRepository;
     public DetailSupplement detailSupplementPostDtoToDetailSupplement(DetailSupplementDto.Post post) {
-        Supplement supplement = supplementService.findAndVerifySupplementByName(post.getSupplementName());
+        Supplement supplement = supplementService.findAndVerifySupplementBySupplementId(post.getSupplementId());
 
         return  DetailSupplement.builder()
 

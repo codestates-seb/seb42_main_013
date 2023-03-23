@@ -6,7 +6,6 @@ import com.SebMainTeam13.team13.supplement.dto.SupplementDto;
 import lombok.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class DetailSupplementDto {
 
@@ -16,7 +15,7 @@ public class DetailSupplementDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Post {
-        private String supplementName;
+        private Long supplementId;
         private String expirationDate;
         private String startDate;
         private String endDate;
@@ -34,7 +33,7 @@ public class DetailSupplementDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Patch {
-        private String supplementName;
+        private Long supplementId;
         private String expirationDate;
         private String startDate;
         private String endDate;

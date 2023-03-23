@@ -31,8 +31,6 @@ public class DetailSupplementService {
     private final DetailSupplementRepository detailDetailSupplementRepository;
     private final DetailService detailService;
     private final UserService userservice;
-
-
     private final SupplementService supplementService;
 
     public DetailSupplement createDetailSupplement(DetailSupplement detailSupplement,Long userId){
