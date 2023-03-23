@@ -20,7 +20,6 @@ import getUserInfo from "./util/getUserInfo";
 
 
 import { Routes, Route, useLocation } from 'react-router-dom';
-import axios from "axios";
 
 function App() {
   const { pathname } = useLocation();
@@ -42,8 +41,6 @@ function App() {
         .catch((err) => console.log(err))
     }
   }, [pathname])
-
-  // console.log(userInfo);
 
   return (
     <>

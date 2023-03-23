@@ -134,6 +134,8 @@ function Search() {
       .catch(err => console.log(err))
   }, [query])
 
+  console.log(query);
+
     // 페이지네이션
     const newNum = searchData.length;
     const newNumbers = Array.from({length: Math.ceil(newNum / 10)}, (v, i) => i + 1);
