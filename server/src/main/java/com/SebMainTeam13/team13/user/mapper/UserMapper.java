@@ -1,5 +1,6 @@
 package com.SebMainTeam13.team13.user.mapper;
 
+import com.SebMainTeam13.team13.concern.dto.ConcernDto;
 import com.SebMainTeam13.team13.concern.entity.Concern;
 import com.SebMainTeam13.team13.detail.dto.DetailDto;
 import com.SebMainTeam13.team13.detail.entity.Detail;
@@ -58,6 +59,15 @@ public class UserMapper {
                         .build())
                 .collect(Collectors.toList());
 
+        List<ConcernDto.ResponseForUser> concerns = user.getDetail().getConcerns().stream()
+                .map(s->ConcernDto.ResponseForUser.builder()
+                        .concernId(s.getConcernId())
+                        .title(s.getTitle())
+                        .build())
+                .collect(Collectors.toList());
+
+
+
         Detail detail = user.getDetail();
         DetailDto.Response detailDto =
                             DetailDto.Response.builder()
@@ -74,6 +84,7 @@ public class UserMapper {
                 .displayName(user.getDisplayName())
                 .detail(detailDto)
                 .supplements(supplementDtos)
+                .concerns(concerns)
 
 
 

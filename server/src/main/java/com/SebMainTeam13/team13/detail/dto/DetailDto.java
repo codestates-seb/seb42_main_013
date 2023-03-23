@@ -34,6 +34,8 @@ public class DetailDto {
         private Long detailId;
         private String birthDate;
         private String gender;
+        private List<Long> concernIds;
+
 
     }
 

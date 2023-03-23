@@ -37,10 +37,15 @@ public class DetailMapper {
     }
 
     public Detail detailPatchDtoToDetail(DetailDto.Patch patch) {
+        List<Concern> concerns = new ArrayList<>();
+        for(Long i:patch.getConcernIds()){
+            concerns.add(concernRepository.findByConcernId(i).get());
+        }
         return Detail.builder()
                 .detailId(patch.getDetailId())
                 .birthDate(patch.getBirthDate())
                 .gender(patch.getGender())
+                .concerns(concerns)
                 .build();
 
     }

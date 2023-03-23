@@ -11,7 +11,9 @@ public enum ExceptionCode {
     DETAIL_NOT_FOUND(404, "Detail not found"),
 
 
+    NOT_ADDED_CONCERN(404, "Is not added concern"),
     CONCERN_NOT_FOUND(404, "Concern not found"),
+    CONCERN_ALREADY_ADDED(404, "Concern already added"),
     SUPPLEMENT_NOT_FOUND(404, "Supplement not found"),
     DETAIL_SUPPLEMENT_NOT_FOUND(404, "DetailSupplement not found"),
     DETAIL_EXISTS(409, "Detail already exists"); 

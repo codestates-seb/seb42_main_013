@@ -29,6 +29,7 @@ import static com.SebMainTeam13.team13.exception.ExceptionCode.*;
 public class DetailService {
     private final DetailRepository detailRepository;
     private final UserRepository userRepository;
+    private final ConcernRepository concernRepository;
 
 
 
@@ -58,10 +59,40 @@ public class DetailService {
         Optional.ofNullable(detail.getGender())
                 .ifPresent(verifiedDetail::setGender);
 
+        verifiedDetail.getConcerns().clear();
+        detail.getConcerns().iterator().forEachRemaining(tag ->
+                verifiedDetail.getConcerns().add(tag)
+        );
 
-        return verifiedDetail;
+        return detailRepository.save(verifiedDetail);
+    }
+    public Detail addConcern(Long concernId, Long detailId) {
+        Detail detail = findAndVerifyDetailByDetailId(detailId);
+        Concern concern = concernRepository.findById(concernId)
+                .orElseThrow(() -> new BusinessLogicException(CONCERN_NOT_FOUND));
+
+        // 이미 추가된 관심사인 경우 예외 발생
+        if (detail.getConcerns().contains(concern)) {
+            throw new BusinessLogicException(CONCERN_ALREADY_ADDED);
+        }
+
+        detail.getConcerns().add(concern);
+        return detail;
     }
 
+    public Detail removeConcern(Long concernId, Long detailId) {
+        Detail detail = findAndVerifyDetailByDetailId(detailId);
+        Concern concern = concernRepository.findById(concernId)
+                .orElseThrow(() -> new BusinessLogicException(CONCERN_NOT_FOUND));
+
+        // 추가되지 않은 관심사인 경우 예외 발생
+        if (!detail.getConcerns().contains(concern)) {
+            throw new BusinessLogicException(NOT_ADDED_CONCERN);
+        }
+
+        detail.getConcerns().remove(concern);
+        return detail;
+    }
 
 
 
@@ -110,4 +141,5 @@ public class DetailService {
         if (user.get().getDetail()!=null)
             throw new BusinessLogicException(DETAIL_EXISTS);
     }
+
 }

@@ -1,5 +1,6 @@
 package com.SebMainTeam13.team13.user.dto;
 
+import com.SebMainTeam13.team13.concern.dto.ConcernDto;
 import com.SebMainTeam13.team13.detail.dto.DetailDto;
 import com.SebMainTeam13.team13.detail.entity.Detail;
 import com.SebMainTeam13.team13.supplement.dto.SupplementDto;
@@ -35,6 +36,7 @@ public class UserDto {
         private String displayName;
         private DetailDto.Response detail;
         private List<SupplementDto.ResponseForUser> supplements;
+        private List<ConcernDto.ResponseForUser> concerns;
     }
 
 }

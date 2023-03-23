@@ -47,21 +47,32 @@ public class ConcernDto {
         private String title;
         private List<SupplementDto.ResponseForUser> supplementsList;
         private List<String> contents;
+
         public Response(Concern concern) {
 
-                    this.concernId= concern.getConcernId();
-                    this.contents=concern.getContents();
-                    this.supplementsList=concern.getSupplements().stream()
-                            .map(supplement -> SupplementDto.ResponseForUser.builder()
-                                    .supplementName(supplement.getSupplementName())
-                                    .imageURL(supplement.getImageURL())
-                                    .build())
-                            .collect(Collectors.toList());
-                    this.title=concern.getTitle();
+            this.concernId = concern.getConcernId();
+            this.contents = concern.getContents();
+            this.supplementsList = concern.getSupplements().stream()
+                    .map(supplement -> SupplementDto.ResponseForUser.builder()
+                            .supplementName(supplement.getSupplementName())
+                            .imageURL(supplement.getImageURL())
+                            .build())
+                    .collect(Collectors.toList());
+            this.title = concern.getTitle();
 
 
         }
-
+    }
+    @Getter
+    @Setter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class ResponseForUser {
+        private Long concernId;
+        private String title;
 
     }
+
+
 }
