@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 // 이렇게 설정하면 tag빼고는 보존이 가능
-let initialState = {selectedConcern: "영양보충"};
+let initialState = {selectedConcern: 1};
 
 const concernSlice = createSlice({
   name: 'concern',

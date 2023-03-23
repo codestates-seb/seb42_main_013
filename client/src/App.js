@@ -13,12 +13,34 @@ import Calendar from "./pages/CalendarPage";
 import Signup from "./pages/Signup";
 import WebAside from "./components/WebAside";
 import SignupDone from "./pages/SignupDone";
+import { useEffect } from "react";
 
 
 import { Routes, Route, useLocation } from 'react-router-dom';
+import axios from "axios";
 
 function App() {
   const { pathname } = useLocation();
+
+  const getUserInfo = async() => {
+    const config = {
+      headers: {
+        "Authorization": sessionStorage.getItem("Authorization")
+      }
+    };
+    try {
+      const response = await axios.get("http://ec2-13-125-253-248.ap-northeast-2.compute.amazonaws.com:8080/users", config)
+      return response
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  useEffect(() => {
+    // const accessToken = sessionStorage.getItem("Authorization");
+    getUserInfo()
+    .then((res) => console.log(res));
+  }, [pathname])
 
   return (
     <>

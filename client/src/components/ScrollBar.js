@@ -52,7 +52,7 @@ function ScrollBar() {
   const dispatch = useDispatch();
 
   const clickHandler = (e) => {
-    const data = e.currentTarget.id;
+    const data = Number(e.currentTarget.id);
     dispatch(concernActions.changeConcernClicked({ data }));
   }
 
@@ -64,8 +64,8 @@ function ScrollBar() {
       >
         {health.map(el => {
           return (
-            <SwiperSlide key={el.id} className={el.title === state.selectedConcern ? "selected-area category" : "category"} onClick={clickHandler} id={el.title}>
-              <CategoryIconDiv className={el.title === state.selectedConcern ? "category-select" : ""}>
+            <SwiperSlide key={el.id} className={el.id === state.selectedConcern ? "selected-area category" : "category"} onClick={clickHandler} id={el.id}>
+              <CategoryIconDiv className={el.id === state.selectedConcern ? "category-select" : ""}>
                 <img src={el.src} alt="health-icon" />
               </CategoryIconDiv>
               <div>{el.title}</div>

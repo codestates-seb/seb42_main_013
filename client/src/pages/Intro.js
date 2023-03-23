@@ -138,6 +138,7 @@ const LoginSignupDiv = styled.div`
 `
 
 function Intro() {
+  //TODO: 로그인 되어있으면 "/"로 이동하도록 useEffect 사용하기
   const navigate = useNavigate();
 
   const introBtnHandler = (e) => {
@@ -150,6 +151,7 @@ function Intro() {
       <Swiper
         spaceBetween={0}
         slidesPerView={1}
+        rewind={true}
         autoplay={{ delay: 4000 }}
         pagination={{ clickable: true }}>
         <SwiperSlide>

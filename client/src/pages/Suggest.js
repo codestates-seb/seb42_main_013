@@ -156,6 +156,9 @@ const SugSlide = styled.div`
   .cough {
     margin-left: 60px;
   }
+  @media (max-width: 427px){
+    font-size: 3.5vw;
+    }
 `
 
 const SugContentConatiner = styled.div`
@@ -322,14 +325,14 @@ function Suggest() {
   const state = useSelector(state => state.concernReducer);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const clickedConcern = health.filter(el => el.title === state.selectedConcern)[0];
+  const clickedConcern = health.filter(el => el.id === state.selectedConcern)[0];
   const numbers = [0, 1, 2, 3].sort(() => Math.random() - 0.5);
 
   useEffect(() => {
-    const data = "영양보충"
+    const data = 1;
     dispatch(concernActions.changeConcernClicked({ data }));
-    // axios.get(`${process.env.REACT_APP_API_URL}/concerns`)
-    //   .then((res) => console.log(res.data.data));
+    axios.get(`${process.env.REACT_APP_API_URL}/concerns`)
+      .then((res) => console.log(res.data.data));
   }, [])
 
   const userSupClick = (e) => {
@@ -391,13 +394,12 @@ function Suggest() {
       </UserContainer>
       <SugSlideContainer>
         <SugSlideDiv>
-
           <Swiper
             spaceBetween={0}
             slidesPerView={1}
             pagination={pagination}
             rewind={true}
-          // autoplay={{ delay: 3000 }}
+            autoplay={{ delay: 3000 }}
           >
             <SlideCounter>/ 5</SlideCounter>
             <SwiperSlide>
@@ -456,7 +458,7 @@ function Suggest() {
         <CategoryTitle><span className="highlight">건강고민</span>별 영양 찾기</CategoryTitle>
         <ScrollBar />
         <LargeContent>
-          <div className="lg-content-title"><img src="images/icon--ipu.png" alt="ipu-icon" className="ipu-icon" />{state.selectedConcern}에 좋은 영양제</div>
+          <div className="lg-content-title"><img src="images/icon--ipu.png" alt="ipu-icon" className="ipu-icon" />{clickedConcern.title}에 좋은 영양제</div>
           <SupplementsArea>
             {clickedConcern.supplementsList.map((el, idx) => {
               return (

@@ -30,19 +30,15 @@ const TimeContentContainer = styled.div`
     display: none;
   }
 `;
-const TimeWrap = ({ time, hours, minutes, supplements, selectedDayFormat }) => {
+const TimeWrap = ({ idx, time, hours, minutes, supplements, selectedDayFormat }) => {
+  hours = String(hours).length<=1?`0${hours}`:hours;
   const isSameHours = time.split(":")[0] === String(hours);
-
-
-// console.log(supplements[0].startDate)
-  // console.log(typeof supplements[0].startDate) //string
-  // console.log(typeof selectedDayFormat)
   return (
     <Container>
       <TimeDivider>
         {Array.from({ length: 60 }, (v, i) => {
-          return <div key={i} style={{ backgroundColor: isSameHours && i === minutes ? "#EB4233" : "unset" }}>
-            {(isSameHours && i === minutes) && <div style={{ position: "absolute", width: "10px", height: "10px", backgroundColor: "#EB4233", left: "-5.5px", top: "-4.5px", borderRadius: "50%", zIndex: 1 }} />}
+          return <div key={i} style={{ minHeight:"1px", backgroundColor: isSameHours && i === minutes ? "#EB4233" : "unset" }}>
+            {(isSameHours && i === minutes) && <div style={{ position: "absolute", width: "10px", height: "10px", backgroundColor: "#EB4233", left: "-5.5px", top: "-4.5px", borderRadius: "50%", zIndex: 2 }} />}
           </div>
         })}
       </TimeDivider>
@@ -55,18 +51,24 @@ const TimeWrap = ({ time, hours, minutes, supplements, selectedDayFormat }) => {
       </TimeWrapCss>
       <InfoDiv>
         {
-        supplements.map((e) => {
-          if((e.startDate === selectedDayFormat) && (e.takingTime.map((e) => e.split(":")[0]).indexOf(time.split(":")[0]) !== -1)) {
-            return <CardWrap>
-              <div>{e.supplementName}</div>
-              <div>take {e.take} pill</div>
-            </CardWrap>
-          }else{
-            <CardWrap>
-              <div style={{height:"100px", width: "100%"}}>{`d`}</div>
-            </CardWrap>
-          }
-        })}
+          supplements.map((e, idx) => {
+            // const DIVIDE = 1000 / 60 / 60 / 24;
+            // const MULTIPLY = 1000 * 60 * 60 * 24;
+            
+            const calc = Math.floor((new Date(e.endDate).getTime() - new Date(selectedDayFormat).getTime()) / 1000 / 60 / 60 / 24)
+            const period = Math.floor((new Date(e.endDate).getTime() - new Date(e.startDate).getTime()) / 1000 / 60 / 60 / 24)
+            
+            const intakeDate = Math.floor(period / e.dosageInterval)+1
+            const intakeDateArr = Array.from({ length: intakeDate }, (v, i) => { return new Date(e.startDate).getTime() + (1000 * 60 * 60 * 24 * (i*e.dosageInterval)) })
+            const isOn = intakeDateArr.indexOf(new Date(selectedDayFormat).getTime())!==-1
+
+            if (isOn && calc <= period && calc >= 0 && (e.takingTime.map((e) => e.split(":")[0]).indexOf(time.split(":")[0]) !== -1)) {
+              return <CardWrap key={idx}>
+                <div>{e.supplementName}</div>
+                <div>{e.dosagePerServing > 1 ? `take ${e.dosagePerServing} pills` : `take ${e.dosagePerServing} pill`}</div>
+              </CardWrap>
+            }
+          })}
       </InfoDiv>
     </Container>
   )
@@ -84,6 +86,7 @@ const Container = styled.div`
 const TimeDivider = styled.div`
   width: 100%;
   height: 100%;
+  /* background-color: red; */
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -92,6 +95,7 @@ const TimeDivider = styled.div`
   div{
     width: 76%;
     height: 1px;
+    min-height: 1px;
     position: relative;
   }
 `;
@@ -157,17 +161,18 @@ const VerticalLine = styled.div`
 `;
 
 
-function Timeline({ supplements, nowYear, nowMonth, nowDay, nowDate, setNowYear, setNowMonth, setNowDay }) {
+function Timeline({ supplements, nowYear, nowMonth, nowDay, nowDate, testData, setNowYear, setNowMonth, setNowDay }) {
   const weeks = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  const timeSpots = Array.from({ length: 25 }, (v, i) => String(i).length > 1 ? `${i}:00` : `0${i}:00`);
+  const timeSpots = Array.from({ length: 24 }, (v, i) => String(i).length > 1 ? `${i}:00` : `0${i}:00`);
   const scrollRef = useRef();
   let time = new Date();
   const [count, setCount] = useState(`${time.getHours()}시 ${time.getMinutes()}분 ${time.getSeconds()}초`);
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
-  const selectedDayFormat=`${nowYear}-${nowMonth < 10 ? `0${nowMonth}` : nowMonth}-${nowDate < 10 ? `0${nowDate}` : nowDate}`;
+  const selectedDayFormat = `${nowYear}-${nowMonth < 10 ? `0${nowMonth}` : nowMonth}-${nowDate < 10 ? `0${nowDate}` : nowDate}`;
   // console.log(supplements)
   // scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+  // console.log(testData);
   useEffect(() => {
     const getTime = () => {
       let time = new Date();
@@ -188,10 +193,9 @@ function Timeline({ supplements, nowYear, nowMonth, nowDay, nowDate, setNowYear,
       <TitleContent>{`${nowMonth < 10 ? `0${nowMonth}` : nowMonth}.${nowDate < 10 ? `0${nowDate}` : nowDate}.${weeks[nowDay]}.`}
       </TitleContent>
       <TimeContentContainer ref={scrollRef}>
-        {/* <VerticalLine /> */}
         {timeSpots.map((e, idx) => {
-          // hours, minutes가 변경될 떄마다 rerendering
-          return <TimeWrap key={e} time={e} hours={hours} minutes={minutes} supplements={supplements} selectedDayFormat={selectedDayFormat}></TimeWrap>
+          // hours, minutes가 변경될 때마다 rerendering
+          return <TimeWrap key={e} idx={e} time={e} hours={hours} minutes={minutes} supplements={supplements} selectedDayFormat={selectedDayFormat}></TimeWrap>
         })}
       </TimeContentContainer>
     </TimelineContainer>
