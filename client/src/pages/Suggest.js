@@ -322,18 +322,24 @@ const SmallContent4 = styled(SmallContent1)`
 function Suggest() {
   //TODO: 서버에 올바른 요청 보내기
   //TODO 서버에 요청 보내려면 String("영양보충")이 아닌 Number(1)로 상태를 받아야 함
-  const state = useSelector(state => state.concernReducer);
-  const { userInfo } = useSelector(state => state.loginInfoReducer);
+  const { selectedConcern } = useSelector(state => state.concernReducer);
+  const { login, userInfo } = useSelector(state => state.loginInfoReducer);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const clickedConcern = health.filter(el => el.id === state.selectedConcern)[0];
+  const clickedConcern = health.filter(el => el.id === selectedConcern)[0];
   const numbers = [0, 1, 2, 3].sort(() => Math.random() - 0.5);
 
   console.log(userInfo);
 
   useEffect(() => {
-    const data = 1;
-    dispatch(concernActions.changeConcernClicked({ data }));
+    if(!login) {
+      navigate("/intro");
+    }
+  }, [login])
+
+  useEffect(() => {
+    // const data = 1;
+    // dispatch(concernActions.changeConcernClicked({ data }));
     axios.get(`${process.env.REACT_APP_API_URL}/concerns`)
       .then((res) => console.log(res.data.data));
   }, [])

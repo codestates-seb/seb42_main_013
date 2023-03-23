@@ -5,6 +5,8 @@ import background3 from "../images/backgrounds/background3.jpg"
 import background4 from "../images/backgrounds/background4.jpg"
 import { SmallBtn } from "../styles/Buttons";
 import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Pagination, Autoplay } from "swiper";
 import "swiper/css";
@@ -140,6 +142,15 @@ const LoginSignupDiv = styled.div`
 function Intro() {
   //TODO: 로그인 되어있으면 "/"로 이동하도록 useEffect 사용하기
   const navigate = useNavigate();
+  const { login } = useSelector(state => state.loginInfoReducer);
+
+  console.log(login);
+
+  useEffect(() => {
+    if(login) {
+      navigate("/");
+    }
+  }, [login])
 
   const introBtnHandler = (e) => {
     e.preventDefault();
@@ -185,7 +196,7 @@ function Intro() {
         <SwiperSlide>
           <BackgroundImg4>
             <ContentDiv4>
-            <div className="content">
+              <div className="content">
                 <p>복용 중인 <strong>영양제</strong>와 <strong>약</strong>은</p>
                 <p>한 페이지에서 손쉽게 관리</p>
               </div>

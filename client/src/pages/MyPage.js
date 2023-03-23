@@ -1,9 +1,11 @@
 import styled from "styled-components";
 import { OptionTag } from "./DataCreate";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { CurrentBtn } from "../styles/Buttons";
-import ImageEditor from "../components/ImageEditor";
+// import ImageEditor from "../components/ImageEditor";
 import ConcernSelector from "../components/ConcernSelector";
+import { useSelector } from "react-redux";
 
 export const MypageConatiner = styled.div`
   display: flex;
@@ -150,6 +152,14 @@ function MyPage() {
   const [clickedSex, setClickedSex] = useState("여성");
   const [clickedTag, setClickedTag] = useState(["영양보충", "관절/뼈건강", "피부건강"]);
   const [birthDate, setBirthDate] = useState("1990-01-01");
+  const { userInfo, login } = useSelector(state => state.loginInfoReducer);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if(!login) {
+      navigate("/intro");
+    }
+  }, [login])
 
   const editBtnHandler = () => {
     if (isEditMode) {
@@ -198,12 +208,12 @@ function MyPage() {
         <div className="top"></div>
         <ProfileAvartar />
         <ProfileName>
-          {isEditMode ? <NameInput type="text" value={username} onChange={editNameHandler} /> : <div>{username}</div>}
-          <div>blueseablueskyblueme@gmail.com</div>
+          {isEditMode ? <NameInput type="text" value={username} onChange={editNameHandler} /> : <div>{userInfo?.displayName}</div>}
+          <div>{userInfo?.email}</div>
         </ProfileName>
         <UserInfo>
           <div className="userinfo-title"><span>생년 월일</span></div>
-          {isEditMode ? <BirthDateInput type="date" value={birthDate} onChange={birthDateHandler} /> : <div>{birthDate.replaceAll("-", ".")}.</div>}
+          {isEditMode ? <BirthDateInput type="date" value={birthDate} onChange={birthDateHandler} /> : <div>{userInfo?.detail.birthDate.replaceAll("-", ".")}.</div>}
         </UserInfo>
         <UserInfo>
           <div className="userinfo-title"><span>성별</span></div>
@@ -222,7 +232,7 @@ function MyPage() {
                 <span className={`${clickedSex === "여성" ? "selected" : ""}`}>여성</span>
               </SelectIconDiv>
             </SelectContainer>
-            : <div>{clickedSex}</div>}
+            : <div>{userInfo?.detail.gender}</div>}
         </UserInfo>
         {isEditMode
           ? <ConcernSelector tagClickHandler={tagClickHandler} clickedTag={clickedTag} />
