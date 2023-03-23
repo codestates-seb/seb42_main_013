@@ -36,8 +36,9 @@ public class SupplementController {
 //        Long userIdAuthed = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Supplement supplement = supplementService.createSupplement(supplementMapper.supplementPostDtoToSupplement(post));
         URI location = UriCreator.createUri(DETAIL_DEFAULT_URL, supplement.getSupplementId());
+        SupplementDto.Response response = supplementMapper.supplementToSupplementResponseDto(supplement);
 
-        return ResponseEntity.created(location).build();
+        return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.OK);
     }
 
     @PatchMapping("/{supplement-id}")
@@ -50,9 +51,9 @@ public class SupplementController {
 
         return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.OK);
     }
-    @GetMapping("/{supplement-name}")
-    public ResponseEntity getSupplement(@PathVariable("supplement-name") String supplementName) {
-        Supplement supplement = supplementService.findAndVerifySupplementByName(supplementName);
+    @GetMapping("/{supplement-id}")
+    public ResponseEntity getSupplement(@PathVariable("supplement-id") Long supplementId) {
+        Supplement supplement = supplementService.findAndVerifySupplementBySupplementId(supplementId);
 
 //        Long userIdAuthed = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         SupplementDto.Response response = supplementMapper.supplementToSupplementResponseDto(supplement);

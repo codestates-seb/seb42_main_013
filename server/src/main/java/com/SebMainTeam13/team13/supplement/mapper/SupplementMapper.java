@@ -48,6 +48,7 @@ public class SupplementMapper {
     public SupplementDto.Response supplementToSupplementResponseDto(Supplement supplement) {
 
             return SupplementDto.Response.builder()
+                    .supplementId(supplement.getSupplementId())
                     .supplementName(supplement.getSupplementName())
                     .nutrients(supplement.getNutrients())
                     .imageURL(supplement.getImageURL())
