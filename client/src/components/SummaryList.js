@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setCreateData } from "../reducer/dataCreateReducer";
+import { setCreateData, setIsPatch } from "../reducer/dataCreateReducer";
 
 
 const ListContainer = styled.li`
@@ -147,6 +147,7 @@ function SummaryList({ pill, data, setData }) {
   const isAlmostRunout = pill.pillsLeft<=10
   const patchHandler = () => {
     dispatch(setCreateData(pill))
+    dispatch(setIsPatch())
   }
 
   return (

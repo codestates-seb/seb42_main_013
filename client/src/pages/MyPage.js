@@ -5,7 +5,11 @@ import { useNavigate } from "react-router-dom";
 import { CurrentBtn } from "../styles/Buttons";
 // import ImageEditor from "../components/ImageEditor";
 import ConcernSelector from "../components/ConcernSelector";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import useAuthCheck from "../util/useAuthCheck";
+import getUserInfo from "../util/getUserInfo";
+import { loginInfoActions } from "../reducer/loginInfoReducer";
+import axios from "axios";
 
 export const MypageConatiner = styled.div`
   display: flex;
@@ -90,12 +94,10 @@ const TagBox = styled.div`
   display: flex;
   gap: 8px;
   width: 100%;
-  justify-content: start;
+  justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
   margin-bottom: 30px;
-  >div{
-    flex-grow: 1;
-  }
 `
 
 export const BasicBtn = styled.div`
@@ -146,31 +148,60 @@ export const BirthDateInput = styled.input`
   padding: 4px;
 `
 
+const NewOptionTag = styled(OptionTag)`
+  width: 100px;
+`
+
 function MyPage() {
-  const [isEditMode, setEditMode] = useState(false);
-  const [username, setUsername] = useState("JOAAA");
-  const [clickedSex, setClickedSex] = useState("여성");
-  const [clickedTag, setClickedTag] = useState(["영양보충", "관절/뼈건강", "피부건강"]);
-  const [birthDate, setBirthDate] = useState("1990-01-01");
   const { userInfo, login } = useSelector(state => state.loginInfoReducer);
+  const [isEditMode, setEditMode] = useState(false);
+  const [username, setUsername] = useState(userInfo.displayName);
+  const [clickedSex, setClickedSex] = useState(userInfo.detail.gender);
+  const [clickedTag, setClickedTag] = useState(userInfo.concerns.map(el => el.concernId));
+  const [birthDate, setBirthDate] = useState(userInfo.detail.birthDate);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if(!login) {
+    if (!login) {
       navigate("/intro");
     }
   }, [login])
 
-  const editBtnHandler = () => {
+  // useAuthCheck();
+
+  const editBtnHandler = async () => {
     if (isEditMode) {
-      const userInfo = {
-        displayname: username,
-        birthDate,
-        gender: clickedSex,
-        concerns: clickedTag
+      if (window.confirm("정보를 수정하시겠습니까?")) {
+        const newUserName = { displayName: username };
+        const userDetail = {
+          birthDate,
+          gender: clickedSex,
+          concernIds: clickedTag
+        }
+        const config = {
+          headers: {
+            "Authorization": sessionStorage.getItem("Authorization")
+          }
+        };
+        console.log(newUserName);
+        console.log(userDetail);
+        const firstPatch = await axios.patch(`${process.env.REACT_APP_API_URL}/users`, newUserName, config);
+        console.log(firstPatch);
+        const secondPatch = await axios.patch(`${process.env.REACT_APP_API_URL}/details`, userDetail, config);
+        console.log(secondPatch)
+        alert("수정이 완료되었습니다!");
+        getUserInfo()
+          .then((userInfo) => {
+            console.log(userInfo);
+            const actions = {};
+            if (userInfo) {
+              actions.login = true;
+              actions.userInfo = userInfo;
+              dispatch(loginInfoActions.changeLoginInfo(actions))
+            }
+          })
       }
-      console.log(userInfo);
-      alert("수정이 완료되었습니다.");
     }
     setEditMode(!isEditMode);
   }
@@ -189,7 +220,7 @@ function MyPage() {
   const tagClickHandler = (e) => {
     console.log(e.target.id);
     const clickedId = Number(e.target.id)
-    if(clickedTag.includes(clickedId)) {
+    if (clickedTag.includes(clickedId)) {
       const taglist = clickedTag.filter(el => el !== clickedId);
       setClickedTag(taglist);
     } else {
@@ -210,12 +241,12 @@ function MyPage() {
         <div className="top"></div>
         <ProfileAvartar />
         <ProfileName>
-          {isEditMode ? <NameInput type="text" value={username} onChange={editNameHandler} /> : <div>{userInfo?.displayName}</div>}
-          <div>{userInfo?.email}</div>
+          {isEditMode ? <NameInput type="text" value={username} onChange={editNameHandler} /> : <div>{userInfo.displayName}</div>}
+          <div>{userInfo.email}</div>
         </ProfileName>
         <UserInfo>
           <div className="userinfo-title"><span>생년 월일</span></div>
-          {isEditMode ? <BirthDateInput type="date" value={birthDate} onChange={birthDateHandler} /> : <div>{userInfo?.detail.birthDate.replaceAll("-", ".")}.</div>}
+          {isEditMode ? <BirthDateInput type="date" value={birthDate} onChange={birthDateHandler} /> : <div>{userInfo.detail.birthDate.replaceAll("-", ".")}.</div>}
         </UserInfo>
         <UserInfo>
           <div className="userinfo-title"><span>성별</span></div>
@@ -234,7 +265,7 @@ function MyPage() {
                 <span className={`${clickedSex === "여성" ? "selected" : ""}`}>여성</span>
               </SelectIconDiv>
             </SelectContainer>
-            : <div>{userInfo?.detail.gender}</div>}
+            : <div>{userInfo.detail.gender}</div>}
         </UserInfo>
         {isEditMode
           ? <ConcernSelector tagClickHandler={tagClickHandler} clickedTag={clickedTag} />
@@ -244,9 +275,9 @@ function MyPage() {
               <div className="withtag">건강 고민</div>
             </UserInfo>
             <TagBox>
-              {userInfo?.concerns.map(el => {
+              {userInfo.concerns.map(el => {
                 return (
-                  <OptionTag key={el.concernId}>{el.title}</OptionTag>
+                  <NewOptionTag key={el.concernId}>{el.title}</NewOptionTag>
                 )
               })}
             </TagBox>

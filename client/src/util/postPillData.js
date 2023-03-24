@@ -1,6 +1,7 @@
 import axios from "axios";
 
-function login (writtenData) {
+
+function postPillData (writtenData, navigate) {
   let supplement = { 
     "supplementName": writtenData.supplementName,
     "nutrients": writtenData.nutrients,
@@ -24,17 +25,21 @@ function login (writtenData) {
       "Authorization": sessionStorage.getItem("Authorization")
     }
   }
-  console.log(supplement)
+  console.log(sessionStorage.getItem("Authorization"))
   axios
-    .post('http://ec2-13-125-253-248.ap-northeast-2.compute.amazonaws.com:8080/supplements', supplement, config)
+    .post(`${process.env.REACT_APP_API_URL}/supplements`, supplement, config)
     .then(res=>{
       detailSupplement = {...detailSupplement, supplementId: res.data.data.supplementId}
-      axios.post('http://ec2-13-125-253-248.ap-northeast-2.compute.amazonaws.com:8080/detailSupplements', detailSupplement, config)
-      .then(res=> console.log("성공"))
+      axios.post(`${process.env.REACT_APP_API_URL}/detailSupplements`, detailSupplement, config)
+      .then(res=> {
+        console.log("성공")
+        navigate('/summary')
+      }
+        )
   })
     .catch((err)=>{
       console.log(err)
     })
 }
 
-export default login;
+export default postPillData;

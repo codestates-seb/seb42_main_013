@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
-import DataInput, { FakeInput} from "../components/DataInput";
+import DataInput from "../components/DataInput";
 import { CurrentBtn } from "../styles/Buttons";
 import { MypageConatiner } from "./MyPage";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { loginInfoActions } from "../reducer/loginInfoReducer";
+import getUserInfo from "../util/getUserInfo";
 
 
 const LoginBox = styled.div`
@@ -107,14 +110,22 @@ export const SocialBtnContent = styled.button`
 
 function Login() {
   const [data, setData] = useState({ email: '', password: '' });
+  const { login } = useSelector(state => state.loginInfoReducer);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if(login) {
+      navigate("/");
+    }
+  }, [login])
 
   const onSubmit = async () => {
-    const URI = "http://ec2-13-125-253-248.ap-northeast-2.compute.amazonaws.com:8080";
     console.log(data);
     await axios({
       method: 'post',
 
-      url: `${URI}/auth/login`,
+      url: `${process.env.REACT_APP_API_URL}/auth/login`,
       params: {},
       data: data,
     }, { withCredentials: true })
@@ -122,19 +133,23 @@ function Login() {
       .then(async(res) => {
         console.log(res);
         sessionStorage.setItem('Authorization', res.headers["authorization"])
-        alert('로그인 성공')
-        await axios({
-          method: 'get',
-          url: `${URI}/users`,
-          params: {},
-          headers:{Authorization:res.headers["authorization"]}
-        }, { withCredentials: true })
+        getUserInfo()
     
-        .then((res) => {
-          sessionStorage.setItem('userInfo', JSON.stringify(res.data))
-          window.location.href = '/'
-        })
-        .catch((err) => { window.location.href = '/setuserinfo' })
+      .then((res) => {
+        if (res.response?.status === 500) {
+          alert("필수 정보를 입력해 주세요!");
+          window.location.href = "/setuserinfo";
+        } else {
+          const actions = {};
+          if (res) {
+            actions.login = true;
+            actions.userInfo = res;
+            dispatch(loginInfoActions.changeLoginInfo(actions))
+            alert('로그인 성공')
+            window.location.href = '/'
+          }
+        }
+      })
         
       })
       .catch((err) => { console.log(err) })

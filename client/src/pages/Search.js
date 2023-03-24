@@ -2,11 +2,13 @@ import styled from "styled-components";
 import SearchBar from "../components/SearchBar";
 import Items from "../components/Items";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import useAuthCheck from "../util/useAuthCheck";
+import { useSelector } from "react-redux";
 
 const SearchContainer = styled.div`
   background-color: #ffffff;
@@ -114,18 +116,21 @@ function Search() {
   const [highPrice, setHighPrice] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get("query");
+  const { login } = useSelector(state => state.loginInfoReducer);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const url = "https://openapi.naver.com/v1/search/shop.json";
-    axios.get(url, {
+    if(!login) {
+      navigate("/intro");
+    }
+  }, [login])
+
+  // useAuthCheck();
+
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_API_URL}/open/naver/shopping`, {
       params: {
         query,
-        display: 50,
-        start: 1
-      },
-      headers: {
-        "X-Naver-Client-Id": process.env.REACT_APP_NAVER_CLIENT_ID,
-        "X-Naver-Client-Secret": process.env.REACT_APP_NAVER_CLIENT_SECRET,
       },
     })
       .then((res) => {
@@ -166,6 +171,7 @@ function Search() {
   }
 
   const priceFilterHandler = (e) => {
+    // TODO: 상태 말고 그냥 정적인 값으로 관리할 수 없을지 생각해보기
     e.preventDefault();
     let filteredData = searchData.slice();
     if(lowPrice.length !== 0) {

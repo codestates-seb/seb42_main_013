@@ -8,7 +8,7 @@ function getPillsData () {
     }
   }
   return axios
-    .get('http://ec2-13-125-253-248.ap-northeast-2.compute.amazonaws.com:8080/detailSupplements', config)
+    .get(`${process.env.REACT_APP_API_URL}/detailSupplements`, config)
     .then(res=> {
       return res.data.data
     })

@@ -7,6 +7,7 @@ import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { searchActions } from "../reducer/searchReducer";
 import { loginInfoActions } from "../reducer/loginInfoReducer";
+import { clearCreate } from "../reducer/dataCreateReducer";
 
 const HeaderContainer = styled.div`
   background-color: var(--blue-100);
@@ -53,12 +54,16 @@ function Header() {
     if (pathname === "/search") {
       dispatch(searchActions.removeSearchValue());
       navigate("/");
-    } else {
+    } else if(pathname === "/datacreate"){
+      dispatch(clearCreate())
+      navigate(-1);
+    } else{
       navigate(-1);
     }
   }
 
   const plusHandler = () => {
+    dispatch(clearCreate())
     navigate("/datacreate");
   }
 
@@ -68,13 +73,10 @@ function Header() {
 
   const logoutHandler = () => {
     if(window.confirm("로그아웃 하시겠습니까?")) {
-      sessionStorage.removeItem('Authorization');
-      const actions = {
-        login: false,
-        userInfo: null
-      }
-      dispatch(loginInfoActions.changeLoginInfo(actions));
-      navigate("/intro");
+      sessionStorage.removeItem("login");
+      sessionStorage.removeItem("userInfo");
+      sessionStorage.removeItem("Authorization");
+      window.location.href = '/intro';
     }
   }
 

@@ -13,34 +13,11 @@ import Calendar from "./pages/CalendarPage";
 import Signup from "./pages/Signup";
 import WebAside from "./components/WebAside";
 import SignupDone from "./pages/SignupDone";
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { loginInfoActions } from "./reducer/loginInfoReducer";
-import getUserInfo from "./util/getUserInfo";
-
-
 import { Routes, Route, useLocation } from 'react-router-dom';
 
 function App() {
   const { pathname } = useLocation();
-  const { userInfo } = useSelector(state => state.loginInfoReducer);
-  const dispatch = useDispatch();
 
-  useEffect(() => {
-    const accessToken = sessionStorage.getItem("Authorization");
-    if (accessToken && !userInfo?.email) {
-      getUserInfo()
-        .then((userInfo) => {
-          const actions = {};
-          if (userInfo) {
-            actions.login = true;
-            actions.userInfo = userInfo.data.data;
-            dispatch(loginInfoActions.changeLoginInfo(actions))
-          }
-        })
-        .catch((err) => console.log(err))
-    }
-  }, [pathname])
 
   return (
     <>
@@ -51,7 +28,7 @@ function App() {
         </div>
         <div className="app-wrap">
           {(pathname === "/intro") ? null : <Header />}
-          <div className={(pathname === "/intro" || pathname === "/login" || pathname === "/signup" || pathname === "/setuserinfo" || pathname === "/datacreate")
+          <div className={(pathname === "/intro" || pathname === "/login" || pathname === "/signup" || pathname === "/setuserinfo" || pathname === "/datacreate" || pathname === "/signupDone")
             ? (pathname === "/intro") ? "" : "other" : "container"}>
             <Routes>
               <Route path="/" element={<Suggest />} />
@@ -67,7 +44,7 @@ function App() {
               <Route path="/signupDone" element={<SignupDone />} />
             </Routes>
           </div>
-          {(pathname === "/intro" || pathname === "/login" || pathname === "/signup" || pathname === "/setuserinfo" || pathname === "/datacreate") ? null : <Footer />}
+          {(pathname === "/intro" || pathname === "/login" || pathname === "/signup" || pathname === "/setuserinfo" || pathname === "/datacreate" || pathname === "/signupDone") ? null : <Footer />}
         </div>
       </div>
     </>
