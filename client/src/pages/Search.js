@@ -125,7 +125,7 @@ function Search() {
     }
   }, [login])
 
-  useAuthCheck();
+  // useAuthCheck();
 
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_API_URL}/open/naver/shopping`, {

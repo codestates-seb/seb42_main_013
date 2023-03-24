@@ -338,7 +338,7 @@ function Suggest() {
     }
   }, [login])
 
-  useAuthCheck();
+  // useAuthCheck();
 
   useEffect(() => {
     // const data = 1;
