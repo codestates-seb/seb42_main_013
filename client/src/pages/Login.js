@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
-import DataInput, { FakeInput} from "../components/DataInput";
+import DataInput from "../components/DataInput";
 import { CurrentBtn } from "../styles/Buttons";
 import { MypageConatiner } from "./MyPage";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { loginInfoActions } from "../reducer/loginInfoReducer";
+import getUserInfo from "../util/getUserInfo";
 
 
 const LoginBox = styled.div`
@@ -107,24 +110,46 @@ export const SocialBtnContent = styled.button`
 
 function Login() {
   const [data, setData] = useState({ email: '', password: '' });
+  const { login } = useSelector(state => state.loginInfoReducer);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if(login) {
+      navigate("/");
+    }
+  }, [login])
 
   const onSubmit = async () => {
-    const URI = "http://ec2-13-125-253-248.ap-northeast-2.compute.amazonaws.com:8080";
+    const URI = "http://ec2-3-35-105-108.ap-northeast-2.compute.amazonaws.com:8080";
     console.log(data);
     await axios({
       method: 'post',
-      // url: `/auth/login`,
+
       url: `${URI}/auth/login`,
       params: {},
       data: data,
     }, { withCredentials: true })
 
-      .then((res) => {
+      .then(async(res) => {
         console.log(res);
         sessionStorage.setItem('Authorization', res.headers["authorization"])
-        alert('로그인 성공')
-        window.location.href = '/'
-
+        getUserInfo()
+    
+        .then((userInfo) => {
+          const actions = {};
+          if (userInfo) {
+            actions.login = true;
+            actions.userInfo = userInfo;
+            dispatch(loginInfoActions.changeLoginInfo(actions))
+            alert('로그인 성공')
+            window.location.href = '/'
+          }
+        })
+        .catch((err) => { alert('필수 정보를 입력해 주세요!');
+        window.location.href = '/setuserinfo'
+      })
+        
       })
       .catch((err) => { console.log(err) })
   };

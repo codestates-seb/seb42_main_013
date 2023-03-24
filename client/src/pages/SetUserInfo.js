@@ -4,7 +4,10 @@ import { CurrentBtn } from "../styles/Buttons";
 // import ImageEditor from "../components/ImageEditor";
 import ConcernSelector from "../components/ConcernSelector";
 import axios from "axios";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import getUserInfo from "../util/getUserInfo";
+import { loginInfoActions } from "../reducer/loginInfoReducer";
 
 
 const SetUserInfoContainer = styled.div`
@@ -130,12 +133,23 @@ function SetUserInfo() {
   const [birthDate, setBirthDate] = useState("");
   const [clickedSex, setClickedSex] = useState("");
   const [clickedTag, setClickedTag] = useState([]);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { userInfo } = useSelector(state => state.loginInfoReducer);
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate("/");
+    }
+  }, [userInfo])
+
+  console.log(userInfo)
 
   const birthDateHandler = (e) => {
     console.log(e.target.value);
     setBirthDate(e.target.value);
   }
-  
+
   const manClickHandler = () => {
     setClickedSex("남성");
   }
@@ -146,7 +160,7 @@ function SetUserInfo() {
   const tagClickHandler = (e) => {
     console.log(e.target.id);
     const clickedId = Number(e.target.id)
-    if(clickedTag.includes(clickedId)) {
+    if (clickedTag.includes(clickedId)) {
       const taglist = clickedTag.filter(el => el !== clickedId);
       setClickedTag(taglist);
     } else {
@@ -154,7 +168,7 @@ function SetUserInfo() {
       setClickedTag(tagList);
     }
   }
-  console.log(clickedTag);
+  // console.log(clickedTag);
 
   const submitBtnHandler = async (e) => {
     e.preventDefault();
@@ -166,11 +180,19 @@ function SetUserInfo() {
       }
     };
     await axios.post(`${process.env.REACT_APP_API_URL}/details`, submitData, config)
-    .then((res) => {
-      console.log(res);
-      alert("정보 등록이 완료되었습니다!");
-    })
-    .catch((err) => console.log(err));
+    getUserInfo()
+      .then((userInfo) => {
+        console.log(userInfo);
+        const actions = {};
+        if (userInfo) {
+          actions.login = true;
+          actions.userInfo = userInfo.data.data;
+          dispatch(loginInfoActions.changeLoginInfo(actions))
+          alert("정보 등록이 완료되었습니다!");
+          navigate("/");
+        }
+      })
+      .catch((err) => console.log(err));
   }
 
   return (
@@ -191,8 +213,8 @@ function SetUserInfo() {
           <span className={`${clickedSex === "여성" ? "selected" : ""}`}>여성</span>
         </IconDiv>
       </SelectSexBox>
-      <BirthDateInput type="date" value={birthDate} onChange={birthDateHandler} placeholder="생년월일"/>
-      <ConcernSelector tagClickHandler={tagClickHandler} clickedTag={clickedTag}/>
+      <BirthDateInput type="date" value={birthDate} onChange={birthDateHandler} placeholder="생년월일" />
+      <ConcernSelector tagClickHandler={tagClickHandler} clickedTag={clickedTag} />
       <CurrentBtn onClick={submitBtnHandler}>입력 완료</CurrentBtn>
     </SetUserInfoContainer>
   )

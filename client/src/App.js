@@ -14,48 +14,35 @@ import Signup from "./pages/Signup";
 import WebAside from "./components/WebAside";
 import SignupDone from "./pages/SignupDone";
 import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { loginInfoActions } from "./reducer/loginInfoReducer";
+import getUserInfo from "./util/getUserInfo";
+import { useNavigate } from "react-router-dom";
 
 
 import { Routes, Route, useLocation } from 'react-router-dom';
-import axios from "axios";
 
 function App() {
   const { pathname } = useLocation();
-  const { userInfo } = useSelector(state => state.loginInfoReducer);
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const getUserInfo = async () => {
-    const config = {
-      headers: {
-        "Authorization": sessionStorage.getItem("Authorization")
-      }
-    };
-    try {
-      const response = await axios.get("http://ec2-13-125-253-248.ap-northeast-2.compute.amazonaws.com:8080/users", config)
-      return response
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
+  // TODO: 추후 함수로 따로 빼서 intro~setuserinfo 제외한 페이지에 띄우기
   useEffect(() => {
-    const accessToken = sessionStorage.getItem("Authorization");
-    if (accessToken && !userInfo?.email) {
-      getUserInfo()
-        .then((userInfo) => {
-          const actions = {};
-          if (userInfo) {
-            actions.login = true;
-            actions.userInfo = userInfo.data.data;
-            dispatch(loginInfoActions.changeLoginInfo(actions))
-          }
-        });
-    }
+    getUserInfo()
+    .then((res) => {
+      if(res.response?.status === 500) {
+        console.log("로그인 만료!");
+      } else {
+        console.log("로그인 유지!");
+      }
+    })
+    .catch(err => {
+      // alert("로그인 기간이 만료되었습니다.");
+      // sessionStorage.removeItem("login");
+      // sessionStorage.removeItem("userInfo");
+      // sessionStorage.removeItem("Authorization");
+      // navigate("/intro");
+      console.log(err);
+    });
   }, [pathname])
-
-  // console.log(userInfo);
 
   return (
     <>

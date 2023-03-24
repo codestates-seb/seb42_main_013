@@ -6,6 +6,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { searchActions } from "../reducer/searchReducer";
+import { loginInfoActions } from "../reducer/loginInfoReducer";
 
 const HeaderContainer = styled.div`
   background-color: var(--blue-100);
@@ -66,7 +67,12 @@ function Header() {
   }
 
   const logoutHandler = () => {
-    navigate("/intro");
+    if(window.confirm("로그아웃 하시겠습니까?")) {
+      sessionStorage.removeItem("login");
+      sessionStorage.removeItem("userInfo");
+      sessionStorage.removeItem("Authorization");
+      window.location.href = '/intro';
+    }
   }
 
   return (
@@ -77,7 +83,9 @@ function Header() {
       {pathname === "/setuserinfo" ? <img src="images/logo_header.png" alt="logo" className="logo" />
         : <Link to="/" onClick={removeHandler}><img src="images/logo_header.png" alt="logo" className="logo" /></Link>}
       <RightDiv>
-        <FontAwesomeIcon icon={faArrowRightFromBracket} onClick={logoutHandler} className={`${(pathname === "/mypage") ? "icon" : "icon none"}`} />
+        <FontAwesomeIcon icon={faArrowRightFromBracket} 
+        onClick={logoutHandler}
+        className={`${(pathname === "/mypage") ? "icon" : "icon none"}`} />
         <FontAwesomeIcon icon={faPlus} onClick={plusHandler} className={`${pathname === "/summary" ? "icon" : "icon none"}`} />
         <div className={`${(pathname === "/summary" || pathname === "/mypage") ? "icon none" : "icon"}`}></div>
       </RightDiv>

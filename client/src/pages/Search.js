@@ -116,16 +116,9 @@ function Search() {
   const query = searchParams.get("query");
 
   useEffect(() => {
-    const url = "https://openapi.naver.com/v1/search/shop.json";
-    axios.get(url, {
+    axios.get(`${process.env.REACT_APP_API_URL}/open/naver/shopping`, {
       params: {
         query,
-        display: 50,
-        start: 1
-      },
-      headers: {
-        "X-Naver-Client-Id": process.env.REACT_APP_NAVER_CLIENT_ID,
-        "X-Naver-Client-Secret": process.env.REACT_APP_NAVER_CLIENT_SECRET,
       },
     })
       .then((res) => {
@@ -133,6 +126,8 @@ function Search() {
       })
       .catch(err => console.log(err))
   }, [query])
+
+  console.log(query);
 
     // 페이지네이션
     const newNum = searchData.length;
@@ -164,6 +159,7 @@ function Search() {
   }
 
   const priceFilterHandler = (e) => {
+    // TODO: 상태 말고 그냥 정적인 값으로 관리할 수 없을지 생각해보기
     e.preventDefault();
     let filteredData = searchData.slice();
     if(lowPrice.length !== 0) {
