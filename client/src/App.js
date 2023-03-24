@@ -24,17 +24,23 @@ function App() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
+  // TODO: 추후 함수로 따로 빼서 intro~setuserinfo 제외한 페이지에 띄우기
   useEffect(() => {
     getUserInfo()
     .then((res) => {
-      console.log("로그인 유지!");
+      if(res.response?.status === 500) {
+        console.log("로그인 만료!");
+      } else {
+        console.log("로그인 유지!");
+      }
     })
     .catch(err => {
-      alert("로그인 기간이 만료되었습니다.");
-      sessionStorage.removeItem("login");
-      sessionStorage.removeItem("userInfo");
-      sessionStorage.removeItem("Authorization");
-      navigate("/intro");
+      // alert("로그인 기간이 만료되었습니다.");
+      // sessionStorage.removeItem("login");
+      // sessionStorage.removeItem("userInfo");
+      // sessionStorage.removeItem("Authorization");
+      // navigate("/intro");
+      console.log(err);
     });
   }, [pathname])
 

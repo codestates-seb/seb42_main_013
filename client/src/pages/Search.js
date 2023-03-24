@@ -159,6 +159,7 @@ function Search() {
   }
 
   const priceFilterHandler = (e) => {
+    // TODO: 상태 말고 그냥 정적인 값으로 관리할 수 없을지 생각해보기
     e.preventDefault();
     let filteredData = searchData.slice();
     if(lowPrice.length !== 0) {
