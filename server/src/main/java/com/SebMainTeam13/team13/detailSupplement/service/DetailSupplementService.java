@@ -9,6 +9,7 @@ import com.SebMainTeam13.team13.exception.BusinessLogicException;
 import com.SebMainTeam13.team13.supplement.entity.Supplement;
 import com.SebMainTeam13.team13.supplement.service.SupplementService;
 import com.SebMainTeam13.team13.user.entity.User;
+import com.SebMainTeam13.team13.user.repository.UserRepository;
 import com.SebMainTeam13.team13.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 
@@ -30,6 +31,7 @@ import static com.SebMainTeam13.team13.exception.ExceptionCode.DETAIL_SUPPLEMENT
 public class DetailSupplementService {
     private final DetailSupplementRepository detailDetailSupplementRepository;
     private final DetailService detailService;
+    private final UserRepository userRepository;
     private final UserService userservice;
     private final SupplementService supplementService;
 
@@ -80,8 +82,12 @@ public class DetailSupplementService {
         return verifiedDetailSupplement;
     }
 
-    public void deleteDetailSupplement(DetailSupplement detailSupplement){
-       detailDetailSupplementRepository.delete(detailSupplement);
+    public void deleteDetailSupplement(DetailSupplement detailSupplement,Long userId){
+       User user = userRepository.findById(userId).get();
+       if(user.getDetail().getDetailSupplements().contains(detailSupplement) ) {
+           detailDetailSupplementRepository.delete(detailSupplement);
+       }
+       else throw new RuntimeException("DetailSupplement not found for user");
     }
 
     //#### 내부 메서드 ###//

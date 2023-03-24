@@ -71,11 +71,11 @@ public class DetailSupplementController {
         return new ResponseEntity<>(new ListResponseDto<>(responses),HttpStatus.OK);
     }
     @DeleteMapping("/{detailSupplement-id}")
-    public ResponseEntity deleteDetailSupplement(@PathVariable("{detailSupplement-id}") Long detailSupplementId) {
+    public ResponseEntity deleteDetailSupplement(@PathVariable("detailSupplement-id") Long detailSupplementId) {
         String principal = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Long userId= userService.findUserIdByEmail(principal);
         DetailSupplement detailSupplement = detailSupplementService.findAndVerifyDetailSupplementByDetailSupplementId(detailSupplementId);
-        detailSupplementService.deleteDetailSupplement(detailSupplement);
+        detailSupplementService.deleteDetailSupplement(detailSupplement,userId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
