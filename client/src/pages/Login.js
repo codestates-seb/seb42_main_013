@@ -113,18 +113,29 @@ function Login() {
     console.log(data);
     await axios({
       method: 'post',
-      // url: `/auth/login`,
+
       url: `${URI}/auth/login`,
       params: {},
       data: data,
     }, { withCredentials: true })
 
-      .then((res) => {
+      .then(async(res) => {
         console.log(res);
         sessionStorage.setItem('Authorization', res.headers["authorization"])
         alert('로그인 성공')
-        window.location.href = '/setuserinfo'
-
+        await axios({
+          method: 'get',
+          url: `${URI}/users`,
+          params: {},
+          headers:{Authorization:res.headers["authorization"]}
+        }, { withCredentials: true })
+    
+        .then((res) => {
+          sessionStorage.setItem('userInfo', JSON.stringify(res.data))
+          window.location.href = '/'
+        })
+        .catch((err) => { window.location.href = '/setuserinfo' })
+        
       })
       .catch((err) => { console.log(err) })
   };
