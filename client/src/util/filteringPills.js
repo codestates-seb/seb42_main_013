@@ -2,10 +2,10 @@ export function filteringPills (data, filter){
   const filteredData = data.filter((data)=>{
     let filtering = true;
     if(filter === "drug"){
-      filtering = data.type === "drug"
+      filtering = data.supplementType === "drug"
     }
     if(filter === "supplement"){
-     filtering = data.type === "supplement"
+     filtering = data.supplementType === "supplement"
     }
     return filtering
   })  

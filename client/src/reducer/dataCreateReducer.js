@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 let initialState = {
   supplementId: null,
-  type: "supplement",
-  imageURL: null,
+  supplementType: "supplement",
+  imageURL: "",
   supplementName: "",
   nutrients: [],
   expirationDate: "",
@@ -22,7 +22,7 @@ const dataCreateSlice = createSlice({
   reducers : {
     setCreateData : (state, action) => {
       state.supplementId= action.payload.supplementId
-      state.type= action.payload.type
+      state.supplementType= action.payload.supplementType
       state.imageURL= action.payload.imageURL
       state.supplementName= action.payload.supplementName
       state.nutrients= action.payload.nutrients

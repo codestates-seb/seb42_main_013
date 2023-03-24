@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import SummaryList, { ModalMenu, ModalMenuLi } from "../components/SummaryList.js";
 import { filteringPills } from "../util/filteringPills.js";
+import getPillsData from "../util/getPillsData.js";
 import { sortingPills } from "../util/sortingPills.js";
+import NoSupplementData from "../images/NoSupplementData.png";
 
 
 const SummaryContainer = styled.div`
@@ -94,104 +96,23 @@ const Filter = styled.div`
   }
 `;
 
+
+const NoSupplementDataImg = styled.img`
+  width: 60%;
+  margin-top: 100px;
+  align-self: center;
+`
+const NoDataComment = styled.span`
+  align-self: center;
+  font-family: NanumBarunGothicBold;
+  color: var(--black-300);
+`
+
 function Summary() {
-  const dummy = [
-    {
-      supplementId: 0,
-      type: "supplement",
-      imageURL: "https://freepngimg.com/save/112695-picture-fish-oil-capsule-free-download-png-hd/1000x500",
-      supplementName: "오메가3",
-      nutrients: ["SAT"],
-      expirationDate: "2025-01-23",
-      pillsLeft: "10",
-      totalCapacity: "150",
-      startDate: new Date().toISOString().substring(0, 10),
-      endDate: "",
-      dosageInterval: 1,
-      takingTime: ["09:00"],
-      dosagePerServing: 1,
-    },
-    {
-      supplementId: 1,
-      type: "supplement",
-      imageURL: "https://freepngimg.com/save/112695-picture-fish-oil-capsule-free-download-png-hd/1000x500",
-      supplementName: "오메가3",
-      nutrients: ["SAT"],
-      expirationDate: "2023-12-25",
-      pillsLeft: "98",
-      totalCapacity: "150",
-      startDate: new Date().toISOString().substring(0, 10),
-      endDate: "",
-      dosageInterval: 1,
-      takingTime: ["09:00"],
-      dosagePerServing: 1,
-    },
-    {
-      supplementId: 2,
-      type: "supplement",
-      imageURL: "https://freepngimg.com/save/112695-picture-fish-oil-capsule-free-download-png-hd/1000x500",
-      supplementName: "오메가3",
-      nutrients: ["SAT"],
-      expirationDate: "2023-03-15",
-      pillsLeft: "120",
-      totalCapacity: "150",
-      startDate: new Date().toISOString().substring(0, 10),
-      endDate: "",
-      dosageInterval: 1,
-      takingTime: ["8:00","11:00","5:30"],
-      dosagePerServing: 1,
-    },
-    {
-      supplementId: 3,
-      type: "drug",
-      imageURL: "https://freepngimg.com/save/112695-picture-fish-oil-capsule-free-download-png-hd/1000x500",
-      supplementName: "항생제",
-      nutrients: ["SAT"],
-      expirationDate: "2023-04-12",
-      pillsLeft: "3",
-      totalCapacity: "150",
-      startDate: new Date().toISOString().substring(0, 10),
-      endDate: "",
-      dosageInterval: 1,
-      takingTime: ["11:00","5:30"],
-      dosagePerServing: 1,
-    },
-    {
-      supplementId: 4,
-      type: "supplement",
-      imageURL: "https://freepngimg.com/save/112695-picture-fish-oil-capsule-free-download-png-hd/1000x500",
-      supplementName: "오메가3",
-      nutrients: ["SAT"],
-      expirationDate: "2023-09-14",
-      pillsLeft: "100",
-      totalCapacity: "150",
-      startDate: new Date().toISOString().substring(0, 10),
-      endDate: "",
-      dosageInterval: 1,
-      takingTime: ["09:00"],
-      dosagePerServing: 1,
-    },
-    {
-      supplementId: 5,
-      type: "drug",
-      imageURL: "https://freepngimg.com/save/112695-picture-fish-oil-capsule-free-download-png-hd/1000x500",
-      supplementName: "감기약",
-      nutrients: ["SAT"],
-      expirationDate: "2026-09-12",
-      pillsLeft: "1",
-      totalCapacity: "150",
-      startDate: new Date().toISOString().substring(0, 10),
-      endDate: "",
-      dosageInterval: 1,
-      takingTime: ["09:00"],
-      dosagePerServing: 1,
-    },
-  ];
   const [sort, setSort] = useState("pillsLeftAscending");
   const [tab, setTab] = useState("all");
   const [isSortOpen, setIsSortOpen] = useState(false);
   const [data, setData] = useState([])
-  //!이렇게 해야하는 것인가.....
   const getSortName = {
     "AtoZ": "가나다순",
     "pillsLeftAscending": "남은약 적은순",
@@ -203,12 +124,14 @@ function Summary() {
     setSort(sortby)
     setIsSortOpen(!isSortOpen)
   }
-  const getData = () => {
-    const response = dummy
-    let filtered = filteringPills(response, tab)
-    let sorted = sortingPills(filtered, sort)
-    setData(sorted)
+  const getData = async () => {
+    //!상태 props로 안보내고 return 값 받기
+    const response = await getPillsData(setData)
+    let filtered = response && filteringPills(response, tab)
+    let sorted = filtered && sortingPills(filtered, sort)
+    sorted && setData(sorted)
   }
+  
   useEffect(()=>{
     getData()
   },[tab, sort])
@@ -260,7 +183,11 @@ function Summary() {
         </Filter>
       </Options>
       <SummartLists>
-        {data.map((ele, idx) => {
+        {(!data || data.length===0)&& <>
+        <NoSupplementDataImg src={NoSupplementData}/>
+        <NoDataComment>등록된 데이터가 없습니다.</NoDataComment>
+        </>}
+        {data && data.map((ele, idx) => {
           return <SummaryList key={idx} pill={ele} data={data} setData={setData}/>;
         })}
       </SummartLists>

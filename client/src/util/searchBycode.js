@@ -11,6 +11,7 @@ function searchByCode (code, setData) {
 
   const splitCode = (!code.includes(" ") && (code.length===12 || code.length===11)) ? `"${code.slice(0,1)} ${code.slice(1,6)} ${code.slice(6,11)} ${code.slice(11)}"` : `"${code}"`
   const replacedCode = splitCode.includes(" ") && splitCode.replaceAll(" ", "%20")
+  console.log(replacedCode)
   axios
     .get(`${process.env.REACT_APP_API_SEARCH_FILTER_URL}${replacedCode}`,config)
     .then((res)=>{
@@ -38,8 +39,8 @@ function searchByCode (code, setData) {
         const obj=
         {
           supplementId: null,
-          type: "supplement",
-          imageURL: null,
+          supplementType: "supplement",
+          imageURL: "",
           supplementName: data.fullName,
           nutrients: data.ingredientRows.map((ele)=> ele.ingredientGroup),
           expirationDate: "",
