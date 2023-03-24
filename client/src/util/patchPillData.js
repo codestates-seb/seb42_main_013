@@ -1,13 +1,13 @@
-import axios from "axios";
+import axios from "axios"
 
 
-function postPillData (writtenData, navigate) {
+
+function patchPillData(writtenData, navigate) {
   let supplement = { 
     "supplementName": writtenData.supplementName,
     "nutrients": writtenData.nutrients,
     "imageURL": writtenData.imageURL,
     "supplementType": writtenData.supplementType,
-    "concernId": null
   } 
   let detailSupplement = { 
       "expirationDate": writtenData.expirationDate,
@@ -19,27 +19,26 @@ function postPillData (writtenData, navigate) {
       "dosagePerServing": writtenData.totalCapacity,
       "dosageInterval": writtenData.dosageInterval
   }
-
+  console.log(writtenData)
   const config = {
     headers: {
       "Authorization": sessionStorage.getItem("Authorization")
     }
   }
-  console.log(sessionStorage.getItem("Authorization"))
+  // console.log(sessionStorage.getItem("Authorization"))
   axios
-    .post(`${process.env.REACT_APP_API_URL}/supplements`, supplement, config)
+    .patch(`${process.env.REACT_APP_API_URL}/supplements/${writtenData.supplementId}`, supplement, config)
     .then(res=>{
-      detailSupplement = {...detailSupplement, supplementId: res.data.data.supplementId}
-      axios.post(`${process.env.REACT_APP_API_URL}/detailSupplements`, detailSupplement, config)
+      console.log("patch1차")
+      axios.post(`${process.env.REACT_APP_API_URL}/detailSupplements/${writtenData.detailSupplementId}`, detailSupplement, config)
       .then(res=> {
-        console.log("성공")
-        navigate('/summary')
-      }
-        )
-  })
+        console.log("수정 성공")
+        // navigate('/summary')
+    })})
     .catch((err)=>{
       console.log(err)
     })
+    
 }
 
-export default postPillData;
+export default patchPillData;
