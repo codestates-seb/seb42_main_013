@@ -138,7 +138,7 @@ function SetUserInfo() {
   const { userInfo } = useSelector(state => state.loginInfoReducer);
 
   useEffect(() => {
-    if (userInfo) {
+    if (userInfo.detail) {
       navigate("/");
     }
   }, [userInfo])
@@ -186,7 +186,7 @@ function SetUserInfo() {
         const actions = {};
         if (userInfo) {
           actions.login = true;
-          actions.userInfo = userInfo.data.data;
+          actions.userInfo = userInfo;
           dispatch(loginInfoActions.changeLoginInfo(actions))
           alert("정보 등록이 완료되었습니다!");
           navigate("/");

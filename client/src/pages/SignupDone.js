@@ -8,7 +8,7 @@ const DoneContainer = styled.div`
   width: 100%;
   height: calc(100vh - 48px);
   position: relative;
-  top: 48px;
+  top: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;

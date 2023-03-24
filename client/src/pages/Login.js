@@ -121,12 +121,11 @@ function Login() {
   }, [login])
 
   const onSubmit = async () => {
-    const URI = "http://ec2-3-35-105-108.ap-northeast-2.compute.amazonaws.com:8080";
     console.log(data);
     await axios({
       method: 'post',
 
-      url: `${URI}/auth/login`,
+      url: `${process.env.REACT_APP_API_URL}/auth/login`,
       params: {},
       data: data,
     }, { withCredentials: true })
@@ -136,18 +135,20 @@ function Login() {
         sessionStorage.setItem('Authorization', res.headers["authorization"])
         getUserInfo()
     
-        .then((userInfo) => {
+      .then((res) => {
+        if (res.response?.status === 500) {
+          alert("필수 정보를 입력해 주세요!");
+          window.location.href = "/setuserinfo";
+        } else {
           const actions = {};
-          if (userInfo) {
+          if (res) {
             actions.login = true;
-            actions.userInfo = userInfo;
+            actions.userInfo = res;
             dispatch(loginInfoActions.changeLoginInfo(actions))
             alert('로그인 성공')
             window.location.href = '/'
           }
-        })
-        .catch((err) => { alert('필수 정보를 입력해 주세요!');
-        window.location.href = '/setuserinfo'
+        }
       })
         
       })
