@@ -116,16 +116,9 @@ function Search() {
   const query = searchParams.get("query");
 
   useEffect(() => {
-    const url = "https://openapi.naver.com/v1/search/shop.json";
-    axios.get(url, {
+    axios.get(`${process.env.REACT_APP_API_URL}/open/naver/shopping`, {
       params: {
         query,
-        display: 50,
-        start: 1
-      },
-      headers: {
-        "X-Naver-Client-Id": process.env.REACT_APP_NAVER_CLIENT_ID,
-        "X-Naver-Client-Secret": process.env.REACT_APP_NAVER_CLIENT_SECRET,
       },
     })
       .then((res) => {

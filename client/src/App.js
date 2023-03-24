@@ -14,32 +14,28 @@ import Signup from "./pages/Signup";
 import WebAside from "./components/WebAside";
 import SignupDone from "./pages/SignupDone";
 import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { loginInfoActions } from "./reducer/loginInfoReducer";
 import getUserInfo from "./util/getUserInfo";
+import { useNavigate } from "react-router-dom";
 
 
 import { Routes, Route, useLocation } from 'react-router-dom';
 
 function App() {
   const { pathname } = useLocation();
-  const { userInfo } = useSelector(state => state.loginInfoReducer);
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const accessToken = sessionStorage.getItem("Authorization");
-    if (accessToken && !userInfo?.email) {
-      getUserInfo()
-        .then((userInfo) => {
-          const actions = {};
-          if (userInfo) {
-            actions.login = true;
-            actions.userInfo = userInfo.data.data;
-            dispatch(loginInfoActions.changeLoginInfo(actions))
-          }
-        })
-        .catch((err) => console.log(err))
-    }
+    getUserInfo()
+    .then((res) => {
+      console.log("로그인 유지!");
+    })
+    .catch(err => {
+      alert("로그인 기간이 만료되었습니다.");
+      sessionStorage.removeItem("login");
+      sessionStorage.removeItem("userInfo");
+      sessionStorage.removeItem("Authorization");
+      navigate("/intro");
+    });
   }, [pathname])
 
   return (

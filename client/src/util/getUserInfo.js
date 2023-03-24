@@ -7,8 +7,8 @@ async function getUserInfo() {
     }
   };
   try {
-    const response = await axios.get("http://ec2-13-125-253-248.ap-northeast-2.compute.amazonaws.com:8080/users", config)
-    return response
+    const response = await axios.get("http://ec2-3-35-105-108.ap-northeast-2.compute.amazonaws.com:8080/users", config)
+    return response.data.data
   } catch (err) {
     console.log(err)
   }
