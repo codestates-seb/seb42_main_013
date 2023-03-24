@@ -4,12 +4,14 @@ import axios from "axios";
 function getPillsData () {
   const config = {
     headers: {
-      "Authorization":  JSON.parse(sessionStorage.getItem("accessToken"))
+      "Authorization":  sessionStorage.getItem("Authorization")
     }
   }
-  axios
+  return axios
     .get('http://ec2-13-125-253-248.ap-northeast-2.compute.amazonaws.com:8080/detailSupplements', config)
-    .then(res=> console.log(res))
+    .then(res=> {
+      return res.data.data
+    })
     .catch((err)=>{
       console.log(err)
     })
