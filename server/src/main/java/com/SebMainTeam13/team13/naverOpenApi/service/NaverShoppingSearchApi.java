@@ -14,10 +14,12 @@ import java.util.Map;
 
 @Component
 public class NaverShoppingSearchApi {
+
     @Value("${NAVER_CLIENT_ID}")
     public String clientId;
 
     @Value("${NAVER_CLIENT_SECRET}")
+    
     public String clientSecret;
 
 
