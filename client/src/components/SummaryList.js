@@ -5,7 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setCreateData, setIsPatch } from "../reducer/dataCreateReducer";
+import { setCreateData, setIDData, setIsPatch } from "../reducer/dataCreateReducer";
+import deletePillData from "../util/deletePillData";
 
 
 const ListContainer = styled.li`
@@ -147,6 +148,7 @@ function SummaryList({ pill, data, setData }) {
   const isAlmostRunout = pill.pillsLeft<=10
   const patchHandler = () => {
     dispatch(setCreateData(pill))
+    dispatch(setIDData(pill))
     dispatch(setIsPatch())
   }
 
@@ -225,7 +227,7 @@ function SummaryList({ pill, data, setData }) {
         <>
           <ModalMenu onClick={(e) => e.stopPropagation()}>
             <ModalMenuLi><Link to="/datacreate" onClick={patchHandler}>수정하기</Link></ModalMenuLi>
-            <ModalMenuLi onClick={deleteDataHandler} className="delete">삭제하기</ModalMenuLi>
+            <ModalMenuLi onClick={()=>{deletePillData(pill)}} className="delete">삭제하기</ModalMenuLi>
           </ModalMenu>
         </>
       )}
