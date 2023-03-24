@@ -68,13 +68,10 @@ function Header() {
 
   const logoutHandler = () => {
     if(window.confirm("로그아웃 하시겠습니까?")) {
-      sessionStorage.removeItem('Authorization');
-      const actions = {
-        login: false,
-        userInfo: null
-      }
-      dispatch(loginInfoActions.changeLoginInfo(actions));
-      navigate("/intro");
+      sessionStorage.removeItem("login");
+      sessionStorage.removeItem("userInfo");
+      sessionStorage.removeItem("Authorization");
+      window.location.href = '/intro';
     }
   }
 

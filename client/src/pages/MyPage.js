@@ -90,12 +90,10 @@ const TagBox = styled.div`
   display: flex;
   gap: 8px;
   width: 100%;
-  justify-content: start;
+  justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
   margin-bottom: 30px;
-  >div{
-    flex-grow: 1;
-  }
 `
 
 export const BasicBtn = styled.div`
@@ -144,6 +142,10 @@ export const BirthDateInput = styled.input`
   flex: 1 0 50%;
   color: var(--black-100);
   padding: 4px;
+`
+
+const NewOptionTag = styled(OptionTag)`
+  width: 100px;
 `
 
 function MyPage() {
@@ -246,7 +248,7 @@ function MyPage() {
             <TagBox>
               {userInfo?.concerns.map(el => {
                 return (
-                  <OptionTag key={el.concernId}>{el.title}</OptionTag>
+                  <NewOptionTag key={el.concernId}>{el.title}</NewOptionTag>
                 )
               })}
             </TagBox>
