@@ -63,6 +63,7 @@ function Header() {
   }
 
   const plusHandler = () => {
+    dispatch(clearCreate())
     navigate("/datacreate");
   }
 
