@@ -13,36 +13,11 @@ import Calendar from "./pages/CalendarPage";
 import Signup from "./pages/Signup";
 import WebAside from "./components/WebAside";
 import SignupDone from "./pages/SignupDone";
-import { useEffect } from "react";
-import getUserInfo from "./util/getUserInfo";
-import { useNavigate } from "react-router-dom";
-
-
 import { Routes, Route, useLocation } from 'react-router-dom';
 
 function App() {
   const { pathname } = useLocation();
-  const navigate = useNavigate();
 
-  // TODO: 추후 함수로 따로 빼서 intro~setuserinfo 제외한 페이지에 띄우기
-  useEffect(() => {
-    getUserInfo()
-    .then((res) => {
-      if(res.response?.status === 500) {
-        console.log("로그인 만료!");
-      } else {
-        console.log("로그인 유지!");
-      }
-    })
-    .catch(err => {
-      // alert("로그인 기간이 만료되었습니다.");
-      // sessionStorage.removeItem("login");
-      // sessionStorage.removeItem("userInfo");
-      // sessionStorage.removeItem("Authorization");
-      // navigate("/intro");
-      console.log(err);
-    });
-  }, [pathname])
 
   return (
     <>
@@ -53,7 +28,7 @@ function App() {
         </div>
         <div className="app-wrap">
           {(pathname === "/intro") ? null : <Header />}
-          <div className={(pathname === "/intro" || pathname === "/login" || pathname === "/signup" || pathname === "/setuserinfo" || pathname === "/datacreate")
+          <div className={(pathname === "/intro" || pathname === "/login" || pathname === "/signup" || pathname === "/setuserinfo" || pathname === "/datacreate" || pathname === "/signupDone")
             ? (pathname === "/intro") ? "" : "other" : "container"}>
             <Routes>
               <Route path="/" element={<Suggest />} />
@@ -69,7 +44,7 @@ function App() {
               <Route path="/signupDone" element={<SignupDone />} />
             </Routes>
           </div>
-          {(pathname === "/intro" || pathname === "/login" || pathname === "/signup" || pathname === "/setuserinfo" || pathname === "/datacreate") ? null : <Footer />}
+          {(pathname === "/intro" || pathname === "/login" || pathname === "/signup" || pathname === "/setuserinfo" || pathname === "/datacreate" || pathname === "/signupDone") ? null : <Footer />}
         </div>
       </div>
     </>

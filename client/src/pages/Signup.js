@@ -42,7 +42,6 @@ const Errorspan = styled.span`
 const onClick=()=>{ window.location.href = '/login'};
 
 function Signup() {
-  const URI = "http://ec2-13-125-253-248.ap-northeast-2.compute.amazonaws.com:8080";
   const [isFocus1, setIsFocus1] = useState(false);
   const [isFocus2, setIsFocus2] = useState(false);
   const [isFocus3, setIsFocus3] = useState(false);
@@ -54,7 +53,7 @@ function Signup() {
     await axios({
       method: 'post',
       // url: `/users`,
-      url: `${URI}/users`,
+      url: `${process.env.REACT_APP_API_URL}/users`,
       params: {},
       data: data,
     }, { withCredentials: true })

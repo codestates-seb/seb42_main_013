@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { concernActions } from "../reducer/concernReducer";
 import { searchActions } from "../reducer/searchReducer";
 import { useNavigate } from "react-router-dom";
+import useAuthCheck from "../util/useAuthCheck";
 import axios from "axios";
 import card1 from "../images/cards/card1.jpg";
 import card2 from "../images/cards/card2.jpg";
@@ -336,6 +337,8 @@ function Suggest() {
       navigate("/intro");
     }
   }, [login])
+
+  useAuthCheck();
 
   useEffect(() => {
     // const data = 1;

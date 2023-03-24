@@ -2,11 +2,13 @@ import styled from "styled-components";
 import SearchBar from "../components/SearchBar";
 import Items from "../components/Items";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import useAuthCheck from "../util/useAuthCheck";
+import { useSelector } from "react-redux";
 
 const SearchContainer = styled.div`
   background-color: #ffffff;
@@ -114,6 +116,16 @@ function Search() {
   const [highPrice, setHighPrice] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get("query");
+  const { login } = useSelector(state => state.loginInfoReducer);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if(!login) {
+      navigate("/intro");
+    }
+  }, [login])
+
+  useAuthCheck();
 
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_API_URL}/open/naver/shopping`, {
