@@ -15,7 +15,7 @@ function useAuthCheck() {
           sessionStorage.removeItem("login");
           sessionStorage.removeItem("userInfo");
           sessionStorage.removeItem("Authorization");
-          navigate("/intro");
+          window.location.href = '/';
         } else {
           console.log("로그인 유지!");
         }

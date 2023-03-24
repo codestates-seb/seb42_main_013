@@ -168,7 +168,7 @@ function MyPage() {
     }
   }, [login])
 
-  useAuthCheck();
+  // useAuthCheck();
 
   const editBtnHandler = async () => {
     if (isEditMode) {
