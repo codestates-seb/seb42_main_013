@@ -51,6 +51,7 @@ public class DetailSupplementMapper {
                 .dosageInterval(patch.getDosageInterval())
                 .supplement(supplement)
 
+
                 .build();
     }
 
@@ -61,6 +62,7 @@ public class DetailSupplementMapper {
                   .supplementType(detailSupplement.getSupplement().getSupplementType())
                   .imageURL(detailSupplement.getSupplement().getImageURL())
                   .nutrients(detailSupplement.getSupplement().getNutrients())
+                  .supplementId(detailSupplement.getSupplement().getSupplementId())
 
                   .build();
         return DetailSupplementDto.Response.builder()
@@ -76,6 +78,7 @@ public class DetailSupplementMapper {
                 .dosagePerServing(detailSupplement.getDosagePerServing())
                 .dosageInterval(detailSupplement.getDosageInterval())
                 .supplementResponse(supplement)
+
 
                 .build();
     }

@@ -60,7 +60,7 @@ public class SupplementController {
 
         return new ResponseEntity<>(new SingleResponseDto<>(response),HttpStatus.OK);
     }
-    @GetMapping("/{supplement-name}")
+    @GetMapping("/name/{supplement-name}")
     public ResponseEntity getSupplement(@PathVariable("supplement-name") String supplementName) {
         Supplement supplement = supplementService.findAndVerifySupplementByName(supplementName);
 

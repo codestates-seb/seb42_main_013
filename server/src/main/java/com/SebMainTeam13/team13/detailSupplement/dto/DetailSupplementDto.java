@@ -75,11 +75,13 @@ public class DetailSupplementDto {
             this.dosagePerServing = detailSupplement.getDosagePerServing();
             this.dosageInterval = detailSupplement.getDosageInterval();
             this.supplementResponse = SupplementDto.Response.builder()
-                    .supplementName(detailSupplement.getSupplement().getSupplementName())
-                    .nutrients(detailSupplement.getSupplement().getNutrients())
-                    .supplementType(detailSupplement.getSupplement().getSupplementType())
-                    .imageURL(detailSupplement.getSupplement().getImageURL())
-                    .build();
+                                         .supplementId(detailSupplement.getSupplement().getSupplementId())
+                                         .supplementName(detailSupplement.getSupplement().getSupplementName())
+                                         .nutrients(detailSupplement.getSupplement().getNutrients())
+                                         .supplementType(detailSupplement.getSupplement().getSupplementType())
+                                         .imageURL(detailSupplement.getSupplement().getImageURL())
+
+                                         .build();
         }
     }
 }
