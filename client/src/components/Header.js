@@ -7,6 +7,7 @@ import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { searchActions } from "../reducer/searchReducer";
 import { loginInfoActions } from "../reducer/loginInfoReducer";
+import { clearCreate } from "../reducer/dataCreateReducer";
 
 const HeaderContainer = styled.div`
   background-color: var(--blue-100);
@@ -53,7 +54,10 @@ function Header() {
     if (pathname === "/search") {
       dispatch(searchActions.removeSearchValue());
       navigate("/");
-    } else {
+    } else if(pathname === "/datacreate"){
+      dispatch(clearCreate())
+      navigate(-1);
+    } else{
       navigate(-1);
     }
   }

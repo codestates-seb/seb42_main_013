@@ -40,9 +40,26 @@ const dataCreateSlice = createSlice({
     },
     setIsPatch : (state) => {
       state.isPatch = !state.isPatch
+    },
+    clearCreate : (state) => {
+      state.isPatch= false
+      state.supplementId= null
+      state.detailSupplementId= null
+      state.supplementType= "supplement"
+      state.imageURL= ""
+      state.supplementName= ""
+      state.nutrients= []
+      state.expirationDate= ""
+      state.pillsLeft= ""
+      state.totalCapacity= ""
+      state.startDate= new Date().toISOString().substring(0, 10)
+      state.endDate= ""
+      state.dosageInterval= "1"
+      state.takingTime= []
+      state.dosagePerServing= 1
     }
   }
 })
 
-export const {setCreateData, setIsPatch} = dataCreateSlice.actions
+export const {setCreateData, setIsPatch, clearCreate} = dataCreateSlice.actions
 export default dataCreateSlice.reducer
