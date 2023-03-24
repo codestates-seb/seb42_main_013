@@ -1,4 +1,4 @@
-package com.SebMainTeam13.team13.api.service;
+package com.SebMainTeam13.team13.naverOpenApi.service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
