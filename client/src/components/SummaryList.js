@@ -133,7 +133,6 @@ export const ModalMenuLi = styled.li`
 `;
 
 function SummaryList({ pill, data, setData }) {
-  console.log(pill)
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const openModalHandler = () => {
