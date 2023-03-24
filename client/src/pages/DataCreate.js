@@ -1,13 +1,14 @@
 import styled from "styled-components";
 import { useEffect, useRef, useState } from "react";
 import CreateModal from "../components/CreateModal";
-import Swiper from "../components/SelectImg";
+import SelectImg from "../components/SelectImg";
 import DataInput, { DeleteBtn, RealInput } from "../components/DataInput";
 import Tags from "../components/Tags";
 import { useDispatch, useSelector } from "react-redux";
 import { setCreateData } from "../reducer/dataCreateReducer";
 import { CurrentBtn } from "../styles/Buttons";
-import dataPost from "../util/dataPost";
+import dataPost from "../util/postPillData";
+import { useNavigate } from "react-router-dom";
 
 const DataCreateContainer = styled.div`
   display: flex;
@@ -176,6 +177,7 @@ const ScanBarcode = styled.button`
 `;
 
 function DataCrete() {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [whichData, setWhichData] = useState("");
   const openeModalHandler = () => {
@@ -205,7 +207,7 @@ function DataCrete() {
   const deleteEleHandler = (ele, idx, name) => {
     setData({ ...data, [name]: [...data[name].slice(0, idx), ...data[name].slice(idx + 1)] });
   };
-
+  console.log(data)
   return (
     <DataCreateContainer>
       <InputSection>
@@ -247,7 +249,7 @@ function DataCrete() {
       </InputSection>
       <InputSection>
         <h3>이미지</h3>
-        <Swiper />
+        <SelectImg />
       </InputSection>
       <InputSection>
         <h3>
@@ -373,7 +375,12 @@ function DataCrete() {
           />
         </svg>
       </ScanBarcode>
-      <CurrentBtn onClick={()=>dataPost(data)}>등록하기</CurrentBtn>
+      <CurrentBtn>패치</CurrentBtn>
+      {data.isPatch 
+      ?<CurrentBtn>수정하기</CurrentBtn> 
+      :<CurrentBtn onClick={()=>dataPost(data, navigate)}>등록하기</CurrentBtn>
+      }
+      
       {isOpen && <CreateModal name={whichData} isOpen={isOpen} openModalHandler={openeModalHandler} data={data} setData={setData} />}
     </DataCreateContainer>
   );

@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 let initialState = {
+  isPatch: false,
   supplementId: null,
+  detailSupplementId: null,
   supplementType: "supplement",
   imageURL: "",
   supplementName: "",
@@ -21,11 +23,12 @@ const dataCreateSlice = createSlice({
   initialState,
   reducers : {
     setCreateData : (state, action) => {
-      state.supplementId= action.payload.supplementId
-      state.supplementType= action.payload.supplementType
-      state.imageURL= action.payload.imageURL
-      state.supplementName= action.payload.supplementName
-      state.nutrients= action.payload.nutrients
+      state.detailSupplementId = action.payload.detailSupplementId
+      state.supplementId= action.payload.supplementResponse.supplementId
+      state.supplementType= action.payload.supplementResponse.supplementType
+      state.imageURL= action.payload.supplementResponse.imageURL
+      state.supplementName= action.payload.supplementResponse.supplementName
+      state.nutrients= action.payload.supplementResponse.nutrients
       state.expirationDate= action.payload.expirationDate
       state.pillsLeft= action.payload.pillsLeft
       state.totalCapacity= action.payload.totalCapacity
@@ -34,9 +37,12 @@ const dataCreateSlice = createSlice({
       state.dosageInterval= action.payload.dosageInterval
       state.takingTime= action.payload.takingTime
       state.dosagePerServing= action.payload.dosagePerServing
+    },
+    setIsPatch : (state) => {
+      state.isPatch = !state.isPatch
     }
   }
 })
 
-export const {setCreateData} = dataCreateSlice.actions
+export const {setCreateData, setIsPatch} = dataCreateSlice.actions
 export default dataCreateSlice.reducer
