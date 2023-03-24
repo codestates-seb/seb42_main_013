@@ -1,9 +1,7 @@
-
-
 package com.SebMainTeam13.team13.naverOpenApi.controller;
 
 import com.SebMainTeam13.team13.naverOpenApi.service.NaverShoppingSearchApi;
-import com.SebMainTeam13.team13.naverOpenApi.dto.OpenApiDto;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +20,8 @@ public class OpenApiController {
     NaverShoppingSearchApi naverShoppingSearchApi = new NaverShoppingSearchApi();
 
     @GetMapping("naver/shopping")
-    public ResponseEntity<Map<String, Object>> getPlace(@RequestBody OpenApiDto.search searchDto) throws Exception {
-        String responseBody = naverShoppingSearchApi.search(searchDto.getQuery());
+    public ResponseEntity<Map<String, Object>> getPlace(@RequestParam("query") String query) throws Exception {
+        String responseBody = naverShoppingSearchApi.search(query);
 
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> jsonMap = mapper.readValue(responseBody, new TypeReference<Map<String,Object>>(){});
