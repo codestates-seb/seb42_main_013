@@ -1,13 +1,13 @@
 import styled from "styled-components";
 import { useEffect, useRef, useState } from "react";
 import CreateModal from "../components/CreateModal";
-import Swiper from "../components/Swiper";
+import Swiper from "../components/SelectImg";
 import DataInput, { DeleteBtn, RealInput } from "../components/DataInput";
 import Tags from "../components/Tags";
 import { useDispatch, useSelector } from "react-redux";
 import { setCreateData } from "../reducer/dataCreateReducer";
 import { CurrentBtn } from "../styles/Buttons";
-import login from "../util/dataPost";
+import dataPost from "../util/dataPost";
 
 const DataCreateContainer = styled.div`
   display: flex;
@@ -213,9 +213,9 @@ function DataCrete() {
         <div>
           <OptionTag
             nobtn={1}
-            notselected={data.type !== "supplement"}
+            notselected={data.supplementType !== "supplement"}
             onClick={() => {
-              setData({ ...data, type: "supplement" });
+              setData({ ...data, supplementType: "supplement" });
             }}
           >
             영양제
@@ -228,9 +228,9 @@ function DataCrete() {
           </OptionTag>
           <OptionTag
             nobtn={1}
-            notselected={data.type !== "drug"}
+            notselected={data.supplementType !== "drug"}
             onClick={() => {
-              setData({ ...data, type: "drug" });
+              setData({ ...data, supplementType: "drug" });
             }}
           >
             처방약
@@ -373,7 +373,7 @@ function DataCrete() {
           />
         </svg>
       </ScanBarcode>
-      <CurrentBtn onClick={login(data)}>등록하기</CurrentBtn>
+      <CurrentBtn onClick={()=>dataPost(data)}>등록하기</CurrentBtn>
       {isOpen && <CreateModal name={whichData} isOpen={isOpen} openModalHandler={openeModalHandler} data={data} setData={setData} />}
     </DataCreateContainer>
   );
