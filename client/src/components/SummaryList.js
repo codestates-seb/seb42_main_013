@@ -152,14 +152,14 @@ function SummaryList({ pill, data, setData }) {
   return (
     <ListContainer>
       {isOpen && <ModalBackdrop className="backdrop" onClick={openModalHandler} />}
-      <ListImgBox img={pill.imageURL}>
+      <ListImgBox img={pill.supplementResponse.imageURL}>
         { (isCloseToExpirationDate||isAlmostRunout) &&
           <FontAwesomeIcon icon={faCircleExclamation} />}
       </ListImgBox>
       <ListContent>
         <PillSection>
-          <PillName>{pill.supplementName}</PillName>
-          <PillContains>{pill.nutrients[0]}</PillContains>
+          <PillName>{pill.supplementResponse.supplementName}</PillName>
+          <PillContains>{pill.supplementResponse.nutrients[0]}</PillContains>
         </PillSection>
         <PillSummary>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -184,7 +184,7 @@ function SummaryList({ pill, data, setData }) {
           {pill.takingTime.map((ele,idx) => {
             return <span key={idx}>{ele}</span>;
           })}
-          {pill.type === "drug" && (
+          {pill.supplementResponse.supplementType === "drug" && (
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <circle cx="7" cy="7" r="5"></circle>
               <circle cx="17" cy="17" r="5"></circle>
@@ -192,7 +192,7 @@ function SummaryList({ pill, data, setData }) {
               <path d="m3.46 10.54 7.08-7.08"></path>
             </svg>
           )}
-          {pill.type === "supplement" && (
+          {pill.supplementResponse.supplementType === "supplement" && (
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"></path>
               <path d="m8.5 8.5 7 7"></path>
