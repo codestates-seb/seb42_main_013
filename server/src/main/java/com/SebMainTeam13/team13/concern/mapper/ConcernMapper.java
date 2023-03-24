@@ -12,6 +12,7 @@ import com.SebMainTeam13.team13.supplement.repository.SupplementRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,6 +47,8 @@ public class ConcernMapper {
 
     public ConcernDto.Response concernToConcernResponseDto(Concern concern) {
         List<SupplementDto.ResponseForUser> supplementDtos = concern.getSupplements().stream()
+                .sorted(Comparator.comparing(Supplement::getNumberSearched).reversed())
+                .limit(4)
                 .map(supplement -> SupplementDto.ResponseForUser.builder()
                         .supplementName(supplement.getSupplementName())
                         .imageURL(supplement.getImageURL())
