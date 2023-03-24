@@ -1,6 +1,7 @@
 package com.SebMainTeam13.team13.naverOpenApi.controller;
 
 import com.SebMainTeam13.team13.naverOpenApi.service.NaverShoppingSearchApi;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;

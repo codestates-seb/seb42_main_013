@@ -35,7 +35,7 @@ public class SupplementDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Response {
-
+        private Long supplementId;
         private String supplementName;
         private List<String> nutrients;
         private String imageURL;

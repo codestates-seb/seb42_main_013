@@ -29,11 +29,10 @@ public class SupplementService {
 
 
     public Supplement createSupplement(Supplement supplement){
-//        verifySupplementByName(supplement);
         Optional.ofNullable(supplement.getConcern())
                 .ifPresent(supplement::setConcern);
+        supplement.setNumberSearched(0);
         return supplementRepository.save(supplement);
-
     }
 
     @Transactional
