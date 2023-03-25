@@ -23,12 +23,10 @@ const dataCreateSlice = createSlice({
   initialState,
   reducers : {
     setCreateData : (state, action) => {
-      state.detailSupplementId = action.payload.detailSupplementId
-      state.supplementId= action.payload.supplementResponse.supplementId
-      state.supplementType= action.payload.supplementResponse.supplementType
-      state.imageURL= action.payload.supplementResponse.imageURL
-      state.supplementName= action.payload.supplementResponse.supplementName
-      state.nutrients= action.payload.supplementResponse.nutrients
+      state.supplementType= action.payload.supplementType
+      state.imageURL= action.payload.imageURL
+      state.supplementName= action.payload.supplementName
+      state.nutrients= action.payload.nutrients
       state.expirationDate= action.payload.expirationDate
       state.pillsLeft= action.payload.pillsLeft
       state.totalCapacity= action.payload.totalCapacity
@@ -37,6 +35,10 @@ const dataCreateSlice = createSlice({
       state.dosageInterval= action.payload.dosageInterval
       state.takingTime= action.payload.takingTime
       state.dosagePerServing= action.payload.dosagePerServing
+    },
+    setIDData : (state, action) => {
+      state.detailSupplementId = action.payload.detailSupplementId
+      state.supplementId= action.payload.supplementId
     },
     setIsPatch : (state) => {
       state.isPatch = !state.isPatch
@@ -61,5 +63,5 @@ const dataCreateSlice = createSlice({
   }
 })
 
-export const {setCreateData, setIsPatch, clearCreate} = dataCreateSlice.actions
+export const {setCreateData, setIsPatch, clearCreate, setIDData} = dataCreateSlice.actions
 export default dataCreateSlice.reducer
