@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import DataInput, { FakeInput, RealInput, SocialBtn } from "../components/DataInput";
 import { useForm } from "react-hook-form";
@@ -6,6 +6,7 @@ import { CurrentBtn } from "../styles/Buttons";
 import { MypageConatiner } from "./MyPage";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Title=({href})=>{
 return (
@@ -42,6 +43,8 @@ const Errorspan = styled.span`
 const onClick=()=>{ window.location.href = '/login'};
 
 function Signup() {
+  const { login } = useSelector(state => state.loginInfoReducer);
+  const navigate = useNavigate();
   const [isFocus1, setIsFocus1] = useState(false);
   const [isFocus2, setIsFocus2] = useState(false);
   const [isFocus3, setIsFocus3] = useState(false);
@@ -69,6 +72,12 @@ function Signup() {
   const onError = (error) => {
     console.log(error);
   };
+
+  useEffect(() => {
+    if(login) {
+      navigate("/suggest");
+    }
+  }, [login])
 
   return (
     <MypageConatiner>

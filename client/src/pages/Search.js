@@ -9,6 +9,7 @@ import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import useAuthCheck from "../util/useAuthCheck";
 import { useSelector } from "react-redux";
+import { ReactComponent as LoadingIcon } from "../images/svg/loadingIcon.svg";
 
 const SearchContainer = styled.div`
   background-color: #ffffff;
@@ -16,6 +17,27 @@ const SearchContainer = styled.div`
   max-width: 428px;
   height: 100%;
   color: var(--black-100);
+`
+
+const LoadingContainer = styled(SearchContainer)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--gap-md);
+  .loader{
+  margin: 0 0 2em;
+  height: 100px;
+  width: 20%;
+  text-align: center;
+  padding: 1em;
+  margin: 0 auto 1em;
+  display: inline-block;
+  vertical-align: top;
+}
+svg path,
+svg rect{
+  fill: var(--blue-100);
+}
 `
 
 const ResultContainer = styled.div`
@@ -114,20 +136,22 @@ function Search() {
   const [isClicked, setIsClicked] = useState(1);
   const [lowPrice, setLowPrice] = useState("");
   const [highPrice, setHighPrice] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get("query");
   const { login } = useSelector(state => state.loginInfoReducer);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(!login) {
-      navigate("/intro");
+    if (!login) {
+      navigate("/");
     }
   }, [login])
 
   // useAuthCheck();
 
   useEffect(() => {
+    setIsLoading(true);
     axios.get(`${process.env.REACT_APP_API_URL}/open/naver/shopping`, {
       params: {
         query,
@@ -135,16 +159,17 @@ function Search() {
     })
       .then((res) => {
         setSearchData(res.data.items)
+        setIsLoading(false);
       })
-      .catch(err => console.log(err))
+      .catch(err => { console.log(err); setIsLoading(false) })
   }, [query])
 
   console.log(query);
 
-    // 페이지네이션
-    const newNum = searchData.length;
-    const newNumbers = Array.from({length: Math.ceil(newNum / 10)}, (v, i) => i + 1);
-    let curPage = searchData.slice((isClicked - 1) * 10, isClicked * 10);
+  // 페이지네이션
+  const newNum = searchData.length;
+  const newNumbers = Array.from({ length: Math.ceil(newNum / 10) }, (v, i) => i + 1);
+  let curPage = searchData.slice((isClicked - 1) * 10, isClicked * 10);
 
   const paginationHandler = (e) => {
     setIsClicked(Number(e.target.textContent));
@@ -171,13 +196,12 @@ function Search() {
   }
 
   const priceFilterHandler = (e) => {
-    // TODO: 상태 말고 그냥 정적인 값으로 관리할 수 없을지 생각해보기
     e.preventDefault();
     let filteredData = searchData.slice();
-    if(lowPrice.length !== 0) {
+    if (lowPrice.length !== 0) {
       filteredData = filteredData.filter(el => Number(el.lprice) >= Number(lowPrice));
     }
-    if(highPrice.length !== 0) {
+    if (highPrice.length !== 0) {
       filteredData = filteredData.filter(el => Number(el.lprice) <= Number(highPrice));
     }
     setSearchData(filteredData);
@@ -192,9 +216,9 @@ function Search() {
         <PriceFilterDiv>
           <div className="not-price-area">가격</div>
           <div className="price-area">
-            <div><PriceFilterInput type="text" value={lowPrice} onChange={lowPriceChange}/>원</div>
+            <div><PriceFilterInput type="text" value={lowPrice} onChange={lowPriceChange} />원</div>
             <div>~</div>
-            <div><PriceFilterInput type="text" value={highPrice} onChange={highPriceChange}/>원</div>
+            <div><PriceFilterInput type="text" value={highPrice} onChange={highPriceChange} />원</div>
           </div>
           <PriceFilterBtn className="not-price-area" onClick={priceFilterHandler}>적용</PriceFilterBtn>
         </PriceFilterDiv>
@@ -202,7 +226,12 @@ function Search() {
           <div className="search-result">'{query}' 검색 결과</div>
           <div className="search-description">(검색 결과는 최대 50건까지 확인할 수 있습니다.)</div>
         </ResultTitleDiv>
-        {searchData.length === 0 ? <div className="search-no-result">
+        {isLoading ? (
+          <LoadingContainer>
+            <LoadingIcon />
+          </LoadingContainer>
+        ) : (
+          searchData.length === 0 ? <div className="search-no-result">
           <p><strong>'{query}'</strong>에 대한 검색 결과가 없습니다.</p>
           <p>검색어를 확인해 주세요.</p>
         </div>
@@ -210,7 +239,8 @@ function Search() {
             return (
               <Items key={idx} title={el.title} img={el.image} link={el.link} price={el.lprice} />
             )
-          })}
+          })
+        )}
       </ResultContainer>
       {searchData.length === 0 ? null
         : <PaginationDiv>
@@ -223,7 +253,6 @@ function Search() {
           <FontAwesomeIcon icon={faChevronRight} className="pagination-arrow" onClick={nextBtnHandler} />
         </PaginationDiv>
       }
-
     </SearchContainer>
   )
 }

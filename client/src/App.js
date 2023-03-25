@@ -27,13 +27,13 @@ function App() {
           <WebAside />
         </div>
         <div className="app-wrap">
-          {(pathname === "/intro") ? null : <Header />}
-          <div className={(pathname === "/intro" || pathname === "/login" || pathname === "/signup" || pathname === "/setuserinfo" || pathname === "/datacreate" || pathname === "/signupDone")
-            ? (pathname === "/intro") ? "" : "other" : "container"}>
+          {(pathname === "/") ? null : <Header />}
+          <div className={(pathname === "/" || pathname === "/login" || pathname === "/signup" || pathname === "/setuserinfo" || pathname === "/datacreate" || pathname === "/signupDone")
+            ? (pathname === "/") ? "" : "other" : "container"}>
             <Routes>
-              <Route path="/" element={<Suggest />} />
+              <Route path="/" element={<Intro />} />
               <Route path="/search" element={<Search />} />
-              <Route path="/intro" element={<Intro />} />
+              <Route path="/suggest" element={<Suggest />} />
               <Route path="/datacreate" element={<DataCreate />} />
               <Route path="/login" element={<Login />} />
               <Route path="/mypage" element={<MyPage />} />
@@ -44,7 +44,7 @@ function App() {
               <Route path="/signupDone" element={<SignupDone />} />
             </Routes>
           </div>
-          {(pathname === "/intro" || pathname === "/login" || pathname === "/signup" || pathname === "/setuserinfo" || pathname === "/datacreate" || pathname === "/signupDone") ? null : <Footer />}
+          {(pathname === "/" || pathname === "/login" || pathname === "/signup" || pathname === "/setuserinfo" || pathname === "/datacreate" || pathname === "/signupDone") ? null : <Footer />}
         </div>
       </div>
     </>

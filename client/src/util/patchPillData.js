@@ -25,20 +25,16 @@ function patchPillData(writtenData, navigate) {
       "Authorization": sessionStorage.getItem("Authorization")
     }
   }
-  // console.log(sessionStorage.getItem("Authorization"))
   axios
     .patch(`${process.env.REACT_APP_API_URL}/supplements/${writtenData.supplementId}`, supplement, config)
     .then(res=>{
-      console.log("patch1차")
-      axios.post(`${process.env.REACT_APP_API_URL}/detailSupplements/${writtenData.detailSupplementId}`, detailSupplement, config)
+      axios.patch(`${process.env.REACT_APP_API_URL}/detailSupplements/${writtenData.detailSupplementId}`, detailSupplement, config)
       .then(res=> {
-        console.log("수정 성공")
-        // navigate('/summary')
+        navigate('/summary')
     })})
     .catch((err)=>{
       console.log(err)
-    })
-    
+    })    
 }
 
 export default patchPillData;

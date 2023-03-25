@@ -334,7 +334,7 @@ function Suggest() {
 
   useEffect(() => {
     if(!login) {
-      navigate("/intro");
+      navigate("/");
     }
   }, [login])
 
@@ -389,17 +389,17 @@ function Suggest() {
         <UserConcern>
           <div><span className="highlight">{userInfo?.displayName}</span>님을 위한 영양제 추천</div>
           <UserSupContainer>
-            <div className="supplement-area" id="종합비타민" onClick={userSupClick}>
+            <div className="supplement-area" id={userInfo.supplements[0].supplementName} onClick={userSupClick}>
               <UserSupImg src="images/icon-pill1.png" alt="supplement-icon" />
-              <div>종합비타민</div>
+              <div>{userInfo.supplements[0].supplementName}</div>
             </div>
-            <div className="supplement-area" id="오메가3" onClick={userSupClick}>
+            <div className="supplement-area" id={userInfo.supplements[1].supplementName} onClick={userSupClick}>
               <UserSupImg src="images/icon-pill2.png" alt="supplement-icon" />
-              <div>오메가3</div>
+              <div>{userInfo.supplements[1].supplementName}</div>
             </div>
-            <div className="supplement-area" id="마그네슘" onClick={userSupClick}>
+            <div className="supplement-area" id={userInfo.supplements[2].supplementName} onClick={userSupClick}>
               <UserSupImg src="images/icon-pill3.png" alt="supplement-icon" />
-              <div>마그네슘</div>
+              <div>{userInfo.supplements[2].supplementName}</div>
             </div>
           </UserSupContainer>
         </UserConcern>

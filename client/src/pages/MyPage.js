@@ -118,6 +118,7 @@ const NameInput = styled.input`
   padding: 4px;
   padding-left: var(--gap-sm);
   border: 1px solid var(--black-400);
+  color: var(--black-100);
 `
 
 const SelectContainer = styled.div`
@@ -164,7 +165,7 @@ function MyPage() {
 
   useEffect(() => {
     if (!login) {
-      navigate("/intro");
+      navigate("/");
     }
   }, [login])
 
@@ -172,6 +173,10 @@ function MyPage() {
 
   const editBtnHandler = async () => {
     if (isEditMode) {
+      if(username.length < 4 || clickedTag.length === 0) {
+        alert("닉네임은 4자 이상, 건강고민은 1개 이상이어야 합니다.");
+        return;
+      }
       if (window.confirm("정보를 수정하시겠습니까?")) {
         const newUserName = { displayName: username };
         const userDetail = {

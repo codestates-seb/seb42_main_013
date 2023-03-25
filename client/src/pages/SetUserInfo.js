@@ -135,15 +135,14 @@ function SetUserInfo() {
   const [clickedTag, setClickedTag] = useState([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { userInfo } = useSelector(state => state.loginInfoReducer);
+  const { login } = useSelector(state => state.loginInfoReducer);
 
   useEffect(() => {
-    if (userInfo.detail) {
-      navigate("/");
+    if (login) {
+      navigate("/suggest");
     }
-  }, [userInfo])
+  }, [login])
 
-  console.log(userInfo)
 
   const birthDateHandler = (e) => {
     console.log(e.target.value);
@@ -172,6 +171,10 @@ function SetUserInfo() {
 
   const submitBtnHandler = async (e) => {
     e.preventDefault();
+    if(clickedTag.length === 0) {
+      alert("건강고민은 1개 이상이어야 합니다.");
+      return;
+    }
     const submitData = { birthDate: birthDate, gender: clickedSex, concernIds: clickedTag };
     console.log(submitData);
     const config = {
