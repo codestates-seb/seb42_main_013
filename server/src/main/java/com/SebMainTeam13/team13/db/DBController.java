@@ -1,5 +1,5 @@
 package com.SebMainTeam13.team13.db;
-
+/*
 import com.SebMainTeam13.team13.concern.entity.Concern;
 import com.SebMainTeam13.team13.concern.repository.ConcernRepository;
 import com.SebMainTeam13.team13.supplement.entity.Supplement;
@@ -919,3 +919,4 @@ public class DBController implements CommandLineRunner {
     }
 }
 
+*/
