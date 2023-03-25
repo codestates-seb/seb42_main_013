@@ -9,6 +9,8 @@ import com.SebMainTeam13.team13.supplement.entity.Supplement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 
 @Component
 @RequiredArgsConstructor
@@ -16,19 +18,20 @@ public class SupplementMapper {
     private final ConcernRepository concernRepository;
 
     public Supplement supplementPostDtoToSupplement(SupplementDto.Post post) {
-        Concern concern= null;
-        if(post.getConcernId()!= null)
-        concern = concernRepository.findByConcernId(post.getConcernId()).get();
-        return  Supplement.builder()
+        if(post.getConcernId()==null) post.setConcernId(0L);
+        Optional<Concern> concern = concernRepository.findByConcernId(post.getConcernId());
+
+        Supplement.SupplementBuilder builder = Supplement.builder()
                 .supplementName(post.getSupplementName())
                 .nutrients(post.getNutrients())
                 .supplementType(post.getSupplementType())
-                .imageURL(post.getImageURL())
-                .concern(concern)
+                .imageURL(post.getImageURL());
 
+        if (concern.isPresent()) {
+            builder.concern(concern.get());
+        }
 
-                .build();
-
+        return builder.build();
     }
 
     public Supplement supplementPatchDtoToSupplement(SupplementDto.Patch patch) {
