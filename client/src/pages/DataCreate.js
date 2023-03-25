@@ -321,7 +321,7 @@ function DataCrete() {
                   ref={inputEl}
                   onBlur={blurHandler}
                   onChange={cycleHandler}
-                  placeholder="몇일마다 복용하시나요"
+                  placeholder="며칠마다 복용하시나요"
                 />
                 <DeleteBtn value={1}>
                   <button>

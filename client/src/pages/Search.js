@@ -144,7 +144,7 @@ function Search() {
 
   useEffect(() => {
     if (!login) {
-      navigate("/intro");
+      navigate("/");
     }
   }, [login])
 

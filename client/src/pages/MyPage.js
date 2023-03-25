@@ -165,7 +165,7 @@ function MyPage() {
 
   useEffect(() => {
     if (!login) {
-      navigate("/intro");
+      navigate("/");
     }
   }, [login])
 

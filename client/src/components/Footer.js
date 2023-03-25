@@ -49,8 +49,8 @@ function Footer() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const categoryArr = [
-    { name: '달력관리', src: faCalendarCheck, link: ["/calendar"] },
-    { name: '추천/검색', src: faMagnifyingGlass, link: ["/", "/search"] },
+    { name: '영양제달력', src: faCalendarCheck, link: ["/calendar"] },
+    { name: '추천/검색', src: faMagnifyingGlass, link: ["/suggest", "/search"] },
     { name: '알약관리', src: faPills, link: ["/summary", "/datacreate"] },
     { name: '마이페이지', src: faUser, link: ["/mypage"] }
   ]

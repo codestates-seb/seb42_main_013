@@ -135,15 +135,14 @@ function SetUserInfo() {
   const [clickedTag, setClickedTag] = useState([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { userInfo } = useSelector(state => state.loginInfoReducer);
+  const { login } = useSelector(state => state.loginInfoReducer);
 
   useEffect(() => {
-    if (userInfo.detail) {
-      navigate("/");
+    if (login) {
+      navigate("/suggest");
     }
-  }, [userInfo])
+  }, [login])
 
-  console.log(userInfo)
 
   const birthDateHandler = (e) => {
     console.log(e.target.value);

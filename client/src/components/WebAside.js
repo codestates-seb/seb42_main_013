@@ -2,7 +2,7 @@ import styled from "styled-components";
 import background5 from "../images/backgrounds/background5.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
-import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const WebAsideContainer = styled.div`
   width: 100%;
@@ -15,6 +15,9 @@ const WebAsideContainer = styled.div`
   img {
     width: 180px;
     margin-bottom: var(--gap-lg);
+  }
+  .logo {
+    cursor: pointer;
   }
 `
 
@@ -90,10 +93,19 @@ const TeammateDiv = styled.div`
 `
 
 function WebAside() {
+  const { login } = useSelector(state => state.loginInfoReducer);
+
+  const logiClickHandler = () => {
+    if(login) {
+      window.location.href = "/suggest"
+    } else {
+      window.location.href = "/"
+    }
+  }
 
   return (
     <WebAsideContainer>
-      <Link to="/"><img src="images/logo1.png" alt="logo" /></Link>
+      <div onClick={logiClickHandler} className="logo"><img src="images/logo1.png" alt="logo" /></div>
       <BackgroundDiv>
         <div className="content">
           <p>나만의 <strong>영양제 달력</strong></p>
