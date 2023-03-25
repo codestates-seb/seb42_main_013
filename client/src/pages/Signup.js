@@ -50,13 +50,14 @@ function Signup() {
   const [isFocus3, setIsFocus3] = useState(false);
 
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const [data, setData] = useState({ email: '', passward: '', displayName: '' });
+  const [data, setData] = useState({ email: '', password: '', displayName: '' });
   const onSubmit = async (data) => {
     console.log(data);
     await axios({
       method: 'post',
       // url: `/users`,
-      url: `${process.env.REACT_APP_API_URL}/users`,
+      // url: `${process.env.REACT_APP_API_URL}/users`,
+      url: `http://ec2-3-35-105-108.ap-northeast-2.compute.amazonaws.com:8080/users`,
       params: {},
       data: data,
     }, { withCredentials: true })

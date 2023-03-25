@@ -13,7 +13,7 @@ const Container = styled.div`
     padding: 10px;
 `;
 
-function Calendar({ testData, supplements, nowYear, nowMonth, nowDate, setNowYear, setNowMonth, setNowDate }) {
+function Calendar({ setCalendarLoaded, testData, supplements, nowYear, nowMonth, nowDate, setNowYear, setNowMonth, setNowDate }) {
     const [datas, setDatas] = useState()
     const [yearMonth, setYearMonth] = useState({ year: 2023, month: 3 })
     const [selected, setSelected] = useState("")
@@ -32,9 +32,11 @@ function Calendar({ testData, supplements, nowYear, nowMonth, nowDate, setNowYea
             setYearMonth({ ...yearMonth, month: m })
         }
     }
+
     useEffect(() => {
         const date = new Date(yearMonth.year, yearMonth.month - 1, 1);
-        renderCalendar(date, yearMonth.year, yearMonth.month);
+        const res = renderCalendar(date, yearMonth.year, yearMonth.month);
+        if (res) setCalendarLoaded(true)
     }, [yearMonth])
 
     const renderCalendar = (date, year, month) => {
@@ -70,16 +72,26 @@ function Calendar({ testData, supplements, nowYear, nowMonth, nowDate, setNowYea
             const monWedFri = index % 7 === 1 || index % 7 === 3 || index % 7 === 5;
 
             let alertDate = [];
-            supplements.map((e, idx) => {
-                const period = Math.floor((new Date(e.endDate).getTime() - new Date(e.startDate).getTime()) / 1000 / 60 / 60 / 24);
-                const intakeDate = Math.floor(period / e.dosageInterval) + 1;
-                const intakeDateArr = Array.from({ length: intakeDate }, (v, i) => { return new Date(e.startDate).getTime() + (1000 * 60 * 60 * 24 * (i * e.dosageInterval)) });
-                alertDate = [...alertDate, ...intakeDateArr];
+            const test = supplements.map((e, idx) => {
+                const calc = Math.floor((new Date(e.endDate).getTime() - new Date(date).getTime()) / 1000 / 60 / 60 / 24)
+                const period = Math.floor((new Date(e.endDate).getTime() - new Date(e.startDate).getTime()) / 1000 / 60 / 60 / 24)
+
+                const intakeDate = Math.floor(period / e.dosageInterval) + 1
+                const intakeDateArr = Array.from({ length: intakeDate }, (v, i) => { return new Date(e.startDate).getTime() + (1000 * 60 * 60 * 24 * (i * e.dosageInterval)) })
+
+                const newDate = date.split('-')[0] + '-' + (date.split('-')[1].length === 1 ? '0' + date.split('-')[1] : date.split('-')[1]) + '-' + date.split('-')[2]
+                // console.log(newDate)
+
+                const isOn = intakeDateArr.indexOf(new Date(newDate).getTime()) !== -1
+
+                // console.log(new Date(e.startDate).getTime(),e.startDate)
+                // console.log(new Date(e.endDate).getTime(),e.endDate)
+                // console.log(new Date(date).getTime(),date)
+                // console.log('-'.repeat(30))
+
+                return isOn
             })
-            const uniqueArr = [...new Set(alertDate)];
-            // console.log(uniqueArr)
-           
-            // console.log( uniqueArr.map(e=> (e/1000/60/60/24) ))
+            // console.log(new Date(date), test)
 
             const passed = onDuration && ((e < nowDate && month === nowMonth && year === nowYear) || ((month < nowMonth && year === nowYear) || year < nowYear));
             const todayFlag = (e === cDay) && (month === cMonth) && (year === cYear);
@@ -95,12 +107,13 @@ function Calendar({ testData, supplements, nowYear, nowMonth, nowDate, setNowYea
                 todayFlag,
                 prev,
                 next,
-                uniqueArr
+                test
             }
             return obj
         })
         // console.log(total)
         setDatas(total);
+        return total
     }
     return (
         <Container>
@@ -132,10 +145,16 @@ function Calendar({ testData, supplements, nowYear, nowMonth, nowDate, setNowYea
                                     setDates.forEach((e, idx) => e(Dates[idx]));
                                 }} key={index} className={`day${e.prevNext || !e.onDuration ? " disable" : e.todayFlag ? " today" : ""}`} style={{ fontSize: '12px', border: selected === e.date ? '2px solid #5b85eb' : e.prevNext ? '2px solid #D6D6D6' : "none" }}>
                                     <span style={{ margin: '5px', fontFamily: 'NanumBarunGothic' }} >{e.name}</span>
-                                    {((e.uniqueArr).indexOf(new Date(e.date).getTime())) !== -1 && (e.onDuration) && <div style={{ position: 'absolute', width: '4px', height: '4px', backgroundColor: "#FB7F0E", bottom: '4px', borderRadius: '99px' }}></div>}
-                                 {console.log(new Date(e.date).getTime())} {/* 모든 날짜(하나씩) */}
-                                {/* {console.log(e.uniqueArr)} */} {/* 복용 날짜 */}
-                                {console.log(e)}
+                                    <div style={{ position: 'absolute', width: '100%', height: '4px', bottom: '4px', display: 'flex', justifyContent: 'center' }}>
+                                        {/* {e.test.map((el,index)=>
+                                        (e.onDuration&&el===true)? <div style={{  width: '4px', height: '4px', backgroundColor: "#FB7F0E", borderRadius: '99px',margin:'0 1px' }}></div>:<></>
+                                      )}   */}
+                                        {(e.onDuration && e.test.filter(e => e).length !== 0) && <div style={{ width: '4px', height: '4px', backgroundColor: "#FB7F0E", borderRadius: '99px', margin: '0 1px' }}></div>}
+                                    </div>
+
+                                    {/* {console.log(new Date(e.date).getTime())} 모든 날짜(하나씩) */}
+                                    {/* {console.log(e.uniqueArr)} */} {/* 복용 날짜 */}
+                                    {/* {console.log(e)} */}
                                 </div>
                             )}
                         </div>
