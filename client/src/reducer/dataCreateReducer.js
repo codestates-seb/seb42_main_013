@@ -23,10 +23,10 @@ const dataCreateSlice = createSlice({
   initialState,
   reducers : {
     setCreateData : (state, action) => {
-      state.supplementType= action.payload.supplementResponse.supplementType
-      state.imageURL= action.payload.supplementResponse.imageURL
-      state.supplementName= action.payload.supplementResponse.supplementName
-      state.nutrients= action.payload.supplementResponse.nutrients
+      state.supplementType= action.payload.supplementType
+      state.imageURL= action.payload.imageURL
+      state.supplementName= action.payload.supplementName
+      state.nutrients= action.payload.nutrients
       state.expirationDate= action.payload.expirationDate
       state.pillsLeft= action.payload.pillsLeft
       state.totalCapacity= action.payload.totalCapacity
@@ -38,7 +38,7 @@ const dataCreateSlice = createSlice({
     },
     setIDData : (state, action) => {
       state.detailSupplementId = action.payload.detailSupplementId
-      state.supplementId= action.payload.supplementResponse.supplementId
+      state.supplementId= action.payload.supplementId
     },
     setIsPatch : (state) => {
       state.isPatch = !state.isPatch

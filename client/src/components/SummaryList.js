@@ -144,25 +144,44 @@ function SummaryList({ pill, data, setData }) {
     let deletedData = data.filter((ele)=>ele.supplementId !== pill.supplementId)
     setData(deletedData)
   }
-  const isCloseToExpirationDate = new Date(pill.expirationDate)-new Date()<=1000*60*60*24*30
-  const isAlmostRunout = pill.pillsLeft<=10
+  const spreadPill = {
+    detailSupplementId: pill.detailSupplementId,
+    dosageInterval: pill.dosageInterval,
+    dosagePerServing: pill.dosagePerServing,
+    endDate: pill.endDate,
+    expirationDate: pill.expirationDate,
+    pillsLeft: pill.pillsLeft,
+    startDate: pill.startDate,
+    supplementName: pill.supplementName,
+    imageURL: pill.supplementResponse.imageURL,
+    nutrients: pill.supplementResponse.nutrients,
+    supplementId: pill.supplementResponse.supplementId,
+    supplementName: pill.supplementResponse.supplementName,
+    supplementType: pill.supplementResponse.supplementType,
+    takingTime: pill.takingTime,
+    totalCapacity: pill.totalCapacity,
+  }
+
+
+  const isCloseToExpirationDate = new Date(spreadPill.expirationDate)-new Date()<=1000*60*60*24*30
+  const isAlmostRunout = spreadPill.pillsLeft<=10
   const patchHandler = () => {
-    dispatch(setCreateData(pill))
-    dispatch(setIDData(pill))
+    dispatch(setCreateData(spreadPill))
+    dispatch(setIDData(spreadPill))
     dispatch(setIsPatch())
   }
 
   return (
     <ListContainer>
       {isOpen && <ModalBackdrop className="backdrop" onClick={openModalHandler} />}
-      <ListImgBox img={pill.supplementResponse.imageURL}>
+      <ListImgBox img={spreadPill.imageURL}>
         { (isCloseToExpirationDate||isAlmostRunout) &&
           <FontAwesomeIcon icon={faCircleExclamation} />}
       </ListImgBox>
       <ListContent>
         <PillSection>
-          <PillName>{pill.supplementResponse.supplementName}</PillName>
-          <PillContains>{pill.supplementResponse.nutrients[0]}</PillContains>
+          <PillName>{spreadPill.supplementName}</PillName>
+          <PillContains>{spreadPill.nutrients[0]}</PillContains>
         </PillSection>
         <PillSummary>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -177,17 +196,17 @@ function SummaryList({ pill, data, setData }) {
             <path d="M12 18h.01"></path>
             <path d="M16 18h.01"></path>
           </svg>
-          {pill.dosageInterval === 1 ? "매일" : `${pill.dosageInterval}일 마다`}
-          {!!pill.takingTime.length && (
+          {spreadPill.dosageInterval === 1 ? "매일" : `${spreadPill.dosageInterval}일 마다`}
+          {!!spreadPill.takingTime.length && (
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <circle cx="12" cy="12" r="10"></circle>
               <polyline points="12 6 12 12 16 14"></polyline>
             </svg>
           )}
-          {pill.takingTime.map((ele,idx) => {
+          {spreadPill.takingTime.map((ele,idx) => {
             return <span key={idx}>{ele}</span>;
           })}
-          {pill.supplementResponse.supplementType === "drug" && (
+          {spreadPill.supplementType === "drug" && (
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <circle cx="7" cy="7" r="5"></circle>
               <circle cx="17" cy="17" r="5"></circle>
@@ -195,22 +214,22 @@ function SummaryList({ pill, data, setData }) {
               <path d="m3.46 10.54 7.08-7.08"></path>
             </svg>
           )}
-          {pill.supplementResponse.supplementType === "supplement" && (
+          {spreadPill.supplementType === "supplement" && (
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"></path>
               <path d="m8.5 8.5 7 7"></path>
             </svg>
           )}
-          {`${pill.dosagePerServing}알`}
+          {`${spreadPill.dosagePerServing}알`}
         </PillSummary>
         <PillSection pillsLeft={isAlmostRunout} expirationDate={isCloseToExpirationDate}>
           <span>남은 알 수</span>
-          <span className="pillsLeft">{pill.pillsLeft}</span>
-          <span>{`/${pill.totalCapacity}`}</span>
-          {!!pill.expirationDate.length && 
+          <span className="pillsLeft">{spreadPill.pillsLeft}</span>
+          <span>{`/${spreadPill.totalCapacity}`}</span>
+          {!!spreadPill.expirationDate.length && 
           <>
             <span>| 소비기한</span>
-            <span className="expirationDate">{pill.expirationDate}</span>
+            <span className="expirationDate">{spreadPill.expirationDate}</span>
           </>
           
           }
@@ -227,7 +246,7 @@ function SummaryList({ pill, data, setData }) {
         <>
           <ModalMenu onClick={(e) => e.stopPropagation()}>
             <ModalMenuLi><Link to="/datacreate" onClick={patchHandler}>수정하기</Link></ModalMenuLi>
-            <ModalMenuLi onClick={()=>{deletePillData(pill)}} className="delete">삭제하기</ModalMenuLi>
+            <ModalMenuLi onClick={()=>{deletePillData(spreadPill)}} className="delete">삭제하기</ModalMenuLi>
           </ModalMenu>
         </>
       )}
