@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface ConcernRepository extends JpaRepository<Concern, Long> {
     Optional<Concern> findByConcernId(long concernId);
+    Optional<Concern> findByTitle(String title);
 }

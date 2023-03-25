@@ -11,10 +11,7 @@ import com.SebMainTeam13.team13.user.dto.UserDto;
 import com.SebMainTeam13.team13.user.entity.User;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -55,7 +52,7 @@ public class UserMapper {
 
         List<SupplementDto.ResponseForUser> supplementDtos = sortedSupplements.stream()
                 .map(s -> SupplementDto.ResponseForUser.builder()
-                        .supplementName(s.getSupplementName())
+                        .supplementName(Arrays.stream(s.getSupplementName().split(" ")).limit(3).collect(Collectors.joining(" ")))
                         .imageURL(s.getImageURL())
                         .build())
                 .collect(Collectors.toList());
