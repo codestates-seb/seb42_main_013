@@ -23,7 +23,7 @@ const TitleContent = styled.div`
 // 스크롤
 const TimeContentContainer = styled.div`
   /* background-color: green; */
- /* height: 500px;*/
+  height: 500px;
   padding:10px 0;
   margin-top: var(--gap-lg);
   overflow-y: scroll;
@@ -32,13 +32,13 @@ const TimeContentContainer = styled.div`
   }
 `;
 const TimeWrap = ({ idx, time, hours, minutes, supplements, selectedDayFormat }) => {
-  hours = String(hours).length<=1?`0${hours}`:hours;
+  hours = String(hours).length <= 1 ? `0${hours}` : hours;
   const isSameHours = time.split(":")[0] === String(hours);
   return (
     <Container>
       <TimeDivider>
         {Array.from({ length: 60 }, (v, i) => {
-          return <div key={i} style={{ minHeight:"1px", backgroundColor: isSameHours && i === minutes ? "#EB4233" : "unset" }}>
+          return <div name={`divider${isSameHours && i === minutes ? "_now" : ""}`} key={i} style={{ minHeight: "1px", backgroundColor: isSameHours && i === minutes ? "#EB4233" : "unset" }}>
             {(isSameHours && i === minutes) && <div style={{ position: "absolute", width: "11px", height: "11px", backgroundColor: "#EB4233", left: "-5.5px", top: "-4.5px", borderRadius: "50%", zIndex: 2 }} />}
           </div>
         })}
@@ -55,17 +55,17 @@ const TimeWrap = ({ idx, time, hours, minutes, supplements, selectedDayFormat })
           supplements.map((e, idx) => {
             // const DIVIDE = 1000 / 60 / 60 / 24;
             // const MULTIPLY = 1000 * 60 * 60 * 24;
-            
+
             const calc = Math.floor((new Date(e.endDate).getTime() - new Date(selectedDayFormat).getTime()) / 1000 / 60 / 60 / 24)
             const period = Math.floor((new Date(e.endDate).getTime() - new Date(e.startDate).getTime()) / 1000 / 60 / 60 / 24)
-            
-            const intakeDate = Math.floor(period / e.dosageInterval)+1
-            const intakeDateArr = Array.from({ length: intakeDate }, (v, i) => { return new Date(e.startDate).getTime() + (1000 * 60 * 60 * 24 * (i*e.dosageInterval)) })
-            const isOn = intakeDateArr.indexOf(new Date(selectedDayFormat).getTime())!==-1
+
+            const intakeDate = Math.floor(period / e.dosageInterval) + 1
+            const intakeDateArr = Array.from({ length: intakeDate }, (v, i) => { return new Date(e.startDate).getTime() + (1000 * 60 * 60 * 24 * (i * e.dosageInterval)) })
+            const isOn = intakeDateArr.indexOf(new Date(selectedDayFormat).getTime()) !== -1
 
             if (isOn && calc <= period && calc >= 0 && (e.takingTime.map((e) => e.split(":")[0]).indexOf(time.split(":")[0]) !== -1)) {
               return <CardWrap key={idx}>
-                <div style={{whiteSpace:'nowrap',textOverflow:'ellipsis',overflow:'hidden',maxWidth:'120px'}}>{e.supplementName}</div>
+                <div style={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden', maxWidth: '120px' }}>{e.supplementName}</div>
                 <div>{e.dosagePerServing > 1 ? `take ${e.dosagePerServing} pills` : `take ${e.dosagePerServing} pill`}</div>
               </CardWrap>
             }
@@ -174,8 +174,9 @@ function Timeline({ supplements, nowYear, nowMonth, nowDay, nowDate, testData, s
   let time = new Date();
   const [count, setCount] = useState(`${time.getHours()}시 ${time.getMinutes()}분 ${time.getSeconds()}초`);
   const [hours, setHours] = useState(0);
-  const [minutes, setMinutes] = useState(0);
+  const [minutes, setMinutes] = useState(-1);
   const selectedDayFormat = `${nowYear}-${nowMonth < 10 ? `0${nowMonth}` : nowMonth}-${nowDate < 10 ? `0${nowDate}` : nowDate}`;
+  const [isLoading, setIsLoading] = useState(false)
   // console.log(supplements)
   // scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   // console.log(testData);
@@ -189,14 +190,23 @@ function Timeline({ supplements, nowYear, nowMonth, nowDay, nowDate, testData, s
       setCount(`${time.getHours()}시 ${time.getMinutes()}분 ${time.getSeconds()}초`);
     }
     getTime();
+
     // let id = setInterval(() => getTime(), 1000);
     let id = setInterval(getTime, 1000);
     return () => clearInterval(id);
   }, []);
 
-  useEffect(()=>{
-    console.log(scrollRef.current.scrollTop - 10)
-  },[scrollRef])
+  useEffect(() => {
+    if (minutes !== -1 && !isLoading) {
+      const target = document.getElementsByName('divider_now')[0]
+      console.log(target)
+      const nowY = target.getBoundingClientRect().top - 543.5546875
+
+      console.log(nowY)
+      scrollRef.current.scrollTo(0, nowY)
+      setIsLoading(true)
+    }
+  }, [minutes])
 
   return (
     <TimelineContainer>

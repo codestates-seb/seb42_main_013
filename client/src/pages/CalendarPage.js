@@ -11,33 +11,35 @@ function CalendarPage() {
   const [nowMonth, setNowMonth] = useState(new Date().getMonth() + 1);
   const [nowDate, setNowDate] = useState(new Date().getDate());
   const [nowDay, setNowDay] = useState(new Date().getDay());
-  const [testData, setTestData]=useState();
+  const [testData, setTestData] = useState();
+
+  const [calendarLoaded, setCalendarLoaded] = useState(false)
 
 
-  useEffect(()=>{
+  useEffect(() => {
     (async () => {
       await axios({
         method: 'get',
         url: `${process.env.REACT_APP_API_URL}/detailSupplements`,
         params: {},
-        headers:{Authorization:sessionStorage.getItem('Authorization')}
+        headers: { Authorization: sessionStorage.getItem('Authorization') }
       })
-  
+
         .then((res) => {
           // window.location.href = '/login'
-          console.log(res)
+          // console.log(res)
           setTestData(res.data.data)
         })
         .catch((err) => { console.log(err) })
     })()
-  },[])
+  }, [])
 
 
   return (
     <>
       <DndProvider backend={HTML5Backend}>
-        {(testData && testData.length!==0)&&<Calendar testData={testData} supplements={testData} nowYear={nowYear} setNowYear={setNowYear} nowMonth={nowMonth} setNowMonth={setNowMonth} nowDate={nowDate} setNowDate={setNowDate} />}
-        {(testData && testData.length !== 0) && <Timeline supplements={testData} nowYear={nowYear} setNowYear={setNowYear} nowMonth={nowMonth} setNowMonth={setNowMonth} nowDate={nowDate} setNowDate={setNowDate} nowDay={nowDay} />}
+        {(testData && testData.length !== 0) && <Calendar setCalendarLoaded={setCalendarLoaded} testData={testData} supplements={testData} nowYear={nowYear} setNowYear={setNowYear} nowMonth={nowMonth} setNowMonth={setNowMonth} nowDate={nowDate} setNowDate={setNowDate} />}
+        {(testData && testData.length !== 0 && calendarLoaded) && <Timeline supplements={testData} nowYear={nowYear} setNowYear={setNowYear} nowMonth={nowMonth} setNowMonth={setNowMonth} nowDate={nowDate} setNowDate={setNowDate} nowDay={nowDay} />}
       </DndProvider>
     </>
   )
