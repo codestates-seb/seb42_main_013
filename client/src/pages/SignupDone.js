@@ -53,7 +53,7 @@ function SignupDone () {
         <p><strong>회원 가입</strong>이</p>
         <p>완료되었습니다.</p>
       </MessageDiv>
-      <SmallBtn onClick={doneBtnHandler}>확인</SmallBtn>
+      <SmallBtn onClick={doneBtnHandler}>로그인</SmallBtn>
     </DoneContainer>
   )
 

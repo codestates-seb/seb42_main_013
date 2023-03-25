@@ -172,6 +172,10 @@ function SetUserInfo() {
 
   const submitBtnHandler = async (e) => {
     e.preventDefault();
+    if(clickedTag.length === 0) {
+      alert("건강고민은 1개 이상이어야 합니다.");
+      return;
+    }
     const submitData = { birthDate: birthDate, gender: clickedSex, concernIds: clickedTag };
     console.log(submitData);
     const config = {
