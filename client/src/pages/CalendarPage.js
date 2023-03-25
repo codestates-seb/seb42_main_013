@@ -13,31 +13,31 @@ function CalendarPage() {
   const [nowDay, setNowDay] = useState(new Date().getDay());
   const [testData, setTestData]=useState();
 
-  // const URI = "http://ec2-13-125-253-248.ap-northeast-2.compute.amazonaws.com:8080";
-  // useEffect(()=>{
-  //   (async () => {
-  //     await axios({
-  //       method: 'get',
-  //       url: `${URI}/detailSupplements`,
-  //       params: {},
-  //       headers:{Authorization:sessionStorage.getItem('Authorization')}
-  //     })
+
+  useEffect(()=>{
+    (async () => {
+      await axios({
+        method: 'get',
+        url: `${process.env.REACT_APP_API_URL}/detailSupplements`,
+        params: {},
+        headers:{Authorization:sessionStorage.getItem('Authorization')}
+      })
   
-  //       .then((res) => {
-  //         // window.location.href = '/login'
-  //         console.log(res)
-  //         setTestData(res.data)
-  //       })
-  //       .catch((err) => { console.log(err) })
-  //   })()
-  // },[])
+        .then((res) => {
+          // window.location.href = '/login'
+          console.log(res)
+          setTestData(res.data.data)
+        })
+        .catch((err) => { console.log(err) })
+    })()
+  },[])
 
 
   return (
     <>
       <DndProvider backend={HTML5Backend}>
-        <Calendar testData={testData} supplements={supplements} nowYear={nowYear} setNowYear={setNowYear} nowMonth={nowMonth} setNowMonth={setNowMonth} nowDate={nowDate} setNowDate={setNowDate} />
-        <Timeline testData={testData} supplements={supplements} nowYear={nowYear} setNowYear={setNowYear} nowMonth={nowMonth} setNowMonth={setNowMonth} nowDate={nowDate} setNowDate={setNowDate} nowDay={nowDay} />
+        {(testData && testData.length!==0)&&<Calendar testData={testData} supplements={testData} nowYear={nowYear} setNowYear={setNowYear} nowMonth={nowMonth} setNowMonth={setNowMonth} nowDate={nowDate} setNowDate={setNowDate} />}
+        {(testData && testData.length !== 0) && <Timeline supplements={testData} nowYear={nowYear} setNowYear={setNowYear} nowMonth={nowMonth} setNowMonth={setNowMonth} nowDate={nowDate} setNowDate={setNowDate} nowDay={nowDay} />}
       </DndProvider>
     </>
   )
