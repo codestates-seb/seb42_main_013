@@ -116,7 +116,7 @@ function Login() {
 
   useEffect(() => {
     if(login) {
-      navigate("/");
+      navigate("/suggest");
     }
   }, [login])
 
@@ -146,7 +146,7 @@ function Login() {
             actions.userInfo = res;
             dispatch(loginInfoActions.changeLoginInfo(actions))
             alert('로그인 성공')
-            window.location.href = '/'
+            window.location.href = '/suggest'
           }
         }
       })

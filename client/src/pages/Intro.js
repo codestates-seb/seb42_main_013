@@ -148,7 +148,7 @@ function Intro() {
 
   useEffect(() => {
     if(login) {
-      navigate("/");
+      navigate("/suggest");
     }
   }, [login])
 

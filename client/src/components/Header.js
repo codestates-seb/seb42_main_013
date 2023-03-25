@@ -76,7 +76,7 @@ function Header() {
       sessionStorage.removeItem("login");
       sessionStorage.removeItem("userInfo");
       sessionStorage.removeItem("Authorization");
-      window.location.href = '/intro';
+      window.location.href = '/';
     }
   }
 
@@ -86,7 +86,7 @@ function Header() {
         className={`${(pathname === "/datacreate" || pathname === "/login" || pathname === "/signup" || pathname === "/search") ? "icon" : "icon hidden"}`}
         onClick={prevBtnHandler} />
       {pathname === "/setuserinfo" ? <img src="images/logo_header.png" alt="logo" className="logo" />
-        : <Link to="/" onClick={removeHandler}><img src="images/logo_header.png" alt="logo" className="logo" /></Link>}
+        : <Link to="/suggest" onClick={removeHandler}><img src="images/logo_header.png" alt="logo" className="logo" /></Link>}
       <RightDiv>
         <FontAwesomeIcon icon={faArrowRightFromBracket} 
         onClick={logoutHandler}
