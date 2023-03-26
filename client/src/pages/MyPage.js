@@ -190,10 +190,20 @@ function MyPage() {
         };
         console.log(newUserName);
         console.log(userDetail);
-        const firstPatch = await axios.patch(`${process.env.REACT_APP_API_URL}/users`, newUserName, config);
-        console.log(firstPatch);
-        const secondPatch = await axios.patch(`${process.env.REACT_APP_API_URL}/details`, userDetail, config);
-        console.log(secondPatch)
+        try {
+          await axios.patch(`${process.env.REACT_APP_API_URL}/users`, newUserName, config)
+        }
+        catch {
+          alert("오류가 발생했습니다. 다시 시도해 주세요.");
+          window.location.reload();
+        };
+        try {
+          await axios.patch(`${process.env.REACT_APP_API_URL}/details`, userDetail, config);
+        }
+        catch {
+          alert("오류가 발생했습니다. 다시 시도해 주세요.");
+          window.location.reload();
+        };
         alert("수정이 완료되었습니다!");
         getUserInfo()
           .then((userInfo) => {
@@ -205,6 +215,8 @@ function MyPage() {
               dispatch(loginInfoActions.changeLoginInfo(actions))
             }
           })
+      } else {
+        return;
       }
     }
     setEditMode(!isEditMode);

@@ -209,6 +209,7 @@ const LargeContent = styled.div`
   border-radius: 30px;
   color: #ffffff;
   font-weight: 500;
+  font-size: 14px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -216,6 +217,7 @@ const LargeContent = styled.div`
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    font-size: 16px;
   }
   .ipu-icon {
     width: 20px;
@@ -224,6 +226,9 @@ const LargeContent = styled.div`
   @media (max-width: 427px){
     height: 80vw;
     font-size: 3.4vw;
+    .lg-content-title {
+      font-size: 3.73vw;
+    }
     }
 `
 
@@ -268,7 +273,7 @@ const SupplementImgDiv = styled.div`
   height: 70%;
   border-radius: 25px;
   background-color: #ffffff;
-  margin-bottom: 4px;
+  margin-bottom: var(--gap-sm);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -369,7 +374,7 @@ function Suggest() {
       });
   }, [])
 
-  console.log(concerns.map(el => {return {title: el.title, supplementsList: el.supplementsList, id: el.concernId}}));
+  console.log(concerns);
 
   const supplementClick = (e) => {
     const data = e.currentTarget.id;
@@ -478,7 +483,7 @@ function Suggest() {
           </SugSlideContainer>
           <SugContentConatiner>
             <CategoryTitle><span className="highlight">건강고민</span>별 영양 찾기</CategoryTitle>
-            <ScrollBar />
+            <ScrollBar concerns={concerns}/>
             <LargeContent>
               <div className="lg-content-title"><img src="images/icon--ipu.png" alt="ipu-icon" className="ipu-icon" />{clickedConcern?.title}에 좋은 영양제</div>
               <SupplementsArea>
@@ -493,20 +498,37 @@ function Suggest() {
               </SupplementsArea>
             </LargeContent>
             <SmallContentTitle>건강한 생활정보</SmallContentTitle>
-            <div className="smallcontent-area">
-              <SmallContent1>
-                <div>{clickedConcern?.contents[numbers[0]]}</div>
-              </SmallContent1>
-              <SmallContent2>
-                <div>{clickedConcern?.contents[numbers[1]]}</div>
-              </SmallContent2>
-              <SmallContent3>
-                <div>{clickedConcern?.contents[numbers[2]]}</div>
-              </SmallContent3>
-              <SmallContent4>
-                <div>{clickedConcern?.contents[numbers[3]]}</div>
-              </SmallContent4>
-            </div>
+            {clickedConcern?.concernId === 17 ? (
+              <div className="smallcontent-area">
+                <SmallContent1>
+                  <div>{"술과 담배는 가급적 멀리해 주세요"}</div>
+                </SmallContent1>
+                <SmallContent2>
+                  <div>{"규칙적으로 꾸준히 운동을 진행해 주세요!"}</div>
+                </SmallContent2>
+                <SmallContent3>
+                  <div>{"체중이 많이 나간다면 좀 더 가볍게\n조절해 주세요"}</div>
+                </SmallContent3>
+                <SmallContent4>
+                  <div>{"짠 음식 섭취는 혈압을 높게 만들어요"}</div>
+                </SmallContent4>
+              </div>
+            ) : (
+              <div className="smallcontent-area">
+                <SmallContent1>
+                  <div>{clickedConcern?.contents[numbers[0]]}</div>
+                </SmallContent1>
+                <SmallContent2>
+                  <div>{clickedConcern?.contents[numbers[1]]}</div>
+                </SmallContent2>
+                <SmallContent3>
+                  <div>{clickedConcern?.contents[numbers[2]]}</div>
+                </SmallContent3>
+                <SmallContent4>
+                  <div>{clickedConcern?.contents[numbers[3]]}</div>
+                </SmallContent4>
+              </div>
+            )}
           </SugContentConatiner>
         </SuggestContainer>
       )}
