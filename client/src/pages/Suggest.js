@@ -2,9 +2,7 @@ import styled from "styled-components";
 import SearchBar from "../components/SearchBar";
 import ScrollBar from "../components/ScrollBar";
 import { useSelector, useDispatch } from "react-redux";
-import { health } from "../components/Health";
-import { useEffect } from "react";
-import { concernActions } from "../reducer/concernReducer";
+import { useState, useEffect } from "react";
 import { searchActions } from "../reducer/searchReducer";
 import { useNavigate } from "react-router-dom";
 import useAuthCheck from "../util/useAuthCheck";
@@ -13,6 +11,7 @@ import card1 from "../images/cards/card1.jpg";
 import card2 from "../images/cards/card2.jpg";
 import card3 from "../images/cards/card3.jpg";
 import card4 from "../images/cards/card4.jpg";
+import { ReactComponent as LoadingIcon } from "../images/svg/loadingIcon.svg";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Pagination, Autoplay } from "swiper";
 import "swiper/css";
@@ -29,6 +28,26 @@ const SuggestContainer = styled.div`
   .highlight {
     color: var(--blue-100);
     font-weight: 600;
+  }
+`
+
+const LoadingContainer = styled(SuggestContainer)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .loader{
+    margin: 0 0 2em;
+    height: 100px;
+    width: 20%;
+    text-align: center;
+    padding: 1em;
+    margin: 0 auto 1em;
+    display: inline-block;
+    vertical-align: top;
+  }
+  svg path,
+  svg rect{
+    fill: var(--blue-100);
   }
 `
 
@@ -58,8 +77,9 @@ const UserSupContainer = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  font-size: 14px;
+  font-size: 13px;
   .supplement-area {
+    width: 24%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -203,7 +223,7 @@ const LargeContent = styled.div`
   }
   @media (max-width: 427px){
     height: 80vw;
-    font-size: 3.5vw;
+    font-size: 3.4vw;
     }
 `
 
@@ -230,7 +250,7 @@ const SupplementDiv = styled.div`
   text-align: center;
   cursor: pointer;
   img {
-    width: 80%;
+    width: 60%;
   }
   .icon-image {
     width: 50%;
@@ -238,7 +258,7 @@ const SupplementDiv = styled.div`
   @media (max-width: 427px){
     width: 22.4vw;
     img {
-    width: 70%;
+    width: 50%;
     }
   }
 `
@@ -321,57 +341,41 @@ const SmallContent4 = styled(SmallContent1)`
 `
 
 function Suggest() {
-  //TODO: 서버에 올바른 요청 보내기
-  //TODO 서버에 요청 보내려면 String("영양보충")이 아닌 Number(1)로 상태를 받아야 함
   const { selectedConcern } = useSelector(state => state.concernReducer);
   const { login, userInfo } = useSelector(state => state.loginInfoReducer);
+  const [concerns, setConcerns] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const clickedConcern = health.filter(el => el.id === selectedConcern)[0];
+  const clickedConcern = concerns.filter(el => el.concernId === selectedConcern)[0];
   const numbers = [0, 1, 2, 3].sort(() => Math.random() - 0.5);
 
   console.log(userInfo);
 
+  useAuthCheck();
+
   useEffect(() => {
-    if(!login) {
+    if (!login) {
       navigate("/");
     }
   }, [login])
 
-  // useAuthCheck();
-
   useEffect(() => {
-    // const data = 1;
-    // dispatch(concernActions.changeConcernClicked({ data }));
-    axios.get(`${process.env.REACT_APP_API_URL}/concerns`)
-      .then((res) => console.log(res.data.data));
+    setIsLoading(true);
+    axios.get(`${process.env.REACT_APP_API_URL}/concerns/`)
+      .then((res) => {
+        setConcerns(res.data.data)
+        setIsLoading(false)
+      });
   }, [])
 
-  const userSupClick = (e) => {
+  console.log(concerns.map(el => {return {title: el.title, supplementsList: el.supplementsList, id: el.concernId}}));
+
+  const supplementClick = (e) => {
     const data = e.currentTarget.id;
     dispatch(searchActions.changeSearchValue({ data }));
     const query = JSON.parse(localStorage.getItem("searchValue"));
     navigate(`/search?query=${query}`);
-  }
-
-  const SupplementClick = (e) => {
-    const data = e.currentTarget.id;
-    dispatch(searchActions.changeSearchValue({ data }));
-    const query = JSON.parse(localStorage.getItem("searchValue"));
-    navigate(`/search?query=${query}`);
-  }
-
-  const omegaClick = (e) => {
-    navigate("/search?query=오메가3")
-  }
-  const summaryClick = () => {
-    navigate("/summary");
-  }
-  const coldClick = () => {
-    navigate("/search?query=감기예방")
-  }
-  const mypageClick = () => {
-    navigate("/mypage")
   }
 
   const pagination = {
@@ -382,123 +386,132 @@ function Suggest() {
   };
 
   return (
-    <SuggestContainer>
-      <SearchBar />
-      <WelcomeDiv>환영합니다, <span className="highlight">{userInfo?.displayName}</span>님!</WelcomeDiv>
-      <UserContainer>
-        <UserConcern>
-          <div><span className="highlight">{userInfo?.displayName}</span>님을 위한 영양제 추천</div>
-          <UserSupContainer>
-            <div className="supplement-area" id={userInfo.supplements[0].supplementName} onClick={userSupClick}>
-              <UserSupImg src="images/icon-pill1.png" alt="supplement-icon" />
-              <div>{userInfo.supplements[0].supplementName}</div>
+    <>
+      {isLoading ? (
+        <LoadingContainer>
+          <LoadingIcon />
+        </LoadingContainer>
+      ) : (
+        <SuggestContainer>
+          <SearchBar />
+          <WelcomeDiv>환영합니다, <span className="highlight">{userInfo?.displayName}</span>님!</WelcomeDiv>
+          <UserContainer>
+            <UserConcern>
+              <div><span className="highlight">{userInfo?.displayName}</span>님을 위한 영양제 추천</div>
+              <UserSupContainer>
+                <div className="supplement-area" id={userInfo.supplements[0].supplementName} onClick={supplementClick}>
+                  <UserSupImg src="images/icon-pill1.png" alt="supplement-icon" />
+                  <div>{userInfo.supplements[0].supplementName}</div>
+                </div>
+                <div className="supplement-area" id={userInfo.supplements[1].supplementName} onClick={supplementClick}>
+                  <UserSupImg src="images/icon-pill2.png" alt="supplement-icon" />
+                  <div>{userInfo.supplements[1].supplementName}</div>
+                </div>
+                <div className="supplement-area" id={userInfo.supplements[2].supplementName} onClick={supplementClick}>
+                  <UserSupImg src="images/icon-pill3.png" alt="supplement-icon" />
+                  <div>{userInfo.supplements[2].supplementName}</div>
+                </div>
+              </UserSupContainer>
+            </UserConcern>
+          </UserContainer>
+          <SugSlideContainer>
+            <SugSlideDiv>
+              <Swiper
+                spaceBetween={0}
+                slidesPerView={1}
+                pagination={pagination}
+                rewind={true}
+                autoplay={{ delay: 3000 }}
+              >
+                <SlideCounter>/ 5</SlideCounter>
+                <SwiperSlide>
+                  <SugSlide bgcolor="#ffedba" onClick={() => navigate("/search?query=오메가3")}>
+                    <div className="slide-text">
+                      <p>다른 건 몰라도 이 영양제는 꼭 드세요!</p>
+                      <p>오메가3 구매하러 가기</p>
+                    </div>
+                    <div className="slide-icon">
+                      <img src="images/icon-suggest1.png" alt="slide-icon" />
+                    </div>
+                  </SugSlide>
+                </SwiperSlide>
+                <SwiperSlide>
+                  <SugSlide bgcolor="#e6e3f4" onClick={() => navigate("/summary")}>
+                    <div className="slide-text">
+                      <p>너무 많아 관리하기 힘든 내 영양제...</p>
+                      <p>'알약관리'에 등록해 보셨나요?</p>
+                    </div>
+                    <div className="slide-icon">
+                      <img src="images/icon-suggest2.png" alt="slide-icon" />
+                    </div>
+                  </SugSlide>
+                </SwiperSlide>
+                <SwiperSlide>
+                  <SugSlide bgcolor="#d2f4e1" onClick={() => navigate("/search?query=감기예방")}>
+                    <div className="slide-text">
+                      <p>꽃샘추위 감기 조심하세요!</p>
+                      <p>미리미리 준비하고 감기예방하기</p>
+                    </div>
+                    <div className="slide-icon">
+                      <img src="images/icon-suggest3.png" alt="slide-icon" className="cough" />
+                    </div>
+                  </SugSlide>
+                </SwiperSlide>
+                <SwiperSlide>
+                  <SugSlide bgcolor="#f9e3ee" onClick={() => navigate("/mypage")}>
+                    <div className="slide-text">
+                      <p>새로운 건강고민이 생기셨나요?</p>
+                      <p>건강고민 선택하고 맞춤 영양제 추천 받아보세요!</p>
+                    </div>
+                  </SugSlide>
+                </SwiperSlide>
+                <SwiperSlide>
+                  <SugSlide bgcolor="#cedcff">
+                    <div className="slide-text">
+                      <p>🍙양반김에 양조간장🥢팀</p>
+                      <p>프로젝트 정말정말 고생 많으셨습니다!</p>
+                    </div>
+                  </SugSlide>
+                </SwiperSlide>
+              </Swiper>
+            </SugSlideDiv>
+          </SugSlideContainer>
+          <SugContentConatiner>
+            <CategoryTitle><span className="highlight">건강고민</span>별 영양 찾기</CategoryTitle>
+            <ScrollBar />
+            <LargeContent>
+              <div className="lg-content-title"><img src="images/icon--ipu.png" alt="ipu-icon" className="ipu-icon" />{clickedConcern?.title}에 좋은 영양제</div>
+              <SupplementsArea>
+                {clickedConcern?.supplementsList.map((el, idx) => {
+                  return (
+                    <SupplementDiv key={idx} id={el.supplementName} onClick={supplementClick}>
+                      <SupplementImgDiv><img src={el.imageURL || "images/icon-pill4.png"} alt="supplement-icon" className={el.imageURL ? "" : "icon-image"} /></SupplementImgDiv>
+                      <div>{el.supplementName}</div>
+                    </SupplementDiv>
+                  )
+                })}
+              </SupplementsArea>
+            </LargeContent>
+            <SmallContentTitle>건강한 생활정보</SmallContentTitle>
+            <div className="smallcontent-area">
+              <SmallContent1>
+                <div>{clickedConcern?.contents[numbers[0]]}</div>
+              </SmallContent1>
+              <SmallContent2>
+                <div>{clickedConcern?.contents[numbers[1]]}</div>
+              </SmallContent2>
+              <SmallContent3>
+                <div>{clickedConcern?.contents[numbers[2]]}</div>
+              </SmallContent3>
+              <SmallContent4>
+                <div>{clickedConcern?.contents[numbers[3]]}</div>
+              </SmallContent4>
             </div>
-            <div className="supplement-area" id={userInfo.supplements[1].supplementName} onClick={userSupClick}>
-              <UserSupImg src="images/icon-pill2.png" alt="supplement-icon" />
-              <div>{userInfo.supplements[1].supplementName}</div>
-            </div>
-            <div className="supplement-area" id={userInfo.supplements[2].supplementName} onClick={userSupClick}>
-              <UserSupImg src="images/icon-pill3.png" alt="supplement-icon" />
-              <div>{userInfo.supplements[2].supplementName}</div>
-            </div>
-          </UserSupContainer>
-        </UserConcern>
-      </UserContainer>
-      <SugSlideContainer>
-        <SugSlideDiv>
-          <Swiper
-            spaceBetween={0}
-            slidesPerView={1}
-            pagination={pagination}
-            rewind={true}
-            autoplay={{ delay: 3000 }}
-          >
-            <SlideCounter>/ 5</SlideCounter>
-            <SwiperSlide>
-              <SugSlide bgcolor="#ffedba" onClick={omegaClick}>
-                <div className="slide-text">
-                  <p>다른 건 몰라도 이 영양제는 꼭 드세요!</p>
-                  <p>오메가3 구매하러 가기</p>
-                </div>
-                <div className="slide-icon">
-                  <img src="images/icon-suggest1.png" alt="slide-icon" />
-                </div>
-              </SugSlide>
-            </SwiperSlide>
-            <SwiperSlide>
-              <SugSlide bgcolor="#e6e3f4" onClick={summaryClick}>
-                <div className="slide-text">
-                  <p>너무 많아 관리하기 힘든 내 영양제...</p>
-                  <p>'알약관리'에 등록해 보셨나요?</p>
-                </div>
-                <div className="slide-icon">
-                  <img src="images/icon-suggest2.png" alt="slide-icon" />
-                </div>
-              </SugSlide>
-            </SwiperSlide>
-            <SwiperSlide>
-              <SugSlide bgcolor="#d2f4e1" onClick={coldClick}>
-                <div className="slide-text">
-                  <p>꽃샘추위 감기 조심하세요!</p>
-                  <p>미리미리 준비하고 감기예방하기</p>
-                </div>
-                <div className="slide-icon">
-                  <img src="images/icon-suggest3.png" alt="slide-icon" className="cough" />
-                </div>
-              </SugSlide>
-            </SwiperSlide>
-            <SwiperSlide>
-              <SugSlide bgcolor="#f9e3ee" onClick={mypageClick}>
-                <div className="slide-text">
-                  <p>새로운 건강고민이 생기셨나요?</p>
-                  <p>건강고민 선택하고 맞춤 영양제 추천 받아보세요!</p>
-                </div>
-              </SugSlide>
-            </SwiperSlide>
-            <SwiperSlide>
-              <SugSlide bgcolor="#cedcff">
-                <div className="slide-text">
-                  <p>🍙양반김에 양조간장🥢팀</p>
-                  <p>프로젝트 정말정말 고생 많으셨습니다!</p>
-                </div>
-              </SugSlide>
-            </SwiperSlide>
-          </Swiper>
-        </SugSlideDiv>
-      </SugSlideContainer>
-      <SugContentConatiner>
-        <CategoryTitle><span className="highlight">건강고민</span>별 영양 찾기</CategoryTitle>
-        <ScrollBar />
-        <LargeContent>
-          <div className="lg-content-title"><img src="images/icon--ipu.png" alt="ipu-icon" className="ipu-icon" />{clickedConcern.title}에 좋은 영양제</div>
-          <SupplementsArea>
-            {clickedConcern.supplementsList.map((el, idx) => {
-              return (
-                <SupplementDiv key={idx} id={el.supplementName} onClick={SupplementClick}>
-                  <SupplementImgDiv><img src={el.imageURL || "images/icon-pill4.png"} alt="supplement-icon" className={el.imageURL ? "" : "icon-image"} /></SupplementImgDiv>
-                  <div>{el.supplementName}</div>
-                </SupplementDiv>
-              )
-            })}
-          </SupplementsArea>
-        </LargeContent>
-        <SmallContentTitle>건강한 생활정보</SmallContentTitle>
-        <div className="smallcontent-area">
-          <SmallContent1>
-            <div>{clickedConcern.contents[numbers[0]]}</div>
-          </SmallContent1>
-          <SmallContent2>
-            <div>{clickedConcern.contents[numbers[1]]}</div>
-          </SmallContent2>
-          <SmallContent3>
-            <div>{clickedConcern.contents[numbers[2]]}</div>
-          </SmallContent3>
-          <SmallContent4>
-            <div>{clickedConcern.contents[numbers[3]]}</div>
-          </SmallContent4>
-        </div>
-      </SugContentConatiner>
-    </SuggestContainer>
+          </SugContentConatiner>
+        </SuggestContainer>
+      )}
+
+    </>
   )
 }
 

@@ -148,7 +148,7 @@ function Search() {
     }
   }, [login])
 
-  // useAuthCheck();
+  useAuthCheck();
 
   useEffect(() => {
     setIsLoading(true);

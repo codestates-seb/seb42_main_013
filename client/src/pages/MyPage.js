@@ -3,7 +3,6 @@ import { OptionTag } from "./DataCreate";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { CurrentBtn } from "../styles/Buttons";
-// import ImageEditor from "../components/ImageEditor";
 import ConcernSelector from "../components/ConcernSelector";
 import { useSelector, useDispatch } from "react-redux";
 import useAuthCheck from "../util/useAuthCheck";
@@ -169,7 +168,7 @@ function MyPage() {
     }
   }, [login])
 
-  // useAuthCheck();
+  useAuthCheck();
 
   const editBtnHandler = async () => {
     if (isEditMode) {
@@ -211,17 +210,6 @@ function MyPage() {
     setEditMode(!isEditMode);
   }
 
-  const editNameHandler = (e) => {
-    setUsername(e.target.value);
-  }
-
-  const manClickHandler = () => {
-    setClickedSex("남성");
-  }
-  const womanClickHandler = () => {
-    setClickedSex("여성");
-  }
-
   const tagClickHandler = (e) => {
     console.log(e.target.id);
     const clickedId = Number(e.target.id)
@@ -234,11 +222,6 @@ function MyPage() {
     }
   }
 
-  const birthDateHandler = (e) => {
-    console.log(e.target.value);
-    setBirthDate(e.target.value);
-  }
-
   return (
     <NewMyContainer>
       {isEditMode ? <h1>수정하기</h1> : <h1>마이페이지</h1>}
@@ -246,24 +229,24 @@ function MyPage() {
         <div className="top"></div>
         <ProfileAvartar />
         <ProfileName>
-          {isEditMode ? <NameInput type="text" value={username} onChange={editNameHandler} /> : <div>{userInfo.displayName}</div>}
+          {isEditMode ? <NameInput type="text" value={username} onChange={(e) => setUsername(e.target.value)} /> : <div>{userInfo.displayName}</div>}
           <div>{userInfo.email}</div>
         </ProfileName>
         <UserInfo>
           <div className="userinfo-title"><span>생년 월일</span></div>
-          {isEditMode ? <BirthDateInput type="date" value={birthDate} onChange={birthDateHandler} /> : <div>{userInfo.detail.birthDate.replaceAll("-", ".")}.</div>}
+          {isEditMode ? <BirthDateInput type="date" value={birthDate} onChange={(e) => setBirthDate(e.target.value)} /> : <div>{userInfo.detail.birthDate.replaceAll("-", ".")}.</div>}
         </UserInfo>
         <UserInfo>
           <div className="userinfo-title"><span>성별</span></div>
           {isEditMode ?
             <SelectContainer>
-              <SelectIconDiv onClick={manClickHandler}>
+              <SelectIconDiv onClick={() => setClickedSex("남성")}>
                 {clickedSex === "남성"
                   ? <img src={`${process.env.PUBLIC_URL}/images/user_man_selected.png`} alt="logo" />
                   : <img src={`${process.env.PUBLIC_URL}/images/user_man.png`} alt="logo" />}
                 <span className={`${clickedSex === "남성" ? "selected" : ""}`}>남성</span>
               </SelectIconDiv>
-              <SelectIconDiv onClick={womanClickHandler}>
+              <SelectIconDiv onClick={() => setClickedSex("여성")}>
                 {clickedSex === "여성"
                   ? <img src={`${process.env.PUBLIC_URL}/images/user_woman_selected.png`} alt="logo" />
                   : <img src={`${process.env.PUBLIC_URL}/images/user_woman.png`} alt="logo" />}
