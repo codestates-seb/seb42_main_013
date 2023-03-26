@@ -10,6 +10,7 @@ function getPillsData () {
   return axios
     .get(`${process.env.REACT_APP_API_URL}/detailSupplements`, config)
     .then(res=> {
+      console.log("get요청")
       return res.data.data
     })
     .catch((err)=>{
