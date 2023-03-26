@@ -139,12 +139,8 @@ function SummaryList({ pill, data, setData }) {
   const openModalHandler = () => {
     setIsOpen(!isOpen);
   };
-  const deleteDataHandler = () => {
-    //! delete요청
-    let deletedData = data.filter((ele)=>ele.supplementId !== pill.supplementId)
-    setData(deletedData)
-  }
   const spreadPill = {
+    ...pill.supplementResponse,
     detailSupplementId: pill.detailSupplementId,
     dosageInterval: pill.dosageInterval,
     dosagePerServing: pill.dosagePerServing,
@@ -153,16 +149,14 @@ function SummaryList({ pill, data, setData }) {
     pillsLeft: pill.pillsLeft,
     startDate: pill.startDate,
     supplementName: pill.supplementName,
-    imageURL: pill.supplementResponse.imageURL,
-    nutrients: pill.supplementResponse.nutrients,
-    supplementId: pill.supplementResponse.supplementId,
-    supplementName: pill.supplementResponse.supplementName,
-    supplementType: pill.supplementResponse.supplementType,
     takingTime: pill.takingTime,
     totalCapacity: pill.totalCapacity,
   }
-
-
+  const deleteDataHandler = () => {
+    let deletedData = data.filter((ele)=>ele.detailSupplementId !== pill.detailSupplementId)
+    setData(deletedData)
+  }
+  
   const isCloseToExpirationDate = new Date(spreadPill.expirationDate)-new Date()<=1000*60*60*24*30
   const isAlmostRunout = spreadPill.pillsLeft<=10
   const patchHandler = () => {
@@ -246,7 +240,7 @@ function SummaryList({ pill, data, setData }) {
         <>
           <ModalMenu onClick={(e) => e.stopPropagation()}>
             <ModalMenuLi><Link to="/datacreate" onClick={patchHandler}>수정하기</Link></ModalMenuLi>
-            <ModalMenuLi onClick={()=>{deletePillData(spreadPill)}} className="delete">삭제하기</ModalMenuLi>
+            <ModalMenuLi onClick={()=>{deletePillData(spreadPill,deleteDataHandler)}} className="delete">삭제하기</ModalMenuLi>
           </ModalMenu>
         </>
       )}

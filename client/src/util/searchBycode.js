@@ -15,12 +15,15 @@ function searchByCode (code, setData) {
   axios
     .get(`${process.env.REACT_APP_API_SEARCH_FILTER_URL}${replacedCode}`,config)
     .then((res)=>{
+      console.log("id는 받음")
+      console.log(res.data.hits[0]._id)
       return res.data.hits[0]._id
     })
     .then((id)=>{
-      return axios.get(`${process.env.REACT_APP_API_ID_URL}${id}`,config)
+      return axios.get(`${process.env.REACT_APP_API_SEARCH_ID_URL}${id}`,config)
     })
     .then((res)=>{
+      console.log("iD로 조회 완료")
       if(code.replaceAll(" ","")===res.data.upcSku.replaceAll(" ","")){
         const suggestedTime = (minDailyServings) => {
           if(minDailyServings === 2){
@@ -53,6 +56,7 @@ function searchByCode (code, setData) {
           dosagePerServing: data.servingSizes[0].minQuantity,
         }
         setData(obj)
+        console.log("search완료")
       } else {
         alert("데이터베이스에 존재하지 않는 코드입니다.")
       }
@@ -62,18 +66,6 @@ function searchByCode (code, setData) {
       console.log(err)
     })
 
-  // const getId = async (code) => {
-  //   try {
-  //     const response = await axios.get(`${process.env.REACT_APP_API_URL}${code}`,config)
-  //     // return response.data
-  //     const id = response.data.hits[0]._id
-  //     console.log(id)
-  //     const info = getInfo(id)
-  //     console.log(info)
-  //   } catch (err) {
-  //     console.log(err)
-  //   }
-  // }
 }
 
 

@@ -11,7 +11,9 @@ import postPillData from "../util/postPillData";
 import { useNavigate } from "react-router-dom";
 import patchPillData from "../util/patchPillData";
 
-const DataCreateContainer = styled.div`
+//Post 전 전체 Input validation 을 위해 form으로 변경
+//! 모든 버튼 타입에 유의
+const DataCreateContainer = styled.form`
   display: flex;
   min-height: calc(100vh - 48px - 64px);
   flex-direction: column;
@@ -24,7 +26,7 @@ const DataCreateContainer = styled.div`
 const InputSection = styled.section`
   display: flex;
   flex-direction: column;
-  margin-bottom: 16px;
+  margin-bottom: 18px;
   width: 100%;
   > h3 {
     font-family: "NanumBarunGothicBold";
@@ -76,6 +78,13 @@ export const OptionTag = styled.div`
     margin-left: 3px;
     width: 14px;
     margin-right: 0;
+  }
+  :hover{
+    background-color: ${(props) => (!props.notselected && "rgb(107, 145, 237)")};
+    color : ${(props) => (props.notselected && "var(--blue-100)")};
+    svg {
+      color : ${(props) => (props.notselected && "var(--blue-100)")};
+    }
   }
 `;
 const Box = styled.div`
@@ -208,9 +217,15 @@ function DataCrete() {
   const deleteEleHandler = (ele, idx, name) => {
     setData({ ...data, [name]: [...data[name].slice(0, idx), ...data[name].slice(idx + 1)] });
   };
-  console.log(data)
+  const submitHandler = (e) => {
+    e.preventDefault();
+    if(e.target.checkValidity()){
+      data.isPatch ? patchPillData(data, navigate) :postPillData(data, navigate)
+    }
+  } 
+
   return (
-    <DataCreateContainer>
+    <DataCreateContainer noValidate onSubmit={submitHandler}>
       <InputSection>
         <h3>종류</h3>
         <div>
@@ -222,7 +237,7 @@ function DataCrete() {
             }}
           >
             영양제
-            <AddBtn>
+            <AddBtn type="button">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                 <path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"></path>
                 <path d="m8.5 8.5 7 7"></path>
@@ -237,7 +252,7 @@ function DataCrete() {
             }}
           >
             처방약
-            <AddBtn>
+            <AddBtn type="button">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                 <circle cx="7" cy="7" r="5"></circle>
                 <circle cx="17" cy="17" r="5"></circle>
@@ -250,7 +265,7 @@ function DataCrete() {
       </InputSection>
       <InputSection>
         <h3>이미지</h3>
-        <SelectImg />
+        <SelectImg data={data} setData={setData}/>
       </InputSection>
       <InputSection>
         <h3>
@@ -267,7 +282,7 @@ function DataCrete() {
             data.nutrients.map((ele, idx) => {
               return <Tags key={idx} ele={ele} idx={idx} deleteEleHandler={deleteEleHandler} name="nutrients" />;
             })}
-          <AddBtn
+          <AddBtn type="button"
             onClick={() => {
               setWhichData("nutrients");
               openeModalHandler();
@@ -324,7 +339,7 @@ function DataCrete() {
                   placeholder="며칠마다 복용하시나요"
                 />
                 <DeleteBtn value={1}>
-                  <button>
+                  <button type="button">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                       <polyline points="20 6 9 17 4 12"></polyline>
                     </svg>
@@ -343,7 +358,7 @@ function DataCrete() {
             data.takingTime.map((ele, idx) => {
               return <Tags key={idx} ele={ele} idx={idx} deleteEleHandler={deleteEleHandler} name="takingTime" />;
             })}
-          <AddBtn
+          <AddBtn type="button"
             onClick={() => {
               setWhichData("takingTime");
               openeModalHandler();
@@ -365,6 +380,7 @@ function DataCrete() {
         </div>
       </InputSection>
       <ScanBarcode
+        type="button"
         onClick={() => {
           setWhichData("barcode");
           openeModalHandler();
@@ -377,10 +393,9 @@ function DataCrete() {
         </svg>
       </ScanBarcode>
       {data.isPatch 
-      ?<CurrentBtn onClick={()=>patchPillData(data, navigate)}>수정하기</CurrentBtn> 
-      :<CurrentBtn onClick={()=>postPillData(data, navigate)}>등록하기</CurrentBtn>
+      ?<CurrentBtn>수정하기</CurrentBtn> 
+      :<CurrentBtn>등록하기</CurrentBtn>
       }
-      
       {isOpen && <CreateModal name={whichData} isOpen={isOpen} openModalHandler={openeModalHandler} data={data} setData={setData} />}
     </DataCreateContainer>
   );

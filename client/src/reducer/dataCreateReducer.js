@@ -5,7 +5,7 @@ let initialState = {
   supplementId: null,
   detailSupplementId: null,
   supplementType: "supplement",
-  imageURL: "",
+  imageURL: "capsule_plain",
   supplementName: "",
   nutrients: [],
   expirationDate: "",
@@ -48,7 +48,7 @@ const dataCreateSlice = createSlice({
       state.supplementId= null
       state.detailSupplementId= null
       state.supplementType= "supplement"
-      state.imageURL= ""
+      state.imageURL= "capsule_plain"
       state.supplementName= ""
       state.nutrients= []
       state.expirationDate= ""

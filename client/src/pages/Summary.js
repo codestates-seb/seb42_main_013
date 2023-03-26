@@ -131,7 +131,7 @@ function Summary() {
     let sorted = filtered && sortingPills(filtered, sort)
     sorted && setData(sorted)
   }
-  
+  console.log(data)
   useEffect(()=>{
     getData()
   },[tab, sort])
@@ -188,7 +188,7 @@ function Summary() {
         <NoDataComment>등록된 데이터가 없습니다.</NoDataComment>
         </>}
         {data && data.map((ele, idx) => {
-          return <SummaryList key={idx} pill={ele} data={data} setData={setData}/>;
+          return <SummaryList key={ele.detailSupplementId} pill={ele} data={data} setData={setData}/>;
         })}
       </SummartLists>
     </SummaryContainer>
