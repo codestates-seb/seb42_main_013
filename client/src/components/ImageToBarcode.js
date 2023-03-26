@@ -21,6 +21,7 @@ function FileInput ({setBarcode, isDetectorAvailable, setIsDetectorAvailable}) {
   }
   
   const detect = (image) => {
+    // eslint-disable-next-line
     const barcodeDetector = new BarcodeDetector();
     barcodeDetector
       .detect(image)
