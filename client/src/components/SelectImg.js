@@ -77,7 +77,7 @@ function SelectImg({setData, data}){
           </g>
         </svg>
       </ImgBox> */}
-      {/* TBD.. */}
+      {/* 사진 찍거나 첨부해서 내사진으로 등록하기 TBD.. */}
       <Swiper
       //Distance between slides in px.
         spaceBetween={1}
@@ -86,11 +86,11 @@ function SelectImg({setData, data}){
       >
         {imgClassName.group1.map((ele,idx)=>{
           return(
-            <SwiperSlide key={idx}><ImgBox isSeleted={data.imageURL===ele} onClick={()=>setImgHandler(ele)}><SpriteImage1 className={ele} url={process.env.PUBLIC_URL + '/images/pillVectorImg.png'}/></ImgBox></SwiperSlide>
+            <SwiperSlide key={idx}><ImgBox isSeleted={data.imageURL===ele} onClick={()=>setImgHandler(ele)}><SpriteImage1 wrappersize="48" className={ele} url={process.env.PUBLIC_URL + '/images/pillVectorImg.png'}/></ImgBox></SwiperSlide>
         )})}
         {imgClassName.group2.map((ele,idx)=>{
           return(
-            <SwiperSlide key={idx}><ImgBox onClick={()=>setImgHandler(ele)}><SpriteImage2 className={ele} url={process.env.PUBLIC_URL + '/images/pillVectorImg2.png'}/></ImgBox></SwiperSlide>
+            <SwiperSlide key={idx}><ImgBox onClick={()=>setImgHandler(ele)}><SpriteImage2 wrappersize="48" className={ele} url={process.env.PUBLIC_URL + '/images/pillVectorImg2.png'}/></ImgBox></SwiperSlide>
         )})}
       </Swiper>
   </Imgscreen>

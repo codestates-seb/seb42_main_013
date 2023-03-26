@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCreateData, setIDData, setIsPatch } from "../reducer/dataCreateReducer";
 import deletePillData from "../util/deletePillData";
+import { SpriteImage1, SpriteImage2 } from "../styles/SpriteImage";
 
 
 const ListContainer = styled.li`
@@ -164,11 +165,17 @@ function SummaryList({ pill, data, setData }) {
     dispatch(setIDData(spreadPill))
     dispatch(setIsPatch())
   }
-
+  
+  let imgGroups={group1:["capsule_plain","ellipse_half_white","rhombus_white","circle_white","omega3", "capsule_red","circle_brown","circle_yellow_1","circle_pink","omega3_2","circle_yellowgreen","capsule_brown","circle_small_yellow","circle_Mix_Pink","capsule_Orange","half_spot"],group2:["capsule_green","capsule_blue","ellipse_pink","ellipse_white","ellipse_half_yellow","rhombus_spot","ellipse_blue","capsule_black","half_circle"]}
+  const findImgSource = imgGroups.group1.includes(spreadPill.imageURL) ? "group1" : "group2"
   return (
     <ListContainer>
       {isOpen && <ModalBackdrop className="backdrop" onClick={openModalHandler} />}
-      <ListImgBox img={spreadPill.imageURL}>
+      <ListImgBox>
+        { findImgSource === "group1"
+          ? <SpriteImage1 wrappersize="100" className={spreadPill.imageURL} url={process.env.PUBLIC_URL + '/images/pillVectorImg.png'}/>
+          : <SpriteImage2 wrappersize="100" className={spreadPill.imageURL} url={process.env.PUBLIC_URL + '/images/pillVectorImg2.png'}/>
+        } 
         { (isCloseToExpirationDate||isAlmostRunout) &&
           <FontAwesomeIcon icon={faCircleExclamation} />}
       </ListImgBox>
