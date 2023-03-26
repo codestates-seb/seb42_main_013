@@ -7,7 +7,7 @@ import searchByCode from "../util/searchBycode";
 import ImageToBarcode from "./ImageToBarcode";
 
 
-
+//!form 대신 disable 속성 적용
 export const ModalBackdrop = styled.div`
   /* top: 0;
   left: 0;
@@ -107,8 +107,8 @@ function CreateModal ({isOpen, openModalHandler, data, name, setData}) {
   }
   const [barcode, setBarcode] = useState({barcode:""})
   const [isDetectorAvailable,setIsDetectorAvailable] = useState(false)
-  const code = () => {
-    searchByCode(barcode.barcode, setData)
+  const searchHandler = () => {
+    !!barcode.barcode && searchByCode(barcode.barcode, setData)
     setBarcode("")
     openModalHandler();
   }
@@ -143,10 +143,10 @@ function CreateModal ({isOpen, openModalHandler, data, name, setData}) {
           {/* <div>함량</div> */}
           {/* <DataInput type="number" data={ingredient} required={1} setData={setIngredient} name="ingredientAmount" /> */}
           <Buttons>
-            <CurrentBtn onClick={closeModalHandler}>취소</CurrentBtn>
+            <CurrentBtn type="button" onClick={closeModalHandler}>취소</CurrentBtn>
             {name === "barcode"
-            ? <CurrentBtn disabled={!ele} onClick={code}>조회하기</CurrentBtn>
-            : <CurrentBtn disabled={!ele} onClick={addEleHandler}>추가하기</CurrentBtn>
+            ? <CurrentBtn type="button" disabled={!ele} onClick={searchHandler}>조회하기</CurrentBtn>
+            : <CurrentBtn type="button" disabled={!ele} onClick={addEleHandler}>추가하기</CurrentBtn>
             }
           </Buttons>
         </ModalView>

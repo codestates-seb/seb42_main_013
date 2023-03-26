@@ -7,10 +7,12 @@ export const FakeInput = styled.div`
   flex: 1;
   border : ${(props) => props.isFocus ?"1px solid var(--blue-100)" : "1px solid var(--black-400)"};
   border-color: ${(props) => !props.isValid && "rgb(240, 86, 86)"};
+  box-shadow: ${(props) => ((props.isValid&&props.isFocus) && "0 0 2px 2px rgba(5, 145,255, .1)")};
   border-radius: 5px;
   /* 1줄 꽉채우게 */
   padding: 0 8px;
   position: relative;
+  transform: all .2s cubic-bezier(.645,.045,.355,1);
   :hover{
     background-color: #F7F9FA;
   }
@@ -141,7 +143,7 @@ function DataInput ({name, min, max, required, placeholder, data, setData, type}
       e.target.setCustomValidity("")
     }
     !isValid && setIsValid(e.target.validity.valid)
-    !isValid && setValidityState(getValidtyState(e))
+    !isValid && setValidityState(getValidtyState(e))//message 출력을 위한 state 설정
   }
   const clear = () => {
     setData({...data,[name]:""})
@@ -150,6 +152,13 @@ function DataInput ({name, min, max, required, placeholder, data, setData, type}
     setIsValid(e.target.validity.valid)
     setValidityState(getValidtyState(e))
     setIsFocus(false)
+  }
+  const messageStopper = (e) => {
+    //브라우저 Invalid 메세지 hide를 위해
+    e.preventDefault();
+    //custom message showing
+    setIsValid(false)
+    setValidityState(getValidtyState(e))
   }
   return (
       <FakeInput isFocus={isFocus} isValid={isValid} validationMessage={validationMessage(validityState)}>
@@ -164,6 +173,7 @@ function DataInput ({name, min, max, required, placeholder, data, setData, type}
           min={min}
           max={max}
           name={name}
+          onInvalid={messageStopper}
         />
         {/* { name === "ingredientAmount" &&
           <DeleteBtn>mg</DeleteBtn>
@@ -174,7 +184,7 @@ function DataInput ({name, min, max, required, placeholder, data, setData, type}
         { type!=="date" &&
         <>
           <DeleteBtn value={!!data[name]} >
-            <button onClick={()=>clear()}>
+            <button type="button" onClick={()=>clear()}>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
                 <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
               </svg>
