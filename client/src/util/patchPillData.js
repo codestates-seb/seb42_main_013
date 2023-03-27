@@ -34,6 +34,8 @@ function patchPillData(writtenData, navigate) {
     })})
     .catch((err)=>{
       console.log(err)
+      !!sessionStorage.Authorization && alert("로그인 기간이 만료되었습니다.")
+      !!sessionStorage.Authorization && navigate('/login')
     })    
 }
 

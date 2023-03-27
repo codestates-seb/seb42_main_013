@@ -64,6 +64,7 @@ function SelectImg({setData, data}){
   const setImgHandler = (className) => {
     setData({...data,imageURL: className})
   }
+
   return(
     <Imgscreen>
       {/* <ImgBox>
@@ -90,7 +91,7 @@ function SelectImg({setData, data}){
         )})}
         {imgClassName.group2.map((ele,idx)=>{
           return(
-            <SwiperSlide key={idx}><ImgBox onClick={()=>setImgHandler(ele)}><SpriteImage2 wrappersize="48" className={ele} url={process.env.PUBLIC_URL + '/images/pillVectorImg2.png'}/></ImgBox></SwiperSlide>
+            <SwiperSlide key={idx}><ImgBox isSeleted={data.imageURL===ele} onClick={()=>setImgHandler(ele)}><SpriteImage2 wrappersize="48" className={ele} url={process.env.PUBLIC_URL + '/images/pillVectorImg2.png'}/></ImgBox></SwiperSlide>
         )})}
       </Swiper>
   </Imgscreen>

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const SpriteImage1 = styled.i`
-  --imgBoxsize-: 40;
+  --imgBoxsize-: ${(props) => (props.wrappersize)};
   background: url(${(props) => props.url}) no-repeat no-repeat;
   &.omega3 {
     background-position: 2.81% 96.711%;
@@ -149,8 +149,8 @@ export const SpriteImage1 = styled.i`
   }
 `;
 export const SpriteImage2 = styled.i`
-  --imgBoxsize-: 45;
-	transform: rotate(90deg);
+  --imgBoxsize-: ${(props) => (props.wrappersize)};
+  transform: rotate(90deg);
   background: url(${(props) => props.url}) no-repeat no-repeat;
   &.capsule_green {
 		transform: none;
