@@ -3,6 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import { SmallBtn } from "../styles/Buttons";
 import { useNavigate } from "react-router";
+import { Player} from "@lottiefiles/react-lottie-player";
+
 
 const DoneContainer = styled.div`
   width: 100%;
@@ -37,6 +39,13 @@ const MessageDiv = styled.div`
     color: var(--blue-100);
   }
 `
+const AnimationBox = styled.div`
+  margin-top: -200px;
+  margin-bottom: -70px;
+  @media (max-width: 270px){
+    margin-bottom: -30px;
+  }
+`
 
 function SignupDone () {
   const navigate = useNavigate();
@@ -48,7 +57,9 @@ function SignupDone () {
 
   return(
     <DoneContainer>
-      <FontAwesomeIcon icon={faCircleCheck} className="icon-check" />
+      <AnimationBox>
+        <Player autoplay keepLastFrame={1} src="https://assets3.lottiefiles.com/packages/lf20_vvtkpxel.json" />
+      </AnimationBox>
       <MessageDiv>
         <p><strong>회원 가입</strong>이</p>
         <p>완료되었습니다.</p>
