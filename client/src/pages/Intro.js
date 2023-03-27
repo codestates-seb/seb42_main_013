@@ -17,6 +17,7 @@ SwiperCore.use([Pagination, Autoplay]);
 const IntroContainer = styled.div`
   width: 100%;
   height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   .swiper-pagination {
     bottom: 160px;
   }
@@ -32,6 +33,7 @@ const IntroContainer = styled.div`
 const BackgroundImg1 = styled.div`
   width: ${(props) => `${props.curwidth}px`};
   height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   object-fit: cover;
   background-image: url(${background1});
   background-size: auto 100%;
@@ -69,6 +71,7 @@ const BackgroundImg4 = styled(BackgroundImg1)`
 const ContentDiv1 = styled.div`
   width: 100%;
   height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
