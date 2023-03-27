@@ -354,6 +354,7 @@ function Suggest() {
   const dispatch = useDispatch();
   const clickedConcern = concerns.filter(el => el.concernId === selectedConcern)[0];
   const numbers = [0, 1, 2, 3].sort(() => Math.random() - 0.5);
+  const userSup = userInfo?.supplements.map(el => el.supplementName).sort(() => Math.random() - 0.5);
 
   useAuthCheck();
 
@@ -400,17 +401,17 @@ function Suggest() {
             <UserConcern>
               <div><span className="highlight">{userInfo?.displayName}</span>님을 위한 영양제 추천</div>
               <UserSupContainer>
-                <div className="supplement-area" id={userInfo.supplements[0].supplementName} onClick={supplementClick}>
+                <div className="supplement-area" id={userSup[0]} onClick={supplementClick}>
                   <UserSupImg src="images/icon-pill1.png" alt="supplement-icon" />
-                  <div>{userInfo.supplements[0].supplementName}</div>
+                  <div>{userSup[0]}</div>
                 </div>
-                <div className="supplement-area" id={userInfo.supplements[1].supplementName} onClick={supplementClick}>
+                <div className="supplement-area" id={userSup[1]} onClick={supplementClick}>
                   <UserSupImg src="images/icon-pill2.png" alt="supplement-icon" />
-                  <div>{userInfo.supplements[1].supplementName}</div>
+                  <div>{userSup[1]}</div>
                 </div>
-                <div className="supplement-area" id={userInfo.supplements[2].supplementName} onClick={supplementClick}>
+                <div className="supplement-area" id={userSup[2]} onClick={supplementClick}>
                   <UserSupImg src="images/icon-pill3.png" alt="supplement-icon" />
-                  <div>{userInfo.supplements[2].supplementName}</div>
+                  <div>{userSup[2]}</div>
                 </div>
               </UserSupContainer>
             </UserConcern>
