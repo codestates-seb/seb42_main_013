@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
@@ -22,7 +23,8 @@ public class OpenApiController {
 
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> jsonMap = mapper.readValue(responseBody, new TypeReference<Map<String,Object>>(){});
-        supplementService.createSupplements(responseBody);
+        String principal = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        supplementService.createSupplements(responseBody,principal);
         return ResponseEntity.ok(jsonMap);
     }
 
