@@ -9,7 +9,9 @@ import com.SebMainTeam13.team13.supplement.entity.Supplement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Component
@@ -75,4 +77,9 @@ public class SupplementMapper {
 
     }
 
+    public List<SupplementDto.Response> supplementsToSupplementResponseDtos(List<Supplement> supplements) {
+        return supplements.stream()
+                .map(this::supplementToSupplementResponseDto)
+                .collect(Collectors.toList());
+    }
 }

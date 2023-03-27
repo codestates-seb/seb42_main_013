@@ -14,5 +14,5 @@ public interface SupplementRepository extends JpaRepository <Supplement, Long>{
     Optional<Supplement> findBySupplementName(String supplementName);
     List<Supplement> findAllBySupplementNameIn(List<String> supplementNames);
     Optional<Supplement> findBySupplementId(Long supplementId);
-
+    List<Supplement> findBySupplementNameContaining(String supplementName);
 }

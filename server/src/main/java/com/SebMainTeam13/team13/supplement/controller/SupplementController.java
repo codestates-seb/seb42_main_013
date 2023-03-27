@@ -7,6 +7,7 @@ import com.SebMainTeam13.team13.dto.SingleResponseDto;
 import com.SebMainTeam13.team13.supplement.dto.SupplementDto;
 import com.SebMainTeam13.team13.supplement.entity.Supplement;
 import com.SebMainTeam13.team13.supplement.mapper.SupplementMapper;
+import com.SebMainTeam13.team13.supplement.repository.SupplementRepository;
 import com.SebMainTeam13.team13.supplement.service.SupplementService;
 import com.SebMainTeam13.team13.utils.UriCreator;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,7 @@ public class SupplementController {
     private final static String DETAIL_DEFAULT_URL = "/supplements";
     private final SupplementService supplementService;
     private final SupplementMapper supplementMapper;
+    private final SupplementRepository supplementRepository;
 
     @PostMapping
     public ResponseEntity postSupplement(@Valid @RequestBody SupplementDto.Post post) {
@@ -62,10 +64,10 @@ public class SupplementController {
     }
     @GetMapping("/name/{supplement-name}")
     public ResponseEntity getSupplement(@PathVariable("supplement-name") String supplementName) {
-        Supplement supplement = supplementService.findAndVerifySupplementByName(supplementName);
+        List<Supplement> supplements = supplementRepository.findBySupplementNameContaining(supplementName);
 
 //        Long userIdAuthed = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        SupplementDto.Response response = supplementMapper.supplementToSupplementResponseDto(supplement);
+        List<SupplementDto.Response> response = supplementMapper.supplementsToSupplementResponseDtos(supplements);
 
         return new ResponseEntity<>(new SingleResponseDto<>(response),HttpStatus.OK);
     }

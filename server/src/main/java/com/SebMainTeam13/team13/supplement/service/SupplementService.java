@@ -1,10 +1,15 @@
 package com.SebMainTeam13.team13.supplement.service;
 
 
+import com.SebMainTeam13.team13.concern.entity.Concern;
 import com.SebMainTeam13.team13.concern.repository.ConcernRepository;
+import com.SebMainTeam13.team13.detail.entity.Detail;
+import com.SebMainTeam13.team13.detail.repository.DetailRepository;
 import com.SebMainTeam13.team13.exception.BusinessLogicException;
 import com.SebMainTeam13.team13.supplement.entity.Supplement;
 import com.SebMainTeam13.team13.supplement.repository.SupplementRepository;
+import com.SebMainTeam13.team13.user.entity.User;
+import com.SebMainTeam13.team13.user.repository.UserRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,6 +27,8 @@ public class SupplementService {
     private final SupplementRepository supplementRepository;
     private final ConcernRepository concernRepository;
     private final  JdbcTemplate jdbcTemplate;
+    private final UserRepository userRepository;
+    private final DetailRepository detailRepository;
 
 
     public Supplement createSupplement(Supplement supplement){
@@ -90,45 +97,70 @@ public class SupplementService {
 
 
 
-    public void createSupplements(String response) throws JsonProcessingException {
+    public void createSupplements(String response,String principal) throws JsonProcessingException {
+        if(response == null) return;
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode = objectMapper.readTree(response);
         JsonNode items = jsonNode.get("items");
         Long concernId;
         Set<String> titleSet = new HashSet<>(jdbcTemplate.queryForList("SELECT DISTINCT title FROM concern", String.class));
 
+
         for (JsonNode item : items) {
+            if(item == null) continue;
             concernId=0L;
             String contents = item.get("title").asText();
+            if(contents == null) continue;
             List<String> values = new ArrayList<>();
             int startIndex = 0;
             int endIndex = 0;
             while ((startIndex = contents.indexOf("<b>", endIndex)) != -1 && (endIndex = contents.indexOf("</b>", startIndex)) != -1) {
                 String keyword = contents.substring(startIndex + 3, endIndex);
                 if (titleSet.contains(keyword)) {
-                    concernId = concernRepository.findByTitle(keyword).get().getConcernId();
+                    Optional<Concern> optionalConcern = concernRepository.findByTitle(keyword);
+                    if (optionalConcern.isPresent()) {
+                        concernId = concernRepository.findByTitle(keyword).get().getConcernId();
+                        if (!"anonymousUser".equals(principal) && concernId != null) {
+                            User user = userRepository.findByEmail(principal).get();
+                            Detail detail = user.getDetail();
+                            if (detail != null) {
+                                Map<Long, Long> integerToLongMap = detail.getLongToLongMap();
+                                if (integerToLongMap.containsKey(concernId)) {
+                                    integerToLongMap.put(concernId, integerToLongMap.get(concernId) + 1);
+                                } else {
+                                    integerToLongMap.put(concernId, 1L);
+                                }
+                                detail.setLongToLongMap(integerToLongMap);
+                                detailRepository.save(detail);
+                            }
+                        }
+                    }
                 }
+
                 values.add(keyword);
             }
-            String supplementName = item.get("title").asText().replaceAll("<b>[^<]*</b>", "");
+            String supplementName = item.get("title").asText().replaceAll("<(/)?[bB]>", "");
             String supplementType = item.get("category3").asText();
 
             if (!findIfNewSupplementName(supplementName)&&supplementType.equals("영양제")) {
 
-                    Supplement supplement = new Supplement();
-                    supplement.setSupplementName(supplementName);
-                    supplement.setSupplementType("nutrient");
-                    supplement.setImageURL(item.get("image").asText());
-                    String nutrients = item.get("category4").asText();
-                    List<String> nutrientsList = Arrays.asList(nutrients);
-                    supplement.setNutrients(nutrientsList);
-                    if(concernId!=0) supplement.setConcern(concernRepository.findByConcernId(concernId).get());
+                Supplement supplement = new Supplement();
+                Optional.ofNullable(supplementName).ifPresent(supplement::setSupplementName);
 
-                    createSupplement(supplement);
+                supplement.setSupplementType("nutrient");
+                supplement.setImageURL(item.get("image").asText());
+                String nutrients = item.get("category4").asText();
+                List<String> nutrientsList = nutrients != null ? Arrays.asList(nutrients) : Collections.emptyList();
+                supplement.setNutrients(nutrientsList);
+                Optional<Concern> optionalConcern = concernRepository.findByConcernId(concernId);
+                supplement.setConcern(optionalConcern.orElse(null));
+
+                createSupplement(supplement);
 
             }
 
         }
     }
-}
+
+ }
 

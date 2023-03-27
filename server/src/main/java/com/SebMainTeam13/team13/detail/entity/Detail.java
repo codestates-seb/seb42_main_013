@@ -13,7 +13,9 @@ import javax.transaction.Transactional;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.SebMainTeam13.team13.detail.entity.Detail.DetailType.ACTIVATE;
 
@@ -51,4 +53,10 @@ public class Detail  {
 
     @ManyToMany
     private List<Concern> concerns = new ArrayList<>();
+    @ElementCollection
+    @CollectionTable(name = "detail_map",
+            joinColumns = {@JoinColumn(name = "detail_id")})
+    @MapKeyColumn(name = "long_key")
+    @Column(name = "long_value")
+    private Map<Long, Long> longToLongMap = new HashMap<>();
 }
