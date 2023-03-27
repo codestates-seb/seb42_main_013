@@ -14,6 +14,7 @@ const SetUserInfoContainer = styled.div`
   width: 100%;
   height: max-content;
   min-height: calc(100vh - 48px);
+  min-height: calc((var(--vh, 1vh) * 100) - 48px);
   position: relative;
   top: 0;
   display: flex;

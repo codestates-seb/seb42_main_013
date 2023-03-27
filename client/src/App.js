@@ -14,10 +14,16 @@ import Signup from "./pages/Signup";
 import WebAside from "./components/WebAside";
 import SignupDone from "./pages/SignupDone";
 import { Routes, Route, useLocation } from 'react-router-dom';
+import { useEffect } from "react";
+import { setOneVh } from "./styles/setOneVh";
 
 function App() {
   const { pathname } = useLocation();
 
+  useEffect(() => {
+    setOneVh();
+      window.addEventListener('resize', setOneVh);
+  }, []);
 
   return (
     <>

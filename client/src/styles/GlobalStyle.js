@@ -34,6 +34,7 @@ const GlobalStyle = createGlobalStyle`
     justify-content: center;
     gap: 80px;
     min-height: 100vh;
+    min-height: calc(var(--vh, 1vh) * 100);
   }
   .web-description {
     width: 380px;
@@ -43,6 +44,8 @@ const GlobalStyle = createGlobalStyle`
   }
   .app-wrap {
     width: 100%;
+    height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
     max-width: 428px;
     box-shadow: 0px 0px 16px rgb(50 50 50 / 12%);
   }
@@ -50,12 +53,14 @@ const GlobalStyle = createGlobalStyle`
     position: relative;
     top: 48px;
     height: calc(100vh - 112px);
+    height: calc((var(--vh, 1vh) * 100) - 112px);
     overflow: scroll;
   }
   .other {
     position: relative;
     top: 48px;
     height: calc(100vh - 48px);
+    height: calc((var(--vh, 1vh) * 100) - 112px);
     overflow: scroll;
   }
 `

@@ -29,6 +29,7 @@ export const MypageConatiner = styled.div`
 const NewMyContainer = styled(MypageConatiner)`
   height: max-content;
   min-height: calc(100vh - 112px);
+  min-height: calc((var(--vh, 1vh) * 100) - 112px);
   padding: 36px;
 `
 

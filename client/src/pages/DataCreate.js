@@ -17,6 +17,7 @@ import patchPillData from "../util/patchPillData";
 const DataCreateContainer = styled.form`
   display: flex;
   min-height: calc(100vh - 48px - 64px);
+  min-height: calc((var(--vh, 1vh) * 100) - 112px);
   flex-direction: column;
   justify-content: space-around;
   padding: 24px 20px 40px;

@@ -11,6 +11,7 @@ import DeleteConfirm from "../components/DeleteConfirm.js";
 const SummaryContainer = styled.div`
   display: flex;
   flex-direction: column;
+  height: 100%;
   padding: 24px 20px;
 `;
 const Headfilter = styled.div`
