@@ -125,6 +125,7 @@ export const ModalMenu = styled.ul`
 export const ModalMenuLi = styled.li`
   padding: 4px 16px;
   background-color: white;
+  cursor: pointer;
   color: ${(props) => (props.selected ? "var(--blue-100)" : "var(--black-200)")};
   &.delete {
     color: rgb(240, 86, 86);

@@ -16,7 +16,7 @@ function postPillData (writtenData, navigate) {
       "takingTime": writtenData.takingTime,
       "pillsLeft": writtenData.pillsLeft,
       "totalCapacity":writtenData.totalCapacity,
-      "dosagePerServing": writtenData.totalCapacity,
+      "dosagePerServing": writtenData.dosagePerServing,
       "dosageInterval": writtenData.dosageInterval
   }
 
