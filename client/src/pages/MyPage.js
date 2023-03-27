@@ -9,6 +9,7 @@ import useAuthCheck from "../util/useAuthCheck";
 import getUserInfo from "../util/getUserInfo";
 import { loginInfoActions } from "../reducer/loginInfoReducer";
 import axios from "axios";
+import { ReactComponent as ProfileImage } from "../images/svg/profileImage.svg";
 
 export const MypageConatiner = styled.div`
   display: flex;
@@ -235,13 +236,15 @@ function MyPage() {
       {isEditMode ? <h1>수정하기</h1> : <h1>마이페이지</h1>}
       <MypageBox>
         <div className="top"></div>
-        <ProfileAvartar />
+        <ProfileAvartar>
+          <ProfileImage />
+        </ProfileAvartar>
         <ProfileName>
           {isEditMode ? <NameInput type="text" value={username} onChange={(e) => setUsername(e.target.value)} /> : <div>{userInfo.displayName}</div>}
           <div>{userInfo.email}</div>
         </ProfileName>
         <UserInfo>
-          <div className="userinfo-title"><span>생년 월일</span></div>
+          <div className="userinfo-title"><span>생년월일</span></div>
           {isEditMode ? <BirthDateInput type="date" value={birthDate} onChange={(e) => setBirthDate(e.target.value)} /> : <div>{userInfo.detail.birthDate.replaceAll("-", ".")}.</div>}
         </UserInfo>
         <UserInfo>

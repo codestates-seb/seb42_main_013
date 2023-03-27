@@ -8,10 +8,10 @@ function useAuthCheck() {
       .then((res) => {
         if (res.response?.status === 500) {
           console.log("로그인 만료!");
-          alert("로그인 기간이 만료되었습니다.");
           sessionStorage.removeItem("login");
           sessionStorage.removeItem("userInfo");
           sessionStorage.removeItem("Authorization");
+          alert("로그인 기간이 만료되었습니다.");
           window.location.href = '/';
         } else {
           console.log("로그인 유지!");
