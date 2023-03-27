@@ -2,7 +2,7 @@ import axios from "axios";
 
 //! 13자리 코드 앞자리가 880이면 국내제품
 
-function searchByCode (code, setData) {
+async function searchByCode (code, setData) {
   const config = {
     headers: {
       "X-Api-Key": `${process.env.REACT_APP_X_Api_Key}`
@@ -11,7 +11,9 @@ function searchByCode (code, setData) {
 
   const splitCode = (!code.includes(" ") && (code.length===12 || code.length===11)) ? `"${code.slice(0,1)} ${code.slice(1,6)} ${code.slice(6,11)} ${code.slice(11)}"` : `"${code}"`
   const replacedCode = splitCode.includes(" ") && splitCode.replaceAll(" ", "%20")
-  axios
+
+
+  await axios
     .get(`${process.env.REACT_APP_API_SEARCH_FILTER_URL}${replacedCode}`,config)
     .then((res)=>{
       return res.data.hits[0]._id
@@ -56,7 +58,6 @@ function searchByCode (code, setData) {
       } else {
         alert("데이터베이스에 존재하지 않는 코드입니다.")
       }
-
     })
     .catch((err)=>{
       console.log(err)

@@ -33,6 +33,7 @@ function postPillData (writtenData, navigate) {
       axios.post(`${process.env.REACT_APP_API_URL}/detailSupplements`, detailSupplement, config)
       .then(res=> {
         console.log("성공")
+        navigate('/summary')
       }
       )
     })

@@ -5,6 +5,8 @@ import { useState } from "react";
 import { CurrentBtn } from "../styles/Buttons";
 import searchByCode from "../util/searchBycode";
 import ImageToBarcode from "./ImageToBarcode";
+import { Player, Controls } from "@lottiefiles/react-lottie-player";
+
 
 
 //!form 대신 disable 속성 적용
@@ -39,6 +41,7 @@ const ModalContainer = styled.div`
 
 
 export const ModalView = styled.div`
+  position: relative;
   border-radius: 5px;
   background-color: #ffffff;
   margin: auto;
@@ -88,10 +91,16 @@ const Buttons = styled.div`
     flex: 1; 
   }
 `
+const LoadingImgBox = styled.div`
+ position: fixed;
+ top: 30%;
+`
 
 
 function CreateModal ({isOpen, openModalHandler, data, name, setData}) {
   const [ele, setEle] = useState({key:""})
+  const [isLoading, setIsLoading] = useState(false);
+
   const closeModalHandler = () => {
     setEle({key:""})
     openModalHandler()
@@ -108,15 +117,25 @@ function CreateModal ({isOpen, openModalHandler, data, name, setData}) {
   const [barcode, setBarcode] = useState({barcode:""})
   const [isDetectorAvailable,setIsDetectorAvailable] = useState(false)
   const searchHandler = () => {
-    !!barcode.barcode && searchByCode(barcode.barcode, setData)
+    setIsLoading(true)
     setBarcode("")
-    openModalHandler();
+    !!barcode.barcode && searchByCode(barcode.barcode, setData, setIsLoading)
+      .then(res=>{
+        setIsLoading(false)
+        openModalHandler()
+      })
   }
 
   return (
     <ModalContainer>
-      {isOpen === true ? <ModalBackdrop onClick={openModalHandler}>
-        <ModalView onClick={(e) => e.stopPropagation()}>
+      {/* 로딩되는 동안은 백드롭 안꺼지게 */}
+       <ModalBackdrop onClick={()=> !isLoading && openModalHandler()}>
+      {
+      isLoading 
+      ?
+        <LoadingImgBox><Player autoplay loop src="https://assets8.lottiefiles.com/packages/lf20_aNSztVN7Us.json" /></LoadingImgBox>
+      :
+        <ModalView onClick={(e) => e.stopPropagation()} >
           {/* <div className="closebtn">
             <AddBtn onClick={openContainsModalHandler}>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
@@ -137,7 +156,7 @@ function CreateModal ({isOpen, openModalHandler, data, name, setData}) {
           }
           { name==="barcode" && <>
             <Title>바코드</Title>
-            <ImageToBarcode setBarcode={setBarcode} isDetectorAvailable={isDetectorAvailable} setIsDetectorAvailable={setIsDetectorAvailable} />
+            <ImageToBarcode setBarcode={setBarcode} barcode={barcode} isDetectorAvailable={isDetectorAvailable} setIsDetectorAvailable={setIsDetectorAvailable} />
             <DataInput data={barcode} setData={setBarcode} placeholder="숫자 직접 입력하기" name="barcode" />
           </>}
           {/* <div>함량</div> */}
@@ -150,7 +169,8 @@ function CreateModal ({isOpen, openModalHandler, data, name, setData}) {
             }
           </Buttons>
         </ModalView>
-      </ModalBackdrop> : null}
+      }
+      </ModalBackdrop>
     </ModalContainer>
   )
 
