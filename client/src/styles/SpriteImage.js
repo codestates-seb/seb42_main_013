@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const SpriteImage1 = styled.i`
   --imgBoxsize-: ${(props) => (props.wrappersize)};
+  transform: ${(props) => props.horizon ?"rotate(90deg)" :null};
   background: url(${(props) => props.url}) no-repeat no-repeat;
   &.omega3 {
     background-position: 2.81% 96.711%;
@@ -150,7 +151,7 @@ export const SpriteImage1 = styled.i`
 `;
 export const SpriteImage2 = styled.i`
   --imgBoxsize-: ${(props) => (props.wrappersize)};
-  transform: rotate(90deg);
+  transform: ${(props) => props.horizon ? null : "rotate(90deg)"};
   background: url(${(props) => props.url}) no-repeat no-repeat;
   &.capsule_green {
 		transform: none;
@@ -163,7 +164,7 @@ export const SpriteImage2 = styled.i`
     scale: calc(var(--imgBoxsize-) / max(var(--height-),var(--width-)));
   }
   &.capsule_blue {
-		transform: none;
+		transform: ${(props) => !props.horizon ? "rotate(180deg)" : "rotate(90deg)"};
     background-position: 16.696% 5.484%;
     background-size: 303px 206px;
     --width-: 19;
@@ -193,7 +194,7 @@ export const SpriteImage2 = styled.i`
   &.ellipse_half_yellow {
     background-position: 62.4% 5.801%;
     background-size: calc(303px * 0.9) 210px;
-    --width-: calc(53 * 0.9);
+    --width-: calc(53 * 1);
     width: calc(var(--width-) * 1px);
     --height-: 25;
     height: calc(var(--height-) * 1px);
