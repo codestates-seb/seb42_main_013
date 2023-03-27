@@ -16,10 +16,9 @@ function patchPillData(writtenData, navigate) {
       "takingTime": writtenData.takingTime,
       "pillsLeft": writtenData.pillsLeft,
       "totalCapacity":writtenData.totalCapacity,
-      "dosagePerServing": writtenData.totalCapacity,
+      "dosagePerServing": writtenData.dosagePerServing,
       "dosageInterval": writtenData.dosageInterval
   }
-  console.log(writtenData)
   const config = {
     headers: {
       "Authorization": sessionStorage.getItem("Authorization")

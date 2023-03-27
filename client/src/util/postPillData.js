@@ -25,7 +25,6 @@ function postPillData (writtenData, navigate) {
       "Authorization": sessionStorage.getItem("Authorization")
     }
   }
-  console.log(sessionStorage.getItem("Authorization"))
   axios
     .post(`${process.env.REACT_APP_API_URL}/supplements`, supplement, config)
     .then(res=>{

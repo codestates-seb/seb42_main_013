@@ -13,6 +13,7 @@ import patchPillData from "../util/patchPillData";
 
 //Post 전 전체 Input validation 을 위해 form으로 변경
 //! 모든 버튼 타입에 유의
+//! enter submit 에 유의
 const DataCreateContainer = styled.form`
   display: flex;
   min-height: calc(100vh - 48px - 64px);
@@ -214,8 +215,14 @@ function DataCrete() {
     setEditMode(false);
     !e.target.value && setData({ ...data, dosageInterval: "1" });
   };
-  const deleteEleHandler = (ele, idx, name) => {
-    setData({ ...data, [name]: [...data[name].slice(0, idx), ...data[name].slice(idx + 1)] });
+  const deleteEleHandler = (ele, targetIdx, name) => {
+    let filtered = data[name].filter((ele,idx)=>{
+      return idx !== targetIdx
+    })
+    // setData({ ...data, [name]: [...data[name].slice(0, idx), ...data[name].slice(idx + 1)] });
+    // 오류남 그리고 왜 submit 되는거지 ?
+    //tag 컴포넌ㄴ트에 버튼이 있었네... type="button"
+    setData({ ...data, [name]: filtered });
   };
   const submitHandler = (e) => {
     e.preventDefault();
@@ -225,7 +232,7 @@ function DataCrete() {
   } 
 
   return (
-    <DataCreateContainer noValidate onSubmit={submitHandler}>
+    <DataCreateContainer noValidate onSubmit={submitHandler} onKeyPress={(e)=>{e.key==="Enter" && e.preventDefault()}}>
       <InputSection>
         <h3>종류</h3>
         <div>
