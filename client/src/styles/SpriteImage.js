@@ -154,7 +154,7 @@ export const SpriteImage2 = styled.i`
   transform: ${(props) => props.horizon ? null : "rotate(90deg)"};
   background: url(${(props) => props.url}) no-repeat no-repeat;
   &.capsule_green {
-		transform: ${(props) => !props.horizon ? "rotate(180deg)" : "rotate(90deg)"};
+		transform: none;
     background-position: 4.553% 7.571%;
     background-size: 303px 206px;
     --width-: 18;
@@ -194,7 +194,7 @@ export const SpriteImage2 = styled.i`
   &.ellipse_half_yellow {
     background-position: 62.4% 5.801%;
     background-size: calc(303px * 0.9) 210px;
-    --width-: calc(53 * 0.9);
+    --width-: calc(53 * 1);
     width: calc(var(--width-) * 1px);
     --height-: 25;
     height: calc(var(--height-) * 1px);
