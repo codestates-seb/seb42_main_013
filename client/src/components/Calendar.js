@@ -72,7 +72,7 @@ function Calendar({ setCalendarLoaded, testData, supplements, nowYear, nowMonth,
             const monWedFri = index % 7 === 1 || index % 7 === 3 || index % 7 === 5;
 
             let alertDate = [];
-            const test = supplements.map((e, idx) => {
+            const test = supplements? supplements.map((e, idx) => {
                 const calc = Math.floor((new Date(e.endDate).getTime() - new Date(date).getTime()) / 1000 / 60 / 60 / 24)
                 const period = Math.floor((new Date(e.endDate).getTime() - new Date(e.startDate).getTime()) / 1000 / 60 / 60 / 24)
 
@@ -90,7 +90,7 @@ function Calendar({ setCalendarLoaded, testData, supplements, nowYear, nowMonth,
                 // console.log('-'.repeat(30))
 
                 return isOn
-            })
+            }) : []
             // console.log(new Date(date), test)
 
             const passed = onDuration && ((e < nowDate && month === nowMonth && year === nowYear) || ((month < nowMonth && year === nowYear) || year < nowYear));

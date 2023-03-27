@@ -3,7 +3,7 @@ import Timeline from "../components/Timeline";
 import React, { useEffect, useState } from "react";
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import supplements from "../components/supplements.json";
+import useAuthCheck from "../util/useAuthCheck";
 import axios from "axios";
 
 function CalendarPage() {
@@ -12,9 +12,7 @@ function CalendarPage() {
   const [nowDate, setNowDate] = useState(new Date().getDate());
   const [nowDay, setNowDay] = useState(new Date().getDay());
   const [testData, setTestData] = useState();
-
   const [calendarLoaded, setCalendarLoaded] = useState(false)
-
 
   useEffect(() => {
     (async () => {
@@ -38,8 +36,8 @@ function CalendarPage() {
   return (
     <>
       <DndProvider backend={HTML5Backend}>
-        {(testData && testData.length !== 0) && <Calendar setCalendarLoaded={setCalendarLoaded} testData={testData} supplements={testData} nowYear={nowYear} setNowYear={setNowYear} nowMonth={nowMonth} setNowMonth={setNowMonth} nowDate={nowDate} setNowDate={setNowDate} />}
-        {(testData && testData.length !== 0 && calendarLoaded) && <Timeline supplements={testData} nowYear={nowYear} setNowYear={setNowYear} nowMonth={nowMonth} setNowMonth={setNowMonth} nowDate={nowDate} setNowDate={setNowDate} nowDay={nowDay} />}
+        {testData && <Calendar setCalendarLoaded={setCalendarLoaded} testData={testData} supplements={testData} nowYear={nowYear} setNowYear={setNowYear} nowMonth={nowMonth} setNowMonth={setNowMonth} nowDate={nowDate} setNowDate={setNowDate} />}
+        {(testData  && calendarLoaded) && <Timeline supplements={testData} nowYear={nowYear} setNowYear={setNowYear} nowMonth={nowMonth} setNowMonth={setNowMonth} nowDate={nowDate} setNowDate={setNowDate} nowDay={nowDay} />}
       </DndProvider>
     </>
   )

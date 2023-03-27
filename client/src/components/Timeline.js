@@ -52,7 +52,7 @@ const TimeWrap = ({ idx, time, hours, minutes, supplements, selectedDayFormat })
       </TimeWrapCss>
       <InfoDiv>
         {
-          supplements.map((e, idx) => {
+          supplements && supplements.map((e, idx) => {
             // const DIVIDE = 1000 / 60 / 60 / 24;
             // const MULTIPLY = 1000 * 60 * 60 * 24;
 
