@@ -3,11 +3,12 @@ import { useState } from "react";
 import { ModalBackdrop } from "../components/CreateModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { setCreateData, setIDData, setIsPatch } from "../reducer/dataCreateReducer";
 import deletePillData from "../util/deletePillData";
 import { SpriteImage1, SpriteImage2 } from "../styles/SpriteImage";
+import { setTargetId } from "../reducer/setTargetReducer";
 
 
 const ListContainer = styled.li`
@@ -141,9 +142,8 @@ export const ModalMenuLi = styled.li`
   }
 `;
 
-function SummaryList({ pill, data, setData}) {
+function SummaryList({ pill, data, setData, openDeleteHanlder}) {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const openModalHandler = () => {
     setIsOpen(!isOpen);
@@ -161,10 +161,7 @@ function SummaryList({ pill, data, setData}) {
     takingTime: pill.takingTime,
     totalCapacity: pill.totalCapacity,
   }
-  const deleteDataHandler = () => {
-    let deletedData = data.filter((ele)=>ele.detailSupplementId !== pill.detailSupplementId)
-    setData(deletedData)
-  }
+
   
   const isCloseToExpirationDate = new Date(spreadPill.expirationDate)-new Date()<=1000*60*60*24*30
   const isAlmostRunout = spreadPill.pillsLeft<=10
@@ -173,10 +170,11 @@ function SummaryList({ pill, data, setData}) {
     dispatch(setIDData(spreadPill))
     dispatch(setIsPatch())
   }
-  const gotoDetailHandler = () => {
-    dispatch(setCreateData(spreadPill))
+  const clickDeleteHandler = () => {
+    openModalHandler()
+    openDeleteHanlder()
+    dispatch(setTargetId(spreadPill.detailSupplementId))
   }
-
 
   let imgGroups={group1:["capsule_plain","ellipse_half_white","rhombus_white","circle_white","omega3", "capsule_red","circle_brown","circle_yellow_1","circle_pink","omega3_2","circle_yellowgreen","capsule_brown","circle_small_yellow","circle_Mix_Pink","capsule_Orange","half_spot"],group2:["capsule_green","capsule_blue","ellipse_pink","ellipse_white","ellipse_half_yellow","rhombus_spot","ellipse_blue","capsule_black","half_circle"]}
   const findImgSource = imgGroups.group1.includes(spreadPill.imageURL) ? "group1" : "group2"
@@ -259,7 +257,7 @@ function SummaryList({ pill, data, setData}) {
         <>
           <ModalMenu onClick={(e) => e.stopPropagation()}>
             <ModalMenuLi><Link to="/datacreate" onClick={patchHandler}>수정하기</Link></ModalMenuLi>
-            <ModalMenuLi onClick={()=>{deletePillData(spreadPill,deleteDataHandler,navigate)}} className="delete">삭제하기</ModalMenuLi>
+            <ModalMenuLi onClick={clickDeleteHandler} className="delete">삭제하기</ModalMenuLi>
           </ModalMenu>
         </>
       )}

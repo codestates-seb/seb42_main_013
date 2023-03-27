@@ -6,6 +6,7 @@ import getPillsData from "../util/getPillsData.js";
 import { sortingPills } from "../util/sortingPills.js";
 import NoSupplementData from "../images/NoSupplementData.png";
 import { useNavigate } from "react-router-dom";
+import DeleteConfirm from "../components/DeleteConfirm.js";
 
 const SummaryContainer = styled.div`
   display: flex;
@@ -97,7 +98,7 @@ const Sort = styled.div`
 
 
 const NoSupplementDataImg = styled.img`
-  width: 60%;
+  width: 50%;
   margin-top: 100px;
   align-self: center;
 `
@@ -136,6 +137,10 @@ function Summary() {
   useEffect(()=>{
     getData()
   },[tab, sort])
+
+  const openDeleteHanlder = () => {
+    setIsdeleteOpen(!isdeleteOpen)
+  }
 
   return (
     <SummaryContainer>
@@ -190,9 +195,10 @@ function Summary() {
         <NoDataComment>등록된 데이터가 없습니다.</NoDataComment>
         </>}
         {data && data.map((ele, idx) => {
-          return <SummaryList key={ele.detailSupplementId} pill={ele} data={data} setData={setData}/>;
+          return <SummaryList key={ele.detailSupplementId} isdeleteOpen={isdeleteOpen} openDeleteHanlder={openDeleteHanlder} pill={ele} data={data} setData={setData}/>;
         })}
       </SummartLists>
+      {isdeleteOpen && <DeleteConfirm data={data} setData={setData} openDeleteHanlder={openDeleteHanlder}/>}
     </SummaryContainer>
   );
 }

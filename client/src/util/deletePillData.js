@@ -1,19 +1,18 @@
 import axios from "axios"
-import getPillsData from "./getPillsData"
 
 
 
-function deletePillData(writtenData, deleteDataHandler,navigate) {
+async function deletePillData(id,navigate) {
   const config = {
     headers: {
       "Authorization": sessionStorage.getItem("Authorization")
     }
   }
-  axios
-    .delete(`${process.env.REACT_APP_API_URL}/detailSupplements/${writtenData.detailSupplementId}`, config)
+  console.log(id)
+  await axios
+    .delete(`${process.env.REACT_APP_API_URL}/detailSupplements/${id}`, config)
     .then(res=>{
       console.log("삭제 성공")
-      deleteDataHandler()
     })
     .catch((err)=>{
       console.log(err)
