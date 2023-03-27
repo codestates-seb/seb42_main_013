@@ -145,8 +145,8 @@ function CreateModal ({isOpen, openModalHandler, data, name, setData}) {
           <Buttons>
             <CurrentBtn type="button" onClick={closeModalHandler}>취소</CurrentBtn>
             {name === "barcode"
-            ? <CurrentBtn type="button" disabled={!ele} onClick={searchHandler}>조회하기</CurrentBtn>
-            : <CurrentBtn type="button" disabled={!ele} onClick={addEleHandler}>추가하기</CurrentBtn>
+            ? <CurrentBtn type="button" disabled={!barcode.barcode} onClick={searchHandler}>조회하기</CurrentBtn>
+            : <CurrentBtn type="button" disabled={!ele.key} onClick={addEleHandler}>추가하기</CurrentBtn>
             }
           </Buttons>
         </ModalView>

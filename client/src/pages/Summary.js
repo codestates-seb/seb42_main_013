@@ -5,7 +5,7 @@ import { filteringPills } from "../util/filteringPills.js";
 import getPillsData from "../util/getPillsData.js";
 import { sortingPills } from "../util/sortingPills.js";
 import NoSupplementData from "../images/NoSupplementData.png";
-
+import { useNavigate } from "react-router-dom";
 
 const SummaryContainer = styled.div`
   display: flex;
@@ -109,9 +109,11 @@ const NoDataComment = styled.span`
 `
 
 function Summary() {
+  const navigate = useNavigate();
   const [sort, setSort] = useState("pillsLeftAscending");
   const [tab, setTab] = useState("all");
   const [isSortOpen, setIsSortOpen] = useState(false);
+  const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [data, setData] = useState([])
   const getSortName = {
     "AtoZ": "가나다순",
@@ -126,16 +128,15 @@ function Summary() {
   }
   const getData = async () => {
     //!상태 props로 안보내고 return 값 받기
-    const response = await getPillsData(setData)
+    const response = await getPillsData(navigate)
     let filtered = response && filteringPills(response, tab)
     let sorted = filtered && sortingPills(filtered, sort)
     sorted && setData(sorted)
   }
-  console.log(data)
   useEffect(()=>{
     getData()
   },[tab, sort])
- 
+
   return (
     <SummaryContainer>
       <Headfilter>
@@ -168,7 +169,7 @@ function Summary() {
             </>
           )}
         </Sort>
-        <Filter>
+        {/* <Filter>
           <button>
             <span>필터</span>
             <svg viewBox="0 0 18 18">
@@ -180,7 +181,8 @@ function Summary() {
               <circle cx="12" cy="11.5" r="1.5" />
             </svg>
           </button>
-        </Filter>
+        </Filter> */}
+        {/* TBD */}
       </Options>
       <SummartLists>
         {(!data || data.length===0)&& <>

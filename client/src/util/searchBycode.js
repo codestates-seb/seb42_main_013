@@ -11,19 +11,15 @@ function searchByCode (code, setData) {
 
   const splitCode = (!code.includes(" ") && (code.length===12 || code.length===11)) ? `"${code.slice(0,1)} ${code.slice(1,6)} ${code.slice(6,11)} ${code.slice(11)}"` : `"${code}"`
   const replacedCode = splitCode.includes(" ") && splitCode.replaceAll(" ", "%20")
-  console.log(replacedCode)
   axios
     .get(`${process.env.REACT_APP_API_SEARCH_FILTER_URL}${replacedCode}`,config)
     .then((res)=>{
-      console.log("id는 받음")
-      console.log(res.data.hits[0]._id)
       return res.data.hits[0]._id
     })
     .then((id)=>{
       return axios.get(`${process.env.REACT_APP_API_SEARCH_ID_URL}${id}`,config)
     })
     .then((res)=>{
-      console.log("iD로 조회 완료")
       if(code.replaceAll(" ","")===res.data.upcSku.replaceAll(" ","")){
         const suggestedTime = (minDailyServings) => {
           if(minDailyServings === 2){
@@ -43,7 +39,7 @@ function searchByCode (code, setData) {
         {
           supplementId: null,
           supplementType: "supplement",
-          imageURL: "",
+          imageURL: "capsule_plain",
           supplementName: data.fullName,
           nutrients: data.ingredientRows.map((ele)=> ele.ingredientGroup),
           expirationDate: "",

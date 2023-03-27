@@ -33,12 +33,13 @@ function postPillData (writtenData, navigate) {
       axios.post(`${process.env.REACT_APP_API_URL}/detailSupplements`, detailSupplement, config)
       .then(res=> {
         console.log("성공")
-        navigate('/summary')
       }
-        )
-  })
+      )
+    })
     .catch((err)=>{
       console.log(err)
+      !!sessionStorage.Authorization && alert("로그인 기간이 만료되었습니다.")
+      !!sessionStorage.Authorization && navigate('/login')
     })
 }
 
