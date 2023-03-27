@@ -133,6 +133,8 @@ const PaginationDiv = styled.div`
 
 function Search() {
   const [searchData, setSearchData] = useState([]);
+  // 가격 필터링 위해 원본 보존
+  const [filteredData, setFilteredData] = useState([]);
   const [isClicked, setIsClicked] = useState(1);
   const [lowPrice, setLowPrice] = useState("");
   const [highPrice, setHighPrice] = useState("");
@@ -159,12 +161,11 @@ function Search() {
     })
       .then((res) => {
         setSearchData(res.data.items)
+        setFilteredData(res.data.items)
         setIsLoading(false);
       })
       .catch(err => { console.log(err); setIsLoading(false) })
   }, [query])
-
-  console.log(query);
 
   // 페이지네이션
   const newNum = searchData.length;
@@ -189,25 +190,29 @@ function Search() {
 
   const lowPriceChange = (e) => {
     setLowPrice(e.target.value);
+    console.log(e.target.value.length);
   }
 
   const highPriceChange = (e) => {
     setHighPrice(e.target.value);
+    console.log(e.target.value.length);
   }
 
   const priceFilterHandler = (e) => {
     e.preventDefault();
-    let filteredData = searchData.slice();
-    if (lowPrice.length !== 0) {
-      filteredData = filteredData.filter(el => Number(el.lprice) >= Number(lowPrice));
+    if (lowPrice.length === 0 && highPrice.length === 0) {
+      setSearchData(filteredData);
     }
-    if (highPrice.length !== 0) {
-      filteredData = filteredData.filter(el => Number(el.lprice) <= Number(highPrice));
+    if (lowPrice.length !== 0 && highPrice.length === 0) {
+      setSearchData(filteredData.filter(el => Number(el.lprice) >= Number(lowPrice)));
     }
-    setSearchData(filteredData);
+    if (lowPrice.length === 0 && highPrice.length !== 0) {
+      setSearchData(filteredData.filter(el => Number(el.lprice) <= Number(highPrice)))
+    }
+    if (lowPrice.length !== 0 && highPrice.length !== 0) {
+      setSearchData(filteredData.filter(el => Number(el.lprice) >= Number(lowPrice) && Number(el.lprice) <= Number(highPrice)))
+    }
   }
-
-  // console.log(data);
 
   return (
     <SearchContainer>
@@ -232,14 +237,14 @@ function Search() {
           </LoadingContainer>
         ) : (
           searchData.length === 0 ? <div className="search-no-result">
-          <p><strong>'{query}'</strong>에 대한 검색 결과가 없습니다.</p>
-          <p>검색어를 확인해 주세요.</p>
-        </div>
-          : curPage.map((el, idx) => {
-            return (
-              <Items key={idx} title={el.title} img={el.image} link={el.link} price={el.lprice} />
-            )
-          })
+            <p><strong>'{query}'</strong>에 대한 검색 결과가 없습니다.</p>
+            <p>검색어를 확인해 주세요.</p>
+          </div>
+            : curPage.map((el, idx) => {
+              return (
+                <Items key={idx} title={el.title} img={el.image} link={el.link} price={el.lprice} />
+              )
+            })
         )}
       </ResultContainer>
       {searchData.length === 0 ? null
