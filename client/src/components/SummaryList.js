@@ -171,7 +171,11 @@ function SummaryList({ pill, data, setData}) {
     dispatch(setIDData(spreadPill))
     dispatch(setIsPatch())
   }
-  
+  const gotoDetailHandler = () => {
+    dispatch(setCreateData(spreadPill))
+  }
+
+
   let imgGroups={group1:["capsule_plain","ellipse_half_white","rhombus_white","circle_white","omega3", "capsule_red","circle_brown","circle_yellow_1","circle_pink","omega3_2","circle_yellowgreen","capsule_brown","circle_small_yellow","circle_Mix_Pink","capsule_Orange","half_spot"],group2:["capsule_green","capsule_blue","ellipse_pink","ellipse_white","ellipse_half_yellow","rhombus_spot","ellipse_blue","capsule_black","half_circle"]}
   const findImgSource = imgGroups.group1.includes(spreadPill.imageURL) ? "group1" : "group2"
   return (
