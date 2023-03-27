@@ -71,7 +71,7 @@ public class SecurityConfiguration {
         @Override
         public void addCorsMappings(CorsRegistry registry) {
             registry.addMapping("/**")
-                    .allowedOrigins("http://localhost:3000", "http://bucket-for-main13.s3-website.ap-northeast-2.amazonaws.com", "http://ipillu.link.s3-website.ap-northeast-2.amazonaws.com")
+                    .allowedOrigins("http://ipillu.link", "http://bucket-for-main13.s3-website.ap-northeast-2.amazonaws.com")
                     .allowedMethods("GET", "POST","PATCH","DELETE","OPTIONS") // 허용할 HTTP method
                     .exposedHeaders("*") //header 노출
                     .allowedHeaders("*") // 요청 헤더 중 서버에서 허용하는 헤더
