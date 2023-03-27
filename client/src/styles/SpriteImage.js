@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const SpriteImage1 = styled.i`
   --imgBoxsize-: ${(props) => (props.wrappersize)};
+  transform: ${(props) => props.horizon ?"rotate(90deg)" :null};
   background: url(${(props) => props.url}) no-repeat no-repeat;
   &.omega3 {
     background-position: 2.81% 96.711%;
@@ -150,10 +151,10 @@ export const SpriteImage1 = styled.i`
 `;
 export const SpriteImage2 = styled.i`
   --imgBoxsize-: ${(props) => (props.wrappersize)};
-  transform: rotate(90deg);
+  transform: ${(props) => props.horizon ? null : "rotate(90deg)"};
   background: url(${(props) => props.url}) no-repeat no-repeat;
   &.capsule_green {
-		transform: none;
+		transform: ${(props) => !props.horizon ? "rotate(180deg)" : "rotate(90deg)"};
     background-position: 4.553% 7.571%;
     background-size: 303px 206px;
     --width-: 18;
@@ -163,7 +164,7 @@ export const SpriteImage2 = styled.i`
     scale: calc(var(--imgBoxsize-) / max(var(--height-),var(--width-)));
   }
   &.capsule_blue {
-		transform: none;
+		transform: ${(props) => !props.horizon ? "rotate(180deg)" : "rotate(90deg)"};
     background-position: 16.696% 5.484%;
     background-size: 303px 206px;
     --width-: 19;

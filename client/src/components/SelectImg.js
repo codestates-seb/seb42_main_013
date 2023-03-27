@@ -26,7 +26,7 @@ const ImgBoxes = styled.div`
 const ImgBox = styled.div`
   cursor: pointer;
   border-style: solid;
-  border-width: ${(props) => (props.isSeleted ? "1.6px" :"1px")};
+  border-width: ${(props) => (props.isSeleted ? "2px" :"1px")};
   border-color: ${(props) => (props.isSeleted ? "var(--blue-100)" :"var(--black-300)")};
   box-shadow: ${(props) => (props.isSeleted && "inset 0 0 2px 1px rgba(5, 145,255, .15)")};
   border-radius: 5px;
