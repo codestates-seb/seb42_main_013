@@ -157,7 +157,7 @@ function CreateModal ({isOpen, openModalHandler, data, name, setData}) {
           { name==="barcode" && <>
             <Title>바코드</Title>
             <ImageToBarcode setBarcode={setBarcode} barcode={barcode} isDetectorAvailable={isDetectorAvailable} setIsDetectorAvailable={setIsDetectorAvailable} />
-            <DataInput data={barcode} setData={setBarcode} placeholder="숫자 직접 입력하기" name="barcode" />
+            <DataInput data={barcode} setData={setBarcode} placeholder="숫자 직접 입력하기" name="barcode" onKeyPress={(e)=>{e.key==="Enter" && searchHandler()}}/>
           </>}
           {/* <div>함량</div> */}
           {/* <DataInput type="number" data={ingredient} required={1} setData={setIngredient} name="ingredientAmount" /> */}
