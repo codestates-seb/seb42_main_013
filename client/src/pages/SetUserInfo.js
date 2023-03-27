@@ -176,7 +176,6 @@ function SetUserInfo() {
       return;
     }
     const submitData = { birthDate: birthDate, gender: clickedSex, concernIds: clickedTag };
-    console.log(submitData);
     const config = {
       headers: {
         "Authorization": sessionStorage.getItem("Authorization")
@@ -185,7 +184,6 @@ function SetUserInfo() {
     await axios.post(`${process.env.REACT_APP_API_URL}/details`, submitData, config)
     getUserInfo()
       .then((userInfo) => {
-        console.log(userInfo);
         const actions = {};
         if (userInfo) {
           actions.login = true;

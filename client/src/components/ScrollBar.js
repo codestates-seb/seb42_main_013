@@ -56,8 +56,6 @@ function ScrollBar() {
     dispatch(concernActions.changeConcernClicked({ data }));
   }
 
-  console.log(selectedConcern);
-
   return (
     <ScrollBarContainer>
       <Swiper
