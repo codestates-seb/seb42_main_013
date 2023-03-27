@@ -355,8 +355,6 @@ function Suggest() {
   const clickedConcern = concerns.filter(el => el.concernId === selectedConcern)[0];
   const numbers = [0, 1, 2, 3].sort(() => Math.random() - 0.5);
 
-  console.log(userInfo);
-
   useAuthCheck();
 
   useEffect(() => {
@@ -373,8 +371,6 @@ function Suggest() {
         setIsLoading(false)
       });
   }, [])
-
-  console.log(concerns);
 
   const supplementClick = (e) => {
     const data = e.currentTarget.id;

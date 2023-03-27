@@ -188,8 +188,6 @@ function MyPage() {
             "Authorization": sessionStorage.getItem("Authorization")
           }
         };
-        console.log(newUserName);
-        console.log(userDetail);
         try {
           await axios.patch(`${process.env.REACT_APP_API_URL}/users`, newUserName, config)
         }
@@ -207,7 +205,6 @@ function MyPage() {
         alert("수정이 완료되었습니다!");
         getUserInfo()
           .then((userInfo) => {
-            console.log(userInfo);
             const actions = {};
             if (userInfo) {
               actions.login = true;
@@ -223,7 +220,6 @@ function MyPage() {
   }
 
   const tagClickHandler = (e) => {
-    console.log(e.target.id);
     const clickedId = Number(e.target.id)
     if (clickedTag.includes(clickedId)) {
       const taglist = clickedTag.filter(el => el !== clickedId);
