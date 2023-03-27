@@ -144,7 +144,6 @@ function Login() {
                 actions.login = true;
                 actions.userInfo = res;
                 dispatch(loginInfoActions.changeLoginInfo(actions))
-                alert('로그인 성공')
                 window.location.href = '/suggest'
               }
             }
