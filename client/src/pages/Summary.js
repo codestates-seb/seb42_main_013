@@ -6,6 +6,7 @@ import getPillsData from "../util/getPillsData.js";
 import { sortingPills } from "../util/sortingPills.js";
 import NoSupplementData from "../images/NoSupplementData.png";
 import { useNavigate } from "react-router-dom";
+import DeleteConfirm from "../components/DeleteConfirm.js";
 
 const SummaryContainer = styled.div`
   display: flex;
@@ -72,33 +73,32 @@ const Sort = styled.div`
   >ul {
     position: absolute;
     z-index: 1000;
-    right: 45px;
     top: 20px;
   }
 `;
-const Filter = styled.div`
-  svg {
-    height: 18px;
-    width: 18px;
-    fill: none;
-  }
-  path {
-    stroke: var(--black-100);
-  }
-  circle {
-    stroke: var(--black-100);
-  }
-  > ul {
-    position: absolute;
-    z-index: 1000;
-    right: 0px;
-    top: 20px;
-  }
-`;
+// const Filter = styled.div`
+//   svg {
+//     height: 18px;
+//     width: 18px;
+//     fill: none;
+//   }
+//   path {
+//     stroke: var(--black-100);
+//   }
+//   circle {
+//     stroke: var(--black-100);
+//   }
+//   > ul {
+//     position: absolute;
+//     z-index: 1000;
+//     right: 0px;
+//     top: 20px;
+//   }
+// `;
 
 
 const NoSupplementDataImg = styled.img`
-  width: 60%;
+  width: 50%;
   margin-top: 100px;
   align-self: center;
 `
@@ -113,7 +113,8 @@ function Summary() {
   const [sort, setSort] = useState("pillsLeftAscending");
   const [tab, setTab] = useState("all");
   const [isSortOpen, setIsSortOpen] = useState(false);
-  const [isDetailOpen, setIsDetailOpen] = useState(false);
+  const [isdeleteOpen, setIsdeleteOpen] = useState(false);
+
   const [data, setData] = useState([])
   const getSortName = {
     "AtoZ": "가나다순",
@@ -136,6 +137,10 @@ function Summary() {
   useEffect(()=>{
     getData()
   },[tab, sort])
+
+  const openDeleteHanlder = () => {
+    setIsdeleteOpen(!isdeleteOpen)
+  }
 
   return (
     <SummaryContainer>
@@ -190,9 +195,10 @@ function Summary() {
         <NoDataComment>등록된 데이터가 없습니다.</NoDataComment>
         </>}
         {data && data.map((ele, idx) => {
-          return <SummaryList key={ele.detailSupplementId} pill={ele} data={data} setData={setData}/>;
+          return <SummaryList key={ele.detailSupplementId} isdeleteOpen={isdeleteOpen} openDeleteHanlder={openDeleteHanlder} pill={ele} data={data} setData={setData}/>;
         })}
       </SummartLists>
+      {isdeleteOpen && <DeleteConfirm data={data} setData={setData} openDeleteHanlder={openDeleteHanlder}/>}
     </SummaryContainer>
   );
 }

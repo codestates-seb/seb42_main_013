@@ -25,12 +25,13 @@ const ImgBoxes = styled.div`
 `
 const ImgBox = styled.div`
   cursor: pointer;
-  border: 1px solid ;
+  border-style: solid;
+  border-width: ${(props) => (props.isSeleted ? "1.6px" :"1px")};
   border-color: ${(props) => (props.isSeleted ? "var(--blue-100)" :"var(--black-300)")};
   box-shadow: ${(props) => (props.isSeleted && "inset 0 0 2px 1px rgba(5, 145,255, .15)")};
   border-radius: 5px;
-  width: 50px;
-  height: 50px;
+  width: 52px;
+  height: 52px;
   position: relative;
   display: flex;
   justify-content: center;
@@ -81,7 +82,7 @@ function SelectImg({setData, data}){
       {/* 사진 찍거나 첨부해서 내사진으로 등록하기 TBD.. */}
       <Swiper
       //Distance between slides in px.
-        spaceBetween={1}
+        spaceBetween={2}
       //Number of slides per view
         slidesPerView={6}
       >

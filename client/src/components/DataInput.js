@@ -126,6 +126,9 @@ function DataInput ({name, min, max, required, placeholder, data, setData, type}
       case "customError" :
         message = "잔여 알 수 보다 많아야 합니다."
       break;
+      case "badInput" :
+        message = "유효한 값을 입력해주세요."
+      break;
       default:
         message = ""
     }

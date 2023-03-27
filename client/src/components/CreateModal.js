@@ -5,7 +5,7 @@ import { useState } from "react";
 import { CurrentBtn } from "../styles/Buttons";
 import searchByCode from "../util/searchBycode";
 import ImageToBarcode from "./ImageToBarcode";
-import { Player, Controls } from "@lottiefiles/react-lottie-player";
+import { Player} from "@lottiefiles/react-lottie-player";
 
 
 
@@ -32,7 +32,7 @@ export const ModalBackdrop = styled.div`
   }
 `;
 
-const ModalContainer = styled.div`
+export const ModalContainer = styled.div`
   position: fixed;
   inset: 0px;
   z-index: 1200;
@@ -77,7 +77,7 @@ const Title = styled.div`
   font-size: 16px;
 `
 
-const Buttons = styled.div`
+export const Buttons = styled.div`
   display: flex;
   margin-top: 12px;
   gap: 4px;
