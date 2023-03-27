@@ -27,9 +27,10 @@ const ListImgBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100px;
+  width: 92px;
   height: 66.5px;
   padding-bottom: 5px;
+  margin-right: 8px;
   >i{
     transform: rotate(90deg);
     box-shadow: 20px 0px 20px -13px #999999;
@@ -37,9 +38,9 @@ const ListImgBox = styled.div`
   position: relative;
   svg{
     position: absolute;
-    width: 12px;
-    left: 10px;
-    bottom: 10px;
+    width: 13px;
+    left: 6px;
+    bottom: 11px;
     color: rgb(240, 86, 86);
   }
 `;
