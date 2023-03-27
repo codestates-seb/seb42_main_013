@@ -5,7 +5,7 @@ import { useState } from "react";
 import { CurrentBtn } from "../styles/Buttons";
 import searchByCode from "../util/searchBycode";
 import ImageToBarcode from "./ImageToBarcode";
-import { Player, Controls } from "@lottiefiles/react-lottie-player";
+import { Player} from "@lottiefiles/react-lottie-player";
 
 
 

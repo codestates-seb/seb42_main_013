@@ -72,29 +72,28 @@ const Sort = styled.div`
   >ul {
     position: absolute;
     z-index: 1000;
-    right: 45px;
     top: 20px;
   }
 `;
-const Filter = styled.div`
-  svg {
-    height: 18px;
-    width: 18px;
-    fill: none;
-  }
-  path {
-    stroke: var(--black-100);
-  }
-  circle {
-    stroke: var(--black-100);
-  }
-  > ul {
-    position: absolute;
-    z-index: 1000;
-    right: 0px;
-    top: 20px;
-  }
-`;
+// const Filter = styled.div`
+//   svg {
+//     height: 18px;
+//     width: 18px;
+//     fill: none;
+//   }
+//   path {
+//     stroke: var(--black-100);
+//   }
+//   circle {
+//     stroke: var(--black-100);
+//   }
+//   > ul {
+//     position: absolute;
+//     z-index: 1000;
+//     right: 0px;
+//     top: 20px;
+//   }
+// `;
 
 
 const NoSupplementDataImg = styled.img`
@@ -113,7 +112,8 @@ function Summary() {
   const [sort, setSort] = useState("pillsLeftAscending");
   const [tab, setTab] = useState("all");
   const [isSortOpen, setIsSortOpen] = useState(false);
-  const [isDetailOpen, setIsDetailOpen] = useState(false);
+  const [isdeleteOpen, setIsdeleteOpen] = useState(false);
+
   const [data, setData] = useState([])
   const getSortName = {
     "AtoZ": "가나다순",
