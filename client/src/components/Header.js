@@ -4,7 +4,7 @@ import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useLocation, useNavigate, Link } from 'react-router-dom';
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { searchActions } from "../reducer/searchReducer";
 import { loginInfoActions } from "../reducer/loginInfoReducer";
 import { clearCreate } from "../reducer/dataCreateReducer";
@@ -23,6 +23,7 @@ const HeaderContainer = styled.div`
   .logo {
     width: 120px;
     margin-top: 2px;
+    cursor: pointer;
   }
   .icon {
     width: 20px;
@@ -48,6 +49,7 @@ function Header() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { login } = useSelector(state => state.loginInfoReducer);
 
   const prevBtnHandler = (e) => {
     e.preventDefault();
@@ -67,8 +69,13 @@ function Header() {
     !!sessionStorage.Authorization ?navigate("/datacreate") :alert("로그인을 해주세요.")
   }
 
-  const removeHandler = () => {
+  const logoClickHandler = () => {
     dispatch(searchActions.removeSearchValue());
+    if(login) {
+      navigate("/suggest")
+    } else {
+      navigate("/")
+    }
   }
 
   const logoutHandler = () => {
@@ -86,7 +93,7 @@ function Header() {
         className={`${(pathname === "/datacreate" || pathname === "/login" || pathname === "/signup" || pathname === "/search") ? "icon" : "icon hidden"}`}
         onClick={prevBtnHandler} />
       {pathname === "/setuserinfo" ? <img src="images/logo_header.png" alt="logo" className="logo" />
-        : <Link to="/suggest" onClick={removeHandler}><img src="images/logo_header.png" alt="logo" className="logo" /></Link>}
+        : <div onClick={logoClickHandler}><img src="images/logo_header.png" alt="logo" className="logo" /></div>}
       <RightDiv>
         <FontAwesomeIcon icon={faArrowRightFromBracket} 
         onClick={logoutHandler}
