@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -47,7 +48,7 @@ public class ConcernMapper {
 
     public ConcernDto.Response concernToConcernResponseDto(Concern concern) {
         List<SupplementDto.ResponseForUser> supplementDtos = concern.getSupplements().stream()
-                .sorted(Comparator.comparing(Supplement::getNumberSearched).reversed())
+                .sorted(Comparator.comparing(s->Optional.ofNullable(s.getNumberSearched()).orElse(1)))
                 .limit(4)
                 .map(supplement -> SupplementDto.ResponseForUser.builder()
                         .supplementName(supplement.getSupplementName())

@@ -8,8 +8,11 @@ import com.SebMainTeam13.team13.detail.service.DetailService;
 import com.SebMainTeam13.team13.dto.SingleResponseDto;
 import com.SebMainTeam13.team13.user.service.UserService;
 import com.SebMainTeam13.team13.utils.UriCreator;
+import com.nimbusds.jose.util.Pair;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
@@ -30,7 +33,16 @@ public class DetailController {
     @PostMapping
     public ResponseEntity postDetail(@Valid @RequestBody DetailDto.Post post) {
         String principal = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Long userId= userService.findUserIdByEmail(principal);
+        Pair<Long, String> userIdAndTokenPair = userService.checkToken(principal);
+        Long userId = userIdAndTokenPair.getLeft();
+        String newAccessToken = userIdAndTokenPair.getRight();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        if (newAccessToken != null) {
+            headers.set("Authorization", "Bearer " + newAccessToken);
+        }
+
         Detail detail = detailService.createDetail(detailMapper.detailPostDtoToDetail(post),userId);
         URI location = UriCreator.createUri(DETAIL_DEFAULT_URL, detail.getDetailId());
 
@@ -40,7 +52,16 @@ public class DetailController {
     @PatchMapping
     public ResponseEntity patchDetail(@Valid @RequestBody DetailDto.Patch patch) {
         String principal = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Long userId= userService.findUserIdByEmail(principal);
+        Pair<Long, String> userIdAndTokenPair = userService.checkToken(principal);
+        Long userId = userIdAndTokenPair.getLeft();
+        String newAccessToken = userIdAndTokenPair.getRight();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        if (newAccessToken != null) {
+            headers.set("Authorization", "Bearer " + newAccessToken);
+        }
+
         Detail detail = detailService.updateDetail(detailMapper.detailPatchDtoToDetail(patch),userId);
         DetailDto.Response response = detailMapper.detailToDetailResponseDto(detail);
 
@@ -50,7 +71,16 @@ public class DetailController {
     @GetMapping
     public ResponseEntity getDetail() {
         String principal = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Long userId= userService.findUserIdByEmail(principal);
+        Pair<Long, String> userIdAndTokenPair = userService.checkToken(principal);
+        Long userId = userIdAndTokenPair.getLeft();
+        String newAccessToken = userIdAndTokenPair.getRight();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        if (newAccessToken != null) {
+            headers.set("Authorization", "Bearer " + newAccessToken);
+        }
+
         Detail detail = detailService.findDetail(userId);
         DetailDto.Response response = detailMapper.detailToDetailResponseDto(detail);
 

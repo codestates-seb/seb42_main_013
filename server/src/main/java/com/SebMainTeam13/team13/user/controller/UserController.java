@@ -2,15 +2,19 @@ package com.SebMainTeam13.team13.user.controller;
 
 import com.SebMainTeam13.team13.dto.MultiResponseDto;
 import com.SebMainTeam13.team13.dto.SingleResponseDto;
+import com.SebMainTeam13.team13.jwt.JwtTokenizer;
 import com.SebMainTeam13.team13.user.dto.UserDto;
 import com.SebMainTeam13.team13.user.entity.User;
 import com.SebMainTeam13.team13.user.mapper.UserMapper;
 import com.SebMainTeam13.team13.user.service.UserService;
 import com.SebMainTeam13.team13.utils.UriCreator;
+import com.nimbusds.jose.util.Pair;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -52,7 +56,15 @@ public class UserController {
     @PatchMapping
     public ResponseEntity updateMe(@Valid @RequestBody UserDto.Patch patchDto) {
         String principal = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Long userId= userService.findUserIdByEmail(principal);
+        Pair<Long, String> userIdAndTokenPair = userService.checkToken(principal);
+        Long userId = userIdAndTokenPair.getLeft();
+        String newAccessToken = userIdAndTokenPair.getRight();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        if (newAccessToken != null) {
+            headers.set("Authorization", "Bearer " + newAccessToken);
+        }
         patchDto.setUserId(userId);
         User user = userService.updateUser(mapper.userPatchToUser(patchDto));
 
@@ -63,9 +75,19 @@ public class UserController {
     @GetMapping
     public ResponseEntity getUser() {
         String principal = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Long userId= userService.findUserIdByEmail(principal);
+        Pair<Long, String> userIdAndTokenPair = userService.checkToken(principal);
+        Long userId = userIdAndTokenPair.getLeft();
+        String newAccessToken = userIdAndTokenPair.getRight();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        if (newAccessToken != null) {
+            headers.set("Authorization", "Bearer " + newAccessToken);
+        }
+
         User user = userService.getUser(userId);
         UserDto.Response response = mapper.userToResponse(user);
+
 
         return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.OK);
     }
@@ -73,8 +95,15 @@ public class UserController {
     @DeleteMapping
     public ResponseEntity deleteUser() {
         String principal = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Long userId= userService.findUserIdByEmail(principal);
-        userService.deleteUser(userId);
+        Pair<Long, String> userIdAndTokenPair = userService.checkToken(principal);
+        Long userId = userIdAndTokenPair.getLeft();
+        String newAccessToken = userIdAndTokenPair.getRight();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        if (newAccessToken != null) {
+            headers.set("Authorization", "Bearer " + newAccessToken);
+        }
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
