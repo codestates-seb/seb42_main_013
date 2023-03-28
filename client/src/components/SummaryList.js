@@ -33,7 +33,7 @@ const ListImgBox = styled.div`
   padding-bottom: 5px;
   margin-right: 8px;
   >i{
-    box-shadow: 20px 0px 20px -13px #999999;
+    /* box-shadow: 20px 0px 20px -13px #999999; */
   }
   position: relative;
   svg{
@@ -181,8 +181,8 @@ function SummaryList({ pill, data, setData, openDeleteHanlder}) {
       {isOpen && <ModalBackdrop className="backdrop" onClick={openModalHandler} />}
       <ListImgBox>
         { findImgSource === "group1"
-          ? <SpriteImage1 wrappersize="85" horizon={1} className={spreadPill.imageURL} url={process.env.PUBLIC_URL + '/images/pillVectorImg.png'}/>
-          : <SpriteImage2 wrappersize="85" horizon={1} className={spreadPill.imageURL} url={process.env.PUBLIC_URL + '/images/pillVectorImg2.png'}/>
+          ? <SpriteImage1 wrappersize="80" horizon={1} className={spreadPill.imageURL} url={process.env.PUBLIC_URL + '/images/pillVectorImg.png'}/>
+          : <SpriteImage2 wrappersize="80" horizon={1} className={spreadPill.imageURL} url={process.env.PUBLIC_URL + '/images/pillVectorImg2.png'}/>
         } 
         { (isCloseToExpirationDate||isAlmostRunout) &&
           <FontAwesomeIcon icon={faCircleExclamation} />}
