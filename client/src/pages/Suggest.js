@@ -11,7 +11,6 @@ import card1 from "../images/cards/card1.jpg";
 import card2 from "../images/cards/card2.jpg";
 import card3 from "../images/cards/card3.jpg";
 import card4 from "../images/cards/card4.jpg";
-import { ReactComponent as LoadingIcon } from "../images/svg/loadingIcon.svg";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Pagination, Autoplay } from "swiper";
 import "swiper/css";
@@ -28,26 +27,6 @@ const SuggestContainer = styled.div`
   .highlight {
     color: var(--blue-100);
     font-weight: 600;
-  }
-`
-
-const LoadingContainer = styled(SuggestContainer)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  .loader{
-    margin: 0 0 2em;
-    height: 100px;
-    width: 20%;
-    text-align: center;
-    padding: 1em;
-    margin: 0 auto 1em;
-    display: inline-block;
-    vertical-align: top;
-  }
-  svg path,
-  svg rect{
-    fill: var(--blue-100);
   }
 `
 
@@ -120,7 +99,7 @@ const SugSlideDiv = styled(UserConcern)`
     position: absolute;
     z-index: 20;
     right: 20px;
-    top: 11.3px;
+    top: 11.4px;
   }
   .swiper-pagination-bullet {
     background-color: transparent;
@@ -349,12 +328,10 @@ function Suggest() {
   const { selectedConcern } = useSelector(state => state.concernReducer);
   const { login, userInfo } = useSelector(state => state.loginInfoReducer);
   const [concerns, setConcerns] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const clickedConcern = concerns.filter(el => el.concernId === selectedConcern)[0];
   const numbers = [0, 1, 2, 3].sort(() => Math.random() - 0.5);
-  const userSup = userInfo?.supplements.map(el => el.supplementName).sort(() => Math.random() - 0.5);
 
   useAuthCheck();
 
@@ -365,13 +342,14 @@ function Suggest() {
   }, [login])
 
   useEffect(() => {
-    setIsLoading(true);
     axios.get(`${process.env.REACT_APP_API_URL}/concerns/`)
       .then((res) => {
         setConcerns(res.data.data)
-        setIsLoading(false)
+
       });
   }, [])
+
+  console.log(concerns);
 
   const supplementClick = (e) => {
     const data = e.currentTarget.id;
@@ -388,12 +366,6 @@ function Suggest() {
   };
 
   return (
-    <>
-      {isLoading ? (
-        <LoadingContainer>
-          <LoadingIcon />
-        </LoadingContainer>
-      ) : (
         <SuggestContainer>
           <SearchBar />
           <WelcomeDiv>환영합니다, <span className="highlight">{userInfo?.displayName}</span>님!</WelcomeDiv>
@@ -401,17 +373,17 @@ function Suggest() {
             <UserConcern>
               <div><span className="highlight">{userInfo?.displayName}</span>님을 위한 영양제 추천</div>
               <UserSupContainer>
-                <div className="supplement-area" id={userSup[0]} onClick={supplementClick}>
+                <div className="supplement-area" id={userInfo?.supplements[0].supplementName} onClick={supplementClick}>
                   <UserSupImg src="images/icon-pill1.png" alt="supplement-icon" />
-                  <div>{userSup[0]}</div>
+                  <div>{userInfo?.supplements[0].supplementName}</div>
                 </div>
-                <div className="supplement-area" id={userSup[1]} onClick={supplementClick}>
+                <div className="supplement-area" id={userInfo?.supplements[1].supplementName} onClick={supplementClick}>
                   <UserSupImg src="images/icon-pill2.png" alt="supplement-icon" />
-                  <div>{userSup[1]}</div>
+                  <div>{userInfo?.supplements[1].supplementName}</div>
                 </div>
-                <div className="supplement-area" id={userSup[2]} onClick={supplementClick}>
+                <div className="supplement-area" id={userInfo?.supplements[2].supplementName} onClick={supplementClick}>
                   <UserSupImg src="images/icon-pill3.png" alt="supplement-icon" />
-                  <div>{userSup[2]}</div>
+                  <div>{userInfo?.supplements[2].supplementName}</div>
                 </div>
               </UserSupContainer>
             </UserConcern>
@@ -528,9 +500,6 @@ function Suggest() {
             )}
           </SugContentConatiner>
         </SuggestContainer>
-      )}
-
-    </>
   )
 }
 
