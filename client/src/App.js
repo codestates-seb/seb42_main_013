@@ -34,8 +34,8 @@ function App() {
         </div>
         <div className="app-wrap">
           {(pathname === "/") ? null : <Header />}
-          <div className={(pathname === "/" || pathname === "/login" || pathname === "/signup" || pathname === "/setuserinfo" || pathname === "/datacreate" || pathname === "/signupDone")
-            ? (pathname === "/") ? "" : "other" : "container"}>
+          <div className={(pathname === "/" || pathname === "/login" || pathname === "/signup" || pathname === "/setuserinfo" || pathname === "/signupDone")
+            ? (pathname === "/") ? "" : "other" : (pathname === "/datacreate") ?"nofooter" :"container"}>
             <Routes>
               <Route path="/" element={<Intro />} />
               <Route path="/search" element={<Search />} />

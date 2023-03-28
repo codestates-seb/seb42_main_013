@@ -63,6 +63,11 @@ const GlobalStyle = createGlobalStyle`
     height: calc((var(--vh, 1vh) * 100) - 112px);
     overflow: scroll;
   }
+  .nofooter{
+    position: relative;
+    top: 48px;
+    overflow: scroll;
+  }
 `
 
 export default GlobalStyle;
