@@ -14,10 +14,24 @@ const TimelineContainer = styled.div`
 const TitleContent = styled.div`
   /* background-color: red; */
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   padding: var(--gap-sm) 0;
   font-family: 'NanumBarunGothicBold';
-  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-size: 27px;
+  div:last-child{
+    background-color: #5b85eb;
+    border-radius: 50px;
+    padding: 0 15px;
+    font-family: 'NanumBarunGothicLight';
+    font-weight: 500;
+    letter-spacing: 0px;
+    font-size: 14px;
+    color: #ffffff;
+  }
 `;
 
 // 스크롤
@@ -52,7 +66,7 @@ const TimeWrap = ({ idx, time, hours, minutes, supplements, selectedDayFormat })
       </TimeWrapCss>
       <InfoDiv>
         {
-          supplements.map((e, idx) => {
+          supplements && supplements.map((e, idx) => {
             // const DIVIDE = 1000 / 60 / 60 / 24;
             // const MULTIPLY = 1000 * 60 * 60 * 24;
 
@@ -179,12 +193,12 @@ function Timeline({ supplements, nowYear, nowMonth, nowDay, nowDate, testData, s
   const [isLoading, setIsLoading] = useState(false)
   // console.log(supplements)
   // scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-  // console.log(testData);
+  const newDay = new Date(nowDate).getDay();
+  // console.log(newDay)
+  // console.log(nowDay)
   useEffect(() => {
     const getTime = () => {
       let time = new Date();
-      // console.log(time)
-      // scrollRef.current.scrollTop = time.getHours() * 135;
       setHours(time.getHours())
       setMinutes(time.getMinutes())
       setCount(`${time.getHours()}시 ${time.getMinutes()}분 ${time.getSeconds()}초`);
@@ -199,10 +213,10 @@ function Timeline({ supplements, nowYear, nowMonth, nowDay, nowDate, testData, s
   useEffect(() => {
     if (minutes !== -1 && !isLoading) {
       const target = document.getElementsByName('divider_now')[0]
-      console.log(target)
+      // console.log(target)
       const nowY = target.getBoundingClientRect().top - 543.5546875
 
-      console.log(nowY)
+      // console.log(nowY)
       scrollRef.current.scrollTo(0, nowY)
       setIsLoading(true)
     }
@@ -210,7 +224,9 @@ function Timeline({ supplements, nowYear, nowMonth, nowDay, nowDate, testData, s
 
   return (
     <TimelineContainer>
-      <TitleContent>{`${nowMonth < 10 ? `0${nowMonth}` : nowMonth}.${nowDate < 10 ? `0${nowDate}` : nowDate}.${weeks[nowDay]}.`}
+      <TitleContent>
+        <div>{`${nowDate < 10 ? `0${nowDate}` : nowDate}`}</div>
+        <div>{`${nowDay&&nowDay}`}</div>
       </TitleContent>
       <TimeContentContainer ref={scrollRef}>
         {timeSpots.map((e, idx) => {

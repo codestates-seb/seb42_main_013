@@ -141,10 +141,10 @@ function Login() {
             } else {
               const actions = {};
               if (res) {
+                const newSup = res.supplements.sort(() => Math.random() - 0.5);
                 actions.login = true;
-                actions.userInfo = res;
+                actions.userInfo = {...res, supplements: newSup};
                 dispatch(loginInfoActions.changeLoginInfo(actions))
-                alert('로그인 성공')
                 window.location.href = '/suggest'
               }
             }

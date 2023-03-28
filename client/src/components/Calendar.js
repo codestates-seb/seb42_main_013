@@ -13,11 +13,10 @@ const Container = styled.div`
     padding: 10px;
 `;
 
-function Calendar({ setCalendarLoaded, testData, supplements, nowYear, nowMonth, nowDate, setNowYear, setNowMonth, setNowDate }) {
+function Calendar({ setCalendarLoaded, testData, supplements, nowYear, nowMonth, nowDate, setNowYear, setNowMonth, setNowDate, setNowDay }) {
     const [datas, setDatas] = useState()
     const [yearMonth, setYearMonth] = useState({ year: 2023, month: 3 })
     const [selected, setSelected] = useState("")
-
     const days = ["일", "월", "화", "수", "목", "금", "토"]
 
     const changeCalendar = (m) => {
@@ -32,11 +31,10 @@ function Calendar({ setCalendarLoaded, testData, supplements, nowYear, nowMonth,
             setYearMonth({ ...yearMonth, month: m })
         }
     }
-
     useEffect(() => {
         const date = new Date(yearMonth.year, yearMonth.month - 1, 1);
         const res = renderCalendar(date, yearMonth.year, yearMonth.month);
-        if (res) setCalendarLoaded(true)
+        // if (res) setCalendarLoaded(true)
     }, [yearMonth])
 
     const renderCalendar = (date, year, month) => {
@@ -67,12 +65,15 @@ function Calendar({ setCalendarLoaded, testData, supplements, nowYear, nowMonth,
             const date = year + "-" + (prev ? month - 1 : next ? month + 1 : month) + "-" + ((e + "").length === 1 ? "0" + e : e);
             const weekend = index % 7 === 0 || index % 7 === 6;
 
+            const day = index % 7 === 0 ? 'Sun' : index % 7 === 1 ? 'Mon' : index % 7 === 2 ? 'Tue' : index % 7 === 3 ? 'Wed' : index % 7 === 4 ? 'Thu' : index % 7 === 5 ? 'Fri' : 'Sat'
+
             const onDuration = !prev && !next;
 
             const monWedFri = index % 7 === 1 || index % 7 === 3 || index % 7 === 5;
 
             let alertDate = [];
-            const test = supplements.map((e, idx) => {
+
+            const test = supplements ? supplements.map((e, idx) => {
                 const calc = Math.floor((new Date(e.endDate).getTime() - new Date(date).getTime()) / 1000 / 60 / 60 / 24)
                 const period = Math.floor((new Date(e.endDate).getTime() - new Date(e.startDate).getTime()) / 1000 / 60 / 60 / 24)
 
@@ -90,7 +91,7 @@ function Calendar({ setCalendarLoaded, testData, supplements, nowYear, nowMonth,
                 // console.log('-'.repeat(30))
 
                 return isOn
-            })
+            }) : []
             // console.log(new Date(date), test)
 
             const passed = onDuration && ((e < nowDate && month === nowMonth && year === nowYear) || ((month < nowMonth && year === nowYear) || year < nowYear));
@@ -107,7 +108,8 @@ function Calendar({ setCalendarLoaded, testData, supplements, nowYear, nowMonth,
                 todayFlag,
                 prev,
                 next,
-                test
+                test,
+                day
             }
             return obj
         })
@@ -140,9 +142,11 @@ function Calendar({ setCalendarLoaded, testData, supplements, nowYear, nowMonth,
                                     if (e.prev) { changeCalendar(yearMonth.month - 1) }
                                     else if (e.next) { changeCalendar(yearMonth.month + 1) }
                                     setSelected(e.date)
-                                    const Dates = e.date.split("-").map(e => Number(e));
-                                    const setDates = [setNowYear, setNowMonth, setNowDate];
-                                    setDates.forEach((e, idx) => e(Dates[idx]));
+                                    console.log(e)
+                                    const Dates = [...e.date.split("-").map(e => Number(e)), e.day]
+                                    console.log(Dates)
+                                    const setDates = [setNowYear, setNowMonth, setNowDate, setNowDay];
+                                    setDates.forEach((f, idx) => f(Dates[idx]));
                                 }} key={index} className={`day${e.prevNext || !e.onDuration ? " disable" : e.todayFlag ? " today" : ""}`} style={{ fontSize: '12px', border: selected === e.date ? '2px solid #5b85eb' : e.prevNext ? '2px solid #D6D6D6' : "none" }}>
                                     <span style={{ margin: '5px', fontFamily: 'NanumBarunGothic' }} >{e.name}</span>
                                     <div style={{ position: 'absolute', width: '100%', height: '4px', bottom: '4px', display: 'flex', justifyContent: 'center' }}>
@@ -151,7 +155,6 @@ function Calendar({ setCalendarLoaded, testData, supplements, nowYear, nowMonth,
                                       )}   */}
                                         {(e.onDuration && e.test.filter(e => e).length !== 0) && <div style={{ width: '4px', height: '4px', backgroundColor: "#FB7F0E", borderRadius: '99px', margin: '0 1px' }}></div>}
                                     </div>
-
                                     {/* {console.log(new Date(e.date).getTime())} 모든 날짜(하나씩) */}
                                     {/* {console.log(e.uniqueArr)} */} {/* 복용 날짜 */}
                                     {/* {console.log(e)} */}
