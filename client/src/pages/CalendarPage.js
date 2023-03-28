@@ -3,7 +3,7 @@ import Timeline from "../components/Timeline";
 import React, { useEffect, useState } from "react";
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import supplements from "../components/supplements.json";
+import useAuthCheck from "../util/useAuthCheck";
 import axios from "axios";
 
 function CalendarPage() {
@@ -12,7 +12,6 @@ function CalendarPage() {
   const [nowDate, setNowDate] = useState(new Date().getDate());
   const [nowDay, setNowDay] = useState(new Date().getDay() === 0 ? 'Sun' : new Date().getDay() === 1 ? 'Mon' : new Date().getDay() === 2 ? 'Tue' : new Date().getDay() === 3 ? 'Wed' : new Date().getDay() === 4 ? 'Thu' : new Date().getDay() === 5 ? 'Fri' : 'Sat');
   const [testData, setTestData] = useState();
-
 
   useEffect(() => {
     (async () => {

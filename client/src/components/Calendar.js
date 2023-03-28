@@ -72,6 +72,7 @@ function Calendar({ setCalendarLoaded, testData, supplements, nowYear, nowMonth,
             const monWedFri = index % 7 === 1 || index % 7 === 3 || index % 7 === 5;
 
             let alertDate = [];
+
             const test = supplements ? supplements.map((e, idx) => {
                 const calc = Math.floor((new Date(e.endDate).getTime() - new Date(date).getTime()) / 1000 / 60 / 60 / 24)
                 const period = Math.floor((new Date(e.endDate).getTime() - new Date(e.startDate).getTime()) / 1000 / 60 / 60 / 24)
