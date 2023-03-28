@@ -19,6 +19,7 @@ const FooterContainer = styled.div`
   padding: 8px;
   display: flex;
   justify-content: space-around;
+  z-index: 3;
   .category {
     padding: 4px;
     color: var(--black-100);
