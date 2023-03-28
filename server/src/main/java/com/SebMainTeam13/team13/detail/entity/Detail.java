@@ -27,7 +27,6 @@ import static javax.persistence.GenerationType.IDENTITY;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Transactional
 public class Detail  {
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -53,10 +52,7 @@ public class Detail  {
 
     @ManyToMany
     private List<Concern> concerns = new ArrayList<>();
-    @ElementCollection
-    @CollectionTable(name = "detail_map",
-            joinColumns = {@JoinColumn(name = "detail_id")})
-    @MapKeyColumn(name = "long_key")
-    @Column(name = "long_value")
-    private Map<Long, Long> longToLongMap = new HashMap<>();
+    @OneToMany(mappedBy = "detail", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ConcernDetailMap> mapList = new ArrayList<>();
 }
+
