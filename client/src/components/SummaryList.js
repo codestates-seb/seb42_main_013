@@ -72,7 +72,6 @@ const PillName = styled.span`
   font-family: NanumBarunGothicBold;
   color: black;
   font-size: 16px;
-  cursor: pointer;
 `;
 const PillContains = styled.span`
   color: var(--black-200);
