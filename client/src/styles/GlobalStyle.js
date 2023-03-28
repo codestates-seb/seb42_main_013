@@ -66,7 +66,9 @@ const GlobalStyle = createGlobalStyle`
   .nofooter{
     position: relative;
     top: 48px;
+    height: calc(100vh - 48px);
     overflow: scroll;
+
   }
 `
 
