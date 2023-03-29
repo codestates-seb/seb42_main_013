@@ -349,8 +349,6 @@ function Suggest() {
       });
   }, [])
 
-  console.log(concerns);
-
   const supplementClick = (e) => {
     const data = e.currentTarget.id;
     dispatch(searchActions.changeSearchValue({ data }));

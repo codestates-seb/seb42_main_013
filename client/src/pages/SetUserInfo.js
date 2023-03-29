@@ -146,7 +146,6 @@ function SetUserInfo() {
 
 
   const birthDateHandler = (e) => {
-    console.log(e.target.value);
     setBirthDate(e.target.value);
   }
 
@@ -158,7 +157,6 @@ function SetUserInfo() {
   }
 
   const tagClickHandler = (e) => {
-    console.log(e.target.id);
     const clickedId = Number(e.target.id)
     if (clickedTag.includes(clickedId)) {
       const taglist = clickedTag.filter(el => el !== clickedId);
@@ -168,7 +166,6 @@ function SetUserInfo() {
       setClickedTag(tagList);
     }
   }
-  // console.log(clickedTag);
 
   const submitBtnHandler = async (e) => {
     e.preventDefault();

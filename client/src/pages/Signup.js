@@ -52,7 +52,7 @@ function Signup() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [data, setData] = useState({ email: '', password: '', displayName: '' });
   const onSubmit = async (data) => {
-    console.log(data);
+    // console.log(data);
     await axios({
       method: 'post',
       // url: `/users`,
@@ -65,7 +65,7 @@ function Signup() {
       .then((res) => {
         alert('회원가입 완료')
         window.location.href = '/signupDone'
-        console.log(res)
+        // console.log(res)
       })
       .catch((err) => { console.log(err) })
   };

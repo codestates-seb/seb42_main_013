@@ -190,12 +190,10 @@ function Search() {
 
   const lowPriceChange = (e) => {
     setLowPrice(e.target.value);
-    console.log(e.target.value.length);
   }
 
   const highPriceChange = (e) => {
     setHighPrice(e.target.value);
-    console.log(e.target.value.length);
   }
 
   const priceFilterHandler = (e) => {

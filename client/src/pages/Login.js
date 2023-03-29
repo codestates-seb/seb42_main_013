@@ -121,7 +121,6 @@ function Login() {
   const [isFocus2, setIsFocus2] = useState(false);
 
   const onSubmit = async (data) => {
-    console.log(data);
     await axios({
       method: 'post',
       url: `${process.env.REACT_APP_API_URL}/auth/login`,
@@ -130,7 +129,6 @@ function Login() {
     }, { withCredentials: true })
 
       .then(async (res) => {
-        console.log(res);
         sessionStorage.setItem('Authorization', res.headers["authorization"])
         getUserInfo()
 

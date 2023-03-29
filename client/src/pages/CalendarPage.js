@@ -24,7 +24,7 @@ function CalendarPage() {
 
         .then((res) => {
           // window.location.href = '/login'
-          console.log(res)
+          // console.log(res)
           setTestData(res.data.data)
         })
         .catch((err) => { console.log(err) })
