@@ -1,0 +1,33 @@
+
+[
+  {
+    "supplementName":"오메가3",
+    "expirationDate": "male",
+    "startDate": "2023-03-22",
+    "endDate": "2023-03-28",
+    "takingTime": [
+      "07:00",
+      "11:00",
+      "18:30"
+    ],
+    "pillsLeft": 50,
+    "totalCapacity": 50,
+    "dosagePerServing": 2,
+    "dosageInterval": 2
+  },
+  {
+    "supplementName":"종합비타민",
+    "expirationDate": "male",
+    "startDate": "2023-03-22",
+    "endDate": "2023-03-29",
+    "takingTime": [
+      "08:00",
+      "11:00",
+      "17:30"
+    ],
+    "pillsLeft": 50,
+    "totalCapacity": 50,
+    "dosagePerServing": 1,
+    "dosageInterval": 1
+  }
+]

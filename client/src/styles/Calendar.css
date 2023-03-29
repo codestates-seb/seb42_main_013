@@ -1,0 +1,34 @@
+.comp_calendar .sec_cal { width: 320px; margin: 10px auto; font-family: "NanumBarunGothic"; } 
+
+.comp_calendar .sec_cal .cal_nav { display: flex; justify-content: center; align-items: center; color:#444 } 
+.comp_calendar .sec_cal .cal_nav .icon { font-size: 18px; cursor: pointer; } 
+
+.comp_calendar .sec_cal .cal_nav .year-month { width: 250px; text-align: center; font-size: 25px; font-family: 'NanumBarunGothicBold'; } 
+
+.comp_calendar .sec_cal .cal_wrap { margin-top: 0px; } 
+
+.comp_calendar .sec_cal .cal_wrap .days { display: flex; margin:30px 0 10px 0;} 
+
+.comp_calendar .sec_cal .cal_wrap .week { display:flex; align-items: center; justify-content: center; width: calc(100% / 7 - 10px); margin:5px 5px; text-align: left; color: #444; font-size: 13px; text-align: center; border-radius:5px; position: relative } 
+
+.comp_calendar .sec_cal .cal_wrap .day {background-color: #ffffff; position: relative; margin: 5px; width: calc(100% / 7 - 10px); border-radius: 10px; height: 35.711px; cursor: pointer; display:flex; flex-direction: column; align-items: center; justify-content: center; color: #333; font-size: 15px; box-sizing: border-box; } 
+.comp_calendar .sec_cal .cal_wrap .day:hover { background-color: #f6f6f6 } 
+
+.comp_calendar .sec_cal .cal_wrap .day.today:hover {background-color:#5b85ebcc } 
+
+.comp_calendar .sec_cal .cal_wrap .day:nth-child(7n-6) {background-color: #f6f6f6; } 
+.comp_calendar .sec_cal .cal_wrap .day:nth-child(7n) {
+ background-color: #f6f6f6; }
+
+.comp_calendar .sec_cal .cal_wrap .day.today { background-color:#5b85eb; color: white } 
+
+.comp_calendar .sec_cal .cal_wrap .day.disable { color: #ccc; cursor: unset; background-color: #efefef; color: none; display: hidden; border: none; } 
+
+.comp_calendar .sec_cal .cal_wrap .dates { display: flex; flex-flow: wrap; } 
+
+.current .today { background: rgb(242 242 242); } 
+
+
+
+
+
