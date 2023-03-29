@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="d0cbc44e-cffb-42dd-ad1e-6a77f19204f2" name="변경" comment="">
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/SebMainTeam13/team13/auth/handler/OAuth2SuccessHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/.gradle/7.6.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gradle/7.6.1/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/.gradle/7.6.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gradle/7.6.1/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/.gradle/7.6.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gradle/7.6.1/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/.gradle/7.6.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gradle/7.6.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/.gradle/7.6.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gradle/7.6.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/server/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/classes/java/main/com/SebMainTeam13/team13/auth/utils/AuthorityUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/classes/java/main/com/SebMainTeam13/team13/auth/utils/AuthorityUtils.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/classes/java/main/com/SebMainTeam13/team13/jwt/JwtTokenizer.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/classes/java/main/com/SebMainTeam13/team13/jwt/JwtTokenizer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/classes/java/main/com/SebMainTeam13/team13/security/config/SecurityConfiguration$CustomFilterConfigurer.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/classes/java/main/com/SebMainTeam13/team13/security/config/SecurityConfiguration$CustomFilterConfigurer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/classes/java/main/com/SebMainTeam13/team13/security/config/SecurityConfiguration.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/classes/java/main/com/SebMainTeam13/team13/security/config/SecurityConfiguration.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/classes/java/main/com/SebMainTeam13/team13/security/handler/JWTAuthenticationFailureHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/classes/java/main/com/SebMainTeam13/team13/security/handler/JWTAuthenticationFailureHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/classes/java/main/com/SebMainTeam13/team13/security/handler/JwtAuthenticationSuccessHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/classes/java/main/com/SebMainTeam13/team13/security/handler/JwtAuthenticationSuccessHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/classes/java/main/com/SebMainTeam13/team13/user/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/classes/java/main/com/SebMainTeam13/team13/user/service/UserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/classes/java/test/com/SebMainTeam13/team13/JWTtest/JwtTokenizerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/classes/java/test/com/SebMainTeam13/team13/JWTtest/JwtTokenizerTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/libs/team13-0.0.1-SNAPSHOT-plain.jar" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/libs/team13-0.0.1-SNAPSHOT-plain.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/libs/team13-0.0.1-SNAPSHOT.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/reports/tests/test/classes/com.SebMainTeam13.team13.JWTtest.JwtTokenizerTest.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/reports/tests/test/classes/com.SebMainTeam13.team13.JWTtest.JwtTokenizerTest.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/reports/tests/test/classes/com.SebMainTeam13.team13.Team13ApplicationTests.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/reports/tests/test/classes/com.SebMainTeam13.team13.Team13ApplicationTests.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/reports/tests/test/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/reports/tests/test/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/reports/tests/test/packages/com.SebMainTeam13.team13.JWTtest.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/reports/tests/test/packages/com.SebMainTeam13.team13.JWTtest.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/reports/tests/test/packages/com.SebMainTeam13.team13.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/reports/tests/test/packages/com.SebMainTeam13.team13.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/resources/main/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/resources/main/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/test-results/test/TEST-com.SebMainTeam13.team13.JWTtest.JwtTokenizerTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/test-results/test/TEST-com.SebMainTeam13.team13.JWTtest.JwtTokenizerTest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/test-results/test/TEST-com.SebMainTeam13.team13.Team13ApplicationTests.xml" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/test-results/test/TEST-com.SebMainTeam13.team13.Team13ApplicationTests.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/test-results/test/binary/output.bin" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/test-results/test/binary/output.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/test-results/test/binary/output.bin.idx" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/test-results/test/binary/output.bin.idx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/test-results/test/binary/results.bin" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/test-results/test/binary/results.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/tmp/bootJar/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/tmp/compileJava/compileTransaction/stash-dir/JwtAuthenticationFilter.class.uniqueId0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/tmp/compileJava/compileTransaction/stash-dir/SecurityConfiguration$CustomFilterConfigurer.class.uniqueId1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/tmp/compileJava/compileTransaction/stash-dir/SecurityConfiguration.class.uniqueId2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/tmp/compileTestJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/tmp/compileTestJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/SebMainTeam13/team13/auth/utils/AuthorityUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/SebMainTeam13/team13/auth/utils/AuthorityUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/SebMainTeam13/team13/jwt/JwtTokenizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/SebMainTeam13/team13/jwt/JwtTokenizer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/SebMainTeam13/team13/security/config/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/SebMainTeam13/team13/security/config/SecurityConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/SebMainTeam13/team13/user/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/SebMainTeam13/team13/user/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/test/java/com/SebMainTeam13/team13/JWTtest/JwtTokenizerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/com/SebMainTeam13/team13/JWTtest/JwtTokenizerTest.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2MhzqrvfNLDbmNTa2SGaJ2jeaqb" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/owner/Desktop/새 폴더 (2)/seb42_main_013",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="애플리케이션 수준" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="디폴트 작업">
+      <changelist id="d0cbc44e-cffb-42dd-ad1e-6a77f19204f2" name="변경" comment="" />
+      <created>1678234795718</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1678234795718</updated>
+      <workItem from="1678234796864" duration="42000" />
+      <workItem from="1678445304505" duration="3000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
