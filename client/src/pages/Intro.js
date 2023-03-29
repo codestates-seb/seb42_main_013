@@ -147,8 +147,6 @@ function Intro() {
   const navigate = useNavigate();
   const { login } = useSelector(state => state.loginInfoReducer);
 
-  console.log(login);
-
   useEffect(() => {
     if(login) {
       navigate("/suggest");

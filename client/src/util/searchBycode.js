@@ -54,7 +54,6 @@ async function searchByCode (code, setData) {
           dosagePerServing: data.servingSizes[0].minQuantity,
         }
         setData(obj)
-        console.log("search완료")
       } else {
         alert("데이터베이스에 존재하지 않는 코드입니다.")
       }

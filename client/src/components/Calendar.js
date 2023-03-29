@@ -142,9 +142,9 @@ function Calendar({ setCalendarLoaded, testData, supplements, nowYear, nowMonth,
                                     if (e.prev) { changeCalendar(yearMonth.month - 1) }
                                     else if (e.next) { changeCalendar(yearMonth.month + 1) }
                                     setSelected(e.date)
-                                    console.log(e)
+                                    // console.log(e)
                                     const Dates = [...e.date.split("-").map(e => Number(e)), e.day]
-                                    console.log(Dates)
+                                    // console.log(Dates)
                                     const setDates = [setNowYear, setNowMonth, setNowDate, setNowDay];
                                     setDates.forEach((f, idx) => f(Dates[idx]));
                                 }} key={index} className={`day${e.prevNext || !e.onDuration ? " disable" : e.todayFlag ? " today" : ""}`} style={{ fontSize: '12px', border: selected === e.date ? '2px solid #5b85eb' : e.prevNext ? '2px solid #D6D6D6' : "none" }}>

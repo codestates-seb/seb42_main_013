@@ -18,7 +18,6 @@ function DeleteConfirm ({openDeleteHanlder,data, setData}) {
   const deleteDataHandler = () => {
     deletePillData(target.id,navigate)
       .then((res)=>{
-        console.log("aaa")
         let deletedData = data.filter((ele)=>ele.detailSupplementId !== target.id)
         setData(deletedData)
         openDeleteHanlder()
