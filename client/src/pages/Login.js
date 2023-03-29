@@ -119,6 +119,9 @@ function Login() {
   const [data, setData] = useState({ email: '', password: '' });
   const [isFocus1, setIsFocus1] = useState(false);
   const [isFocus2, setIsFocus2] = useState(false);
+  const { login } = useSelector(state => state.loginInfoReducer);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onSubmit = async (data) => {
     await axios({
@@ -134,8 +137,8 @@ function Login() {
 
           .then((res) => {
             if (res.response?.status === 500) {
-              alert("필수 정보를 입력해 주세요!");
               window.location.href = "/setuserinfo";
+              alert("필수 정보를 입력해 주세요!");
             } else {
               const actions = {};
               if (res) {
@@ -143,7 +146,7 @@ function Login() {
                 actions.login = true;
                 actions.userInfo = {...res, supplements: newSup};
                 dispatch(loginInfoActions.changeLoginInfo(actions))
-                window.location.href = '/suggest'
+                navigate("/suggest");
               }
             }
           })
@@ -155,10 +158,6 @@ function Login() {
     console.log(error);
   };
 
-
-  const { login } = useSelector(state => state.loginInfoReducer);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (login) {
