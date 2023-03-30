@@ -3,7 +3,7 @@ import loginExpire from "./loginExpire"
 
 
 
-async function deletePillData(id,openDeleteHanlder,data, setData) {
+async function deletePillData(id,data, setData,openDeleteHanlder) {
   const config = { 
     headers: {
       "Authorization": sessionStorage.getItem("Authorization")
@@ -12,6 +12,7 @@ async function deletePillData(id,openDeleteHanlder,data, setData) {
   await axios
     .delete(`${process.env.REACT_APP_API_URL}/detailSupplements/${id}`, config)
     .then((res)=>{
+      console.log(data)
       let deletedData = data.filter((ele)=>ele.detailSupplementId !== id)
       setData(deletedData)
       openDeleteHanlder()
@@ -20,7 +21,7 @@ async function deletePillData(id,openDeleteHanlder,data, setData) {
       console.log(err)
       // !!sessionStorage.Authorization && alert("로그인 기간이 만료되었습니다.")
       // !!sessionStorage.Authorization && navigate('/login')
-      loginExpire();
+      // loginExpire();
     })    
 }
 
