@@ -15,7 +15,7 @@
 - **`프로젝트 기간` :** 2023.03.03. - 2023.04.03.
 - **`한 줄 소개` :** 영양제 관리를 돕고 새로운 영양제를 추천하는 사용자 맞춤 영양제 서비스
 - **`팀원` :** 양예진(팀장), 김민지, 김태은, 반종현(부팀장), 조민기
-- **`배포 링크` :** [http://bucket-for-main13.s3-website.ap-northeast-2.amazonaws.com](http://bucket-for-main13.s3-website.ap-northeast-2.amazonaws.com)
+- **`링크` :** [서비스 메뉴얼](https://docs.google.com/presentation/d/1F7oTSAVCPtnpg6T06QYaP5ogIoqmDu75/edit?usp=share_link&ouid=111467942398670186641&rtpof=true&sd=true) / [I Pill U 홈페이지](http://bucket-for-main13.s3-website.ap-northeast-2.amazonaws.com)
 <div align="center">
   <h3>* I Pill U는 모바일 환경에 최적화되어 있습니다. 모바일 열람을 원하시면 아래 QR코드를 활용해 주세요!</h3>
   <img width="30%" src="https://user-images.githubusercontent.com/77859683/228735304-2b2d382b-a808-44ed-a179-205e4b937ddc.png" alt="ipillu-qrcode">
@@ -39,7 +39,7 @@
 | [양예진<br>(FE, 팀장)](https://github.com/yjyaang) | [김민지<br>(FE)](https://github.com/JOAAAAAAAAAAA) | [김태은<br>(FE)](https://github.com/10xc) | [반종현<br>(BE, 부팀장)](https://github.com/JONGHYUNVAN) | [조민기<br>(BE)](https://github.com/SEB-BE-42-mkcho) | 
 | :---: | :---: | :---: | :---: | :---: |
 | <img alt="양예진" src="https://user-images.githubusercontent.com/77859683/228738032-26654b73-fef7-47c6-a301-44ce48593257.png" height="150"> | <img alt="김민지" src="https://user-images.githubusercontent.com/77859683/228738461-5a3dbe9a-a78c-4ada-81b3-f8dcc9a7af5e.png" height="150"> | <img alt="김태은" src="https://user-images.githubusercontent.com/77859683/228740344-c8a32f16-5b3f-4167-b6e3-85c4aed5512c.png" height="150" style=""> | <img alt="반종현" src="https://user-images.githubusercontent.com/77859683/228738489-e17bf780-db54-4bf4-b91b-9a9e92067d5d.png" height="150"> | <img alt="조민기" src="https://user-images.githubusercontent.com/77859683/228738494-3630891b-2d8f-49a7-ab43-c812144ed802.png" height="150"> |
-|<p align="left">- 질문 CRUD 개발- 태그 CRU 개발 <br/></p> |<p align="left">- 로그인 인증 개발<br/>(JWT 발급, 인증)<br/>- OAuth2.0 로그인<br/>인증 처리(구글)<br/>- Spring Security<br/>- User CRUD<br/>- 프로필 이미지 관리<br/>- 예외처리 로직 기능<br/></p>|<p align="left">- 답변 CRUD 개발<br/>- 댓글 CRUD 개발<br/>- RestDocs API<br/>문서화 기능 구현<br/>- AWS 배포 환경 구축<br/></p>|<p align="left">- Login 페이지<br/>(JWT/OAuth2.0)<br/>- Signup 페이지<br/>- 질문 Create</br>- Tags 페이지 <br/>- Footer 컴포넌트<br/>- Aside<br/>(오른쪽 사이드바)<br/></p>|<p align="left">-메인페이지 구현<br/>(필터,정렬,조회)<br/>-마이페이지 구현</br>(조회, 수정)<br/>-유저페이지 구현</br>-페이지네이션</br>-질문 검색</br>(tag, body,<br/>user,answerCo)</br>-Nav(lfet)</br></p>|
+|<p align="left">가나다라마바사아자차카타<br/>- (웹) 좌측 소개 페이지<br/>- 시작 페이지<br/>- 유저 정보 CRU<br/>- 영양제 추천 페이지<br/>- 영양제 검색 페이지<br/>- 토큰 만료 검증 함수<br/></p> |<p align="left">가나다라마바사아자차카타<br/>- 알약 관리 페이지<br/>- 데이터 생성 페이지<br/>- 영양제CRUD<br/>- fitlering & sorting<br/>- 바코드 인식 후 자동 입력<br/></p>|<p align="left">가나다라마바사아자차카타<br/>- 회원가입 페이지<br/>- 로그인 페이지<br/>- 캘린더 페이지<br/>  (캘린더/타임라인)<br/></p>|<p align="left">가나다라마바사아자차카타<br/>- Spring security<br/>  - JWT<br/>- User, Detail,<br/> Supplement,<br/>Concern<br/>DetailSupplement<br/>CRUD<br/>-User, Detail,<br/>Supplement, <br/>Concern<br/> DetailSupplement<br/>간 연관관계 매핑<br/>- NaverOpenApi <br/>Controller<br/>- ApiResponse<br/>->DBdata 가공후 저장<br/>- 가공후 저장된 데이터<br/> Search<br/>- ApiResponse를 <br/>통한 user 의<br/> concern에 관한 <br/>노출횟수 저장 <br/></p>|<p align="left">가나다라마바사아자차카타<br/>- Concern CRU<br/>- NaverOpenAPI적용<br/></p>|
 <br/>
 
 ## :computer: 기술 스택
@@ -62,6 +62,8 @@
 + [화면 정의서](https://drive.google.com/file/d/1bUcgcAfQcFdfLkO6aKqS2vBGdcjgR91o/view)
 + [개발자 테스트](https://drive.google.com/file/d/1WwghUac7BKHWVWvpLnS-HU8FGfN-wagt/view)
 + [활동 기록, 회의기록](https://www.notion.so/codestates/51d619ec198340e0a317638e2cd85e04)
++ [서비스 메뉴얼](https://docs.google.com/presentation/d/1F7oTSAVCPtnpg6T06QYaP5ogIoqmDu75/edit?usp=share_link&ouid=111467942398670186641&rtpof=true&sd=true)
++ [기술 발표 영상](https://www.youtube.com/watch?v=kVcoMQc9Ntk)
 <br/>
 
 
