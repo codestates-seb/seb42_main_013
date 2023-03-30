@@ -17,14 +17,14 @@
 - **`팀원` :** 양예진(팀장), 김민지, 김태은, 반종현(부팀장), 조민기
 - **`링크` :** [I Pill U 홈페이지](http://ipillu.link/) | [서비스 메뉴얼](https://drive.google.com/file/d/1yzOMx5NTbo7W8sjl1KdhyVBO08Z_EuJ9/view?usp=share_link)
 <div align="center">
-  <h3>* I Pill U는 모바일 환경에 최적화되어 있습니다. 모바일 열람을 원하시면 아래 QR코드를 활용해 주세요!</h3>
+  <h3>* I Pill U는 모바일 환경에 최적화되어 있습니다.</h3><h3>모바일 열람을 원하시면 아래 QR코드를 활용해 주세요!</h3>
   <img width="30%" src="https://user-images.githubusercontent.com/116554914/228786478-4c99907e-326a-45c0-8a93-4dd4777089f8.png" alt="ipillu-qrcode">
 </div>
 
 <br/>
 
 ## :bulb: Intro
-<h3>영양제 종류, 복용법, 유통기한...일일이 기억하기 너무 복잡하다:face_with_spiral_eyes: 손쉽게 관리할 수 있는 방법 없을까?</h3>
+<h3>영양제 종류, 복용법, 유통기한...일일이 기억하기 너무 복잡하다:face_with_spiral_eyes:</h3><h3>손쉽게 관리할 수 있는 방법 없을까?</h3>
 
 
 - 나만의 **영양제 달력**으로 꼼꼼하게 정리하는 영양제 일정
