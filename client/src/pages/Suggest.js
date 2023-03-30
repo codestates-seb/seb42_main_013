@@ -332,15 +332,12 @@ function Suggest() {
   const dispatch = useDispatch();
   const clickedConcern = concerns.filter(el => el.concernId === selectedConcern)[0];
   const numbers = [0, 1, 2, 3].sort(() => Math.random() - 0.5);
-
-
-  console.log(login);
   
   useEffect(() => {
     if (!login) {
-      navigate("/");
+      window.location.href = "/";
     }
-  }, [login])
+  }, [])
 
   useEffect(() => {
     authCheck();
@@ -372,17 +369,17 @@ function Suggest() {
             <UserConcern>
               <div><span className="highlight">{userInfo?.displayName}</span>님을 위한 영양제 추천</div>
               <UserSupContainer>
-                <div className="supplement-area" id={userInfo?.supplements[0].supplementName} onClick={supplementClick}>
+                <div className="supplement-area" id={userInfo?.supplements?.[0].supplementName} onClick={supplementClick}>
                   <UserSupImg src="images/icon-pill1.png" alt="supplement-icon" />
-                  <div>{userInfo?.supplements[0].supplementName}</div>
+                  <div>{userInfo?.supplements?.[0].supplementName}</div>
                 </div>
-                <div className="supplement-area" id={userInfo?.supplements[1].supplementName} onClick={supplementClick}>
+                <div className="supplement-area" id={userInfo?.supplements?.[1].supplementName} onClick={supplementClick}>
                   <UserSupImg src="images/icon-pill2.png" alt="supplement-icon" />
-                  <div>{userInfo?.supplements[1].supplementName}</div>
+                  <div>{userInfo?.supplements?.[1].supplementName}</div>
                 </div>
-                <div className="supplement-area" id={userInfo?.supplements[2].supplementName} onClick={supplementClick}>
+                <div className="supplement-area" id={userInfo?.supplements?.[2].supplementName} onClick={supplementClick}>
                   <UserSupImg src="images/icon-pill3.png" alt="supplement-icon" />
-                  <div>{userInfo?.supplements[2].supplementName}</div>
+                  <div>{userInfo?.supplements?.[2].supplementName}</div>
                 </div>
               </UserSupContainer>
             </UserConcern>
