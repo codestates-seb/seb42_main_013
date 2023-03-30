@@ -1,29 +1,47 @@
-# IPillU project 
-## &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; by team.🍙 양반김에 양조간장🥢
+<h1>
+  <img width="40px" src="https://user-images.githubusercontent.com/77859683/228727338-a7859126-bdf5-4d9e-aeff-c8dd56296b88.png" alt="ipillu-logo" style="margin-bottom:-7px">
+  <span>I Pill U</span>
+</h1>
 
-## :bulb: 프로젝트 개요
+<br/>
+<div  align="center">
+  <img width="60%" src="https://user-images.githubusercontent.com/77859683/228727366-e4bb41d5-e111-442f-b0af-ac550bd41dc6.png" alt="ipillu-logo">
+</div>
+<h3 align="center">당신을 위한 영양제 맞춤 서비스, I Pill U</h3>
+</br>
 
-현대인들의 개인의 건강에 대한 관심이 증가함에 따라
-트렌드에 맞는 헬스 케어 관련된 서비스 기획하고, 영양제 영역에서 사용자 친화적 서비스 를 구상하였다.             									
+- **`팀 이름` :** **🍙양반김에 양조간장🥢**
+- **`프로젝트 명` :** I Pill U
+- **`프로젝트 기간` :** 2023.03.03. - 2023.04.03.
+- **`한 줄 소개` :** 영양제 관리를 돕고 새로운 영양제를 추천하는 사용자 맞춤 영양제 서비스
+- **`팀원` :** 양예진(팀장), 김민지, 김태은, 반종현(부팀장), 조민기
+- **`배포 링크` :** [http://bucket-for-main13.s3-website.ap-northeast-2.amazonaws.com](http://bucket-for-main13.s3-website.ap-northeast-2.amazonaws.com)
+<div align="center">
+  <h3>* I Pill U는 모바일 환경에 최적화되어 있습니다. 모바일 열람을 원하시면 아래 QR코드를 활용해 주세요!</h3>
+  <img width="30%" src="https://user-images.githubusercontent.com/77859683/228735304-2b2d382b-a808-44ed-a179-205e4b937ddc.png" alt="ipillu-qrcode">
+</div>
 
-영양제의 종류와 복용법, 유통기한 등을 일일이 기억하는 일은 불편하므로,
-개인이 자신이 먹는 영양제와 약을 손쉽게 관리할 수 있는 서비스, 또한 적절한 영양제를 추천해 주는 맞춤형 서비스를 개발하였다.
+<br/>
 
-## 🥅 프로젝트 목표
-사용자가 자신이 복용하는 영양제나 처방약을 구분하여 등록하고 
-복용 시간, 기간 등을 입력하여 타임라인에 따라 체계적으로 관리하는 서비스를 개발한다.
-직접 입력한 건강 데이터를 바탕으로 적절한 영양제를 추천 받을 수 있고
-사용자가 보다 쉽고 효과적으로 건강 관리를 할 수 있도록 돕는 서비스를 개발한다.
+## :bulb: Intro
+<h3>영양제 종류, 복용법, 유통기한...일일이 기억하기 너무 복잡하다:face_with_spiral_eyes: 손쉽게 관리할 수 있는 방법 없을까?</h3>
 
--
 
-:paperclip: 배포 주소
--
-+ [IPillU 배포 주소(AWS)](http://bucket-for-main13.s3-website.ap-northeast-2.amazonaws.com/)
+- 나만의 **영양제 달력**으로 꼼꼼하게 정리하는 영양제 일정
+- 필요한 영양제는 **추천**받고 새로운 영양제 **검색**까지
+- 복용 중인 **영양제**와 **약**은 한 페이지에서 손쉽게 관리
 
-:calendar: 프로젝트 기간
--
-23.03.03 ~ 23.04.02
+<br/>
+
+## :family: 팀원 소개
+
+### Frontend
+| [양예진<br>(FE, 팀장)](https://github.com/boahn) | [김민지<br>(FE)](https://github.com/kdmstj) | [김태은<br>(FE)](https://github.com/Gr8G1) | [반종현<br>(BE, 부팀장)](https://github.com/yjyaang) | [조민기<br>(BE)](https://github.com/JOAAAAAAAAAAA) | 
+| :---: | :---: | :---: | :---: | :---: |
+| <img alt="안병옥" src="https://avatars.githubusercontent.com/u/116166923?v=4" height="100" width="100"> | <img alt="강은서" src="https://avatars.githubusercontent.com/u/62414231?v=4" height="100" width="100"> | <img alt="현지원" src="https://avatars.githubusercontent.com/u/29472238?v=4" height="100" width="100"> | <img alt="양예진" src="https://avatars.githubusercontent.com/u/116554914?v=4" height="100" width="100"> | <img alt="김민지" src="https://avatars.githubusercontent.com/u/116185146?v=4" height="100" width="100"> |
+|<p align="left">- 질문 CRUD 개발- 태그 CRU 개발 <br/></p> |<p align="left">- 로그인 인증 개발<br/>(JWT 발급, 인증)<br/>- OAuth2.0 로그인<br/>인증 처리(구글)<br/>- Spring Security<br/>- User CRUD<br/>- 프로필 이미지 관리<br/>- 예외처리 로직 기능<br/></p>|<p align="left">- 답변 CRUD 개발<br/>- 댓글 CRUD 개발<br/>- RestDocs API<br/>문서화 기능 구현<br/>- AWS 배포 환경 구축<br/></p>|<p align="left">- Login 페이지<br/>(JWT/OAuth2.0)<br/>- Signup 페이지<br/>- 질문 Create</br>- Tags 페이지 <br/>- Footer 컴포넌트<br/>- Aside<br/>(오른쪽 사이드바)<br/></p>|<p align="left">-메인페이지 구현<br/>(필터,정렬,조회)<br/>-마이페이지 구현</br>(조회, 수정)<br/>-유저페이지 구현</br>-페이지네이션</br>-질문 검색</br>(tag, body,<br/>user,answerCo)</br>-Nav(lfet)</br></p>|
+<br/>
+
 
 :file_folder: 문서함
 - 
@@ -33,23 +51,8 @@
 + [화면 정의서](https://drive.google.com/file/d/1bUcgcAfQcFdfLkO6aKqS2vBGdcjgR91o/view)
 + [개발자 테스트](https://drive.google.com/file/d/1WwghUac7BKHWVWvpLnS-HU8FGfN-wagt/view)
 + [활동 기록, 회의기록](https://www.notion.so/codestates/51d619ec198340e0a317638e2cd85e04?p=ae3c8e6bbbcf49209378a560987a1f70&pm=s)
+<br/>
 
-:family: 팀원 소개
--
-
-### Frontend
-|김민지|김태은|양예진|
-|------|---|---|
-|JOAAAAAAAAAAA|10xc|:---:|
-|------|---|---|
-|blueseablueskyblueme@gmail.com|01053702613a@gmail.com|topbuty97@gmail.com|
-
-### Backend
-|빈종현|조민기|
-|------|---|
-|JONGHYUNVAN|SEB-BE-42-mkcho|
-|------|---|
-|billlys2@gmail.com|withmove@gmail.com|
 
 :computer: 기술 스택
 -
