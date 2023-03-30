@@ -1,5 +1,5 @@
 import axios from "axios"
-
+import loginExpire from "./loginExpire"
 
 
 function patchPillData(writtenData, navigate) {
@@ -27,14 +27,23 @@ function patchPillData(writtenData, navigate) {
   axios
     .patch(`${process.env.REACT_APP_API_URL}/supplements/${writtenData.supplementId}`, supplement, config)
     .then(res=>{
+      console.log("aa")
       axios.patch(`${process.env.REACT_APP_API_URL}/detailSupplements/${writtenData.detailSupplementId}`, detailSupplement, config)
       .then(res=> {
         navigate('/summary')
-    })})
+      })
+      .catch((err)=>{
+        console.log(err)
+        loginExpire()
+        // !!sessionStorage.Authorization && alert("로그인 기간이 만료되었습니다.")
+        // !!sessionStorage.Authorization && navigate('/login')
+      })  
+    })
     .catch((err)=>{
       console.log(err)
-      !!sessionStorage.Authorization && alert("로그인 기간이 만료되었습니다.")
-      !!sessionStorage.Authorization && navigate('/login')
+      loginExpire()
+      // !!sessionStorage.Authorization && alert("로그인 기간이 만료되었습니다.")
+      // !!sessionStorage.Authorization && navigate('/login')
     })    
 }
 

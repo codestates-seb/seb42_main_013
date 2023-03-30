@@ -201,9 +201,10 @@ function DataCrete() {
   const inputEl = useRef(null);
   const [isEditMode, setEditMode] = useState(false);
   useEffect(() => {
-    if (isEditMode) {
-      inputEl.current.focus();
-    }
+    !sessionStorage.Authorization && alert("로그인을 해주세요.")
+    !sessionStorage.Authorization && navigate('/login')
+    isEditMode && inputEl.current.focus();
+
   }, [isEditMode]);
   const openEditHandler = () => {
     setData({ ...data, dosageInterval: "" });
