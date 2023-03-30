@@ -157,16 +157,16 @@ const NewOptionTag = styled(OptionTag)`
 function MyPage() {
   const { userInfo, login } = useSelector(state => state.loginInfoReducer);
   const [isEditMode, setEditMode] = useState(false);
-  const [username, setUsername] = useState(userInfo.displayName);
-  const [clickedSex, setClickedSex] = useState(userInfo.detail.gender);
-  const [clickedTag, setClickedTag] = useState(userInfo.concerns.map(el => el.concernId));
-  const [birthDate, setBirthDate] = useState(userInfo.detail.birthDate);
+  const [username, setUsername] = useState(userInfo?.displayName);
+  const [clickedSex, setClickedSex] = useState(userInfo?.detail?.gender);
+  const [clickedTag, setClickedTag] = useState(userInfo?.concerns?.map(el => el.concernId));
+  const [birthDate, setBirthDate] = useState(userInfo?.detail?.birthDate);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (!login) {
-      navigate("/");
+      window.location.href = "/";
     }
   }, [login])
 
@@ -243,12 +243,12 @@ function MyPage() {
           <ProfileImage />
         </ProfileAvartar>
         <ProfileName>
-          {isEditMode ? <NameInput type="text" value={username} onChange={(e) => setUsername(e.target.value)} /> : <div>{userInfo.displayName}</div>}
-          <div>{userInfo.email}</div>
+          {isEditMode ? <NameInput type="text" value={username} onChange={(e) => setUsername(e.target.value)} /> : <div>{userInfo?.displayName}</div>}
+          <div>{userInfo?.email}</div>
         </ProfileName>
         <UserInfo>
           <div className="userinfo-title"><span>생년월일</span></div>
-          {isEditMode ? <BirthDateInput type="date" value={birthDate} onChange={(e) => setBirthDate(e.target.value)} /> : <div>{userInfo.detail.birthDate.replaceAll("-", ".")}.</div>}
+          {isEditMode ? <BirthDateInput type="date" value={birthDate} onChange={(e) => setBirthDate(e.target.value)} /> : <div>{userInfo?.detail?.birthDate.replaceAll("-", ".")}.</div>}
         </UserInfo>
         <UserInfo>
           <div className="userinfo-title"><span>성별</span></div>
@@ -267,7 +267,7 @@ function MyPage() {
                 <span className={`${clickedSex === "여성" ? "selected" : ""}`}>여성</span>
               </SelectIconDiv>
             </SelectContainer>
-            : <div>{userInfo.detail.gender}</div>}
+            : <div>{userInfo?.detail?.gender}</div>}
         </UserInfo>
         {isEditMode
           ? <ConcernSelector tagClickHandler={tagClickHandler} clickedTag={clickedTag} />
@@ -277,7 +277,7 @@ function MyPage() {
               <div className="withtag">건강 고민</div>
             </UserInfo>
             <TagBox>
-              {userInfo.concerns.map(el => {
+              {userInfo?.concerns?.map(el => {
                 return (
                   <NewOptionTag key={el.concernId}>{el.title}</NewOptionTag>
                 )
