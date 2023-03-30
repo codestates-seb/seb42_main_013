@@ -66,7 +66,7 @@ function Header() {
 
   const plusHandler = () => {
     dispatch(clearCreate())
-    !!sessionStorage.Authorization ?navigate("/datacreate") :alert("로그인을 해주세요.")
+    navigate("/datacreate")
   }
 
   const logoClickHandler = () => {
