@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { CurrentBtn } from "../styles/Buttons";
 import ConcernSelector from "../components/ConcernSelector";
 import { useSelector, useDispatch } from "react-redux";
-import useAuthCheck from "../util/useAuthCheck";
+import authCheck from "../util/authCheck";
 import getUserInfo from "../util/getUserInfo";
 import { loginInfoActions } from "../reducer/loginInfoReducer";
 import axios from "axios";
@@ -170,11 +170,13 @@ function MyPage() {
     }
   }, [login])
 
-  useAuthCheck();
+  useEffect(() => {
+    authCheck();
+  }, [])
 
   const editBtnHandler = async () => {
     if (isEditMode) {
-      if(username.length < 4 || clickedTag.length === 0) {
+      if (username.length < 4 || clickedTag.length === 0) {
         alert("닉네임은 4자 이상, 건강고민은 1개 이상이어야 합니다.");
         return;
       }

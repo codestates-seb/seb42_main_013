@@ -3,7 +3,7 @@ import Timeline from "../components/Timeline";
 import React, { useEffect, useState } from "react";
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import supplements from "../components/supplements.json";
+import loginExpire from "../util/loginExpire";
 import axios from "axios";
 
 function CalendarPage() {
@@ -28,7 +28,7 @@ function CalendarPage() {
           console.log(res)
           setTestData(res.data.data)
         })
-        .catch((err) => { console.log(err) })
+        .catch((err) => { loginExpire(); })
     })()
   }, [])
 

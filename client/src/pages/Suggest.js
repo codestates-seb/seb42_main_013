@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { searchActions } from "../reducer/searchReducer";
 import { useNavigate } from "react-router-dom";
-import useAuthCheck from "../util/useAuthCheck";
+import authCheck from "../util/authCheck";
 import axios from "axios";
 import card1 from "../images/cards/card1.jpg";
 import card2 from "../images/cards/card2.jpg";
@@ -333,8 +333,9 @@ function Suggest() {
   const clickedConcern = concerns.filter(el => el.concernId === selectedConcern)[0];
   const numbers = [0, 1, 2, 3].sort(() => Math.random() - 0.5);
 
-  useAuthCheck();
 
+  console.log(login);
+  
   useEffect(() => {
     if (!login) {
       navigate("/");
@@ -342,10 +343,10 @@ function Suggest() {
   }, [login])
 
   useEffect(() => {
+    authCheck();
     axios.get(`${process.env.REACT_APP_API_URL}/concerns/`)
       .then((res) => {
         setConcerns(res.data.data)
-
       });
   }, [])
 
