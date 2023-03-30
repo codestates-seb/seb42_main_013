@@ -111,6 +111,7 @@ public class SupplementService {
             List<String> values = new ArrayList<>();
             int startIndex = 0;
             int endIndex = 0;
+
             while ((startIndex = contents.indexOf("<b>", endIndex)) != -1 && (endIndex = contents.indexOf("</b>", startIndex)) != -1) {
                 String keyword = contents.substring(startIndex + 3, endIndex);
                 if (titleSet.contains(keyword)) {

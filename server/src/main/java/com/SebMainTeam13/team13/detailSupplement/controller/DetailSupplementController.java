@@ -35,20 +35,21 @@ public class DetailSupplementController {
 
     private final UserService userService;
     @PostMapping
-    public ResponseEntity postDetailSupplement(@Valid @RequestBody DetailSupplementDto.Post post) {
-        String principal = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Pair<Long, String> userIdAndTokenPair = userService.checkToken(principal);
+    public ResponseEntity postDetailSupplement(@Valid @RequestBody DetailSupplementDto.Post post,
+                                                @RequestHeader("Authorization") HttpHeaders requestHeaders) {
+        Pair<Long, String> userIdAndTokenPair = userService.checkToken(requestHeaders);
         Long userId = userIdAndTokenPair.getLeft();
         String newAccessToken = userIdAndTokenPair.getRight();
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        if (newAccessToken != null) {
-            headers.set("Authorization", "Bearer " + newAccessToken);
-        }
-
         DetailSupplement detailSupplement = detailSupplementService.createDetailSupplement(detailSupplementMapper.detailSupplementPostDtoToDetailSupplement(post),userId);
         URI location = UriCreator.createUri(DETAIL_DEFAULT_URL, detailSupplement.getDetailSupplementId());
+        if (newAccessToken != null) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.set("Authorization", "Bearer " + newAccessToken);
+
+            return ResponseEntity.created(location).headers(headers).build();
+        }
 
         return ResponseEntity.created(location).build();
     }
@@ -71,38 +72,38 @@ public class DetailSupplementController {
         return new ResponseEntity<>(new SingleResponseDto<>(response),HttpStatus.OK);
     }
     @GetMapping
-    public ResponseEntity getDetailSupplements() {
-        String principal = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Pair<Long, String> userIdAndTokenPair = userService.checkToken(principal);
+    public ResponseEntity getDetailSupplements(@RequestHeader("Authorization") HttpHeaders requestHeaders) {
+        Pair<Long, String> userIdAndTokenPair = userService.checkToken(requestHeaders);
         Long userId = userIdAndTokenPair.getLeft();
         String newAccessToken = userIdAndTokenPair.getRight();
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        if (newAccessToken != null) {
-            headers.set("Authorization", "Bearer " + newAccessToken);
-        }
 
         List<DetailSupplement> detailSupplements = detailSupplementService.findDetailSupplements(userId);
         List<DetailSupplementDto.Response> responses = detailSupplementMapper.detailSupplementsToDetailSupplementResponseDtos(detailSupplements);
 
+        if (newAccessToken != null) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.set("Authorization", "Bearer " + newAccessToken);
+            return new  ResponseEntity<>(new ListResponseDto<>(responses), headers, HttpStatus.OK);
+        }
         return new ResponseEntity<>(new ListResponseDto<>(responses),HttpStatus.OK);
     }
+
     @DeleteMapping("/{detailSupplement-id}")
-    public ResponseEntity deleteDetailSupplement(@PathVariable("detailSupplement-id") Long detailSupplementId) {
-        String principal = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Pair<Long, String> userIdAndTokenPair = userService.checkToken(principal);
+    public ResponseEntity deleteDetailSupplement(@PathVariable("detailSupplement-id") Long detailSupplementId,@RequestHeader("Authorization") HttpHeaders requestHeaders) {
+        Pair<Long, String> userIdAndTokenPair = userService.checkToken(requestHeaders);
         Long userId = userIdAndTokenPair.getLeft();
         String newAccessToken = userIdAndTokenPair.getRight();
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        if (newAccessToken != null) {
-            headers.set("Authorization", "Bearer " + newAccessToken);
-        }
-
         DetailSupplement detailSupplement = detailSupplementService.findAndVerifyDetailSupplementByDetailSupplementId(detailSupplementId);
         detailSupplementService.deleteDetailSupplement(detailSupplement,userId);
+
+        if (newAccessToken != null) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.set("Authorization", "Bearer " + newAccessToken);
+            return ResponseEntity.noContent().headers(headers).build();
+        }
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
