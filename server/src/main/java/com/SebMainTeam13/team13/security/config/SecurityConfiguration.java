@@ -9,6 +9,7 @@ import com.SebMainTeam13.team13.security.filter.JwtAuthenticationFilter;
 import com.SebMainTeam13.team13.security.filter.JwtVerificationFilter;
 import com.SebMainTeam13.team13.security.handler.JWTAuthenticationFailureHandler;
 import com.SebMainTeam13.team13.security.handler.JwtAuthenticationSuccessHandler;
+import com.SebMainTeam13.team13.security.repository.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -38,6 +39,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfiguration {
     private final JwtTokenizer jwtTokenizer;
     private final AuthorityUtils authorityUtils;
+    private final RefreshTokenRepository refreshTokenRepository;
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -95,7 +97,7 @@ public class SecurityConfiguration {
             JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils);
 
             jwtAuthenticationFilter.setFilterProcessesUrl("/auth/login");
-            jwtAuthenticationFilter.setAuthenticationSuccessHandler(new JwtAuthenticationSuccessHandler());
+            jwtAuthenticationFilter.setAuthenticationSuccessHandler(new JwtAuthenticationSuccessHandler(jwtTokenizer, refreshTokenRepository));
             jwtAuthenticationFilter.setAuthenticationFailureHandler(new JWTAuthenticationFailureHandler());
 
             builder.addFilter(jwtAuthenticationFilter)

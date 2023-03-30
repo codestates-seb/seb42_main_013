@@ -1,6 +1,7 @@
 package com.SebMainTeam13.team13.user.entity;
 
 import com.SebMainTeam13.team13.detail.entity.Detail;
+import com.SebMainTeam13.team13.security.entity.RefreshToken;
 import com.SebMainTeam13.team13.security.entity.UserRole;
 import lombok.*;
 
@@ -45,6 +46,9 @@ public class User {
     @OneToOne(fetch = EAGER)
     @JoinColumn(name = "detail")
     private Detail detail;
+
+    @OneToOne
+    private RefreshToken refreshToken;
 
     @Getter
     public enum UserStatus {

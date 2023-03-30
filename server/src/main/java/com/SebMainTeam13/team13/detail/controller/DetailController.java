@@ -31,59 +31,60 @@ public class DetailController {
     private final DetailMapper detailMapper;
     private final UserService userService;
     @PostMapping
-    public ResponseEntity postDetail(@Valid @RequestBody DetailDto.Post post) {
-        String principal = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Pair<Long, String> userIdAndTokenPair = userService.checkToken(principal);
+    public ResponseEntity postDetail(@Valid @RequestBody DetailDto.Post post,@RequestHeader("Authorization") HttpHeaders requestHeaders) {
+        Pair<Long, String> userIdAndTokenPair = userService.checkToken(requestHeaders);
         Long userId = userIdAndTokenPair.getLeft();
         String newAccessToken = userIdAndTokenPair.getRight();
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        if (newAccessToken != null) {
-            headers.set("Authorization", "Bearer " + newAccessToken);
-        }
+
 
         Detail detail = detailService.createDetail(detailMapper.detailPostDtoToDetail(post),userId);
         URI location = UriCreator.createUri(DETAIL_DEFAULT_URL, detail.getDetailId());
+        if (newAccessToken != null) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.set("Authorization", "Bearer " + newAccessToken);
 
+            return ResponseEntity.created(location).headers(headers).build();
+        }
         return ResponseEntity.created(location).build();
     }
 
     @PatchMapping
-    public ResponseEntity patchDetail(@Valid @RequestBody DetailDto.Patch patch) {
-        String principal = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Pair<Long, String> userIdAndTokenPair = userService.checkToken(principal);
+    public ResponseEntity patchDetail(@Valid @RequestBody DetailDto.Patch patch,@RequestHeader("Authorization") HttpHeaders requestHeaders) {
+        Pair<Long, String> userIdAndTokenPair = userService.checkToken(requestHeaders);
         Long userId = userIdAndTokenPair.getLeft();
         String newAccessToken = userIdAndTokenPair.getRight();
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        if (newAccessToken != null) {
-            headers.set("Authorization", "Bearer " + newAccessToken);
-        }
 
         Detail detail = detailService.updateDetail(detailMapper.detailPatchDtoToDetail(patch),userId);
         DetailDto.Response response = detailMapper.detailToDetailResponseDto(detail);
 
+        if (newAccessToken != null) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.set("Authorization", "Bearer " + newAccessToken);
+            return new ResponseEntity<>(new SingleResponseDto<>(response), headers, HttpStatus.OK);
+        }
         return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity getDetail() {
-        String principal = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Pair<Long, String> userIdAndTokenPair = userService.checkToken(principal);
+    public ResponseEntity getDetail(@RequestHeader("Authorization") HttpHeaders requestHeaders) {
+        Pair<Long, String> userIdAndTokenPair = userService.checkToken(requestHeaders);
         Long userId = userIdAndTokenPair.getLeft();
         String newAccessToken = userIdAndTokenPair.getRight();
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        if (newAccessToken != null) {
-            headers.set("Authorization", "Bearer " + newAccessToken);
-        }
+
 
         Detail detail = detailService.findDetail(userId);
         DetailDto.Response response = detailMapper.detailToDetailResponseDto(detail);
 
+        if (newAccessToken != null) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.set("Authorization", "Bearer " + newAccessToken);
+            return new ResponseEntity<>(new SingleResponseDto<>(response), headers, HttpStatus.OK);
+        }
         return new ResponseEntity<>(new SingleResponseDto<>(response),HttpStatus.OK);
     }
 

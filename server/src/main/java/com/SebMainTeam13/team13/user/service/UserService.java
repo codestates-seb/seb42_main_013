@@ -2,7 +2,9 @@ package com.SebMainTeam13.team13.user.service;
 
 
 import com.SebMainTeam13.team13.auth.utils.AuthorityUtils;
+import com.SebMainTeam13.team13.exception.BusinessLogicException;
 import com.SebMainTeam13.team13.jwt.JwtTokenizer;
+import com.SebMainTeam13.team13.security.repository.RefreshTokenRepository;
 import com.SebMainTeam13.team13.user.entity.User;
 import com.SebMainTeam13.team13.user.repository.UserRepository;
 import com.nimbusds.jose.util.Pair;
@@ -12,12 +14,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.token.TokenService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
+
+import static com.SebMainTeam13.team13.exception.ExceptionCode.*;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +33,7 @@ public class UserService {
     private final AuthorityUtils authorityUtils;
 
     private final JwtTokenizer jwtTokenizer;
+    private final RefreshTokenRepository refreshTokenRepository;
 
 
     public User createUser(User user) {
@@ -110,23 +117,47 @@ public class UserService {
         }
     }
 
-    public Pair<Long, String> checkToken(String principal) {
+    public Pair<Long, String> checkToken(HttpHeaders requestHeaders) {
 
         try {
-            Long userId = userRepository.findByEmail(principal).get().getUserId();
-            return Pair.of(userId, null); // 액세스 토큰이 유효한 경우
-        } catch (ExpiredJwtException e) {
-            String refreshToken = e.getClaims().get("refreshToken").toString();
-            Map<String, Object> claims = new HashMap<>();
-            claims.put("type", "refreshToken");
+            String token = requestHeaders.getFirst("Authorization").substring(7);
+            Set<String> headerKeys = requestHeaders.keySet();
+            for (String key : headerKeys) {
+                System.out.println(key);
+            }
             JwtParser parser = Jwts.parserBuilder()
-                    .setSigningKey(jwtTokenizer.getSecretKey())
+                    .setSigningKey(jwtTokenizer.getSecretKey().getBytes())
                     .build();
-            Jws<Claims> jws = parser.parseClaimsJws(refreshToken);
+            Jws<Claims> jws = parser.parseClaimsJws(token);
             String subject = jws.getBody().getSubject();
-            Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
-            String newAccessToken = jwtTokenizer.generateAccessToken(claims, subject, expiration, jwtTokenizer.getSecretKey());
-            return Pair.of(userRepository.findByEmail(principal).get().getUserId(), newAccessToken); // 새로운 액세스 토큰을 반환
+            return Pair.of(userRepository.findByEmail(subject).get().getUserId(), null);
+
+            // 액세스 토큰이 유효한 경우
         }
+
+        catch (ExpiredJwtException e) {
+            Optional<String> refreshTokenOpt = requestHeaders.containsKey("refresh") ? requestHeaders.get("refresh").stream().findFirst() : Optional.empty();
+            if(refreshTokenOpt.isEmpty()) throw new BusinessLogicException(ACCESS_TOKEN_EXPIRED);
+
+            if (refreshTokenOpt.isPresent()) {
+                String token = refreshTokenOpt.get();
+                 User userFromToken = refreshTokenRepository.findByToken(token).get().getUser();
+                 String username = e.getClaims().get("username").toString();
+                 User user = userRepository.findByEmail(username).get();
+
+
+                if(user.getUserId()==userFromToken.getUserId()) {
+
+                    Map<String, Object> claims = new HashMap<>();
+                    claims.put("type", "accessToken");
+
+                    Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
+                    String newAccessToken = jwtTokenizer.generateAccessToken(claims, username, expiration, jwtTokenizer.getSecretKey());
+                    return Pair.of(userRepository.findByEmail(username).get().getUserId(), newAccessToken);
+                }
+            }
+
+        }
+        throw new RuntimeException("authization failed");
     }
 }

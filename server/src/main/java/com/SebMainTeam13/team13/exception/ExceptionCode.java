@@ -16,6 +16,8 @@ public enum ExceptionCode {
     CONCERN_ALREADY_ADDED(404, "Concern already added"),
     SUPPLEMENT_NOT_FOUND(404, "Supplement not found"),
     DETAIL_SUPPLEMENT_NOT_FOUND(404, "DetailSupplement not found"),
+
+    ACCESS_TOKEN_EXPIRED(404, "AccessToken Expired"),
     DETAIL_EXISTS(409, "Detail already exists"); 
 
     @Getter
