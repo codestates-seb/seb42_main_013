@@ -35,11 +35,10 @@
 
 ## :family: 팀원 소개
 
-### Frontend
 | [양예진<br>(FE, 팀장)](https://github.com/yjyaang) | [김민지<br>(FE)](https://github.com/JOAAAAAAAAAAA) | [김태은<br>(FE)](https://github.com/10xc) | [반종현<br>(BE, 부팀장)](https://github.com/JONGHYUNVAN) | [조민기<br>(BE)](https://github.com/SEB-BE-42-mkcho) | 
 | :---: | :---: | :---: | :---: | :---: |
 | <img alt="양예진" src="https://user-images.githubusercontent.com/77859683/228738032-26654b73-fef7-47c6-a301-44ce48593257.png" height="150"> | <img alt="김민지" src="https://user-images.githubusercontent.com/77859683/228738461-5a3dbe9a-a78c-4ada-81b3-f8dcc9a7af5e.png" height="150"> | <img alt="김태은" src="https://user-images.githubusercontent.com/77859683/228740344-c8a32f16-5b3f-4167-b6e3-85c4aed5512c.png" height="150" style=""> | <img alt="반종현" src="https://user-images.githubusercontent.com/77859683/228738489-e17bf780-db54-4bf4-b91b-9a9e92067d5d.png" height="150"> | <img alt="조민기" src="https://user-images.githubusercontent.com/77859683/228738494-3630891b-2d8f-49a7-ab43-c812144ed802.png" height="150"> |
-|<p align="left">가나다라마바사아자차카타<br/>- (웹) 좌측 소개 페이지<br/>- 시작 페이지<br/>- 유저 정보 CRU<br/>- 영양제 추천 페이지<br/>- 영양제 검색 페이지<br/>- 토큰 만료 검증 함수<br/></p> |<p align="left">가나다라마바사아자차카타<br/>- 알약 관리 페이지<br/>- 데이터 생성 페이지<br/>- 영양제CRUD<br/>- fitlering & sorting<br/>- 바코드 인식 후 자동 입력<br/></p>|<p align="left">가나다라마바사아자차카타<br/>- 회원가입 페이지<br/>- 로그인 페이지<br/>- 캘린더 페이지<br/>  (캘린더/타임라인)<br/></p>|<p align="left">가나다라마바사아자차카타<br/>- Spring security<br/>  - JWT<br/>- User, Detail,<br/> Supplement,<br/>Concern<br/>DetailSupplement<br/>CRUD<br/>-User, Detail,<br/>Supplement, <br/>Concern<br/> DetailSupplement<br/>간 연관관계 매핑<br/>- NaverOpenApi <br/>Controller<br/>- ApiResponse<br/>->DBdata 가공후 저장<br/>- 가공후 저장된 데이터<br/> Search<br/>- ApiResponse를 <br/>통한 user 의<br/> concern에 관한 <br/>노출횟수 저장 <br/></p>|<p align="left">가나다라마바사아자차카타<br/>- Concern CRU<br/>- NaverOpenAPI적용<br/></p>|
+|<p align="left">- (웹) 좌측 소개 페이지<br/>- 시작 페이지<br/>- 유저 정보 CRU<br/>- 영양제 추천 페이지<br/>- 영양제 검색 페이지<br/>- 토큰 만료 검증 함수<br/></p> |<p align="left">- 알약 관리 페이지<br/>- 데이터 생성 페이지<br/>- 영양제CRUD<br/>- fitlering & sorting<br/>- 바코드 인식 후 자동 입력<br/></p>|<p align="left">- 회원가입 페이지<br/>- 로그인 페이지<br/>- 캘린더 페이지<br/>  (캘린더/타임라인)<br/></p>|<p align="left">- Spring security<br/>  - JWT<br/>- User, Detail,<br/> Supplement,<br/>Concern<br/>DetailSupplement<br/>CRUD 및 연관관계 매핑<br/>- NaverOpenApi <br/>Controller<br/></p>|<p align="left">- Concern CRU<br/>- NaverOpenAPI적용<br/></p>|
 <br/>
 
 ## :computer: 기술 스택
