@@ -18,7 +18,7 @@
 - **`링크` :** [I Pill U 홈페이지](http://ipillu.link/) | [서비스 메뉴얼](https://drive.google.com/file/d/1yzOMx5NTbo7W8sjl1KdhyVBO08Z_EuJ9/view?usp=share_link)
 <div align="center">
   <h3>* I Pill U는 모바일 환경에 최적화되어 있습니다. 모바일 열람을 원하시면 아래 QR코드를 활용해 주세요!</h3>
-  <img width="30%" src="https://user-images.githubusercontent.com/77859683/228735304-2b2d382b-a808-44ed-a179-205e4b937ddc.png" alt="ipillu-qrcode">
+  <img width="30%" src="https://user-images.githubusercontent.com/116554914/228786478-4c99907e-326a-45c0-8a93-4dd4777089f8.png" alt="ipillu-qrcode">
 </div>
 
 <br/>
