@@ -15,7 +15,7 @@
 - **`프로젝트 기간` :** 2023.03.03. - 2023.04.03.
 - **`한 줄 소개` :** 영양제 관리를 돕고 새로운 영양제를 추천하는 사용자 맞춤 영양제 서비스
 - **`팀원` :** 양예진(팀장), 김민지, 김태은, 반종현(부팀장), 조민기
-- **`링크` :** [I Pill U 홈페이지](http://bucket-for-main13.s3-website.ap-northeast-2.amazonaws.com) | [서비스 메뉴얼](https://drive.google.com/file/d/1yzOMx5NTbo7W8sjl1KdhyVBO08Z_EuJ9/view?usp=share_link)
+- **`링크` :** [I Pill U 홈페이지](http://ipillu.link/) | [서비스 메뉴얼](https://drive.google.com/file/d/1yzOMx5NTbo7W8sjl1KdhyVBO08Z_EuJ9/view?usp=share_link)
 <div align="center">
   <h3>* I Pill U는 모바일 환경에 최적화되어 있습니다. 모바일 열람을 원하시면 아래 QR코드를 활용해 주세요!</h3>
   <img width="30%" src="https://user-images.githubusercontent.com/77859683/228735304-2b2d382b-a808-44ed-a179-205e4b937ddc.png" alt="ipillu-qrcode">
