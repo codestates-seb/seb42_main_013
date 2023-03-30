@@ -63,7 +63,7 @@ function Signup() {
     }, { withCredentials: true })
 
       .then((res) => {
-        alert('회원가입 완료')
+        // alert('회원가입 완료')
         window.location.href = '/signupDone'
         // console.log(res)
       })
