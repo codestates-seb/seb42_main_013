@@ -7,7 +7,7 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
-import useAuthCheck from "../util/useAuthCheck";
+import authCheck from "../util/authCheck";
 import { useSelector } from "react-redux";
 import { ReactComponent as LoadingIcon } from "../images/svg/loadingIcon.svg";
 
@@ -150,7 +150,9 @@ function Search() {
     }
   }, [login])
 
-  useAuthCheck();
+  useEffect(() => {
+    authCheck();
+  }, [])
 
   useEffect(() => {
     setIsLoading(true);
