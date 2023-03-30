@@ -13,20 +13,13 @@ const Comment = styled.div`
 
 
 function DeleteConfirm ({openDeleteHanlder,data, setData}) {
-  const navigate = useNavigate();
   const target = useSelector((state) => state.target);
   const deleteDataHandler = () => {
-    deletePillData(target.id,navigate)
-      .then((res)=>{
-        let deletedData = data.filter((ele)=>ele.detailSupplementId !== target.id)
-        setData(deletedData)
-        openDeleteHanlder()
-      })
+    deletePillData(target.id,data, setData, openDeleteHanlder)
   }
   return (
     <ModalContainer>
       <ModalBackdrop onClick={()=>openDeleteHanlder()}>
-
 
       <ModalView onClick={(e) => e.stopPropagation()}>
         <Comment>
