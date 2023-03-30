@@ -1,14 +1,25 @@
-# :headphones: 네? 뉴진스의 하입보이요 Team 입니다.
+# IPillU project 
+## &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; by team.🍙 양반김에 양조간장🥢
 
-:bulb: 프로젝트 목표
+## :bulb: 프로젝트 개요
+
+현대인들의 개인의 건강에 대한 관심이 증가함에 따라
+트렌드에 맞는 헬스 케어 관련된 서비스 기획하고, 영양제 영역에서 사용자 친화적 서비스 를 구상하였다.             									
+
+영양제의 종류와 복용법, 유통기한 등을 일일이 기억하는 일은 불편하므로,
+개인이 자신이 먹는 영양제와 약을 손쉽게 관리할 수 있는 서비스, 또한 적절한 영양제를 추천해 주는 맞춤형 서비스를 개발하였다.
+
+## 🥅 프로젝트 목표
+사용자가 자신이 복용하는 영양제나 처방약을 구분하여 등록하고 
+복용 시간, 기간 등을 입력하여 타임라인에 따라 체계적으로 관리하는 서비스를 개발한다.
+직접 입력한 건강 데이터를 바탕으로 적절한 영양제를 추천 받을 수 있고
+사용자가 보다 쉽고 효과적으로 건강 관리를 할 수 있도록 돕는 서비스를 개발한다.
+
 -
-
 
 :paperclip: 배포 주소
 -
-
-
-
++ [IPillU 배포 주소(AWS)](http://bucket-for-main13.s3-website.ap-northeast-2.amazonaws.com/)
 
 :calendar: 프로젝트 기간
 -
@@ -16,24 +27,29 @@
 
 :file_folder: 문서함
 - 
-+ [사용자 요구사항 정의서]
-+ [API 명세서]
-+ [User Flow
-+ [개발자 테스트]
-+ [활동 기록, 회의기록 및 칸반보드])
++ [사용자 요구사항 정의서](https://docs.google.com/spreadsheets/d/17eBM3l6ISMAeMXSSNHd_SefAwoWtXF-VQcBI1VOaVSE/edit#gid=0)
++ [API 명세서](https://documenter.getpostman.com/view/24689794/2s93JtRQ54)
++ [API 명세서2](https://documenter.getpostman.com/view/24689794/2s93JxsMP7)
++ [화면 정의서](https://drive.google.com/file/d/1bUcgcAfQcFdfLkO6aKqS2vBGdcjgR91o/view)
++ [개발자 테스트](https://drive.google.com/file/d/1WwghUac7BKHWVWvpLnS-HU8FGfN-wagt/view)
++ [활동 기록, 회의기록](https://www.notion.so/codestates/51d619ec198340e0a317638e2cd85e04?p=ae3c8e6bbbcf49209378a560987a1f70&pm=s)
 
 :family: 팀원 소개
 -
 
 ### Frontend
-||||
-|:---:|:---:|:---:|
-||||
+|김민지|김태은|양예진|
+|------|---|---|
+|JOAAAAAAAAAAA|10xc|:---:|
+|------|---|---|
+|blueseablueskyblueme@gmail.com|01053702613a@gmail.com|topbuty97@gmail.com|
 
 ### Backend
-||반종현||
-|:---:|:---:|:---:|
-||||
+|빈종현|조민기|
+|------|---|
+|JONGHYUNVAN|SEB-BE-42-mkcho|
+|------|---|
+|billlys2@gmail.com|withmove@gmail.com|
 
 :computer: 기술 스택
 -
@@ -51,20 +67,18 @@
 -
 | 태그 이름 | 설명 |
 | --- | --- |
-| feat | 새로운 기능 추가 |
-| fix | 버그 수정 |
-| docs | 문서 수정 |
-| refactor | 코드 리팩토링 |
-| test | 테스트 및 테스트 리팩토링 코드 작성(프로덕션 코드 변경 X) |
-| chore | 빌드 업무 수정, 패키지 매니저 설정 및 수정(프로덕션 코드 변경 X) |
-| style | 코드 수정은 없지만, 코드 포맷 변경시 작성 |
-| design | CSS 등 사용자 UI 디자인 변경 |
-| comment | 필요한 주석 추가 및 변경 |
-| rename | 파일 및 폴더를 수정하는 작업 |
-| remove | 파일 및 폴더를 삭제하는 작업 |
-| init | 초기 환경설정 |
-| !BREAKING CHANGE | 커다란 API 변경의 경우 |
-| !HOTFIX |  급하게 치명적인 버그를 고쳐야 하는 경우 |
+| [Feat] | 새로운 기능 추가 |
+| [Fix] | 버그 수정 |
+| [Docs] | 문서 수정 |
+| [Refactor] | 코드 리팩토링 |
+| [Test] | 테스트 및 테스트 리팩토링 코드 작성(프로덕션 코드 변경 X) |
+| [Chore] | 빌드 업무 수정, 패키지 매니저 설정 및 수정(프로덕션 코드 변경 X) |
+| [Style] | 코드 수정은 없지만, 코드 포맷 변경시 작성 |
+| [Design] | CSS 등 사용자 UI 디자인 변경 |
+| [Comment] | 필요한 주석 추가 및 변경 |
+| [Rename] | 파일 및 폴더를 수정하는 작업 |
+| [Remove] | 파일 및 폴더를 삭제하는 작업 |
+
 
 
   <details>
@@ -156,7 +170,3 @@ import styles from './컴포넌트명.module.css';
 
 </div>
 </details>
-
-:page_with_curl: 결과 화면
--
-
