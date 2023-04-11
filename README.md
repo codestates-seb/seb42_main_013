@@ -53,7 +53,23 @@
 ### Backend
 <img src="https://img.shields.io/badge/Java-008FC7?style=for-the-badge&logo=Java&logoColor=white"> <img src="https://img.shields.io/badge/SPRING-6DB33F?style=for-the-badge&logo=SPRING&logoColor=white"> <img src="https://img.shields.io/badge/SPRING BOOT-6DB33F?style=for-the-badge&logo=SPRING BOOT&logoColor=white"> <img src="https://img.shields.io/badge/SPRING Security-6DB33F?style=for-the-badge&logo=SPRING Security&logoColor=white"> <img src="https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JWT&logoColor=white"> <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white"> <img src="https://img.shields.io/badge/AMAZON EC2-FF9900?style=for-the-badge&logo=Amazon EC2&logoColor=white">
 
-<br/>
+<br/>   
+
+## 시연 영상
+|**최초 접속 페이지**|**회원가입**|
+|:---:|:---:|
+|<img width="360px" src="https://user-images.githubusercontent.com/116554914/231062562-4f1acdea-9d48-42d4-a8a4-a5755b20adfc.gif"/>|<img width="360px" src="https://user-images.githubusercontent.com/116554914/231062621-44cb7bfc-4475-45d5-87b3-b74fb952691d.gif"/>|
+|**로그인(최초)**|**로그인(기존 유저)**|
+|<img width="360px" src="https://user-images.githubusercontent.com/116554914/231062794-3a57263a-25ed-48d3-835b-784ea839e82a.gif"/>|<img width="360px" src="https://user-images.githubusercontent.com/116554914/231062904-6111f00d-7dcd-4df0-aa98-8eee7697b56a.gif"/>|
+|**유저 정보 등록**|**영양제 추천 페이지**|
+|<img width="360px" src="https://user-images.githubusercontent.com/116554914/231063153-ba4d5574-353f-4342-9bac-71113f5043c8.gif"/>|<img width="360px" src="https://user-images.githubusercontent.com/116554914/231063347-13b7be97-7f9a-42be-8e4d-1fd3ad7eac8c.gif"/>|
+|**영양제 검색 페이지**|**영양제 달력 페이지**|
+|<img width="360px" src="https://user-images.githubusercontent.com/116554914/231063217-dd41ac02-5065-4cee-9501-1a06f0174d24.gif"/>|<img width="360px" src="https://user-images.githubusercontent.com/116554914/231063250-0af6c1f2-ca37-400c-b0c9-ce1001739ff5.gif"/>|
+|**사용자 영양제 추가**|**사용자 영양제 수정 및 삭제**|
+|<img width="360px" src="https://user-images.githubusercontent.com/116554914/231063514-3e0798be-8f5c-460e-87db-36c0f8a1d7f0.gif"/>|<img width="360px" src="https://user-images.githubusercontent.com/116554914/231063531-bbd2cb98-7f4d-471b-b120-d0572f20b30c.gif"/>|
+|**마이페이지&로그아웃**|**access token 만료**|
+|<img width="360px" src="https://user-images.githubusercontent.com/116554914/231063600-bbf78155-02a1-48d4-8f50-39c047de602d.gif"/>|<img width="360px" src="https://user-images.githubusercontent.com/116554914/231063608-02a5dc38-f0b6-4b51-aa0d-2685ed2a6cab.gif"/>|
+
 
 ## :file_folder: 문서함
 + [사용자 요구사항 정의서](https://docs.google.com/spreadsheets/d/17eBM3l6ISMAeMXSSNHd_SefAwoWtXF-VQcBI1VOaVSE/edit#gid=0)
